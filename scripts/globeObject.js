@@ -23,6 +23,9 @@ define(['./WorldWindShim'],function (WorldWind) {
 
     globe.navigator.lookAtLocation.altitude = 0;
     globe.navigator.range = 2e7;
+    layers[2].layer._compass.size = 0.05;
+    layers[4].layer.placement.y = 49;
+    layers[4].layer.placement.x = window.innerWidth-200;
 
     for (let l = 0; l < layers.length; l++) {
         layers[l].layer.enabled = layers[l].enabled;

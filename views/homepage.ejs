@@ -68,6 +68,14 @@
             background-color: #57b6b7;
             color: white;
         }
+        #navControls {
+            background-color: #0db9f0;
+            color: white;
+        }
+        #navControls:hover {
+            background-color: #0D8BBD;
+            color: white;
+        }
         #clear, #stopTL:hover {
             background-color: #b71926;
             color: white;
@@ -208,9 +216,17 @@
 </ul>
 <div class="container">
     <div class="col-sm-8" id="globe">
-        <canvas id="canvasOne" width="1920" height="1080" style="position: fixed; left: 0; width: 100%; height: 100%; background-color: black;">
+        <canvas id="canvasOne" width="1920" height="1080" style="position: fixed; left: 0; top: 38px; width: 100%; height: 100%; background-color: black;">
             Your browser does not support HTML5 Canvas.
         </canvas>
+
+        <div style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;">
+            <h4 style="color: white; display: inline-block;">Date Range:</h4>
+            <input type="text" readonly id="amount"  style="display: inline-block; border: 0px; color: white; background-color: transparent">
+            <span id="filter" class="glyphicon glyphicon-list btn" style="float: right; color: white"></span>
+            <div id="slider-range"></div>
+        </div>
+
         <div class="popup-group" id="popupBox">
             <div class="popupBoxWrapper">
                 <div class="popupBoxContent">
@@ -225,6 +241,31 @@
                     </div>
                     <!--Popup Box Footer-->
                     <div class="popup-Footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dialog" title="Filter Options">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could take over a minute.</p>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2 push-md-10">
+                        <h5>From:</h5></div>
+                    <div class="col-md-10 pull-md-2">
+                        <input class="date form-control fromdatepicker" style="color:#000000; position: relative;
+                     display: block">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2 push-md-10">
+                        <h5>To:</h5></div>
+                    <div class="col-md-10 pull-md-2">
+                        <input class="date form-control todatepicker" style="color:#000000; position: relative;
+                    display: block">
                     </div>
                 </div>
             </div>
@@ -248,7 +289,7 @@
         <div class="dropdown" id="continentList" style="height: 10px">
         </div>
         <hr>
-        <h5>Layers <span id="refresh" class="glyphicon glyphicon-refresh btn"></span><span id="clear" class="glyphicon glyphicon-trash btn"></span></h5>
+        <h5>Layers <span id="refresh" class="glyphicon glyphicon-refresh btn"></span><span id="clear" class="glyphicon glyphicon-trash btn"></span>  <span id="navControls" class="glyphicon glyphicon-adjust btn"></span></h5>
         <div class="list-group" id="layerList">
         </div>
         <hr>
@@ -281,17 +322,7 @@
         <button id="pauseTL" class="btn btn-primary" style="display: none" type="button">PAUSE</button>
         <button id="stopTL" class="btn btn-primary" style="display: inline-block;" type="button">STOP</button>
 <!--        </div>-->
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-2 push-md-10">
-                    <h5>Date Range:</h5>
-                </div>
-                <div class="col-md-10 pull-md-2">
-                    <input type="text" id="amount" readonly style="border: 0px; color: white; background-color: transparent">
-                    <div id="slider-range"></div>
-                </div>
-            </div>
-        </div>
+
         <div class="form-group">
             <div class="row">
                 <div class="col-md-2 push-md-10">
@@ -308,7 +339,7 @@
                 <div class="col-md-2 push-md-10">
                     <h5>From:</h5></div>
                 <div class="col-md-10 pull-md-2">
-                    <input class="date form-control" id="fromdatepicker" style="color:#000000; position: relative;
+                    <input class="date form-control fromdatepicker" style="color:#000000; position: relative;
                      display: block">
                 </div>
             </div>
@@ -318,7 +349,7 @@
                 <div class="col-md-2 push-md-10">
                     <h5>To:</h5></div>
                 <div class="col-md-10 pull-md-2">
-                    <input class="date form-control" id="todatepicker" style="color:#000000; position: relative;
+                    <input class="date form-control todatepicker" style="color:#000000; position: relative;
                     display: block">
                 </div>
             </div>
@@ -327,8 +358,8 @@
         <div class="list-group" id="annotationList" style="width: 100%; text-align: center;">
             <div class="input-group" id="annotationBox" style="width: 100%;text-align: center;align-content: center;">
                 <div class="smallRule">
-                    <h5><strong>Highest Infections (>100k)</strong></h5>
-                    <div id="magSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
+                    <h5 id="titleCategory"><strong>Highest Infections (lowest to highest)</strong></h5>
+                    <div id="hInfectionSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
                          style="width: 100%;">
                         <div class="ui-slider-range ui-widget-header ui-corner-all"
                              style="left: 61.4286%; width: 38.5714%;"></div>
@@ -339,23 +370,7 @@
                         <div class="ui-slider-range ui-widget-header ui-corner-all"
                              style="width: 24.2857%; left: 75.7143%;"></div>
                     </div>
-                    <h5><span id="magSliderValue">5 to 100 Countries</span></h5>
-                </div>
-                <div class="smallRule">
-                    <h5><strong>Highest Deaths (>10k)</strong></h5>
-                    <div id="depthSlider"
-                         class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                         style="width: 100%;">
-                        <div class="ui-slider-range ui-widget-header ui-corner-all"
-                             style="left: 61.4286%; width: 38.5714%;"></div>
-                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
-                              style="left: 75.7143%;"></span>
-                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
-                              style="left: 100%;"></span>
-                        <div class="ui-slider-range ui-widget-header ui-corner-all"
-                             style="width: 24.2857%; left: 75.7143%;"></div>
-                    </div>
-                    <h5><span id="depthSliderValue">5 to 100 Countries</span></h5>
+                    <h5><span id="hInfectionsValue">5 to 300 Locations</span></h5>
                 </div>
                 <div style="color: #FFFFFF;">
                     <h5><strong>Surface Opacity</strong></h5>
@@ -369,7 +384,190 @@
         </div>
     </div>
 
-    <div id="information" class="col-sm-2 tabcontentRight" style="width: 25% !important;">
+    <div id="information" class="col-sm-2 tabcontentRight" style="ps-container: ps-theme-default ps-active; font-size: 12px;width: 25% !important;">
+        <hr>
+        <h3 style="text-align: center; font-size: 20px !important;"><em><strong>CV-19 Pandemic: Returning to A Better Tomorrow</strong></em></h3>
+        <hr>
+        <h4 style="text-align: center">The Plan</h4>
+        <p style="text-align: justify">
+                During this time of great international need and severe personal difficulty, our goal for
+                returning to a better tomorrow is to provide Covid-19 pandemic solutions. These
+                solutions will be highly adaptable web apps, designed in response to the pandemic, and
+                referred to here as Covid Toolkits.
+        </p>
+        <p style="text-align: justify">
+                By involving a cross-section of world-class technology experts and solutions providers,
+                we will maximize this international collaborative effort. These Covid Toolkits will
+                powerfully reveal our Covid state-of-the-world. This will allow the world to better
+                understand our actual circumstance.
+        </p>
+        <p style="text-align: justify">
+                This will include trend analyses, via dynamic and interactive web app visualizations,
+                along with future projected scenarios shown at planetary scale. Our purpose, to
+                dramatically increase the efficacy of any strategic response. This will inspire the world
+                to recognize how much we are in this together.
+        </p>
+        <p style="text-align: justify">
+                To that end, UNITAR, FAO, the World Bank, Thales, Sinergise, Strategic News
+                Service, AWorldBridge and others will design and build a suite of Covid Toolkits.
+        </p>
+        <hr>
+        <h4 style="text-align: center"><strong>Covid Toolkit Priorities</strong></h4>
+        <p style="text-align: center; font-size: 10px;">
+            Covid Toolkit Priorities are described here, subsequently followed by their goals.
+        </p>
+
+        <p style="text-align: justify;">
+        <strong>Priority 1, Severity &amp; Capacity:</strong> Key issues to be addressed will be trend analyses of
+        infection and resultant impact to medical supply chain and vulnerability thereof.
+        Mapping geographic region and medical facilities, with tracking of human infection rate
+        and regional ability to respond. Our over-arching goal is to most effectively respond to
+        the medical priorities of hospitalization resources, testing and case monitoring.
+        </p>
+        <p style="text-align: justify;">
+        <strong>Priority 2, Food Security &amp; Economy:</strong> Food security (agriculture) will become an
+        urgent continental-scale concern, especially in third-world areas. Economic instability
+        (poverty) and attendant geopolitical consequences will be exacerbated. Earth is already
+        witnessing internal and international migrations and increasing geopolitical violence.
+        </p>
+        <h5><strong>I. Priority 1 Goals: <i>Severity &amp; Capacity</i></strong></h5>
+        <p style="padding-left: 5%"><strong>a. <i>Covid-19 Severity:</i></strong></p>
+        <ol type="1">
+            <li style="text-align: justify">
+                <strong>Areas of Concern:</strong> Areas of increasing infection or expected high potential,
+                based on known comorbidity numbers are identified using high-resolution
+                satellite data with regions coded green, yellow, and red. Real-time and
+                prospective crowding issues of concern can be identified. This will allow people
+                see what area to avoid, and plan accordingly.
+            </li>
+            <li style="text-align: justify">
+                <strong>Infection Rate:</strong> Nations, States, Regions and Cities, will be able to represent
+                degree of infections by area. This will provide a color-coded guide that is
+                instructive for individuals navigating their movement in order to avoid areas of
+                high or increasing infection. By way of example this would designate areas as red
+                for where there is a high case count (density) or infections trending upward.
+            </li>
+            <li style="text-align: justify">
+                <strong>Behavioral Assessment:</strong> Individuals who are self-quarantining as confirmed
+                carriers, could identify events and areas recently visited. We imagine a separate
+                UN Covid web app that allows for identification of recent sensitive areas where
+                contagion has been confirmed. Recommendations on increased caution or self-
+                quarantine could identify specific areas of concern, limiting the need for a larger
+                area of lockdown.
+            </li>
+            <li style="text-align: justify">
+                <strong>Mortality:</strong> Increase accurate assessment of death rates by corroborative tracking
+                of current morgue and cemetery activity as compared to historical norms.
+            </li>
+        </ol>
+
+        <p style="padding-left: 5%"><strong>b. <i>Covid-19 Capacity:</i></strong></p>
+
+        <ol type="1">
+            <li style="text-align: justify">
+                <strong>Treatment Sites:</strong> Medical facilities will show maximum capacity and degree of
+                use. This will identify specific resources available (equipment/staff) versus needs.
+                This would greatly improve logistics efficiency and allow for tracking of efficacy.
+                Tracking hospitals by patient age, condition and outcome, would identify how
+                respective medical facilities are performing, indicating which are being over-
+                whelmed and need additional staff or supplies, or may have resources to spare.
+            </li>
+            <li style="text-align: justify">
+                <strong>Medical Equipment:</strong> Tracking equipment deliveries in real-time would allow
+                medical teams to more accurately predict the near-term choices they are making.
+                If they know they have N95&#39;s coming tomorrow (or other PPE), they don&#39;t need to
+                stretch resources by reusing, and thereby decrease the potential for infection.
+            </li>
+            <li style="text-align: justify">
+                <strong>Hotspot Predictor:</strong> Prediction of likely new hotspots based on the profile of the
+                population (number of patients at-risk, combined with mobility data) cross-
+                referenced with hospital capacity and potential impact on surrounding regions.
+            </li>
+            <li style="text-align: justify">
+                <strong>Maximum Data:</strong> Possibly one of the more invaluable contributions of involving
+                education, is to challenge the world’s University community to find and provide
+                linkage to *their* local, regional and national data, Covid-19 related.
+            </li>
+        </ol>
+
+        <p style="text-align: center; font-size: 10px">
+            <i>AWorldBridge is fully equipped, given some support, to accept, standardize and
+                deliver that data to a world-central database.</i>
+        </p>
+
+        <h5><strong>II. Priority 2 Goals: <i>Food Security &amp; Economy</i></strong></h5>
+
+        <p style="padding-left: 5%"><strong>a. <i>Food Security:</i></strong></p>
+
+        <ol type="1">
+            <li style="text-align: justify;">
+                <strong>Famines of Biblical Scale Increasing:</strong> <a href="https://www.theguardian.com/global-development/2020/apr/21/coronavirus-pandemic-will-cause-famine-of-biblical-proportions">https://www.theguardian.com/global-development/2020/apr/21/coronavirus-pandemic-will-cause-famine-of-biblical-proportions</a>
+            </li>
+            <li style="text-align: justify">
+                Estimate crop productivity for the upcoming season using historical and real-
+                time satellite imagery for major agricultural areas. Identify where crop
+                productivity will be seriously impacted and suggest best crops to plant based on
+                projected weather. Current and projected climate factors need to be incorporated.
+                The purpose is to assist both local farming communities and agri-business.
+                A related example: <a href="https://github.com/WorldWindLabs/AgroSphere">https://github.com/WorldWindLabs/AgroSphere</a>
+            </li>
+            <li style="text-align: justify">
+                <strong>Minimize Hunger:</strong> Tracking the expected movement of food, versus food-deficit
+                areas, would help in determining where the most help will be needed. Focus on
+                calorie-negative and lowest-income regions.
+            </li>
+            <li style="text-align: justify">
+                <strong>Transport Bottlenecks:</strong> Where is major transportation and supply-chain working
+                well or stalled with major delays, particularly at international borders.
+            </li>
+        </ol>
+
+        <p style="padding-left: 5%"><strong>b. <i>Economy:</i></strong></p>
+        <ol type="1">
+            <li style="text-align: justify;">
+                <strong>Privacy-Protected Testing, Contact-Tracing, and Quarantine:</strong> This will combine
+                testing data with location information. Quarantine managed by each country’s
+                chosen policy. Any contact-tracing app data needs to decay after 3 or 4 weeks
+                (anonymized location data tracking of positive patients).
+            </li>
+            <li style="text-align: justify;">
+                <strong>Economic Health Tracker:</strong> Assess electricity usage by country and region, i.e.,
+                the NASA Black Marble, as a metric for economic health, to identify areas
+                hardest hit and in most need of economic assistance. Cross-reference historic
+                energy data with current use, as well as economic status and unemployment
+                claims by region.
+            </li>
+        </ol>
+
+        <hr>
+
+        <h4 style="text-align: center"><strong><i>Additional Priority III</i></strong></h4>
+
+        <p style="text-align: center"><strong>Proposal for University Student Crowd-sourced, Micro Data Set Development for CV-19 Strategic Response</strong></p>
+        <p style="text-align: justify; padding-left: 5%;">
+            <strong>Education &amp; Data Access:</strong> Children’s education and their teachers’ ability to
+            teach is being severely compromised by the isolation required due to the
+            pandemic. Teachers were not trained to teach online. This leads to greatly
+            diminished teaching capacity and resultant lack of learning, and has left both
+            teachers and students frustrated and overwhelmed. Classic classroom teachers do
+            not know how to teach via distance-learning. They tend to load up students with
+            mountains of homework, causing students to detach themselves from learning.
+            We must provide a professional development system that teaches teachers how to
+            teach and learners how to learn, via distance-learning. AWorldBridge is
+            accomplished at this method of teaching and can build those teaching modules.
+        </p>
+
+        <p style="text-align: justify">
+            I. <strong>Critical Inspiration for Data:</strong> Possibly one of the more invaluable contributions
+            of involving education, is to challenge the world’s University community to find and
+            provide linkage to *their* local, regional and national data, Covid-19 related.
+            AWorldBridge is fully equipped, given some support, to collect, standardize and deliver
+            that data to a world-central database.
+        </p>
+        <hr>
+    </div>
+
+    <div id="graphs" class="col-sm-2 tabcontentRight" style="width: 25% !important;">
         <ul class="tab"
             style="z-index: 999; position: fixed; width: auto; background: rgba(46,74,110,1); overflow: visible">
             <li><a class="tablinksInfo"onclick="openTabInfo(event, 'confirmed_cases');"
@@ -378,65 +576,31 @@
             <li><a class="tablinksInfo" id="conD" onclick="openTabInfo(event, 'confirmed_deaths')" style="font-size: 16px">Deaths</a>
             </li>
             <li><a class="tablinksInfo" id="conR" onclick="openTabInfo(event, 'confirmed_recoveries')" style="font-size: 16px">Recovered</a></li>
+            <li><a class="tablinksInfo" id="conA" onclick="openTabInfo(event, 'confirmed_active')" style="font-size: 16px">Active Cases</a></li>
         </ul>
 
         <div id="confirmed_cases" class="col-sm-2 tabcontentInfo" style="display: initial">
             <h4><strong>Number of Confirmed Cases:</strong></h4>
             <hr>
-            <p style="font-size: 72px"><span id="conC"></span></p>
+            <p style="font-size: 72px"><span id="conConfirmed"></span></p>
         </div>
 
         <div id="confirmed_deaths" class="col-sm-2 tabcontentInfo">
             <h4><strong>Number of Confirmed Deaths:</strong></h4>
             <hr>
-            <p style="font-size: 72px"><span id="conD"></span></p>
+            <p style="font-size: 72px"><span id="conDeaths"></span></p>
         </div>
 
         <div id="confirmed_recoveries" class="col-sm-2 tabcontentInfo">
             <h4><strong>Number of People Recovered:</strong></h4>
             <hr>
-            <p style="font-size: 72px"><span id="conR"></span></p>
-        </div>
-    </div>
-
-    <div id="graphs" class="col-sm-2 tabcontentRight" style="width: 25% !important;">
-        <ul class="tab"
-            style="z-index: 999; position: fixed; width: auto; background: rgba(46,74,110,1); overflow: visible">
-            <li><a class="tablinksInfo" id="graph1" onclick="openTabInfo(event, '1_day');" style="font-size: 12px">Current</a></li>
-            <li><a class="tablinksInfo" id="graph2" onclick="openTabInfo(event, '7_days')" style="font-size: 12px">Past 7 Days</a></li>
-            <li><a class="tablinksInfo" id="graph3" onclick="openTabInfo(event, '9_weeks')" style="font-size: 12px">Past 9 Weeks </a></li>
-            <li><a class="tablinksInfo" id="graph4" onclick="openTabInfo(event, '12_months')" style="font-size: 12px">Past 12 Months </a></li>
-        </ul>
-
-        <div id="colBody">
-
+            <p style="font-size: 72px"><span id="conRecoveries"></span></p>
         </div>
 
-        <div id="1_day" class="col-sm-2 tabcontentInfo" style="display: initial">
-            <h4><strong>Number of Confirmed Cases:</strong></h4>
+        <div id="confirmed_active" class="col-sm-2 tabcontentInfo">
+            <h4><strong>Number of Active Cases:</strong></h4>
             <hr>
-            <p style="font-size: 72px"><span id="graph1"></span></p>
-        </div>
-
-        <div id="7_days" class="col-sm-2 tabcontentInfo">
-            <h4><strong>Number of Confirmed Deaths:</strong></h4>
-            <hr>
-            <p style="font-size: 72px"><span id="graph2"></span></p>
-        </div>
-
-        <div id="9_weeks" class="col-sm-2 tabcontentInfo">
-            <h4><strong>Number of People Recovered:</strong></h4>
-            <hr>
-            <p style="font-size: 72px"><span id="graph3"></span></p>
-        </div>
-        <div id="12_months" class="col-sm-2 tabcontentInfo">
-            <h4><strong>Number of People Recovered:</strong></h4>
-            <hr>
-            <p style="font-size: 72px"><span id="graph4"></span></p>
-        </div>
-        <div class="chart-container" id="colBody">
-            <!--                    <div class="popup-Body chart-container" id="popupBody">-->
-            <canvas id = "stackedChart" style="background:#fff; height:200px;"></canvas>
+            <p style="font-size: 72px"><span id="conActive"></span></p>
         </div>
     </div>
 

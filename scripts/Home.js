@@ -8,8 +8,9 @@ requirejs([
     , 'dataAll'
     , 'LayerManager'
     , '3rdPartyLibs/Chart-2.9.3.min.js'
+    , 'createPK'
     , 'initPL'
-], function (newGlobe, dataAll, LayerManager, Chart) {
+], function (newGlobe, dataAll, LayerManager, Chart, newPK) {
     "use strict";
 
     // dataAll.arrCountry.forEach(function (ele, index) {
@@ -48,8 +49,8 @@ requirejs([
     const currentSelectedLayer = $("#currentSelectedLayer");
 
     let categoryS = "Confirmed Cases";
-    let fromDate = $('#fromdatepicker');
-    let toDate = $('#todatepicker');
+    let fromDate = $('.fromdatepicker');
+    let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
     let i = 0;
 
@@ -268,6 +269,15 @@ requirejs([
             curDate.val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
         } );
 
+        $("#slider-range").one("click", function () {
+            console.log("one");
+            $("#filter").click();
+        })
+
+        $('#filter').click(function () {
+            $("#dialog").dialog("open");
+        });
+
         $( function() {
             $( "#hInfectionSlider" ).slider({
                 // animate: 3000,
@@ -310,7 +320,7 @@ requirejs([
             onCurrent();
         });
 
-        $('#fromdatepicker').change(function () {
+        $('.fromdatepicker').change(function () {
             onFrom();
         });
 
@@ -318,7 +328,40 @@ requirejs([
         // newGlobe.addEventListener("mousemove", handleMouseMove);
 
         newGlobe.addEventListener("click", handleMouseCLK);
+
+        $( function () {
+            $( "#dialog" ).dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Apply": function() {
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        } );
     });
+
+    let filterDialog = function () {
+        ("#dialog").dialog({
+            buttons : {
+                "Confirm" : function() {
+                    $(this).dialog("close");
+                },
+                "Cancel" : function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#dialog").dialog("open");
+    }
 
     let onCurrent = function () {
         let currentD = $("#currentdatepicker").val();
@@ -477,6 +520,8 @@ requirejs([
 
     let updateCurr = function (currentD) {
 
+        newPK(currentD, categoryS, "init");
+
         numC = 0;
         numD = 0;
         numR = 0;
@@ -518,7 +563,7 @@ requirejs([
     }
 
     let updateHIS = function (v1, v2) {
-                let sortLayers = [];
+         let sortLayers = [];
                 newGlobe.layers.forEach(function (elem, index) {
                     if (elem instanceof WorldWind.RenderableLayer) {
                         elem.renderables.forEach(function (d) {
