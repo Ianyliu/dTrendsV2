@@ -70,6 +70,15 @@ requirejs([
         nextL.prop('disabled', true);
         previousL.prop('disabled', true);
 
+        flatpickr(".date", {
+            defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
+            minDate: dataAll.arrDate[0].Date,
+            maxDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
+            inline: false,
+            dateFormat: "Y-m-d",
+            time_24hr: true
+        });
+
         $("#popover").popover({html: true, placement: "top", trigger: "hover"});
 
         //if the opened layer was clicked, the layer shows
@@ -181,38 +190,6 @@ requirejs([
             console.log(this);
         })
 
-        // $('.dropdown-toggle').click(function (e) {
-        //     // let k = 0;
-        //     //
-        //     // for (k = 0; k < 4; k++) {
-        //     //     if ($('.dropdown-menu').get(k).id === "projectionD") {
-        //     //         break;
-        //     //     } else if ($('.dropdown-menu').get(k).id === "continentD") {
-        //     //         break;
-        //     //     } else if ($('.dropdown-menu').get(k).id === "categoryD") {
-        //     //         break;
-        //     //     } else if ($('.dropdown-menu').get(k).id === "diseaseD") {
-        //     //         break;
-        //     //     }
-        //     // }
-        //     // console.log(k);
-        //     // console.log($('.dropdown-menu').get(k).id);
-        //     let dropdown = $(e.target).find('.dropdown-menu');
-        //     console.log($('.dropdown-menu'))
-        //     console.log(dropdown);
-        //     dropDownFixedPosition($('button'), $('.dropdown-menu'));
-        // })
-
-        // $(".dropdown-toggle").on('click', function(e) {
-        //     let dropdown = $(e.target).find('.dropdown-menu');
-        //     console.log(dropdown);
-        //
-        //     dropdown.appendTo('body');
-        //     $(this).on('hidden.bs.dropdown', function () {
-        //         dropdown.appendTo(e.target);
-        //     })
-        // });
-
         $(function() {
             //add BT DD show event
             $(".dropdown").on("show.bs.dropdown", function() {
@@ -278,6 +255,22 @@ requirejs([
             $("#dialog").dialog("open");
         });
 
+        $('#fullLoad').click(function () {
+            if ($('input#fullLoad').is(':checked')) {
+                $('.filterFrom').val(dataAll.arrDate[0].Date);
+                $('.filterTo').val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+                $('.filterFrom, .filterTo').css('background-color', 'lightgray');
+                $('.filterFrom, .filterTo').prop('disabled', true);
+                $('#filterContinents').val('all_continents');
+                $('#filterContinents').prop('disabled', true);
+            } else {
+                $('.filterFrom, .filterTo').css('background-color', 'white');
+                $('.filterFrom, .filterTo').prop('disabled', false);
+                $('#filterContinents').prop('disabled', false);
+            }
+        })
+
+
         $( function() {
             $( "#hInfectionSlider" ).slider({
                 // animate: 3000,
@@ -333,7 +326,7 @@ requirejs([
             $( "#dialog" ).dialog({
                 resizable: false,
                 height: "auto",
-                width: 400,
+                width: 450,
                 autoOpen: false,
                 modal: true,
                 buttons: {
@@ -520,7 +513,6 @@ requirejs([
 
     let updateCurr = function (currentD) {
 
-        newPK(currentD, categoryS, "init");
 
         numC = 0;
         numD = 0;

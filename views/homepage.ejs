@@ -247,14 +247,14 @@
         </div>
 
         <div id="dialog" title="Filter Options">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could take over a minute.</p>
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could take a long time.</p>
 
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-2 push-md-10">
                         <h5>From:</h5></div>
                     <div class="col-md-10 pull-md-2">
-                        <input class="date form-control fromdatepicker" style="color:#000000; position: relative;
+                        <input class="date form-control filterFrom fromdatepicker" style="color:#000000; background: white; position: relative;
                      display: block">
                     </div>
                 </div>
@@ -264,11 +264,30 @@
                     <div class="col-md-2 push-md-10">
                         <h5>To:</h5></div>
                     <div class="col-md-10 pull-md-2">
-                        <input class="date form-control todatepicker" style="color:#000000; position: relative;
+                        <input class="date form-control filterTo todatepicker" style="color:#000000; background: white; position: relative;
                     display: block">
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2 push-md-10">
+                        <h5>Continents:</h5></div>
+                    <div class="col-md-10 pull-md-2">
+                        <select class="form-control" name="continents" id="filterContinents">
+                            <option selected="selected" value="all_continents">All Continents</option>
+                            <option value="North America">North America</option>
+                            <option value="Europe">Europe</option>
+                            <option value="South America">South America</option>
+                            <option value="Asia">Asia</option>
+                            <option value="Africa">Africa</option>
+                            <option value="Oceania">Oceania</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <input type="checkbox" id="fullLoad" style="display: inline-block"><p style="display: inline-block; margin-left: 10px"><strong>Full Load (all days will be loaded)</strong></p>
         </div>
     </div>
 
@@ -608,10 +627,11 @@
 </div>
 <script>
     $(document).ready(function() {
-        flatpickr(".date", {
-            dateFormat: "Y-m-d",
-            time_24hr: true
-        });
+        // flatpickr(".date", {
+        //     defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
+        //     dateFormat: "Y-m-d",
+        //     time_24hr: true
+        // });
     //     alert('Welcome to CitySmart V2! Our application works best on the most recent version of Chrome. If you are experiencing any problems, try switching a browser.');
     //     alert('Please wait for our application to finish loading before attempting to login.');
     });
