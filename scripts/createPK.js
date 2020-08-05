@@ -4,12 +4,14 @@ define([
 ], function (newGlobe, pkObject){
     "use strict";
 
-    function createPK(date, country, type, flag) {
-        console.log(date, country, type, flag);
+
+    let pLayer;
+    function createPK(date, type, flag) {
+        console.log(date, type, flag);
         if (flag !== "init") {
             // initiated by Home.js
             // delete all other unnecessary placemarks
-            deletePK(date, country);
+            deletePK(date);
         }
 
         // define color for active case
@@ -17,15 +19,21 @@ define([
 
         // request the data for placemarks with given date and country
         $.ajax({
-            url: '/9dData',
+            url: '/1dData',
             type: 'GET',
-            data: {date: date, country: country},
+            data: {date: date},
             dataType: 'json',
             async: false,
             success: function (resp) {
                 if (!resp.error) {
                     resp.data.forEach(function (el, i) {
+                        pLayer = new WorldWind.RenderableLayer(el.CountryName);
+                        pLayer.enabled = true;
+                        pLayer.layerType = 'H_PKLayer';
+                        pLayer.continent = el.ContinentName;
+
                         //create placemarks
+                        console.log(newGlobe.layers);
                         let cConfirmed = el.Color_Confirmed.split(' ');
                         let cDeath = el.Color_Death.split(' ');
                         let cRecovered = el.Color_Recovered.split(' ');
@@ -53,12 +61,18 @@ define([
                         activePK.pk.userProperties.dName = el.DisplayName;
 
                         // disable all the placemarks except requested date
-                        confirmedPK.pk.enabled = false;
+                        confirmedPK.pk.enabled = true;
                         deathPK.pk.enabled = false;
                         recoveredPK.pk.enabled = false;
                         activePK.pk.enabled = false;
 
-                        if (el.Date == d) {
+                        pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);
+
+                        // add current placemark layer onto worldwind layer obj
+                        newGlobe.addLayer(pLayer);
+                        newGlobe.redraw();
+
+                        /*if (el.Date == d) {
                             switch (type) {
                                 case "Confirmed":
                                     confirmedPK.pk.enabled = true;
@@ -69,18 +83,18 @@ define([
                                 case "Active":
                                     activePK.pk.enabled = true;
                             }
-                        }
+                        }*/
 
                         // find the placemark layer in newGlobe.layers, otherwise create a new renderable layer
-                        let pLayer = newGlobe.layers.find(({displayName}) => displayName === el.CountryName);
+                        //let pLayer = newGlobe.layers.find(({displayName}) => displayName === el.CountryName);
 
                         //add placemarks onto placemark layer
-                        if (!pLayer) {
+                        /*if (!pLayer) {
                             console.log("Country layer can not find!");
                         } else {
                             pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);
                             // newGlobe.redraw();
-                        }
+                        }*/
                     })
                 }
             }
@@ -133,5 +147,5 @@ define([
         }
     }
 
-    return createPK();
+    return createPK;
 });

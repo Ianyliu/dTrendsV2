@@ -1,15 +1,16 @@
 requirejs.config({
-    waitSeconds: 2,
+    waitSeconds: 0,
     baseUrl: "scripts"
 });
 
 requirejs([
-    'newGlobe'
+    'globeObject'
     , 'dataAll'
     , 'LayerManager'
     , '3rdPartyLibs/Chart-2.9.3.min.js'
+    , 'createPK'
     , 'initPL'
-], function (newGlobe, dataAll, LayerManager, Chart) {
+], function (newGlobe, dataAll, LayerManager, Chart, newPK) {
     "use strict";
 
     // dataAll.arrCountry.forEach(function (ele, index) {
@@ -48,10 +49,15 @@ requirejs([
     const currentSelectedLayer = $("#currentSelectedLayer");
 
     let categoryS = "Confirmed Cases";
-    let fromDate = $('#fromdatepicker');
-    let toDate = $('#todatepicker');
+    let fromDate = $('.fromdatepicker');
+    let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
     let i = 0;
+
+    let numC = 0;
+    let numD = 0;
+    let numR = 0;
+    let numA = 0;
 
     //All the event listeners
     $(document).ready(function () {
@@ -63,6 +69,15 @@ requirejs([
         currentSelectedLayer.prop('value', 'No Layer Selected');
         nextL.prop('disabled', true);
         previousL.prop('disabled', true);
+
+        flatpickr(".date", {
+            defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
+            minDate: dataAll.arrDate[0].Date,
+            maxDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
+            inline: false,
+            dateFormat: "Y-m-d",
+            time_24hr: true
+        });
 
         $("#popover").popover({html: true, placement: "top", trigger: "hover"});
 
@@ -78,6 +93,19 @@ requirejs([
         $('#clear').click(function () {
             closeAllToggle();
         });
+
+        $('#navControls').click(function () {
+            if (newGlobe.layers[2].enabled === true && newGlobe.layers[4].enabled === true) {
+                $('#navControls').css("background-color","transparent");
+                newGlobe.layers[2].enabled = false;
+                newGlobe.layers[4].enabled = false;
+            } else if (newGlobe.layers[2].enabled === false && newGlobe.layers[4].enabled === false) {
+                $('#navControls').css("background-color","#0db9f0");
+                newGlobe.layers[2].enabled = true;
+                newGlobe.layers[4].enabled = true;
+            }
+
+        })
 
         $("#diseaseDropdown").find(" li").on("click", function (e) {
             onDiseaseClick(e);
@@ -123,7 +151,75 @@ requirejs([
 
         fromDate.val(dataAll.arrDate[0].Date);
         toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        curDate.val(toDate.val());
+        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+
+        newGlobe.layers.forEach(function (elem, index) {
+            if (elem instanceof WorldWind.RenderableLayer) {
+                elem.renderables.forEach(function (d) {
+                    if (d instanceof WorldWind.Placemark) {
+                        if (d.userProperties.Date == curDate.val()) {
+                            if (d.userProperties.Type == "Confirmed Cases") {
+                                numC += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Deaths") {
+                                numD += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Recoveries") {
+                                numR += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Active Cases") {
+                                numA += d.userProperties.Number;
+                            }
+                        }
+                    }
+                });
+            }
+            if (index == newGlobe.layers.length - 1) {
+                newGlobe.redraw()
+            }
+        });
+
+        $('#conConfirmed').text(numC);
+        $('#conDeaths').text(numD);
+        $('#conRecoveries').text(numR);
+        $('#conActive').text(numA);
+
+        // console.log(curDate.val());
+
+        $('.dropdown-submenu a.test').on("click", function(e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+            console.log(this);
+        })
+
+        $(function() {
+            //add BT DD show event
+            $(".dropdown").on("show.bs.dropdown", function() {
+                let $btnDropDown = $(this).find(".dropdown-toggle");
+                let $listHolder = $(this).find(".dropdown-menu");
+                let subMenu = $(this).find(".dropdown-submenu");
+                let subMenu2 = subMenu.find(".dropdown-menu");
+                //reset position property for DD container
+                $(this).css("position", "static");
+                $listHolder.css({
+                    "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
+                    "left": $btnDropDown.offset().left + "px"
+                });
+                subMenu2.css({
+                    "left": $listHolder.outerWidth(true) + "px"
+                });
+
+                $listHolder.data("open", true);
+            });
+            //add BT DD hide event
+            $(".dropdown").on("hidden.bs.dropdown", function() {
+                var $listHolder = $(this).find(".dropdown-menu");
+                $listHolder.data("open", false);
+            });
+        });
+
+        let setOpacity = function (value) {
+            newGlobe.Opacity = value;
+            newGlobe.surfaceOpacity = newGlobe.Opacity;
+        };
 
         //get current date value of current step
         //turn on all the placemarks with the date of current step
@@ -136,17 +232,198 @@ requirejs([
                 min: new Date(fromDate.val()).getTime()/1000,
                 max: new Date(toDate.val()).getTime()/1000,
                 step: 86400,
-                value: new Date(fromDate.val()).getTime()/1000,
+                value: new Date(toDate.val()).getTime()/1000,
                 slide: function( event, ui ) {
                     // console.log("slider");
                     $( "#amount" ).val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
 
                     // console.log($.format.date(ui.value*1000,"yyyy-MM-dd" ));
                     updateCurr($( "#amount" ).val());
+                    updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1));
                 }
             });
             //display current date range
             curDate.val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
+            $('#amount').val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
+        } );
+
+        $( function() {
+            $( "#doubleSlider-range" ).slider({
+                // animate: 3000,
+                // range: true,
+                min: new Date(fromDate.val()).getTime()/1000,
+                max: new Date(toDate.val()).getTime()/1000,
+                step: 86400,
+                values: [new Date(fromDate.val()).getTime()/1000, new Date(toDate.val()).getTime()/1000],
+                slide: function( event, ui ) {
+                    // console.log("slider");
+                    $( "#amount2" ).val( $.format.date(ui.values[0]*1000,"yyyy-MM-dd" ) + " to " + $.format.date(ui.values[1]*1000,"yyyy-MM-dd" ));
+
+                    $('#slider-range').slider("option", "min", $( "#doubleSlider-range" ).slider( "values", 0));
+                    $('#slider-range').slider("option", "max", $( "#doubleSlider-range" ).slider( "values", 1));
+                    $('#slider-range').slider("option", "value", $( "#doubleSlider-range" ).slider( "values", 1));
+                    $('#amount').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+
+                    $('.filterFrom').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd"));
+                    $('.filterTo').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+                }
+            });
+            //display current date range
+            $('#amount2').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd") + " to " + $.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+        } );
+
+        $("#slider-range").one("click", function () {
+            console.log("one");
+            $("#filter").click();
+        })
+
+        $('#filter').click(function () {
+            $("#dialog").dialog("open");
+        });
+        $('#edit').click(function () {
+            if ($('#edit').hasClass('edit-mode')) {
+                $("#dialogDateRange").dialog("open");
+                $('#edit').removeClass('edit-mode');
+                $('#edit').css('background-color','transparent');
+                $('#labelRangeSlider').css('display','none');
+                $('#labelSlider').css('display','inline-block');
+                $('#doubleSlider-range').css('display','none');
+                $('#amount2').css('display','none');
+                $('#slider-range').css('display','block');
+                $('#amount').css('display','inline-block');
+            } else {
+                $('#edit').addClass('edit-mode');
+                $('#edit').css('background-color','#55d2d5');
+                $('#labelRangeSlider').css('display','inline-block');
+                $('#labelSlider').css('display','none');
+                $('#doubleSlider-range').css('display','block');
+                $('#amount2').css('display','inline-block');
+                $('#slider-range').css('display','none');
+                $('#amount').css('display','none');
+            }
+        })
+        $( function () {
+            $( "#dialog" ).dialog({
+                resizable: false,
+                height: "auto",
+                width: 450,
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Apply": function() {
+                        $('#drFrom').val($("#foFrom").val());
+                        $('#drTo').val($("#foTo").val());
+
+                        $('#slider-range').slider("values", 0) === new Date($('#foFrom').val()).getTime()/1000;
+                        $('#slider-range').slider("values", 1) === new Date($('#foTo').val()).getTime()/1000;
+                        $( "#amount2" ).val( $('#foFrom' ).val() + " to " + $('#foTo').val());
+
+                        $('#slider-range').slider("option", "min", new Date($('#foFrom').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime()/1000);
+                        $('#amount').val($('#foTo').val());
+
+                        $('#edit').removeClass('edit-mode');
+                        $('#edit').css('background-color','transparent');
+                        $('#labelRangeSlider').css('display','none');
+                        $('#labelSlider').css('display','inline-block');
+                        $('#doubleSlider-range').css('display','none');
+                        $('#amount2').css('display','none');
+                        $('#slider-range').css('display','block');
+                        $('#amount').css('display','inline-block');
+
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        } );
+
+        $( function () {
+            $( "#dialogDateRange" ).dialog({
+                resizable: false,
+                height: "auto",
+                width: 450,
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Confirm": function() {
+                        $('#foFrom').val($("#drFrom").val());
+                        $('#foTo').val($("#drTo").val());
+
+                        $('#slider-range').slider("values", 0) === new Date($('#drFrom').val()).getTime()/1000;
+                        $('#slider-range').slider("values", 1) === new Date($('#drTo').val()).getTime()/1000;
+                        $( "#amount2" ).val( $('#drFrom' ).val() + " to " + $('#drTo').val());
+
+                        $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime()/1000);
+                        $('#amount').val($('#drTo').val());
+
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $('#edit').addClass('edit-mode');
+                        $('#edit').css('background-color','#55d2d5');
+                        $('#labelRangeSlider').css('display','inline-block');
+                        $('#labelSlider').css('display','none');
+                        $('#doubleSlider-range').css('display','block');
+                        $('#amount2').css('display','inline-block');
+                        $('#slider-range').css('display','none');
+                        $('#amount').css('display','none');
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        } );
+
+        $('#fullLoad').click(function () {
+            if ($('input#fullLoad').is(':checked')) {
+                $('.filterFrom').val(dataAll.arrDate[0].Date);
+                $('.filterTo').val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+                $('.filterFrom, .filterTo').css('background-color', 'lightgray');
+                $('.filterFrom, .filterTo').prop('disabled', true);
+                $('#filterContinents').val('all_continents');
+                $('#filterContinents').prop('disabled', true);
+            } else {
+                $('.filterFrom, .filterTo').css('background-color', 'white');
+                $('.filterFrom, .filterTo').prop('disabled', false);
+                $('#filterContinents').prop('disabled', false);
+            }
+        })
+
+        $( function() {
+            $( "#hInfectionSlider" ).slider({
+                // animate: 3000,
+                // range: true,
+                min: 5,
+                max: 300,
+                values: [5,300],
+                slide: function( event, ui ) {
+                    // console.log("slider");
+                    $( "#hInfectionsValue" ).text( ui.values[0] + " to " + ui.values[1] + " Locations");
+
+                    updateHIS(ui.values[0], ui.values[1]);
+                }
+            });
+            $( "#hInfectionsValue" ).text($("#hInfectionSlider").slider("values", 0) + " to " + $("#hInfectionsSlider").slider("values", 1) + " Locations");
+        } );
+
+        $( function() {
+            $( "#opacitySlider" ).slider({
+                value: 100,
+                animate: true,
+                slide: function( event, ui ) {
+                    // console.log("slider");
+                    $( "#opacitySliderValue" ).text(ui.value + "% opacity");
+                },
+                stop: function(event, ui) {
+                    setOpacity(ui.value / 100);
+                }
+            });
+
         } );
 
         // $("#slider-range").change(function () {
@@ -159,7 +436,7 @@ requirejs([
             onCurrent();
         });
 
-        fromDate.change(function () {
+        $('.fromdatepicker').change(function () {
             onFrom();
         });
 
@@ -167,10 +444,17 @@ requirejs([
         // newGlobe.addEventListener("mousemove", handleMouseMove);
 
         newGlobe.addEventListener("click", handleMouseCLK);
+
+
     });
 
     let onCurrent = function () {
         let currentD = $("#currentdatepicker").val();
+
+        numC = 0;
+        numD = 0;
+        numR = 0;
+        numA = 0;
 
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer) {
@@ -182,6 +466,15 @@ requirejs([
                             } else {
                                 d.enabled = false;
                             }
+                            if (d.userProperties.Type == "Confirmed Cases") {
+                                numC += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Deaths") {
+                                numD += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Recoveries") {
+                                numR += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Active Cases") {
+                                numA += d.userProperties.Number;
+                            }
                         } else {
                             d.enabled = false;
                         }
@@ -190,11 +483,16 @@ requirejs([
             }
             newGlobe.redraw()
         });
+
+        $('#conConfirmed').text(numC);
+        $('#conDeaths').text(numD);
+        $('#conRecoveries').text(numR);
+        $('#conActive').text(numA);
     };
 
     let onFrom = function () {
-        for(let j = 0; j > dataAll.arrPL[dataAll.arrPL.length -1].Date; j++) {
-            if (dataAll.arrPL[j].Date === fromDate.val()) {
+        for(let j = 0; j < dataAll.arrDate.length -1; j++) {
+            if (dataAll.arrDate[j].Date === fromDate.val()) {
                 i = j;
             }
         }
@@ -210,12 +508,16 @@ requirejs([
         //reset the button background color according to selection
         if (categoryS === "Confirmed Cases") {
             $("#categoryList").find("button").css("background-color", "red");
+            $("#titleCategory").text("Highest Infections (lowest to highest)");
         } else if (categoryS === "Deaths") {
             $("#categoryList").find("button").css("background-color", "black");
+            $("#titleCategory").text("Highest Deaths (lowest to highest)");
         } else if (categoryS === "Recoveries") {
             $("#categoryList").find("button").css("background-color", "#7cfc00");
+            $("#titleCategory").text("Highest Recoveries (lowest to highest)");
         } else if (categoryS === "Active Cases") {
             $("#categoryList").find("button").css("background-color", "#F9910A");
+            $("#titleCategory").text("Highest Active Cases (lowest to highest)");
         }
 
         //turn off all the placemarks, and then turn on selected placemarks
@@ -295,17 +597,20 @@ requirejs([
 
         if (projectionName === "COVID-19") {
             covid19();
-        } else if (projectionName === "Influenza A") {
+        } else {
             influenzaA();
-        } else if (projectionName === "Influenza B") {
-            influenzaB();
         }
         // newGlobe.redraw();
     };
 
     let updateCurr = function (currentD) {
-        // console.log(currentD);
-        // curDate.val(currentD);
+        
+        numC = 0;
+        numD = 0;
+        numR = 0;
+        numA = 0;
+
+        curDate.val($( "#amount" ).val());
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
                 elem.renderables.forEach(function (d) {
@@ -316,6 +621,15 @@ requirejs([
                             } else {
                                 d.enabled = false;
                             }
+                            if (d.userProperties.Type == "Confirmed Cases") {
+                                numC += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Deaths") {
+                                numD += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Recoveries") {
+                                numR += d.userProperties.Number;
+                            } else if (d.userProperties.Type == "Active Cases") {
+                                numA += d.userProperties.Number;
+                            }
                         } else {
                             d.enabled = false;
                         }
@@ -324,10 +638,55 @@ requirejs([
             }
             newGlobe.redraw()
         });
+
+        $('#conConfirmed').text(numC);
+        $('#conDeaths').text(numD);
+        $('#conRecoveries').text(numR);
+        $('#conActive').text(numA);
+    }
+
+    let updateHIS = function (v1, v2) {
+         let sortLayers = [];
+                newGlobe.layers.forEach(function (elem, index) {
+                    if (elem instanceof WorldWind.RenderableLayer) {
+                        elem.renderables.forEach(function (d) {
+                            if (d instanceof WorldWind.Placemark) {
+                                if (d.userProperties.Date == curDate.val()) {
+                                    if (d.userProperties.Type === categoryS) {
+                                        sortLayers.push(d);
+                                        d.enabled = true;
+                                    } else {
+                                        d.enabled = false;
+                                    }
+                                } else {
+                                    d.enabled = false;
+                                }
+                            }
+                        })
+                    }
+            newGlobe.redraw()
+        });
+        sortLayers.sort(function(a, b) {
+            if (a.userProperties.Number === b.userProperties.Number) {
+                return 0;
+            }
+            if (a.userProperties.Number > b.userProperties.Number) {
+                return 1;
+            } else {
+                return -1;
+            }
+        })
+
+        for (let k = 0; k < sortLayers.length; k++) {
+            if (k >= v1 && k <= v2) {
+                sortLayers[k].enabled = true;
+            } else {
+                sortLayers[k].enabled = false;
+            }
+        }
     }
 
     let timelapse = function () {
-        console.log(" i:" + i);
         l = setInterval(function () {
             if (!play) {
                 // console.log("start");
@@ -488,7 +847,7 @@ requirejs([
         popupBodyItem.children().remove();
 
         let popupBodyName = $('<p class="site-name"><h4>' + PM.userProperties.dName + '</h4></p>');
-        let popupBodyDesc = $('<p class="site-description">' + "Stacked Chart of Statistics" + '</p><br>');
+        let popupBodyDesc = $('<p class="site-description">' + "Total Cases = Active + Deceased + Recoveries" + '</p><br>');
         let br = $('<br><br>');
 
         //add buttons here
@@ -633,50 +992,52 @@ requirejs([
             async: false,
             success: function (resp) {
                 if (!resp.error) {
-                    let cArr = [];
+                    //let cArr = [];
                     let dArr = [];
                     let rArr = [];
                     let aArr = [];
-                    let colorA = [];
+                    //let colorA = [];
 
                     // console.log(resp.data.length);
                     for (i = 0; i < resp.data.length -1; i++) {
-                        cArr.push(resp.data[i].CaseNum);
+                        //cArr.push(resp.data[i].CaseNum);
                         dArr.push(resp.data[i].DeathNum);
                         rArr.push(resp.data[i].RecovNum);
                         aArr.push(resp.data[i].CaseNum - resp.data[i].DeathNum - resp.data[i].RecovNum);
-                        if (i !== 0 && aArr[i-1] < aArr[i]) {
+                        /*if (i !== 0 && aArr[i-1] < aArr[i]) {
                             colorA.push("#9a0000");
                         } else if (i !== 0 && aArr[i-1] > aArr[i]) {
                             colorA.push("#1ee31e");
                         } else {
                             colorA.push("#2e5468");
-                        }
+                        }*/
                     }
 
                     let myChart = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: lArr,
-                            datasets: [{
+                            datasets: [
+                             /*{
                                 label: 'Confirmed Cases',
                                 backgroundColor: "#caf270",
                                 data: cArr,
                             }, {
-                                label: 'Deaths',
-                                backgroundColor: "#45c490",
+                                label: 'Increase in Active Cases',
+                                backgroundColor: "#9a0000"
+                            }*/
+                            {
+                                label: 'Active Cases',
+                                backgroundColor: "#45c498",
+                                data: aArr,
+                            }, {
+                                label: 'Deceased',
+                                backgroundColor: "#ead04b",
                                 data: dArr,
                             }, {
                                 label: 'Recoveries',
-                                backgroundColor: "#008d93",
+                                backgroundColor: "#035992",
                                 data: rArr,
-                            }, {
-                                label: 'Active Cases',
-                                backgroundColor: colorA,
-                                data: aArr,
-                            }, {
-                                label: 'Increase in Active Cases',
-                                backgroundColor: "#9a0000"
                             }],
                         },
                         options: {

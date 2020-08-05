@@ -33,15 +33,16 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/9dData', function (req, res) {
+    app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        let nineDaysQ = "select * from dtrends.layers where CountryName = ? and Date < ? order by Date";
-        con_DT.query(nineDaysQ, req.query.country, req.query.date, function (err, results) {
+        let oneDaysQ = "select * from dtrends.layers where Date = ? order by CountryName;";
+        con_DT.query(oneDaysQ, req.query.date, function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});
             } else {
+                //console.log(results);
                 res.json({"error": false, "data": results});
             }
         });
