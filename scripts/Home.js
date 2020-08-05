@@ -244,6 +244,32 @@ requirejs([
             });
             //display current date range
             curDate.val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
+            $('#amount').val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
+        } );
+
+        $( function() {
+            $( "#doubleSlider-range" ).slider({
+                // animate: 3000,
+                // range: true,
+                min: new Date(fromDate.val()).getTime()/1000,
+                max: new Date(toDate.val()).getTime()/1000,
+                step: 86400,
+                values: [new Date(fromDate.val()).getTime()/1000, new Date(toDate.val()).getTime()/1000],
+                slide: function( event, ui ) {
+                    // console.log("slider");
+                    $( "#amount2" ).val( $.format.date(ui.values[0]*1000,"yyyy-MM-dd" ) + " to " + $.format.date(ui.values[1]*1000,"yyyy-MM-dd" ));
+
+                    $('#slider-range').slider("option", "min", $( "#doubleSlider-range" ).slider( "values", 0));
+                    $('#slider-range').slider("option", "max", $( "#doubleSlider-range" ).slider( "values", 1));
+                    $('#slider-range').slider("option", "value", $( "#doubleSlider-range" ).slider( "values", 1));
+                    $('#amount').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+
+                    $('.filterFrom').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd"));
+                    $('.filterTo').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+                }
+            });
+            //display current date range
+            $('#amount2').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd") + " to " + $.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
         } );
 
         $("#slider-range").one("click", function () {
@@ -254,6 +280,104 @@ requirejs([
         $('#filter').click(function () {
             $("#dialog").dialog("open");
         });
+        $('#edit').click(function () {
+            if ($('#edit').hasClass('edit-mode')) {
+                $("#dialogDateRange").dialog("open");
+                $('#edit').removeClass('edit-mode');
+                $('#edit').css('background-color','transparent');
+                $('#labelRangeSlider').css('display','none');
+                $('#labelSlider').css('display','inline-block');
+                $('#doubleSlider-range').css('display','none');
+                $('#amount2').css('display','none');
+                $('#slider-range').css('display','block');
+                $('#amount').css('display','inline-block');
+            } else {
+                $('#edit').addClass('edit-mode');
+                $('#edit').css('background-color','#55d2d5');
+                $('#labelRangeSlider').css('display','inline-block');
+                $('#labelSlider').css('display','none');
+                $('#doubleSlider-range').css('display','block');
+                $('#amount2').css('display','inline-block');
+                $('#slider-range').css('display','none');
+                $('#amount').css('display','none');
+            }
+        })
+        $( function () {
+            $( "#dialog" ).dialog({
+                resizable: false,
+                height: "auto",
+                width: 450,
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Apply": function() {
+                        $('#drFrom').val($("#foFrom").val());
+                        $('#drTo').val($("#foTo").val());
+
+                        $('#slider-range').slider("values", 0) === new Date($('#foFrom').val()).getTime()/1000;
+                        $('#slider-range').slider("values", 1) === new Date($('#foTo').val()).getTime()/1000;
+                        $( "#amount2" ).val( $('#foFrom' ).val() + " to " + $('#foTo').val());
+
+                        $('#slider-range').slider("option", "min", new Date($('#foFrom').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime()/1000);
+                        $('#amount').val($('#foTo').val());
+
+                        $('#edit').removeClass('edit-mode');
+                        $('#edit').css('background-color','transparent');
+                        $('#labelRangeSlider').css('display','none');
+                        $('#labelSlider').css('display','inline-block');
+                        $('#doubleSlider-range').css('display','none');
+                        $('#amount2').css('display','none');
+                        $('#slider-range').css('display','block');
+                        $('#amount').css('display','inline-block');
+
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        } );
+
+        $( function () {
+            $( "#dialogDateRange" ).dialog({
+                resizable: false,
+                height: "auto",
+                width: 450,
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Confirm": function() {
+                        $('#foFrom').val($("#drFrom").val());
+                        $('#foTo').val($("#drTo").val());
+
+                        $('#slider-range').slider("values", 0) === new Date($('#drFrom').val()).getTime()/1000;
+                        $('#slider-range').slider("values", 1) === new Date($('#drTo').val()).getTime()/1000;
+                        $( "#amount2" ).val( $('#drFrom' ).val() + " to " + $('#drTo').val());
+
+                        $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime()/1000);
+                        $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime()/1000);
+                        $('#amount').val($('#drTo').val());
+
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $('#edit').addClass('edit-mode');
+                        $('#edit').css('background-color','#55d2d5');
+                        $('#labelRangeSlider').css('display','inline-block');
+                        $('#labelSlider').css('display','none');
+                        $('#doubleSlider-range').css('display','block');
+                        $('#amount2').css('display','inline-block');
+                        $('#slider-range').css('display','none');
+                        $('#amount').css('display','none');
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        } );
 
         $('#fullLoad').click(function () {
             if ($('input#fullLoad').is(':checked')) {
@@ -269,7 +393,6 @@ requirejs([
                 $('#filterContinents').prop('disabled', false);
             }
         })
-
 
         $( function() {
             $( "#hInfectionSlider" ).slider({
@@ -322,39 +445,8 @@ requirejs([
 
         newGlobe.addEventListener("click", handleMouseCLK);
 
-        $( function () {
-            $( "#dialog" ).dialog({
-                resizable: false,
-                height: "auto",
-                width: 450,
-                autoOpen: false,
-                modal: true,
-                buttons: {
-                    "Apply": function() {
-                        $( this ).dialog( "close" );
-                    },
-                    Cancel: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            });
-        } );
+
     });
-
-    let filterDialog = function () {
-        ("#dialog").dialog({
-            buttons : {
-                "Confirm" : function() {
-                    $(this).dialog("close");
-                },
-                "Cancel" : function() {
-                    $(this).dialog("close");
-                }
-            }
-        });
-
-        $("#dialog").dialog("open");
-    }
 
     let onCurrent = function () {
         let currentD = $("#currentdatepicker").val();
@@ -512,8 +604,7 @@ requirejs([
     };
 
     let updateCurr = function (currentD) {
-
-
+        
         numC = 0;
         numD = 0;
         numR = 0;

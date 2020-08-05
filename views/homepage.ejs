@@ -27,6 +27,12 @@
 <!--    <script src="https://www.google.com/recaptcha/api.js?render=6Ld7fq8UAAAAAOv8ZEiVj6P972pR_Vf3ko5R0JB_"></script>-->
     <script src="//cdn.jsdelivr.net/npm/flatpickr"></script>
 <!--    <script src="3rdPartyLibs/build/WorldWind-built.js"></script>-->
+<!--    <script src="https://code.jquery.com/jquery-2.1.1.js"></script>-->
+<!--    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>-->
+
+    <!-- plus a jQuery UI theme, here I use "flick" -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="3rdPartyLibs/popper-1.14.0.min.js"></script>
     <script src="3rdPartyLibs/bootstrap-3.3.4.min.js"></script>
@@ -221,10 +227,14 @@
         </canvas>
 
         <div style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;">
-            <h4 style="color: white; display: inline-block;">Date Range:</h4>
+            <h4 id="labelSlider" style="color: white; display: inline-block;">Date Slider:</h4>
+            <h4 id="labelRangeSlider" style="color: white; display: none;">Date Range Selector (select slider min/max dates):</h4>
             <input type="text" readonly id="amount"  style="display: inline-block; border: 0px; color: white; background-color: transparent">
+            <input type="text" readonly id="amount2"  style="width: 250px; display: none; border: 0px; color: white; background-color: transparent">
             <span id="filter" class="glyphicon glyphicon-list btn" style="float: right; color: white"></span>
+            <span id="edit" class="glyphicon glyphicon-pencil btn" style="float: right; color: white"></span>
             <div id="slider-range"></div>
+            <div id="doubleSlider-range" style="display: none"></div>
         </div>
 
         <div class="popup-group" id="popupBox">
@@ -246,6 +256,32 @@
             </div>
         </div>
 
+        <div id="dialogDateRange" title="Date Range Confirmation">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Are you sure you would like to select these dates?</p>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2 push-md-10">
+                        <h5>From:</h5></div>
+                    <div class="col-md-10 pull-md-2">
+                        <input id="drFrom" class="date form-control filterFrom fromdatepicker" style="color:#000000; background: white; position: relative;
+                     display: block">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2 push-md-10">
+                        <h5 >To:</h5></div>
+                    <div class="col-md-10 pull-md-2">
+                        <input id="drTo" class="date form-control filterTo todatepicker" style="color:#000000; background: white;
+                    display: block">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div id="dialog" title="Filter Options">
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could take a long time.</p>
 
@@ -254,7 +290,7 @@
                     <div class="col-md-2 push-md-10">
                         <h5>From:</h5></div>
                     <div class="col-md-10 pull-md-2">
-                        <input class="date form-control filterFrom fromdatepicker" style="color:#000000; background: white; position: relative;
+                        <input id="foFrom" class="date form-control filterFrom fromdatepicker" style="color:#000000; background: white; position: relative;
                      display: block">
                     </div>
                 </div>
@@ -264,7 +300,7 @@
                     <div class="col-md-2 push-md-10">
                         <h5>To:</h5></div>
                     <div class="col-md-10 pull-md-2">
-                        <input class="date form-control filterTo todatepicker" style="color:#000000; background: white; position: relative;
+                        <input id="foTo" class="date form-control filterTo todatepicker" style="color:#000000; background: white; position: relative;
                     display: block">
                     </div>
                 </div>
