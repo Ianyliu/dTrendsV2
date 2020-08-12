@@ -13,5 +13,19 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1"
-  }
+  },
+  "name": "dtrendsv2",
+  "version": "1.0.0",
+  "main": "dTrends_mainSvr.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anson-Zhao/dTrendsV2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anson-Zhao/dTrendsV2/issues"
+  },
+  "homepage": "https://github.com/Anson-Zhao/dTrendsV2#readme",
+  "description": ""
 }

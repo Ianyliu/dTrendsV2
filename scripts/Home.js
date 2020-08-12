@@ -10,7 +10,7 @@ requirejs([
     , '3rdPartyLibs/Chart-2.9.3.min.js'
     , 'createPK'
     , 'initPL'
-], function (newGlobe, dataAll, LayerManager, Chart, newPK) {
+], function (newGlobe, dataAll, LayerManager, Chart, createPK) {
     "use strict";
 
     // dataAll.arrCountry.forEach(function (ele, index) {
@@ -61,6 +61,8 @@ requirejs([
 
     //All the event listeners
     $(document).ready(function () {
+
+        createPK([dataAll.arrDate[dataAll.arrDate.length - 1].Date, dataAll.arrDate[dataAll.arrDate.length - 1].Date], "Confirmed", "init");
 
         layerManager.synchronizeLayerList();
         // let dateT = new Date();
@@ -611,6 +613,8 @@ requirejs([
         numA = 0;
 
         curDate.val($( "#amount" ).val());
+        createPK([currentD,currentD], categoryS, "not init")
+
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
                 elem.renderables.forEach(function (d) {
