@@ -36,8 +36,8 @@ module.exports = function (app) {
     app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        let oneDaysQ = "select * from dtrends.layers where Date = ? order by CountryName;";
-        con_DT.query(oneDaysQ, req.query.date, function (err, results) {
+        let oneDaysQ = "select * from dtrends.layers where Date >= ? AND Date <= ? order by CountryName;";
+        con_DT.query(oneDaysQ, [req.query.date[0], req.query.date[1]], function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});

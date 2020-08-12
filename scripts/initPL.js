@@ -8,9 +8,9 @@ requirejs([
     let pLayer;
     let curDate = dataAll.arrDate[dataAll.arrDate.length - 1].Date
 
-    createPK(curDate, "Confirmed", "init");
+    //createPK(curDate, "Confirmed", "init");
 
-    /*dataAll.arrCountry.forEach(function (el, i) {
+    dataAll.arrCountry.forEach(function (el, i) {
         //create placemark layer
         pLayer = new WorldWind.RenderableLayer(el.CountryName);
         pLayer.enabled = true;
@@ -22,6 +22,7 @@ requirejs([
         // newGlobe.redraw();
 
         //create initial placemarks
-        createPK(curDate, el.CountryName, "Confirmed", "init");
-    })*/
+        //createPK(curDate, el.CountryName, "Confirmed", "init");
+    })
+    console.log(newGlobe.layers);
 });
