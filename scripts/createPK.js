@@ -154,7 +154,7 @@ define([
         } else {
             dpLayer.renderables.forEach(function (e,i) {
                 if (e.userProperties.Date !== da[0]) {
-                    dpLayer.removeRenderable(e);
+                    dpLayer.removeAllRenderables(e);
                 }
             })
             newGlobe.redraw();
