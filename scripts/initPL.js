@@ -13,6 +13,7 @@ requirejs([
     dataAll.arrCountry.forEach(function (el, i) {
         //create placemark layer
         pLayer = new WorldWind.RenderableLayer(el.CountryName);
+        pLayer.displayName = el.CountryName;
         pLayer.enabled = true;
         pLayer.layerType = 'H_PKLayer';
         pLayer.continent = el.ContinentName;
@@ -24,5 +25,7 @@ requirejs([
         //create initial placemarks
         //createPK(curDate, el.CountryName, "Confirmed", "init");
     })
+    createPK([dataAll.arrDate[dataAll.arrDate.length - 1].Date, dataAll.arrDate[dataAll.arrDate.length - 1].Date], "Confirmed", "init");
+
     console.log(newGlobe.layers);
 });

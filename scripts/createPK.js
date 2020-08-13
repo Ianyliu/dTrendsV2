@@ -1,6 +1,7 @@
 define([
     './globeObject'
     ,'./pkObject'
+    ,'./initPL'
 ], function (newGlobe, pkObject){
     "use strict";
 
@@ -66,8 +67,6 @@ define([
                         recoveredPK.pk.enabled = false;
                         activePK.pk.enabled = false;
 
-                        let countryN = el.CountryName.replace(/ /g,"_");
-
                         // find the placemark layer in newGlobe.layers, otherwise create a new renderable layer
                         let pLayer = newGlobe.layers.find(({displayName}) => displayName === el.CountryName);
                         console.log(el.CountryName);
@@ -101,6 +100,7 @@ define([
 
                         //add placemarks onto placemark layer
                         if (!pLayer) {
+                            console.log(pLayer);
                             console.log("Country layer can not find!");
                         } else {
                             pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);
@@ -152,11 +152,12 @@ define([
         if (!dpLayer) {
             console.log("No country layer found!");
         } else {
-            dpLayer.renderables.forEach(function (e,i) {
-                if (e.userProperties.Date !== da[0]) {
-                    dpLayer.removeRenderable(e);
-                }
-            })
+            // dpLayer.renderables.forEach(function (e,i) {
+                dpLayer.removeAllRenderables();
+                // if (e.userProperties.Date !== da[0]) {
+                //     dpLayer.removeRenderable(e);
+                // }
+            // })
             newGlobe.redraw();
         }
 
