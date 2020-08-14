@@ -361,6 +361,9 @@ requirejs([
                         $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime()/1000);
                         $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime()/1000);
                         $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime()/1000);
+
+                        createPK([$('#drFrom').val(), $('#drTo').val()], categoryS, "not init", $('#filterContinents').val());
+
                         $('#amount').val($('#drTo').val());
 
                         $( this ).dialog( "close" );

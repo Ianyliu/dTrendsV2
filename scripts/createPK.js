@@ -7,8 +7,8 @@ define([
 
 
     //let pLayer;
-    function createPK(date, type, flag) {
-        console.log(date, type, flag);
+    function createPK(date, type, flag, countries, continents) {
+        console.log(date, type, flag, countries, continents);
 
         // define color for active case
         let colorStr = "rgb(249,145,10) rgb(249,145,10) rgb(249,145,10)";
@@ -17,17 +17,17 @@ define([
         $.ajax({
             url: '/1dData',
             type: 'GET',
-            data: {date: date},
+            data: {date: date, countries: countries, continents: continents},
             dataType: 'json',
             async: false,
             success: function (resp) {
                 if (!resp.error) {
+                    if (flag !== "init") {
+                        // initiated by Home.js
+                        // delete all other unnecessary placemarks
+                        deletePK(date, resp.data.CountryName);
+                    }
                     resp.data.forEach(function (el, i) {
-                        if (flag !== "init") {
-                            // initiated by Home.js
-                            // delete all other unnecessary placemarks
-                            deletePK(date, el.CountryName);
-                        }
                         /*pLayer = new WorldWind.RenderableLayer(el.CountryName);
                         pLayer.enabled = true;
                         pLayer.layerType = 'H_PKLayer';
