@@ -172,7 +172,7 @@ requirejs([
         })
 
         //selecting placemark creates pop-up
-        newGlobe.addEventListener("click", controls.handleMouseCLK());
+        newGlobe.addEventListener("click", controls.handleMouseCLK);
 
 
     });
