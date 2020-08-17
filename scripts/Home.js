@@ -127,7 +127,6 @@ requirejs([
             curDate.val(fromDate.val());
             // closeAllToggle();
             timelapse();
-
         });
 
         $('#pauseTL').click(function () {
