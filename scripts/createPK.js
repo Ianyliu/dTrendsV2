@@ -48,18 +48,22 @@ define([
                         confirmedPK.pk.userProperties.Date = el.Date;
                         confirmedPK.pk.userProperties.Type = "Confirmed Cases";
                         confirmedPK.pk.userProperties.dName = el.DisplayName;
+                        confirmedPK.pk.userProperties.Number = el.CaseNum;
 
                         deathPK.pk.userProperties.Date = el.Date;
                         deathPK.pk.userProperties.Type = "Deaths";
                         deathPK.pk.userProperties.dName = el.DisplayName;
+                        deathPK.pk.userProperties.Number = el.DeathNum;
 
                         recoveredPK.pk.userProperties.Date = el.Date;
                         recoveredPK.pk.userProperties.Type = "Recoveries";
                         recoveredPK.pk.userProperties.dName = el.DisplayName;
+                        recoveredPK.pk.userProperties.Number = el.RecovNum;
 
                         activePK.pk.userProperties.Date = el.Date;
                         activePK.pk.userProperties.Type = "Active Cases";
                         activePK.pk.userProperties.dName = el.DisplayName;
+                        activePK.pk.userProperties.Number = el.CaseNum-el.DeathNum-el.RecovNum;
 
                         // disable all the placemarks except requested date
                         confirmedPK.pk.enabled = true;
