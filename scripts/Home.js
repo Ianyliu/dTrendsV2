@@ -9,8 +9,9 @@ requirejs([
     , 'LayerManager'
     , '3rdPartyLibs/Chart-2.9.3.min.js'
     , 'createPK'
+    , 'controls'
     //, 'initPL'
-], function (newGlobe, dataAll, LayerManager, Chart, createPK) {
+], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls) {
     "use strict";
 
     // dataAll.arrCountry.forEach(function (ele, index) {
@@ -42,35 +43,45 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
-    let l;
-    let play = false;
-    const nextL = $(".next");
-    const previousL = $("#previousL");
-    const currentSelectedLayer = $("#currentSelectedLayer");
-
-    let categoryS = "Confirmed Cases";
+    // let l;
+    // let play = false;
+    //
+    // let categoryS = "Confirmed Cases";
     let fromDate = $('.fromdatepicker');
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
-    let i = 0;
-
-    let numC = 0;
-    let numD = 0;
-    let numR = 0;
-    let numA = 0;
+    // let i = 0;
+    //
+    // let numC = 0;
+    // let numD = 0;
+    // let numR = 0;
+    // let numA = 0;
 
     //All the event listeners
     $(document).ready(function () {
 
-
+        //generates layer menu
         layerManager.synchronizeLayerList();
-        // let dateT = new Date();
 
-        //the beginning value of the button
-        currentSelectedLayer.prop('value', 'No Layer Selected');
-        nextL.prop('disabled', true);
-        previousL.prop('disabled', true);
+        //sets date picker values
+        fromDate.val(dataAll.arrDate[0].Date);
+        toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
 
+        //loads initial case numbers
+        controls.initCaseNum();
+
+        //overlays sub dropdown menus
+        $('.dropdown-submenu a.test').on("click", function(e) {
+            $(this).next('ul').toggle();
+
+            e.stopPropagation();
+            e.preventDefault();
+        })
+
+        controls.subDropdown();
+
+        //sets date picker format; disables all dates without data available
         flatpickr(".date", {
             defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
             minDate: dataAll.arrDate[0].Date,
@@ -82,139 +93,77 @@ requirejs([
 
         $("#popover").popover({html: true, placement: "top", trigger: "hover"});
 
-        //if the opened layer was clicked, the layer shows
+        //resets the globe to original position and placemarks
         $('#globeOrigin').click(function () {
+            controls.enableAllToggle();
             newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
         });
 
+        //enables all placemarks
         $('#refresh').click(function () {
-            enableAllToggle();
+            controls.enableAllToggle();
         });
 
+        //disables all placemarks
         $('#clear').click(function () {
-            closeAllToggle();
+            controls.closeAllToggle();
         });
 
+        //enables and disables the navigation controls
         $('#navControls').click(function () {
-            if (newGlobe.layers[2].enabled === true && newGlobe.layers[4].enabled === true) {
-                $('#navControls').css("background-color","transparent");
-                newGlobe.layers[2].enabled = false;
-                newGlobe.layers[4].enabled = false;
-            } else if (newGlobe.layers[2].enabled === false && newGlobe.layers[4].enabled === false) {
-                $('#navControls').css("background-color","#0db9f0");
-                newGlobe.layers[2].enabled = true;
-                newGlobe.layers[4].enabled = true;
-            }
-
+            controls.onNav();
         })
 
+        //dropdown menu for diseases and influenzas
         $("#diseaseDropdown").find(" li").on("click", function (e) {
-            onDiseaseClick(e);
+            controls.onDiseaseClick(e);
         });
 
+        //dropdown menu for placemark category
         $("#categoryList").find(" li").on("click", function (e) {
-            onCategory(e);
+            controls.onCategory(e);
         });
 
+        //dropdown menu for continent selection
         $("#continentList").find(" li").on("click", function (e) {
-            onContinent(e);
+            controls.onContinent(e);
         });
 
+        //timelapse: start button
         $('#toggleTL').click(function () {
             $('#pauseTL').show();
             $('#toggleTL').hide();
 
             curDate.val(fromDate.val());
-            // closeAllToggle();
-            timelapse();
 
+            controls.timelapse();
         });
 
-        $('#pauseTL').click(function () {
-            $('#pauseTL').hide();
-            $('#playTL').show();
-            pause();
-        });
-
-        $('#playTL').click(function () {
-            $('#pauseTL').show();
-            $('#playTL').hide();
-            pause();
-        });
-
+        //timelapse: stop button
         $('#stopTL').click(function () {
-            clearInterval(l);
+            controls.clearI();
+
             $('#playTL').hide();
             $('#pauseTL').hide();
             $('#toggleTL').show();
+
             curDate.val(fromDate.val());
         });
 
-        fromDate.val(dataAll.arrDate[0].Date);
-        toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        //timelapse: pause button
+        $('#pauseTL').click(function () {
+            $('#pauseTL').hide();
+            $('#playTL').show();
 
-        newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer) {
-                elem.renderables.forEach(function (d) {
-                    if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type == "Confirmed Cases") {
-                                numC += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Deaths") {
-                                numD += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Recoveries") {
-                                numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
-                                numA += d.userProperties.Number;
-                            }
-                        }
-                    }
-                });
-            }
-            if (index == newGlobe.layers.length - 1) {
-                newGlobe.redraw()
-            }
+            controls.pause();
         });
 
-        $('#conConfirmed').text(numC);
-        $('#conDeaths').text(numD);
-        $('#conRecoveries').text(numR);
-        $('#conActive').text(numA);
+        //timelapse: play button
+        $('#playTL').click(function () {
+            $('#pauseTL').show();
+            $('#playTL').hide();
 
-        // console.log(curDate.val());
-
-        $('.dropdown-submenu a.test').on("click", function(e) {
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
-            console.log(this);
-        })
-
-        $(function() {
-            //add BT DD show event
-            $(".dropdown").on("show.bs.dropdown", function() {
-                let $btnDropDown = $(this).find(".dropdown-toggle");
-                let $listHolder = $(this).find(".dropdown-menu");
-                let subMenu = $(this).find(".dropdown-submenu");
-                let subMenu2 = subMenu.find(".dropdown-menu");
-                //reset position property for DD container
-                $(this).css("position", "static");
-                $listHolder.css({
-                    "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
-                    "left": $btnDropDown.offset().left + "px"
-                });
-                subMenu2.css({
-                    "left": $listHolder.outerWidth(true) + "px"
-                });
-
-                $listHolder.data("open", true);
-            });
-            //add BT DD hide event
-            $(".dropdown").on("hidden.bs.dropdown", function() {
-                var $listHolder = $(this).find(".dropdown-menu");
-                $listHolder.data("open", false);
-            });
+            controls.pause();
         });
 
         let setOpacity = function (value) {
@@ -222,166 +171,24 @@ requirejs([
             newGlobe.surfaceOpacity = newGlobe.Opacity;
         };
 
-        //get current date value of current step
-        //turn on all the placemarks with the date of current step
-        //turn off all other placemarks
+        //load slider functionalities
+        controls.sliderRange();
+        controls.doubleSlider();
 
-        $( function() {
-            $( "#slider-range" ).slider({
-                // animate: 3000,
-                // range: true,
-                min: new Date(fromDate.val()).getTime()/1000,
-                max: new Date(toDate.val()).getTime()/1000,
-                step: 86400,
-                value: new Date(toDate.val()).getTime()/1000,
-                slide: function( event, ui ) {
-                    // console.log("slider");
-                    $( "#amount" ).val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
-
-                    // console.log($.format.date(ui.value*1000,"yyyy-MM-dd" ));
-                    updateCurr($( "#amount" ).val());
-                    updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1));
-                }
-            });
-            //display current date range
-            curDate.val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
-            $('#amount').val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
-        } );
-
-        $( function() {
-            $( "#doubleSlider-range" ).slider({
-                // animate: 3000,
-                // range: true,
-                min: new Date(fromDate.val()).getTime()/1000,
-                max: new Date(toDate.val()).getTime()/1000,
-                step: 86400,
-                values: [new Date(fromDate.val()).getTime()/1000, new Date(toDate.val()).getTime()/1000],
-                slide: function( event, ui ) {
-                    // console.log("slider");
-                    $( "#amount2" ).val( $.format.date(ui.values[0]*1000,"yyyy-MM-dd" ) + " to " + $.format.date(ui.values[1]*1000,"yyyy-MM-dd" ));
-
-                    $('#slider-range').slider("option", "min", $( "#doubleSlider-range" ).slider( "values", 0));
-                    $('#slider-range').slider("option", "max", $( "#doubleSlider-range" ).slider( "values", 1));
-                    $('#slider-range').slider("option", "value", $( "#doubleSlider-range" ).slider( "values", 1));
-                    $('#amount').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
-
-                    $('.filterFrom').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd"));
-                    $('.filterTo').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
-                }
-            });
-            //display current date range
-            $('#amount2').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd") + " to " + $.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
-        } );
-
+        //first click on date slider prompts filter option popup
         $("#slider-range").one("click", function () {
-            console.log("one");
             $("#filter").click();
         })
 
+        //far right of date slider overlay; opens dialog when filter is selected
         $('#filter').click(function () {
             $("#dialog").dialog("open");
         });
+
+        //prompts date range adjustments
         $('#edit').click(function () {
-            if ($('#edit').hasClass('edit-mode')) {
-                $("#dialogDateRange").dialog("open");
-                $('#edit').removeClass('edit-mode');
-                $('#edit').css('background-color','transparent');
-                $('#labelRangeSlider').css('display','none');
-                $('#labelSlider').css('display','inline-block');
-                $('#doubleSlider-range').css('display','none');
-                $('#amount2').css('display','none');
-                $('#slider-range').css('display','block');
-                $('#amount').css('display','inline-block');
-            } else {
-                $('#edit').addClass('edit-mode');
-                $('#edit').css('background-color','#55d2d5');
-                $('#labelRangeSlider').css('display','inline-block');
-                $('#labelSlider').css('display','none');
-                $('#doubleSlider-range').css('display','block');
-                $('#amount2').css('display','inline-block');
-                $('#slider-range').css('display','none');
-                $('#amount').css('display','none');
-            }
+            controls.edit();
         })
-        $( function () {
-            $( "#dialog" ).dialog({
-                resizable: false,
-                height: "auto",
-                width: 450,
-                autoOpen: false,
-                modal: true,
-                buttons: {
-                    "Apply": function() {
-                        $('#drFrom').val($("#foFrom").val());
-                        $('#drTo').val($("#foTo").val());
-
-                        $('#slider-range').slider("values", 0) === new Date($('#foFrom').val()).getTime()/1000;
-                        $('#slider-range').slider("values", 1) === new Date($('#foTo').val()).getTime()/1000;
-                        $( "#amount2" ).val( $('#foFrom' ).val() + " to " + $('#foTo').val());
-
-                        $('#slider-range').slider("option", "min", new Date($('#foFrom').val()).getTime()/1000);
-                        $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime()/1000);
-                        $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime()/1000);
-                        $('#amount').val($('#foTo').val());
-
-                        $('#edit').removeClass('edit-mode');
-                        $('#edit').css('background-color','transparent');
-                        $('#labelRangeSlider').css('display','none');
-                        $('#labelSlider').css('display','inline-block');
-                        $('#doubleSlider-range').css('display','none');
-                        $('#amount2').css('display','none');
-                        $('#slider-range').css('display','block');
-                        $('#amount').css('display','inline-block');
-
-                        $( this ).dialog( "close" );
-                    },
-                    Cancel: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            });
-        } );
-
-        $( function () {
-            $( "#dialogDateRange" ).dialog({
-                resizable: false,
-                height: "auto",
-                width: 450,
-                autoOpen: false,
-                modal: true,
-                buttons: {
-                    "Confirm": function() {
-                        $('#foFrom').val($("#drFrom").val());
-                        $('#foTo').val($("#drTo").val());
-
-                        $('#slider-range').slider("values", 0) === new Date($('#drFrom').val()).getTime()/1000;
-                        $('#slider-range').slider("values", 1) === new Date($('#drTo').val()).getTime()/1000;
-                        $( "#amount2" ).val( $('#drFrom' ).val() + " to " + $('#drTo').val());
-
-                        $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime()/1000);
-                        $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime()/1000);
-                        $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime()/1000);
-
-                        createPK([$('#drFrom').val(), $('#drTo').val()], categoryS, "not init", $('#filterContinents').val());
-
-                        $('#amount').val($('#drTo').val());
-
-                        $( this ).dialog( "close" );
-                    },
-                    Cancel: function() {
-                        $('#edit').addClass('edit-mode');
-                        $('#edit').css('background-color','#55d2d5');
-                        $('#labelRangeSlider').css('display','inline-block');
-                        $('#labelSlider').css('display','none');
-                        $('#doubleSlider-range').css('display','block');
-                        $('#amount2').css('display','inline-block');
-                        $('#slider-range').css('display','none');
-                        $('#amount').css('display','none');
-                        $( this ).dialog( "close" );
-                    }
-                }
-            });
-        } );
 
         $('#fullLoad').click(function () {
             if ($('input#fullLoad').is(':checked')) {
@@ -437,7 +244,7 @@ requirejs([
 
         //now when user picks the date, globe will redraw to show the placemarks of that day
         $('#currentdatepicker').change(function () {
-            onCurrent();
+            updateCurr(curDate.val());
         });
 
         $('.fromdatepicker').change(function () {
@@ -614,8 +421,8 @@ requirejs([
         numR = 0;
         numA = 0;
 
-        curDate.val($( "#amount" ).val());
-        createPK([currentD,currentD], categoryS, "not init")
+        curDate.val(currentD);
+        //createPK([currentD,currentD], categoryS, "not init")
 
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
@@ -1076,85 +883,5 @@ requirejs([
                 }
             }
         });
-    }
-
-    function handleMouseMove(o) {
-        if ($("#popover").is(":visible")) {
-            $("#popover").hide();
-        }
-
-        // The input argument is either an Event or a TapRecognizer. Both have the same properties for determining
-        // the mouse or tap location.
-        let x = o.clientX,
-            y = o.clientY;
-
-        // Perform the pick. Must first convert from window coordinates to canvas coordinates, which are
-        // relative to the upper left corner of the canvas rather than the upper left corner of the page.
-
-        let pickList = newGlobe.pick(newGlobe.canvasCoordinates(x, y));
-
-        for (let q = 0; q < pickList.objects.length; q++) {
-            let pickedPL = pickList.objects[q].userObject;
-
-            if (pickedPL instanceof WorldWind.Placemark && !!pickedPL.userProperties.p_name) {
-
-                let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
-                let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-                //
-                let popover = document.getElementById('popover');
-                popover.style.position = "absolute";
-                popover.style.left = (x + xOffset - 3) + 'px';
-                popover.style.top = (y + yOffset - 3) + 'px';
-
-                let content = "<p><strong>Project Name:</strong> " + pickedPL.userProperties.p_name +
-                    "<br>" + "<strong>Year Online:</strong> " + pickedPL.userProperties.p_year +
-                    "<br>" + "<strong>Rated Capacity:</strong> " + pickedPL.userProperties.p_avgcap +
-                    "<br>" + "<strong>Total Height:</strong> " + pickedPL.userProperties.t_ttlh + "</p>";
-
-
-                $("#popover").attr('data-content', content);
-                $("#popover").show();
-            } else if (pickedPL instanceof WorldWind.Placemark && !!pickedPL.userProperties.dep_name) {
-                let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
-                let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-                //
-                let popover = document.getElementById('popover');
-                popover.style.position = "absolute";
-                popover.style.left = (x + xOffset - 3) + 'px';
-                popover.style.top = (y + yOffset - 3) + 'px';
-
-                let content = "<p><strong>Site Name:</strong> " + pickedPL.userProperties.dep_name +
-                    "<br>" + "<strong>Commodity:</strong> " + pickedPL.userProperties.commodity +
-                    "<br>" + "<strong>Development Status:</strong> " + pickedPL.userProperties.dep_type + "</p>";
-
-                $("#popover").attr('data-content', content);
-                $("#popover").show();
-            } else if (pickedPL instanceof WorldWind.Placemark && !!pickedPL.userProperties.site_name) {
-                let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
-                let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-                //
-                let popover = document.getElementById('popover');
-                popover.style.position = "absolute";
-                popover.style.left = (x + xOffset - 3) + 'px';
-                popover.style.top = (y + yOffset - 3) + 'px';
-
-                let content = "<p><strong>Site Name:</strong> " + pickedPL.userProperties.site_name +
-                    "<br>" + "<strong>Commodity:</strong> " + pickedPL.userProperties.commodity +
-                    "<br>" + "<strong>Development Status:</strong> " + pickedPL.userProperties.dev_stat + "</p>";
-
-                $("#popover").attr('data-content', content);
-                $("#popover").show();
-            }
-        }
-    }
-
-    function barChange(toggleV) {
-
-        const left = $("#leftScale");
-        const right = $("#rightScale");
-
-        left.html(config[toggleV].Min);
-        right.html(config[toggleV].Max);
-
     }
 });
