@@ -403,8 +403,48 @@ define([
         }
     };
 
+    //under third left tab; filter slider for lowest to highest infections
+    let infectionSlider = function () {
+        $( "#hInfectionSlider" ).slider({
+            min: 5,
+            max: 300,
+            values: [5,300],
+            slide: function( event, ui ) {
+                //updates text
+                $( "#hInfectionsValue" ).text( ui.values[0] + " to " + ui.values[1] + " Locations");
+
+                //updates placemarks displayed based on infection slider range
+                updateHIS(ui.values[0], ui.values[1]);
+            }
+        });
+        //display current numbers for locations shown
+        $( "#hInfectionsValue" ).text($("#hInfectionSlider").slider("values", 0) + " to " + $("#hInfectionsSlider").slider("values", 1) + " Locations");
+    }
+
+    //under third left tab; surface opacity slider
+    let opacitySlider = function () {
+        $( "#opacitySlider" ).slider({
+            value: 100,
+            animate: true,
+            slide: function( event, ui ) {
+                //updates text
+                $( "#opacitySliderValue" ).text(ui.value + "% opacity");
+            },
+            stop: function(event, ui) {
+                //when user releases mouse, sets opacity to that percentage
+                setOpacity(ui.value / 100);
+            }
+        });
+    }
+
+    //sets surface opacity
+    let setOpacity = function (value) {
+        newGlobe.Opacity = value;
+        newGlobe.surfaceOpacity = newGlobe.Opacity;
+    };
+
     //date slider
-    let sliderRange = function() {
+    let dateSlider = function() {
         $( "#slider-range" ).slider({
             min: new Date(fromDate.val()).getTime()/1000,
             max: new Date(toDate.val()).getTime()/1000,
@@ -427,7 +467,7 @@ define([
     };
 
     //range slider; sets date range for date slider
-    let doubleSlider = function() {
+    let rangeSlider = function() {
         $( "#doubleSlider-range" ).slider({
             min: new Date(fromDate.val()).getTime()/1000,
             max: new Date(toDate.val()).getTime()/1000,
@@ -476,6 +516,22 @@ define([
         }
     }
 
+    //overrides user changes in filter option dialog box; sets date range to max range, continents to all
+    let fullLoad = function () {
+        if ($('input#fullLoad').is(':checked')) {
+            $('.filterFrom').val(dataAll.arrDate[0].Date);
+            $('.filterTo').val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+            $('.filterFrom, .filterTo').css('background-color', 'lightgray');
+            $('.filterFrom, .filterTo').prop('disabled', true);
+            $('#filterContinents').val('all_continents');
+            $('#filterContinents').prop('disabled', true);
+        } else {
+            $('.filterFrom, .filterTo').css('background-color', 'white');
+            $('.filterFrom, .filterTo').prop('disabled', false);
+            $('#filterContinents').prop('disabled', false);
+        }
+    }
+
     //dialog box for filter options for date slider; contains date range picker, continent selector, and full load option
     let filterOptionDialog = function () {
         $( "#dialog" ).dialog({
@@ -490,16 +546,18 @@ define([
                     $('#drFrom').val($("#foFrom").val());
                     $('#drTo').val($("#foTo").val());
 
-                    //changes
+                    //changes date slider value range
                     $('#slider-range').slider("values", 0) === new Date($('#foFrom').val()).getTime()/1000;
                     $('#slider-range').slider("values", 1) === new Date($('#foTo').val()).getTime()/1000;
                     $( "#amount2" ).val( $('#foFrom' ).val() + " to " + $('#foTo').val());
 
+                    //changes date slider min and max valuesm current value, and text display
                     $('#slider-range').slider("option", "min", new Date($('#foFrom').val()).getTime()/1000);
                     $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime()/1000);
                     $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime()/1000);
                     $('#amount').val($('#foTo').val());
 
+                    //ensures date slider is shown and range slider is hidden; edit mode is closed
                     $('#edit').removeClass('edit-mode');
                     $('#edit').css('background-color','transparent');
                     $('#labelRangeSlider').css('display','none');
@@ -518,6 +576,7 @@ define([
         });
     }
 
+    //dialog box for edit mode for date slider; contains date range picker
     let editDialog = function () {
         $( "#dialogDateRange" ).dialog({
             resizable: false,
@@ -527,24 +586,28 @@ define([
             modal: true,
             buttons: {
                 "Confirm": function() {
+                    //changes dates across all date range pickers
                     $('#foFrom').val($("#drFrom").val());
                     $('#foTo').val($("#drTo").val());
 
+                    //changes date slider value range
                     $('#slider-range').slider("values", 0) === new Date($('#drFrom').val()).getTime()/1000;
                     $('#slider-range').slider("values", 1) === new Date($('#drTo').val()).getTime()/1000;
                     $( "#amount2" ).val( $('#drFrom' ).val() + " to " + $('#drTo').val());
 
+                    //changes date slider min and max valuesm current value, and text display
                     $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime()/1000);
                     $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime()/1000);
                     $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime()/1000);
-
-                    createPK([$('#drFrom').val(), $('#drTo').val()], categoryS, "not init", $('#filterContinents').val());
-
                     $('#amount').val($('#drTo').val());
+
+                    //creates placemarks based on range selected
+                    createPK([$('#drFrom').val(), $('#drTo').val()], categoryS, "not init", $('#filterContinents').val());
 
                     $( this ).dialog( "close" );
                 },
                 Cancel: function() {
+                    //edit mode remains active
                     $('#edit').addClass('edit-mode');
                     $('#edit').css('background-color','#55d2d5');
                     $('#labelRangeSlider').css('display','inline-block');
@@ -554,6 +617,236 @@ define([
                     $('#slider-range').css('display','none');
                     $('#amount').css('display','none');
                     $( this ).dialog( "close" );
+                }
+            }
+        });
+    }
+
+    //on clicking placemark
+    let handleMouseCLK = function (e) {
+        let x = e.clientX,
+            y = e.clientY;
+        let pickListCLK = newGlobe.pick(newGlobe.canvasCoordinates(x, y));
+
+        pickListCLK.objects.forEach(function (value) {
+            let pickedPM = value.userObject;
+            if (pickedPM instanceof WorldWind.Placemark) {
+                sitePopUp(pickedPM);
+            }
+        })
+    }
+
+    //pop-up content
+    let sitePopUp = function (PM) {
+        let popupBodyItem = $("#popupBody");
+        //clears pop-up contents
+        popupBodyItem.children().remove();
+
+        //inserts title and discription for placemark
+        let popupBodyName = $('<p class="site-name"><h4>' + PM.userProperties.dName + '</h4></p>');
+        let popupBodyDesc = $('<p class="site-description">' + "Total Cases = Active + Deceased + Recoveries" + '</p><br>');
+        let br = $('<br><br>');
+
+        //tab buttons for different date ranges for chart data shown
+        let button0 = document.createElement("button");
+        button0.id = button0.value = "1";
+        button0.textContent = "Current";
+        button0.className = "chartsB";
+        button0.onclick = function () {chartDFun(button0, PM)};
+        let button1 = document.createElement("button");
+        button1.id = button1.value = "7";
+        button1.textContent = "Past 7 Days";
+        button1.className = "chartsB";
+        button1.onclick = function () {chartDFun(button1, PM)};
+        let button2 = document.createElement("button");
+        button2.id = button2.value = "14";
+        button2.textContent = "Past 2 Weeks";
+        button2.className = "chartsB";
+        button2.onclick = function () {chartDFun(button2, PM)};
+        let button3 = document.createElement("button");
+        button3.id = button3.value = "30";
+        button3.textContent = "Past 1 Month";
+        button3.className = "chartsB";
+        button3.onclick = function () {chartDFun(button3, PM)};
+        let button4 = document.createElement("button");
+        button4.id = button4.value = "63";
+        button4.textContent = "Past 2 Months";
+        button4.className = "chartsB";
+        button4.onclick = function () {chartDFun(button4, PM)};
+
+        popupBodyItem.append(popupBodyName);
+        popupBodyItem.append(popupBodyDesc);
+        popupBodyItem.append(button0);
+        popupBodyItem.append(button1);
+        popupBodyItem.append(button2);
+        popupBodyItem.append(button3);
+        popupBodyItem.append(button4);
+        popupBodyItem.append(br);
+
+        let modal = document.getElementById('popupBox');
+        let span = document.getElementById('closeIt');
+
+        modal.style.display = "block";
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        //load chart data
+        button0.click();
+    }
+
+    let chartDFun = function (objButton, PM) {
+        // get button value to reset chart duration time
+        let pDate = dataAll.arrDate[dataAll.arrDate.length-1].Date;
+        let d0 = new Date(""+ pDate + "")
+        let dFrom = $.format.date(d0.setDate(d0.getDate() - objButton.id + 1), "yyyy-MM-dd");
+        let dTo = dataAll.arrDate[dataAll.arrDate.length - 1].Date;
+
+        // disable this button and enable previous button disabled
+        $(".chartsB").prop('disabled', false);
+        $("#"+objButton.value).prop('disabled', true);
+        $("#chartText").html(objButton.textContent);
+
+        // set label date value
+        let lArr = [];
+        let d1 = new Date("" + pDate + "");
+
+        //label creation
+        if (objButton.value === "1") {
+            lArr.push(pDate);
+        } else if (objButton.value === "7") {
+            lArr.push($.format.date(d1.setDate(d1.getDate() - 5), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+            )
+        } else if (objButton.value === "14") {
+            lArr.push($.format.date(d1.setDate(d1.getDate() - 12), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+            )
+        } else if (objButton.value === "30") {
+            lArr.push($.format.date(d1.setDate(d1.getDate() - 26), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+            )
+        } else if (objButton.value === "63") {
+            lArr.push($.format.date(d1.setDate(d1.getDate() - 61), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6 ), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+            )
+        }
+
+        // refresh the chart canvas and data
+        let cCanvas = document.getElementById("stackedChart");
+        if (!!cCanvas) {
+            cCanvas.remove();
+            cCanvas = document.createElement("canvas");
+            cCanvas.id = "stackedChart";
+            cCanvas.height = 300;
+        } else {
+            cCanvas = document.createElement("canvas");
+            cCanvas.id = "stackedChart";
+            cCanvas.height = 300;
+        }
+
+        let ctx = cCanvas.getContext('2d');
+        let popupBody = $("#popupBody");
+        popupBody.append(cCanvas);
+
+        //retrieves data for chart
+        $.ajax({
+            url: '/chartData',
+            type: 'GET',
+            data: {dateFrom: dFrom, dateTo: dTo, dName: PM.userProperties.dName,},
+            dataType: 'json',
+            async: false,
+            success: function (resp) {
+                if (!resp.error) {
+                    let dArr = [];
+                    let rArr = [];
+                    let aArr = [];
+
+                    for (i = 0; i < resp.data.length -1; i++) {
+                        dArr.push(resp.data[i].DeathNum);
+                        rArr.push(resp.data[i].RecovNum);
+                        aArr.push(resp.data[i].CaseNum - resp.data[i].DeathNum - resp.data[i].RecovNum);
+                    }
+
+                    let myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: lArr,
+                            datasets: [
+                                {
+                                    label: 'Active Cases',
+                                    backgroundColor: "#45c498",
+                                    data: aArr,
+                                }, {
+                                    label: 'Deceased',
+                                    backgroundColor: "#ead04b",
+                                    data: dArr,
+                                }, {
+                                    label: 'Recoveries',
+                                    backgroundColor: "#035992",
+                                    data: rArr,
+                                }],
+                        },
+                        options: {
+                            tooltips: {
+                                displayColors: true,
+                                callbacks:{
+                                    mode: 'x',
+                                },
+                            },
+                            scales: {
+                                xAxes: [{
+                                    stacked: true,
+                                    gridLines: {
+                                        display: false,
+                                    }
+                                }],
+                                yAxes: [{
+                                    stacked: true,
+                                    ticks: {
+                                        beginAtZero: true,
+                                    },
+                                    type: 'linear',
+                                }]
+                            },
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            legend: { position: 'bottom' },
+                        }
+                    })
                 }
             }
         });
@@ -594,5 +887,5 @@ define([
 
     }
 
-    return {initCaseNum, subDropdown, updateCurr, onDiseaseClick, onCategory, onContinent, onNav, timelapse, pause, clearI, updateHIS, onFrom, sliderRange, doubleSlider, edit, filterOptionDialog, editDialog, enableAllToggle, closeAllToggle}
+    return {initCaseNum, subDropdown, updateCurr, onDiseaseClick, onCategory, onContinent, onNav, timelapse, pause, clearI, updateHIS, onFrom, infectionSlider, opacitySlider, dateSlider, rangeSlider, edit, fullLoad, filterOptionDialog, editDialog, handleMouseCLK, enableAllToggle, closeAllToggle}
 })
