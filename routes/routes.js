@@ -42,7 +42,7 @@ module.exports = function (app) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});
             } else {
-                //console.log(results);
+                console.log(results);
                 res.json({"error": false, "data": results});
             }
         });
