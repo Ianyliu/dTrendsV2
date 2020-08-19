@@ -34,7 +34,7 @@ define([
                         pLayer.continent = el.ContinentName;*/
 
                         //create placemarks
-                        console.log(newGlobe.layers);
+                        //console.log(newGlobe.layers);
                         let cConfirmed = el.Color_Confirmed.split(' ');
                         let cDeath = el.Color_Death.split(' ');
                         let cRecovered = el.Color_Recovered.split(' ');
@@ -104,7 +104,7 @@ define([
 
                         //add placemarks onto placemark layer
                         if (!pLayer) {
-                            console.log(pLayer);
+                            // console.log(pLayer);
                             console.log("Country layer can not find!");
                         } else {
                             pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);

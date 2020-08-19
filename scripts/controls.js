@@ -22,6 +22,8 @@ define([
     let numR = 0;
     let numA = 0;
 
+    let speed = false;
+
     //underinitial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
@@ -90,7 +92,10 @@ define([
 
         curDate.val(currentD);
 
-        createPK([currentD,currentD], categoryS, "not init");
+        if (!speed) {
+            console.log("slow");
+            createPK([currentD,currentD], categoryS, "not init");
+        }
 
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
@@ -542,6 +547,8 @@ define([
             modal: true,
             buttons: {
                 "Apply": function() {
+                    speed = true;
+
                     //changes dates across all date range pickers
                     $('#drFrom').val($("#foFrom").val());
                     $('#drTo').val($("#foTo").val());
@@ -556,6 +563,12 @@ define([
                     $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime()/1000);
                     $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime()/1000);
                     $('#amount').val($('#foTo').val());
+
+                    //creates placemarks based on range selected
+                    if (speed) {
+                        console.log("fast");
+                        createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                    }
 
                     //ensures date slider is shown and range slider is hidden; edit mode is closed
                     $('#edit').removeClass('edit-mode');
@@ -586,6 +599,7 @@ define([
             modal: true,
             buttons: {
                 "Confirm": function() {
+                    speed = true;
                     //changes dates across all date range pickers
                     $('#foFrom').val($("#drFrom").val());
                     $('#foTo').val($("#drTo").val());
@@ -602,7 +616,10 @@ define([
                     $('#amount').val($('#drTo').val());
 
                     //creates placemarks based on range selected
-                    createPK([$('#drFrom').val(), $('#drTo').val()], categoryS, "not init", $('#filterContinents').val());
+                    if (speed) {
+                        console.log("fast");
+                        createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                    }
 
                     $( this ).dialog( "close" );
                 },
