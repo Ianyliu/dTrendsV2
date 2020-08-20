@@ -32,7 +32,7 @@ define(['./WorldWindShim'],function (WorldWind) {
         ctx.fillStyle = color;
         ctx.fill();
 
-        ctx.strokeStyle = "rgb(0,0,0)";
+        ctx.strokeStyle = "rgb(188,188,188)";
         ctx.stroke();
 
         ctx.closePath();

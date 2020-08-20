@@ -36,13 +36,13 @@ module.exports = function (app) {
     app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        let oneDaysQ = "select * from dtrends.layers where Date >= ? AND Date <= ? order by CountryName;";
+        let oneDaysQ = "select * from dtrends.layers where Date >= ? AND Date <= ? order by CountryName, Date;";
         con_DT.query(oneDaysQ, [req.query.date[0], req.query.date[1]], function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});
             } else {
-                console.log(results);
+                // console.log(results);
                 res.json({"error": false, "data": results});
             }
         });

@@ -1,12 +1,12 @@
 define([
     './globeObject'
     ,'./pkObject'
-    ,'./initPL'
+    // ,'./initPL'
 ], function (newGlobe, pkObject){
     "use strict";
 
 
-    //let pLayer;
+    let pLayer;
     function createPK(date, type, flag, countries, continents) {
         console.log(date, type, flag, countries, continents);
 
@@ -28,13 +28,15 @@ define([
                         deletePK(date, resp.data.CountryName);
                     }
                     resp.data.forEach(function (el, i) {
-                        /*pLayer = new WorldWind.RenderableLayer(el.CountryName);
-                        pLayer.enabled = true;
-                        pLayer.layerType = 'H_PKLayer';
-                        pLayer.continent = el.ContinentName;*/
+                        if (i === 0) {
+                            //create placemark layer
+                            pLayer = new WorldWind.RenderableLayer(el.CountryName);
+                            pLayer.enabled = true;
+                            pLayer.layerType = 'H_PKLayer';
+                            pLayer.continent = el.ContinentName;
+                        }
 
                         //create placemarks
-                        //console.log(newGlobe.layers);
                         let colorC = "1 0 0";
                         let colorD = "0 0 0";
                         let colorR = "0.4 1 0.2 ";
@@ -72,51 +74,54 @@ define([
                         activePK.pk.userProperties.Number = el.CaseNum-el.DeathNum-el.RecovNum;
 
                         // disable all the placemarks except requested date
-                        confirmedPK.pk.enabled = true;
-                        deathPK.pk.enabled = false;
-                        recoveredPK.pk.enabled = false;
-                        activePK.pk.enabled = false;
-
-                        // find the placemark layer in newGlobe.layers, otherwise create a new renderable layer
-                        let pLayer = newGlobe.layers.find(({displayName}) => displayName === el.CountryName);
-                        console.log(el.CountryName);
-
-                        // if (flag !== "init") {
-                        //     pLayer.removeAllRenderables();
-                        // }
-                        // if (pLayer) {
-                        //     pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);
-                        // }
-
-
+                        if (el.Date === resp.data[resp.data.length - 1].Date) {
+                            confirmedPK.pk.enabled = true;
+                            deathPK.pk.enabled = false;
+                            recoveredPK.pk.enabled = false;
+                            activePK.pk.enabled = false;
+                        } else {
+                            confirmedPK.pk.enabled = false;
+                            deathPK.pk.enabled = false;
+                            recoveredPK.pk.enabled = false;
+                            activePK.pk.enabled = false;
+                        }
 
                         // add current placemark layer onto worldwind layer obj
-                        //newGlobe.addLayer(pLayer);
                         newGlobe.redraw();
 
-                        /*if (el.Date == d) {
-                            switch (type) {
-                                case "Confirmed":
-                                    confirmedPK.pk.enabled = true;
-                                case "Death":
-                                    deathPK.pk.enabled = true;
-                                case "Recovered":
-                                    recoveredPK.pk.enabled = true;
-                                case "Active":
-                                    activePK.pk.enabled = true;
-                            }
-                        }*/
-
+                        pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);
 
                         //add placemarks onto placemark layer
-                        if (!pLayer) {
-                            // console.log(pLayer);
-                            console.log("Country layer can not find!");
+                        if (i !== resp.data.length - 1) {
+                            if (el.CountryName !== resp.data[i+1].CountryName) {
+                                // add current placemark layer onto worldwind layer obj
+                                console.log("Country layer can not find!");
+                                newGlobe.addLayer(pLayer);
+                                newGlobe.redraw();
+
+                                //create new placemark layer for next country
+                                pLayer = new WorldWind.RenderableLayer(resp.data[i + 1].CountryName);
+                                pLayer.enabled = true;
+                                pLayer.layerType = 'H_PKLayer';
+                                pLayer.continent = resp.data[i + 1].ContinentName;
+                            }
                         } else {
-                            pLayer.addRenderables([confirmedPK.pk, deathPK.pk, recoveredPK.pk, activePK.pk]);
-                            console.log(pLayer);
+                            for (let j = 6; j < newGlobe.layers.length - 1; j++) {
+                                if (newGlobe.layers[j].displayName === 'India'){
+                                    for (let k = 0; k < newGlobe.layers[j].renderables.length-1; k++) {
+                                        if (newGlobe.layers[j].renderables[k].userProperties.Date === "2020-05-12") {
+                                            console.log(newGlobe.layers[j].renderables[k]);
+                                        }
+
+                                    }
+                                }
+
+                            }
+                            // add current placemark layer onto worldwind layer obj
+                            newGlobe.addLayer(pLayer);
                             newGlobe.redraw();
                         }
+
                     })
                 }
             }
@@ -155,34 +160,9 @@ define([
     }
 
     function deletePK(da, co) {
-        // locate pLayer
-        let dpLayer = newGlobe.layers.find(({displayName}) => displayName === co);
-        // console.log(dpLayer);
-        //
-        if (!dpLayer) {
-            console.log("No country layer found!");
-        } else {
-            // dpLayer.renderables.forEach(function (e,i) {
-                dpLayer.removeAllRenderables();
-                // if (e.userProperties.Date !== da[0]) {
-                //     dpLayer.removeRenderable(e);
-                // }
-            // })
-            newGlobe.redraw();
+        for (let i = 6; i < newGlobe.layers.length - 1; i++) {
+            newGlobe.removeLayer(newGlobe.layers[i]);
         }
-
-        // newGlobe.layers.forEach(function (elem, index) {
-        //     if (elem instanceof WorldWind.RenderableLayer) {
-        //         elem.renderables.forEach(function (d) {
-        //             if (d instanceof WorldWind.Placemark) {
-        //                 if (d.userProperties.Date == da) {
-        //                     console.log(d);
-        //                     d.removeAllRenderables();
-        //                 }
-        //             }
-        //         })
-        //     }
-        // });
     }
 
     return createPK;
