@@ -35,10 +35,16 @@ define([
 
                         //create placemarks
                         //console.log(newGlobe.layers);
-                        let cConfirmed = el.Color_Confirmed.split(' ');
-                        let cDeath = el.Color_Death.split(' ');
-                        let cRecovered = el.Color_Recovered.split(' ');
-                        let cActive = colorStr.split(' ');
+                        let colorC = "1 0 0";
+                        let colorD = "0 0 0";
+                        let colorR = "0.4 1 0.2 ";
+                        let colorA = "0.9 0.6 0";
+
+                        //create placemarks
+                        let cConfirmed = colorC.split(' ');
+                        let cDeath = colorD.split(' ');
+                        let cRecovered = colorR.split(' ');
+                        let cActive = colorA.split(' ');
 
                         let confirmedPK = new pkObject(cConfirmed, el.Latitude, el.Longitude, sizePK(el.CaseNum));
                         let deathPK = new pkObject(cDeath, el.Latitude, el.Longitude, sizePK(el.DeathNum));
