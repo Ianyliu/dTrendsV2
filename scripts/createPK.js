@@ -27,6 +27,7 @@ define([
                         // delete all other unnecessary placemarks
                         deletePK(date, resp.data.CountryName);
                     }
+                    console.log(resp.data);
                     resp.data.forEach(function (el, i) {
                         /*pLayer = new WorldWind.RenderableLayer(el.CountryName);
                         pLayer.enabled = true;
