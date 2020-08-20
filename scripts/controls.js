@@ -83,7 +83,6 @@ define([
 
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
     let updateCurr = function (currentD) {
-
         //reset case numbers
         numC = 0;
         numD = 0;
@@ -102,14 +101,16 @@ define([
             if (elem instanceof WorldWind.RenderableLayer) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
+                        console.log("currentD is ");
+                        console.log(currentD);
                         if (d.userProperties.Date == currentD) {
+                            console.log("YD");
                             if (d.userProperties.Type === categoryS) {
                                 d.enabled = true;
-                                if (d.userProperties.dName == "India"){
+                                if (d.userProperties.dName == "India" && currentD == "2020-05-12"){
                                     console.log("Indian_0512 is "+d.enabled);
                                     console.log(d);
                                 }
-
                             } else {
                                 d.enabled = false;
                             }
@@ -123,6 +124,7 @@ define([
                                 numA += d.userProperties.Number;
                             }
                         } else {
+                            console.log("ND");
                             d.enabled = false;
                         }
                     }
@@ -462,11 +464,11 @@ define([
             value: new Date(toDate.val()).getTime()/1000,
             slide: function( event, ui ) {
                 //updates text
-                $( "#amount" ).val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
+                $("#amount").val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
 
                 //update current placemark display based on slider/current date
                 console.log($("#amount").val());
-                updateCurr($( "#amount" ).val());
+                updateCurr($("#amount").val());
 
                 //update filter boundaries with changes in date
                 updateHIS($('#hInfectionSlider').slider('values', 0), $('#hInfectionSlider').slider('values', 1));
