@@ -92,19 +92,24 @@ define([
 
         curDate.val(currentD);
 
-        if (!speed) {
-            console.log("slow");
-            createPK([currentD,currentD], categoryS, "not init");
-        }
+        // if (!speed) {
+        //     console.log("slow");
+        //     createPK([currentD,currentD], categoryS, "not init");
+        // }
 
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date === currentD) {
+                        if (d.userProperties.Date == currentD) {
                             if (d.userProperties.Type === categoryS) {
                                 d.enabled = true;
+                                if (d.userProperties.dName == "India"){
+                                    console.log("Indian_0512 is "+d.enabled);
+                                    console.log(d);
+                                }
+
                             } else {
                                 d.enabled = false;
                             }
@@ -460,6 +465,7 @@ define([
                 $( "#amount" ).val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
 
                 //update current placemark display based on slider/current date
+                console.log($("#amount").val());
                 updateCurr($( "#amount" ).val());
 
                 //update filter boundaries with changes in date
