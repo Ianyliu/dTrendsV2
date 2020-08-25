@@ -155,9 +155,9 @@ requirejs([
 
 
         //first click on date slider prompts filter option popup
-        $("#slider-range").one("click", function () {
-            $("#filter").click();
-        })
+        // $("#slider-range").one("click", function () {
+        //     $("#filter").click();
+        // })
 
         //far right of date slider overlay; opens dialog when filter is selected
         $('#filter').click(function () {
