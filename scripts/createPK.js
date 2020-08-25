@@ -8,7 +8,6 @@ define([
 
     let pLayer;
     function createPK(date, type, flag, countries, continents) {
-        console.log(date, type, flag, countries, continents);
 
         // request the data for placemarks with given date and country
         $.ajax({
@@ -92,7 +91,6 @@ define([
                         if (i !== resp.data.length - 1) {
                             if (el.CountryName !== resp.data[i+1].CountryName) {
                                 // add current placemark layer onto worldwind layer obj
-                                console.log("Country layer can not find!");
                                 newGlobe.addLayer(pLayer);
                                 newGlobe.redraw();
 
@@ -103,17 +101,6 @@ define([
                                 pLayer.continent = resp.data[i + 1].ContinentName;
                             }
                         } else {
-                            for (let j = 6; j < newGlobe.layers.length - 1; j++) {
-                                if (newGlobe.layers[j].displayName === 'India'){
-                                    for (let k = 0; k < newGlobe.layers[j].renderables.length-1; k++) {
-                                        if (newGlobe.layers[j].renderables[k].userProperties.Date === "2020-05-12") {
-                                            console.log(newGlobe.layers[j].renderables[k]);
-                                        }
-
-                                    }
-                                }
-
-                            }
                             // add current placemark layer onto worldwind layer obj
                             newGlobe.addLayer(pLayer);
                             newGlobe.redraw();
