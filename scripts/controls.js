@@ -91,26 +91,14 @@ define([
 
         curDate.val(currentD);
 
-        // if (!speed) {
-        //     console.log("slow");
-        //     createPK([currentD,currentD], categoryS, "not init");
-        // }
-
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        console.log("currentD is ");
-                        console.log(currentD);
                         if (d.userProperties.Date == currentD) {
-                            console.log("YD");
                             if (d.userProperties.Type === categoryS) {
                                 d.enabled = true;
-                                if (d.userProperties.dName == "India" && currentD == "2020-05-12"){
-                                    console.log("Indian_0512 is "+d.enabled);
-                                    console.log(d);
-                                }
                             } else {
                                 d.enabled = false;
                             }
@@ -124,7 +112,6 @@ define([
                                 numA += d.userProperties.Number;
                             }
                         } else {
-                            console.log("ND");
                             d.enabled = false;
                         }
                     }
@@ -418,9 +405,9 @@ define([
     //under third left tab; filter slider for lowest to highest infections
     let infectionSlider = function () {
         $( "#hInfectionSlider" ).slider({
-            min: 5,
-            max: 300,
-            values: [5,300],
+            min: 0,
+            max: 320,
+            values: [0,320],
             slide: function( event, ui ) {
                 //updates text
                 $( "#hInfectionsValue" ).text( ui.values[0] + " to " + ui.values[1] + " Locations");
@@ -464,10 +451,10 @@ define([
             value: new Date(toDate.val()).getTime()/1000,
             slide: function( event, ui ) {
                 //updates text
+
                 $("#amount").val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
 
                 //update current placemark display based on slider/current date
-                console.log($("#amount").val());
                 updateCurr($("#amount").val());
 
                 //update filter boundaries with changes in date

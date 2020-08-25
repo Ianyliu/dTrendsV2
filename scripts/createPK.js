@@ -10,9 +10,6 @@ define([
     function createPK(date, type, flag, countries, continents) {
         console.log(date, type, flag, countries, continents);
 
-        // define color for active case
-        let colorStr = "rgb(249,145,10) rgb(249,145,10) rgb(249,145,10)";
-
         // request the data for placemarks with given date and country
         $.ajax({
             url: '/1dData',
@@ -25,9 +22,8 @@ define([
                     if (flag !== "init") {
                         // initiated by Home.js
                         // delete all other unnecessary placemarks
-                        deletePK(date, resp.data.CountryName);
+                        deletePK();
                     }
-                    console.log(resp.data);
                     resp.data.forEach(function (el, i) {
                         if (i === 0) {
                             //create placemark layer
@@ -37,13 +33,13 @@ define([
                             pLayer.continent = el.ContinentName;
                         }
 
-                        //create placemarks
+                        //define colors for the placemarks
                         let colorC = "1 0 0";
                         let colorD = "0 0 0";
                         let colorR = "0.4 1 0.2 ";
                         let colorA = "0.9 0.6 0";
 
-                        //create placemarks
+                        //color arrays
                         let cConfirmed = colorC.split(' ');
                         let cDeath = colorD.split(' ');
                         let cRecovered = colorR.split(' ');
@@ -160,7 +156,7 @@ define([
         return magnitude
     }
 
-    function deletePK(da, co) {
+    function deletePK() {
         for (let i = 6; i < newGlobe.layers.length - 1; i++) {
             newGlobe.removeLayer(newGlobe.layers[i]);
         }
