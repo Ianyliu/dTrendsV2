@@ -3,7 +3,7 @@ define([
     ,'./dataAll'
     ,'./LayerManager'
     ,'./createPK'
-], function (newGlobe, dataAll, LayerManager,createPK) {
+], function (newGlobe, dataAll, layerManager,createPK) {
     "use strict";
 
     let categoryS = "Confirmed Cases";
