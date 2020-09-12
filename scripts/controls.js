@@ -81,7 +81,15 @@ define([
         });
 
         $(".agrotoggle").click(function(){
-
+            let visibility = $( "#agrosphere-dropdowndiv" ).css( "visibility");
+            let display = $( "#agrosphere-dropdowndiv" ).css( "display");
+            if (visibility == 'hidden' && display == "none"){
+                $( "#agrosphere-dropdowndiv" ).css( "visibility", "visible" );
+                $( "#agrosphere-dropdowndiv" ).css( "display", "block");
+            } else {
+                $( "#agrosphere-dropdowndiv" ).css( "visibility", "hidden" );
+                $( "#agrosphere-dropdowndiv" ).css( "display", "none");
+            }
         });
 
         // $(".agrodropdown").on("show.bs.dropdown", function() {
