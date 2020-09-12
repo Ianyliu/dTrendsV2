@@ -46,6 +46,66 @@
 
     <style>
         body {padding-bottom: 80px}
+/**/
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 17px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 13px;
+            width: 13px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(13px);
+            -ms-transform: translateX(13px);
+            transform: translateX(13px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 17px;
+        }
+/**/
+        .slider.round:before {
+            border-radius: 50%;
+        }
 
         .note {
             color: #959595;
@@ -189,6 +249,7 @@
     </style>
 
 </head>
+<body>
 
 <ul class="tab" style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
     <li><a class="tablinksLeft logo" title="Info"><strong>AWB Disease Trends</strong></a></li>
@@ -229,8 +290,8 @@
         <div style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;">
             <h4 id="labelSlider" style="color: white; display: inline-block;">Date Slider:</h4>
             <h4 id="labelRangeSlider" style="color: white; display: none;">Date Range Selector (select slider min/max dates):</h4>
-            <input type="text" readonly id="amount"  style="display: inline-block; border: 0px; color: white; background-color: transparent">
-            <input type="text" readonly id="amount2"  style="width: 250px; display: none; border: 0px; color: white; background-color: transparent">
+            <input type="text" readonly id="amount"  style="display: inline-block; border: 0; color: white; background-color: transparent">
+            <input type="text" readonly id="amount2"  style="width: 250px; display: none; border: 0; color: white; background-color: transparent">
             <span id="filter" class="glyphicon glyphicon-list btn" style="float: right; color: white"></span>
             <span id="edit" class="glyphicon glyphicon-pencil btn" style="float: right; color: white"></span>
             <div id="slider-range"></div>
@@ -382,7 +443,9 @@
         </div>
         <br><br><br><br>
         <h5>Famine and Food Projection</h5>
-        <a href="https://worldwind.arc.nasa.gov/agrosphere/" class="btn btn-info btn-block" type="button">Agrosphere<span class="caret"></span></a>
+        <div class="dropdown" id="agrosphereDropdown" style="height: 10px">
+        </div>
+        <!---<a href="https://worldwind.arc.nasa.gov/agrosphere/" class="btn btn-info btn-block" type="button">Agrosphere<span class="caret"></span></a>--->
     </div>
 
     <div id="drawing" class="col-sm-2 tabcontentLeft leftTabPadding"

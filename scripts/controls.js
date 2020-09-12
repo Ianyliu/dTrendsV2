@@ -79,6 +79,33 @@ define([
             var $listHolder = $(this).find(".dropdown-menu");
             $listHolder.data("open", false);
         });
+
+        $(".agrotoggle").click(function(){
+
+        });
+
+        // $(".agrodropdown").on("show.bs.dropdown", function() {
+        //     let $btnDropDown = $(this).find(".dropdown-toggle");
+        //     let $listHolder = $(this).find(".dropdown-menu");
+        //     let subMenu = $(this).find(".dropdown-submenu");
+        //     let subMenu2 = subMenu.find(".dropdown-menu");
+        //     //reset position property for DD container
+        //     $(this).css("position", "static");
+        //     $listHolder.css({
+        //         "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
+        //         "left": $btnDropDown.offset().left + "px"
+        //     });
+        //     subMenu2.css({
+        //         "left": $listHolder.outerWidth(true) + "px"
+        //     });
+        //
+        //     $listHolder.data("open", true);
+        // });
+        // //add BT DD hide event
+        // $(".agrodropdown").on("hidden.bs.dropdown", function() {
+        //     var $listHolder = $(this).find(".dropdown-menu");
+        //     $listHolder.data("open", false);
+        // });
     }
 
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
@@ -139,6 +166,20 @@ define([
         }
     };
 
+    //under first left tab; used to switch display between
+    let onAgrosphereClick = function (event) {
+        let projectionName = event.target.innerText || event.target.innerHTML;
+        $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+
+        if (projectionName === "crop") {
+            crop();
+        } else if(projectionName === 'weather'){
+            weatherStation();
+        } else if(projectionName === 'country'){
+            countryPlacemark();
+        } else {}
+    };
+
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
         //refreshes layer menu to match the disease selected
@@ -183,6 +224,11 @@ define([
 
         }
     };
+
+    //
+    let crop = function (){};
+    let weatherStation = function () {};
+    let countryPlacemark = function () {};
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
     let onCategory = function (event) {
@@ -899,5 +945,5 @@ define([
 
     }
 
-    return {initCaseNum, subDropdown, updateCurr, onDiseaseClick, onCategory, onContinent, onNav, timelapse, pause, clearI, updateHIS, onFrom, infectionSlider, opacitySlider, dateSlider, rangeSlider, edit, fullLoad, filterOptionDialog, editDialog, handleMouseCLK, enableAllToggle, closeAllToggle}
+    return {initCaseNum, subDropdown, updateCurr, onDiseaseClick, onAgrosphereClick, onCategory, onContinent, onNav, timelapse, pause, clearI, updateHIS, onFrom, infectionSlider, opacitySlider, dateSlider, rangeSlider, edit, fullLoad, filterOptionDialog, editDialog, handleMouseCLK, enableAllToggle, closeAllToggle}
 })

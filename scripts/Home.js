@@ -106,6 +106,10 @@ requirejs([
             controls.onDiseaseClick(e);
         });
 
+        $("#agrosphereDropdown").find(" li").on("click", function (e) {
+            controls.onAgrosphereClick(e);
+        });
+
         //dropdown menu for placemark category
         $("#categoryList").find(" li").on("click", function (e) {
             controls.onCategory(e);

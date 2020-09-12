@@ -277,6 +277,7 @@ define([
             "Influenza A",
             "Influenza B"
         ];
+
         let diseaseDropdown = $("#diseaseDropdown");
 
         let diseaseOptions = $('<button class="btn btn-info btn-block dropdown-toggle" type="button" data-toggle="dropdown">COVID-19<span class="caret"></span></button>');
@@ -293,6 +294,32 @@ define([
 
         ulItem2 = $('</ul>');
         diseaseDropdown.append(ulItem2);
+
+        let agrosphereCat = [
+            'Crops',
+            'Countries',
+            'Weather Stations'
+        ]
+
+        let agrosphereDropdown = $("#agrosphereDropdown");
+
+        let agrosphereOptions = $('<button class="btn btn-info btn-block agrotoggle" type="button" data-toggle="">Agrosphere<span class="caret"></span></button>');
+
+        agrosphereDropdown.append(agrosphereOptions);
+
+        let ulItem3 = $('<div class="">');
+        agrosphereDropdown.append(ulItem3);
+
+        for (let i = 0; i < agrosphereCat.length; i++) {
+            let agrosphereItem = $('<p>' + agrosphereCat[i] + '</p>'+ '<label class="switch">\n' +
+                '  <input type="checkbox">\n' +
+                '  <span class="slider round"></span>\n' +
+                '</label>');
+            ulItem3.append(agrosphereItem);
+        }
+
+        ulItem3 = $('</div>');
+        agrosphereDropdown.append(ulItem3);
     };
 
     LayerManager.prototype.onSearchButton = function (event) {
