@@ -105,11 +105,12 @@ define([
 
         $("#Countries-switch").click(function(){
             if($(this).is(":checked")){
-                console.log("Checkbox is checked.");
+                $( "#CountriesDropdown" ).css( "visibility", "visible" );
+                $( "#CountriesDropdown" ).css( "display", "block");
             }
             else if($(this).is(":not(:checked)")){
-                console.log("Checkbox is unchecked.");
-            }
+                $( "#CountriesDropdown" ).css( "visibility", "hidden" );
+                $( "#CountriesDropdown" ).css( "display", "none");            }
         });
 
         $("#WeatherStations-switch").click(function(){
