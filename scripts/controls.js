@@ -83,7 +83,7 @@ define([
         $(".agrotoggle").click(function(){
             let visibility = $( "#agrosphere-dropdowndiv" ).css( "visibility");
             let display = $( "#agrosphere-dropdowndiv" ).css( "display");
-            if (visibility == 'hidden' && display == "none"){
+            if (visibility === 'hidden' && display === "none"){
                 $( "#agrosphere-dropdowndiv" ).css( "visibility", "visible" );
                 $( "#agrosphere-dropdowndiv" ).css( "display", "block");
             } else {
@@ -92,16 +92,14 @@ define([
             }
         });
 
-        $(".Crops-switch").click(function(){
-            let visibility = $( ".CropsDropdown" ).css( "visibility");
-            let display = $( ".CropsDropdown" ).css( "display");
+        $("#Crops-switch").click(function(){
             if($(this).is(":checked")){
-                $( ".CropsDropdown" ).css( "visibility", "visible" );
-                $( ".CropsDropdown" ).css( "display", "block");
+                $( "#CropsDropdown" ).css( "visibility", "visible" );
+                $( "#CropsDropdown" ).css( "display", "block");
             }
             else if($(this).is(":not(:checked)")){
-                $( ".CropsDropdown" ).css( "visibility", "visible" );
-                $( ".CropsDropdown" ).css( "display", "block");
+                $( "#CropsDropdown" ).css( "visibility", "hidden" );
+                $( "#CropsDropdown" ).css( "display", "none");
             }
         });
 
@@ -115,41 +113,15 @@ define([
         });
 
         $("#WeatherStations-switch").click(function(){
-            let visibility = $( "#WeatherStationsDropdown" ).css( "visibility");
-            let display = $( "#WeatherStationsDropdown" ).css( "display");
             if($(this).is(":checked")){
                 $( "#WeatherStationsDropdown" ).css( "visibility", "visible" );
                 $( "#WeatherStationsDropdown" ).css( "display", "block");
             }
             else if($(this).is(":not(:checked)")){
-                $( "#WeatherStationsDropdown" ).css( "visibility", "visible" );
-                $( "#WeatherStationsDropdown" ).css( "display", "block");
+                $( "#WeatherStationsDropdown" ).css( "visibility", "hidden" );
+                $( "#WeatherStationsDropdown" ).css( "display", "none");
             }
         });
-
-
-        // $(".agrodropdown").on("show.bs.dropdown", function() {
-        //     let $btnDropDown = $(this).find(".dropdown-toggle");
-        //     let $listHolder = $(this).find(".dropdown-menu");
-        //     let subMenu = $(this).find(".dropdown-submenu");
-        //     let subMenu2 = subMenu.find(".dropdown-menu");
-        //     //reset position property for DD container
-        //     $(this).css("position", "static");
-        //     $listHolder.css({
-        //         "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
-        //         "left": $btnDropDown.offset().left + "px"
-        //     });
-        //     subMenu2.css({
-        //         "left": $listHolder.outerWidth(true) + "px"
-        //     });
-        //
-        //     $listHolder.data("open", true);
-        // });
-        // //add BT DD hide event
-        // $(".agrodropdown").on("hidden.bs.dropdown", function() {
-        //     var $listHolder = $(this).find(".dropdown-menu");
-        //     $listHolder.data("open", false);
-        // });
     }
 
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
