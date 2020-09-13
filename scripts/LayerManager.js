@@ -312,7 +312,7 @@ define([
         agrosphereDropdown.append(ulItem3);
 
         for (let i = 0; i < agrosphereCat.length; i++) {
-            let agrosphereItem = $('<p style="display: block;"' +'id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '</p>'+ '<label class="switch" style="display: block;"'+'id="label-'+ agrosphereCat[i] + '">' +
+            let agrosphereItem = $('<p style="display: block;"' +' id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
                 '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch">'+
                 '  <span class="slider round"></span>\n' +
                 '</label>');
@@ -335,7 +335,7 @@ define([
 
         let cropsDropdown = $("#cropsDropdown");
 
-        let cropsOptions = $('<button class="btn btn-info btn-block cropstoggle" type="button" data-toggle="">Crops<span class="caret"></span></button>');
+        let cropsOptions = $("#Crops-switch");
 
         cropsDropdown.append(cropsOptions);
 
@@ -343,8 +343,8 @@ define([
         cropsDropdown.append(ulItem4);
 
         for (let i = 0; i < cropsmenu.length; i++) {
-            let cropsItem = $('<p style="display: block;"' +'id="'+ cropsmenu[i] + '-text">'+ cropsmenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+'id="label-'+ cropsmenu[i] + '">' +
-                '  <input type="checkbox" id="' + cropsmenu[i] + '-switch"'+ 'class="cropscheckbox">' +
+            let cropsItem = $('<p style="display: block;"' +' id="'+ cropsmenu[i] + '-text">'+ cropsmenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ cropsmenu[i] + '">' +
+                '  <input type="checkbox" id="' + cropsmenu[i] + '-switch"'+ ' class="cropscheckbox">' +
                 '  <span class="slider round"></span>\n' +
                 '</label>');
             ulItem4.append(cropsItem);
@@ -355,13 +355,11 @@ define([
 
         //Weatherstation Menu
         let weathermenu = [
-            'Production',
-            'Price',
-            'Livestock',
-            'Emissions',
-            'Pesticides',
-            'Fertilizer',
-            'Yield'
+            'GraphsandWeather',
+            'YearlyTemperature',
+            'MonthlyTemperature',
+            'YearlyPrecipitation',
+            'MonthlyPrecipitation'
         ]
 
         let weatherDropdown = $("#weatherDropdown");
@@ -374,7 +372,7 @@ define([
         weatherDropdown.append(ulItem5);
 
         for (let i = 0; i < weathermenu.length; i++) {
-            let weatherItem = $('<p style="display: block;"' +'id="'+ weathermenu[i] + '-text">'+ weathermenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+'id="label-'+ weathermenu[i] + '">' +
+            let weatherItem = $('<p style="display: block;"' +' id="'+ weathermenu[i] + '-text">'+ weathermenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
                 '  <input type="checkbox" id="' + weathermenu[i] + '-switch">'+
                 '  <span class="slider round"></span>\n' +
                 '</label>');
