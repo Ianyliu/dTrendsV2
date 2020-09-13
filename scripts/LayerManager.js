@@ -304,7 +304,7 @@ define([
 
         let agrosphereDropdown = $("#agrosphereDropdown");
         let weatherDropdown = $("#WeatherStationsDropdown");
-        let cropsDropdown = $("#CropsDropdown");
+        let cropsDropdown = $(".CropsDropdown");
         let agrodiv = $("#agrosphere-dropdowndiv")
 
         let agrosphereOptions = $('<button class="btn btn-info btn-block agrotoggle" type="button" data-toggle="">Agrosphere<span class="caret"></span></button>');
@@ -315,10 +315,10 @@ define([
         agrosphereDropdown.append(ulItem3);
 
         for (let i = 0; i < agrosphereCat.length; i++) {
-            let agrosphereItem = $('<p style="display: block;"' +' id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
+            let agrosphereItem = $('<p style="display: block;"' +' id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '<label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
                 '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch">'+
                 '  <span class="slider round"></span>\n' +
-                '</label><div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none"></div>'); //'<div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none">'+
+                '</label>' + '</p>'+ '<div class ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none"></div>'); //'<div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none">'+
             ulItem3.append(agrosphereItem);
 
             // if (agrosphereCat[i] === "Crops") {
@@ -345,8 +345,8 @@ define([
         ]
 
 
-        // let ulItem4 = $('');
-        // cropsDropdown.append(ulItem4);
+        let ulItem4 = $('<div class="CropsDropdown" style="visibility: hidden; display: none">');
+        cropsDropdown.append(ulItem4);
 
         for (let i = 0; i < cropsmenu.length; i++) {
             let cropsItem = $('<p style="display: block;"' +' id="'+ cropsmenu[i] + '-text">'+ cropsmenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ cropsmenu[i] + '">' +
@@ -356,6 +356,8 @@ define([
             cropsDropdown.append(cropsItem);
         }
 
+        // cropsDropdown.append(cropsmenu)
+        //
         // ulItem4 = $('</div>');
         // cropsDropdown.append(ulItem4);
 

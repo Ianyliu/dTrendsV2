@@ -92,16 +92,16 @@ define([
             }
         });
 
-        $("#Crops-switch").click(function(){
-            let visibility = $( "#crops-dropdowndiv" ).css( "visibility");
-            let display = $( "#crops-dropdowndiv" ).css( "display");
+        $(".Crops-switch").click(function(){
+            let visibility = $( ".CropsDropdown" ).css( "visibility");
+            let display = $( ".CropsDropdown" ).css( "display");
             if($(this).is(":checked")){
-                $( "#crops-dropdowndiv" ).css( "visibility", "visible" );
-                $( "#crops-dropdowndiv" ).css( "display", "block");
+                $( ".CropsDropdown" ).css( "visibility", "visible" );
+                $( ".CropsDropdown" ).css( "display", "block");
             }
             else if($(this).is(":not(:checked)")){
-                $( "#crops-dropdowndiv" ).css( "visibility", "visible" );
-                $( "#crops-dropdowndiv" ).css( "display", "block");
+                $( ".CropsDropdown" ).css( "visibility", "visible" );
+                $( ".CropsDropdown" ).css( "display", "block");
             }
         });
 
@@ -115,15 +115,15 @@ define([
         });
 
         $("#WeatherStations-switch").click(function(){
-            let visibility = $( "#weather-dropdowndiv" ).css( "visibility");
-            let display = $( "#weather-dropdowndiv" ).css( "display");
+            let visibility = $( "#WeatherStationsDropdown" ).css( "visibility");
+            let display = $( "#WeatherStationsDropdown" ).css( "display");
             if($(this).is(":checked")){
-                $( "#weather-dropdowndiv" ).css( "visibility", "visible" );
-                $( "#weather-dropdowndiv" ).css( "display", "block");
+                $( "#WeatherStationsDropdown" ).css( "visibility", "visible" );
+                $( "#WeatherStationsDropdown" ).css( "display", "block");
             }
             else if($(this).is(":not(:checked)")){
-                $( "#weather-dropdowndiv" ).css( "visibility", "visible" );
-                $( "#weather-dropdowndiv" ).css( "display", "block");
+                $( "#WeatherStationsDropdown" ).css( "visibility", "visible" );
+                $( "#WeatherStationsDropdown" ).css( "display", "block");
             }
         });
 
