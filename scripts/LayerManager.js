@@ -303,20 +303,31 @@ define([
         ]
 
         let agrosphereDropdown = $("#agrosphereDropdown");
+        let weatherDropdown = $("#WeatherStationsDropdown");
+        let cropsDropdown = $("#CropsDropdown");
+        let agrodiv = $("#agrosphere-dropdowndiv")
 
         let agrosphereOptions = $('<button class="btn btn-info btn-block agrotoggle" type="button" data-toggle="">Agrosphere<span class="caret"></span></button>');
 
         agrosphereDropdown.append(agrosphereOptions);
 
-        let ulItem3 = $('<div id="agrosphere-dropdowndiv" class="" style="visibility: hidden; display: none">');
+        let ulItem3 = $('<div id="agrosphere-dropdowndiv" style="visibility: hidden; display: none">');
         agrosphereDropdown.append(ulItem3);
 
         for (let i = 0; i < agrosphereCat.length; i++) {
             let agrosphereItem = $('<p style="display: block;"' +' id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
                 '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch">'+
                 '  <span class="slider round"></span>\n' +
-                '</label>');
+                '</label><div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none"></div>'); //'<div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none">'+
             ulItem3.append(agrosphereItem);
+
+            // if (agrosphereCat[i] === "Crops") {
+            //     agrodiv.append(agrosphereItem)
+            // } else if (agrosphereCat[i] === "Countries") {
+            //
+            // } else if (agrosphereCat[i] === "WeatherStations") {
+            //     agrodiv.append(agrosphereItem)
+            // } else{}
         }
 
         ulItem3 = $('</div>');
@@ -333,54 +344,47 @@ define([
             'Yield'
         ]
 
-        let cropsDropdown = $("#cropsDropdown");
 
-        let cropsOptions = $("#Crops-switch");
-
-        cropsDropdown.append(cropsOptions);
-
-        let ulItem4 = $('<div id="crops-dropdowndiv" class="cropssubmenu" style="visibility: hidden; display: none">');
-        cropsDropdown.append(ulItem4);
+        // let ulItem4 = $('');
+        // cropsDropdown.append(ulItem4);
 
         for (let i = 0; i < cropsmenu.length; i++) {
             let cropsItem = $('<p style="display: block;"' +' id="'+ cropsmenu[i] + '-text">'+ cropsmenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ cropsmenu[i] + '">' +
                 '  <input type="checkbox" id="' + cropsmenu[i] + '-switch"'+ ' class="cropscheckbox">' +
                 '  <span class="slider round"></span>\n' +
                 '</label>');
-            ulItem4.append(cropsItem);
+            cropsDropdown.append(cropsItem);
         }
 
-        ulItem4 = $('</div>');
-        cropsDropdown.append(ulItem4);
+        // ulItem4 = $('</div>');
+        // cropsDropdown.append(ulItem4);
 
         //Weatherstation Menu
-        let weathermenu = [
-            'GraphsandWeather',
-            'YearlyTemperature',
-            'MonthlyTemperature',
-            'YearlyPrecipitation',
-            'MonthlyPrecipitation'
-        ]
-
-        let weatherDropdown = $("#weatherDropdown");
-
-        let weatherOptions = $('<button class="btn btn-info btn-block weathertoggle" type="button" data-toggle="">Weather Station<span class="caret"></span></button>');
-
-        weatherDropdown.append(weatherOptions);
-
-        let ulItem5 = $('<div id="weather-dropdowndiv" class="" style="visibility: hidden; display: none">');
-        weatherDropdown.append(ulItem5);
-
-        for (let i = 0; i < weathermenu.length; i++) {
-            let weatherItem = $('<p style="display: block;"' +' id="'+ weathermenu[i] + '-text">'+ weathermenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
-                '  <input type="checkbox" id="' + weathermenu[i] + '-switch">'+
-                '  <span class="slider round"></span>\n' +
-                '</label>');
-            ulItem5.append(weatherItem);
-        }
-
-        ulItem4 = $('</div>');
-        cropsDropdown.append(ulItem4);
+        // let weathermenu = [
+        //     'GraphsandWeather',
+        //     'YearlyTemperature',
+        //     'MonthlyTemperature',
+        //     'YearlyPrecipitation',
+        //     'MonthlyPrecipitation'
+        // ]
+        //
+        // let weatherOptions = $('#WeatherStations-switch');
+        //
+        // weatherDropdown.append(weatherOptions);
+        //
+        // let ulItem5 = $('<div id="weather-dropdowndiv" class="" style="visibility: hidden; display: none">');
+        // weatherDropdown.append(ulItem5);
+        //
+        // for (let i = 0; i < weathermenu.length; i++) {
+        //     let weatherItem = $('<p style="display: block;"' +' id="'+ weathermenu[i] + '-text">'+ weathermenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
+        //         '  <input type="checkbox" id="' + weathermenu[i] + '-switch">'+
+        //         '  <span class="slider round"></span>\n' +
+        //         '</label>');
+        //     ulItem5.append(weatherItem);
+        // }
+        //
+        // ulItem5 = $('</div>');
+        // cropsDropdown.append(ulItem5);
 
 
     };
