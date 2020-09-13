@@ -89,6 +89,7 @@ define([
             } else {
                 $( "#agrosphere-dropdowndiv" ).css( "visibility", "hidden" );
                 $( "#agrosphere-dropdowndiv" ).css( "display", "none");
+                $( ".agroswitch" ).prop( "checked", false );
             }
         });
 
@@ -100,6 +101,7 @@ define([
             else if($(this).is(":not(:checked)")){
                 $( "#CropsDropdown" ).css( "visibility", "hidden" );
                 $( "#CropsDropdown" ).css( "display", "none");
+                $( ".cropscheckbox" ).prop( "checked", false );
             }
         });
 
@@ -110,7 +112,9 @@ define([
             }
             else if($(this).is(":not(:checked)")){
                 $( "#CountriesDropdown" ).css( "visibility", "hidden" );
-                $( "#CountriesDropdown" ).css( "display", "none");            }
+                $( "#CountriesDropdown" ).css( "display", "none");
+                $( ".countrycheckbox" ).prop( "checked", false );
+            }
         });
 
         $("#WeatherStations-switch").click(function(){
@@ -121,6 +125,7 @@ define([
             else if($(this).is(":not(:checked)")){
                 $( "#WeatherStationsDropdown" ).css( "visibility", "hidden" );
                 $( "#WeatherStationsDropdown" ).css( "display", "none");
+                $( ".weathercheckbox" ).prop( "checked", true );
             }
         });
     }

@@ -313,7 +313,7 @@ define([
 
         for (let i = 0; i < agrosphereCat.length; i++) {
             let agrosphereItem = $('<p style="display: block;"' +' id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '<label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
-                '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch">'+
+                '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch" class="agroswitch">'+
                 '  <span class="slider round"></span>\n' +
                 '</label>' + '</p>'+ '<div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none"></div><br><br><br>');
             ulItem3.append(agrosphereItem);
