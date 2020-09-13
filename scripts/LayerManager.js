@@ -295,10 +295,11 @@ define([
         ulItem2 = $('</ul>');
         diseaseDropdown.append(ulItem2);
 
+        //Agrosphere Menu
         let agrosphereCat = [
             'Crops',
             'Countries',
-            'Weather Stations'
+            'WeatherStations'
         ]
 
         let agrosphereDropdown = $("#agrosphereDropdown");
@@ -312,7 +313,7 @@ define([
 
         for (let i = 0; i < agrosphereCat.length; i++) {
             let agrosphereItem = $('<p style="display: block;"' +'id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] + '</p>'+ '<label class="switch" style="display: block;"'+'id="label-'+ agrosphereCat[i] + '">' +
-                '  <input type="checkbox">\n' +
+                '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch">'+
                 '  <span class="slider round"></span>\n' +
                 '</label>');
             ulItem3.append(agrosphereItem);
@@ -320,6 +321,70 @@ define([
 
         ulItem3 = $('</div>');
         agrosphereDropdown.append(ulItem3);
+
+        //Crops Menu
+        let cropsmenu = [
+            'Production',
+            'Price',
+            'Livestock',
+            'Emissions',
+            'Pesticides',
+            'Fertilizer',
+            'Yield'
+        ]
+
+        let cropsDropdown = $("#cropsDropdown");
+
+        let cropsOptions = $('<button class="btn btn-info btn-block cropstoggle" type="button" data-toggle="">Crops<span class="caret"></span></button>');
+
+        cropsDropdown.append(cropsOptions);
+
+        let ulItem4 = $('<div id="crops-dropdowndiv" class="cropssubmenu" style="visibility: hidden; display: none">');
+        cropsDropdown.append(ulItem4);
+
+        for (let i = 0; i < cropsmenu.length; i++) {
+            let cropsItem = $('<p style="display: block;"' +'id="'+ cropsmenu[i] + '-text">'+ cropsmenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+'id="label-'+ cropsmenu[i] + '">' +
+                '  <input type="checkbox" id="' + cropsmenu[i] + '-switch"'+ 'class="cropscheckbox">' +
+                '  <span class="slider round"></span>\n' +
+                '</label>');
+            ulItem4.append(cropsItem);
+        }
+
+        ulItem4 = $('</div>');
+        cropsDropdown.append(ulItem4);
+
+        //Weatherstation Menu
+        let weathermenu = [
+            'Production',
+            'Price',
+            'Livestock',
+            'Emissions',
+            'Pesticides',
+            'Fertilizer',
+            'Yield'
+        ]
+
+        let weatherDropdown = $("#weatherDropdown");
+
+        let weatherOptions = $('<button class="btn btn-info btn-block weathertoggle" type="button" data-toggle="">Weather Station<span class="caret"></span></button>');
+
+        weatherDropdown.append(weatherOptions);
+
+        let ulItem5 = $('<div id="weather-dropdowndiv" class="" style="visibility: hidden; display: none">');
+        weatherDropdown.append(ulItem5);
+
+        for (let i = 0; i < weathermenu.length; i++) {
+            let weatherItem = $('<p style="display: block;"' +'id="'+ weathermenu[i] + '-text">'+ weathermenu[i] + '</p>'+ '<label class="switch" style="display: block;"'+'id="label-'+ weathermenu[i] + '">' +
+                '  <input type="checkbox" id="' + weathermenu[i] + '-switch">'+
+                '  <span class="slider round"></span>\n' +
+                '</label>');
+            ulItem5.append(weatherItem);
+        }
+
+        ulItem4 = $('</div>');
+        cropsDropdown.append(ulItem4);
+
+
     };
 
     LayerManager.prototype.onSearchButton = function (event) {

@@ -92,6 +92,42 @@ define([
             }
         });
 
+        $("#Crops-switch").click(function(){
+            let visibility = $( "#crops-dropdowndiv" ).css( "visibility");
+            let display = $( "#crops-dropdowndiv" ).css( "display");
+            if($(this).is(":checked")){
+                $( "#crops-dropdowndiv" ).css( "visibility", "visible" );
+                $( "#crops-dropdowndiv" ).css( "display", "block");
+            }
+            else if($(this).is(":not(:checked)")){
+                $( "#crops-dropdowndiv" ).css( "visibility", "visible" );
+                $( "#crops-dropdowndiv" ).css( "display", "block");
+            }
+        });
+
+        $("#Countries-switch").click(function(){
+            if($(this).is(":checked")){
+                console.log("Checkbox is checked.");
+            }
+            else if($(this).is(":not(:checked)")){
+                console.log("Checkbox is unchecked.");
+            }
+        });
+
+        $("#WeatherStations-switch").click(function(){
+            let visibility = $( "#weather-dropdowndiv" ).css( "visibility");
+            let display = $( "#weather-dropdowndiv" ).css( "display");
+            if($(this).is(":checked")){
+                $( "#weather-dropdowndiv" ).css( "visibility", "visible" );
+                $( "#weather-dropdowndiv" ).css( "display", "block");
+            }
+            else if($(this).is(":not(:checked)")){
+                $( "#weather-dropdowndiv" ).css( "visibility", "visible" );
+                $( "#weather-dropdowndiv" ).css( "display", "block");
+            }
+        });
+
+
         // $(".agrodropdown").on("show.bs.dropdown", function() {
         //     let $btnDropDown = $(this).find(".dropdown-toggle");
         //     let $listHolder = $(this).find(".dropdown-menu");
