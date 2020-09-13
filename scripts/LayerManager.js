@@ -303,8 +303,6 @@ define([
         ]
 
         let agrosphereDropdown = $("#agrosphereDropdown");
-        let cropsDropdown = $("#CropsDropdown");
-        let weatherDropdown = $("#WeatherStationsDropdown");
 
         let agrosphereOptions = $('<button class="btn btn-info btn-block agrotoggle" type="button" data-toggle="">Agrosphere<span class="caret"></span></button>');
 
@@ -325,6 +323,9 @@ define([
         agrosphereDropdown.append(ulItem3);
 
         //Crops Menu
+
+        let cropsDropdown = $("#CropsDropdown");
+
         let cropsmenu = [
             'Production',
             'Price',
@@ -343,9 +344,10 @@ define([
             cropsDropdown.append(cropsItem);
         }
 
-
-
         //Weatherstation Menu
+
+        let weatherDropdown = $("#WeatherStationsDropdown");
+
         let weathermenu = [
             'GraphsandWeather',
             'YearlyTemperature',
