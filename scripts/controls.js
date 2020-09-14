@@ -90,6 +90,9 @@ define([
                 $( "#agrosphere-dropdowndiv" ).css( "visibility", "hidden" );
                 $( "#agrosphere-dropdowndiv" ).css( "display", "none");
                 $( ".agroswitch" ).prop( "checked", false );
+                $( ".cropscheckbox" ).prop( "checked", false );
+                $( ".countrycheckbox" ).prop( "checked", false );
+                $( ".weathercheckbox" ).prop( "checked", true );
             }
         });
 
