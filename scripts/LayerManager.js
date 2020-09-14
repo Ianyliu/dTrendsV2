@@ -601,10 +601,10 @@ define([
         ]
 
         for (let i = 0; i < countrymenu.length; i++) {
-            let countryItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ countrymenu[i] + '">' +
+            let countryItem = $('<br><label class="switch" style="display: block; text-align:center;"'+' id="label-'+ countrymenu[i] + '">' +
                 '  <input type="checkbox" id="' + countrymenu[i] + '-switch"'+ ' class="countrycheckbox">' +
                 '  <span class="slider round"></span>' +
-                '<span style="margin-left: 40px" id="' + countrymenu[i] + '">' + countrymenu[i] + '</span><br></label><br><br>');
+                '<span style="margin-left: 40px;" id="' + countrymenu[i] + '">' + countrymenu[i] + '</span><br></label><br><br><br><br><br><br><br>');
             countryDropdown.append(countryItem);
         }
 
@@ -624,7 +624,7 @@ define([
             let weatherItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
                 '  <input type="checkbox" id="' + weathermenu[i] + '-switch"'+ ' class="weathercheckbox">' +
                 '  <span class="slider round"></span>\n' +
-                '<span style="margin-left: 40px" id="' + weathermenu[i] + '">' + weathermenu[i] + '</span></label><br><br><br><br><br>');
+                '<span style="margin-left: 40px" id="' + weathermenu[i] + '">' + weathermenu[i] + '</span></label><br><br><br>');
             weatherDropdown.append(weatherItem);
         }
 
