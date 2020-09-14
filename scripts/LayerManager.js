@@ -312,10 +312,10 @@ define([
         agrosphereDropdown.append(ulItem3);
 
         for (let i = 0; i < agrosphereCat.length; i++) {
-            let agrosphereItem = $('<label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
+            let agrosphereItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ agrosphereCat[i] + '">' +
                 '  <input type="checkbox" id="' + agrosphereCat[i] + '-switch" class="agroswitch">'+
                 '<span class="slider round">' +
-                '<span style="margin-left: 40px" id="' + agrosphereCat[i] + '">' + agrosphereCat[i] + '</span></label>' + '<div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none"></div><br><br><br>');
+                '<span style="margin-left: 40px" id="' + agrosphereCat[i] + '">' + agrosphereCat[i] + '</span></label>' + '<div id ="' + agrosphereCat[i]+ 'Dropdown" style="visibility: hidden; display: none"></div><br>');
             ulItem3.append(agrosphereItem);//'<p style="display: block;"' +' id="'+ agrosphereCat[i] + '-text">'+ agrosphereCat[i] +
                     }
 
@@ -337,10 +337,10 @@ define([
         ]
 
         for (let i = 0; i < cropsmenu.length; i++) {
-            let cropsItem = $('<label class="switch" style="display: block;"'+' id="label-'+ cropsmenu[i] + '">' +
+            let cropsItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ cropsmenu[i] + '">' +
                 '  <input type="checkbox" id="' + cropsmenu[i] + '-switch"'+ ' class="cropscheckbox">' +
                 '  <span class="slider round"></span>' +
-                '<span style="margin-left: 40px" id="' + cropsmenu[i] + '">' + cropsmenu[i] + '</span></label><br><br><br>');
+                '<span style="margin-left: 40px" id="' + cropsmenu[i] + '">' + cropsmenu[i] + '</span></label><br>');
             cropsDropdown.append(cropsItem);
         }
 
@@ -601,10 +601,10 @@ define([
         ]
 
         for (let i = 0; i < countrymenu.length; i++) {
-            let countryItem = $('<label class="switch" style="display: block;"'+' id="label-'+ countrymenu[i] + '">' +
+            let countryItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ countrymenu[i] + '">' +
                 '  <input type="checkbox" id="' + countrymenu[i] + '-switch"'+ ' class="countrycheckbox">' +
                 '  <span class="slider round"></span>' +
-                '<span style="margin-left: 40px" id="' + countrymenu[i] + '">' + countrymenu[i] + '</span></label><br><br><br>');
+                '<span style="margin-left: 40px" id="' + countrymenu[i] + '">' + countrymenu[i] + '</span></label><br>');
             countryDropdown.append(countryItem);
         }
 
@@ -621,10 +621,10 @@ define([
         ]
 
         for (let i = 0; i < weathermenu.length; i++) {
-            let weatherItem = $('<label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
+            let weatherItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
                 '  <input type="checkbox" id="' + weathermenu[i] + '-switch"'+ ' class="weathercheckbox">' +
                 '  <span class="slider round"></span>\n' +
-                '<span style="margin-left: 40px" id="' + agrosphereCat[i] + '">' + agrosphereCat[i] + '</span></label><br><br><br>');
+                '<span style="margin-left: 40px" id="' + agrosphereCat[i] + '">' + agrosphereCat[i] + '</span></label><br><br>');
             weatherDropdown.append(weatherItem);
         }
 
