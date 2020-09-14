@@ -340,7 +340,7 @@ define([
             let cropsItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ cropsmenu[i] + '">' +
                 '  <input type="checkbox" id="' + cropsmenu[i] + '-switch"'+ ' class="cropscheckbox">' +
                 '  <span class="slider round"></span>' +
-                '<span style="margin-left: 40px" id="' + cropsmenu[i] + '">' + cropsmenu[i] + '</span></label><br>');
+                '<span style="margin-left: 40px; position:relative;" id="' + cropsmenu[i] + '">' + cropsmenu[i] + '</span></label><br><br>');
             cropsDropdown.append(cropsItem);
         }
 
@@ -604,7 +604,7 @@ define([
             let countryItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ countrymenu[i] + '">' +
                 '  <input type="checkbox" id="' + countrymenu[i] + '-switch"'+ ' class="countrycheckbox">' +
                 '  <span class="slider round"></span>' +
-                '<span style="margin-left: 40px" id="' + countrymenu[i] + '">' + countrymenu[i] + '</span><br></label><br>');
+                '<span style="margin-left: 40px" id="' + countrymenu[i] + '">' + countrymenu[i] + '</span><br></label><br><br>');
             countryDropdown.append(countryItem);
         }
 
@@ -624,7 +624,7 @@ define([
             let weatherItem = $('<br><label class="switch" style="display: block;"'+' id="label-'+ weathermenu[i] + '">' +
                 '  <input type="checkbox" id="' + weathermenu[i] + '-switch"'+ ' class="weathercheckbox">' +
                 '  <span class="slider round"></span>\n' +
-                '<span style="margin-left: 40px" id="' + weathermenu[i] + '">' + weathermenu[i] + '</span></label><br><br>');
+                '<span style="margin-left: 40px" id="' + weathermenu[i] + '">' + weathermenu[i] + '</span></label><br><br><br><br><br>');
             weatherDropdown.append(weatherItem);
         }
 

@@ -89,6 +89,12 @@ define([
             } else {
                 $( "#agrosphere-dropdowndiv" ).css( "visibility", "hidden" );
                 $( "#agrosphere-dropdowndiv" ).css( "display", "none");
+                $( "#CropsDropdown" ).css( "visibility", "hidden" );
+                $( "#CropsDropdown" ).css( "display", "none");
+                $( "#CountriesDropdown" ).css( "visibility", "hidden" );
+                $( "#CountriesDropdown" ).css( "display", "none");
+                $( "#WeatherStationsDropdown" ).css( "visibility", "hidden" );
+                $( "#WeatherStationsDropdown" ).css( "display", "none");
                 $( ".agroswitch" ).prop( "checked", false );
                 $( ".cropscheckbox" ).prop( "checked", false );
                 $( ".countrycheckbox" ).prop( "checked", false );
