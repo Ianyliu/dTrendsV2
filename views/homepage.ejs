@@ -7,7 +7,7 @@
     <meta charset="utf-8"/>
     <title>AWB Disease Trends</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<!--    <link rel="icon" href="/images/download%20(2).jpeg">-->
+    <!--    <link rel="icon" href="/images/download%20(2).jpeg">-->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900' rel='stylesheet' type='text/css'>
@@ -18,17 +18,19 @@
     <link rel="stylesheet" href="css/stylesheet1.css"/>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"><!--    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
-    <link rel="stylesheet" type="text/css" href="css/Chart.css"><!--    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
-<!--    <script data-require="angular.js@1.6.0" data-semver="1.6.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>-->
-<!--    <script data-require="ui-bootstrap@*" data-semver="2.2.0" src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-2.2.0.js"></script>-->
-<!--    <link rel="stylesheet" href="css/rzslider.css" />-->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!--    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="css/Chart.css">
+    <!--    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
+    <!--    <script data-require="angular.js@1.6.0" data-semver="1.6.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>-->
+    <!--    <script data-require="ui-bootstrap@*" data-semver="2.2.0" src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-2.2.0.js"></script>-->
+    <!--    <link rel="stylesheet" href="css/rzslider.css" />-->
     <script src="3rdPartyLibs/jquery-3.3.1.min.js" type="text/javascript"></script>
-<!--    <script src="https://www.google.com/recaptcha/api.js?render=6Ld7fq8UAAAAAOv8ZEiVj6P972pR_Vf3ko5R0JB_"></script>-->
+    <!--    <script src="https://www.google.com/recaptcha/api.js?render=6Ld7fq8UAAAAAOv8ZEiVj6P972pR_Vf3ko5R0JB_"></script>-->
     <script src="//cdn.jsdelivr.net/npm/flatpickr"></script>
-<!--    <script src="3rdPartyLibs/build/WorldWind-built.js"></script>-->
-<!--    <script src="https://code.jquery.com/jquery-2.1.1.js"></script>-->
-<!--    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>-->
+    <!--    <script src="3rdPartyLibs/build/WorldWind-built.js"></script>-->
+    <!--    <script src="https://code.jquery.com/jquery-2.1.1.js"></script>-->
+    <!--    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>-->
 
     <!-- plus a jQuery UI theme, here I use "flick" -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
@@ -40,13 +42,16 @@
     <script src="3rdPartyLibs/dateformat.min.js"></script>
     <script type="text/javascript" src="scripts/ui_controls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
-<!--    <script src="scripts/customPL_Worker.js"></script>-->
-<!--    <script data-main="../scripts/Home"></script>-->
+    <!--    <script src="scripts/customPL_Worker.js"></script>-->
+    <!--    <script data-main="../scripts/Home"></script>-->
     <script data-main="../scripts/Home" src="3rdPartyLibs/requirejs-2.3.6.min.js"></script>
 
     <style>
-        body {padding-bottom: 80px}
-/**/
+        body {
+            padding-bottom: 80px
+        }
+
+        /**/
         .switch {
             position: relative;
             display: inline-block;
@@ -102,7 +107,8 @@
         .slider.round {
             border-radius: 17px;
         }
-/**/
+
+        /**/
         .slider.round:before {
             border-radius: 50%;
         }
@@ -134,24 +140,28 @@
             background-color: #57b6b7;
             color: white;
         }
+
         #navControls {
             background-color: #0db9f0;
             color: white;
         }
+
         #navControls:hover {
             background-color: #0D8BBD;
             color: white;
         }
+
         #clear, #stopTL:hover {
             background-color: #b71926;
             color: white;
         }
+
         #stopTL {
             background-color: grey;
         }
 
         .log-form {
-            font-size : 18px;
+            font-size: 18px;
         }
 
         .box1 {
@@ -174,15 +184,17 @@
             width: 7px;
         }
 
-        #accordion::-webkit-scrollbar-corner  {
+        #accordion::-webkit-scrollbar-corner {
             display: block;
         }
+
         .highlight {
             border: 1px solid blue;
         }
 
         .alert alert-danger {
         }
+
         .popup-group {
             position: fixed;
             top: 0;
@@ -193,32 +205,45 @@
             display: none
 
         }
-        .popupBoxWrapper{
-            width: 600px; margin: 50px auto; text-align: left; max-height:800px; overflow-y: auto;
+
+        .popupBoxWrapper {
+            width: 600px;
+            margin: 50px auto;
+            text-align: left;
+            max-height: 800px;
+            overflow-y: auto;
         }
-        .popupBoxContent{
-            background-color: #FFF; padding: 25px; width:100%;
+
+        .popupBoxContent {
+            background-color: #FFF;
+            padding: 25px;
+            width: 100%;
 
         }
+
         .popup-Header {
             padding: 10px 16px;
             background-color: #84c77d;
             color: white;
         }
+
         .close {
             color: red;
             float: right;
             font-size: 38px;
             font-weight: bold;
         }
-        .popup-Body {padding: 2px 16px;}
+
+        .popup-Body {
+            padding: 2px 16px;
+        }
 
         #capsWarning {
             color: red;
             text-align: center;
         }
 
-        #layers-toggle{
+        #layers-toggle {
             position: absolute;
             top: 417px;
             left: 330px;
@@ -251,7 +276,8 @@
 </head>
 <body>
 
-<ul class="tab" style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
+<ul class="tab"
+    style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
     <li><a class="tablinksLeft logo" title="Info"><strong>AWB Disease Trends</strong></a></li>
     <li>
         <a class="tablinksLeft" onclick="openTabLeft(event, 'controls')" title="Controls">
@@ -283,15 +309,19 @@
 </ul>
 <div class="container">
     <div class="col-sm-8" id="globe">
-        <canvas id="canvasOne" width="1920" height="1080" style="position: fixed; left: 0; top: 38px; width: 100%; height: 100%; background-color: black;">
+        <canvas id="canvasOne" width="1920" height="1080"
+                style="position: fixed; left: 0; top: 38px; width: 100%; height: 100%; background-color: black;">
             Your browser does not support HTML5 Canvas.
         </canvas>
 
         <div style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;">
             <h4 id="labelSlider" style="color: white; display: inline-block;">Date Slider:</h4>
-            <h4 id="labelRangeSlider" style="color: white; display: none;">Date Range Selector (select slider min/max dates):</h4>
-            <input type="text" readonly id="amount"  style="display: inline-block; border: 0; color: white; background-color: transparent">
-            <input type="text" readonly id="amount2"  style="width: 250px; display: none; border: 0; color: white; background-color: transparent">
+            <h4 id="labelRangeSlider" style="color: white; display: none;">Date Range Selector (select slider min/max
+                dates):</h4>
+            <input type="text" readonly id="amount"
+                   style="display: inline-block; border: 0; color: white; background-color: transparent">
+            <input type="text" readonly id="amount2"
+                   style="width: 250px; display: none; border: 0; color: white; background-color: transparent">
             <span id="filter" class="glyphicon glyphicon-list btn" style="float: right; color: white"></span>
             <span id="edit" class="glyphicon glyphicon-pencil btn" style="float: right; color: white"></span>
             <div id="slider-range"></div>
@@ -306,9 +336,9 @@
                         <span class="close" id="closeIt">&times;</span>
                     </div>
                     <!-- Popup Box Body-->
-                    <div class="popup-Body chart-container" id="popupBody" >
-<!--                    <div class="popup-Body chart-container" id="popupBody">-->
-<!--                        <canvas id = "stackedChart" style="background:#fff; height:200px;"></canvas>-->
+                    <div class="popup-Body chart-container" id="popupBody">
+                        <!--                    <div class="popup-Body chart-container" id="popupBody">-->
+                        <!--                        <canvas id = "stackedChart" style="background:#fff; height:200px;"></canvas>-->
                     </div>
                     <!--Popup Box Footer-->
                     <div class="popup-Footer">
@@ -318,7 +348,8 @@
         </div>
 
         <div id="dialogDateRange" title="Date Range Confirmation">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Are you sure you would like to select these dates?</p>
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Are you sure you
+                would like to select these dates?</p>
 
             <div class="form-group">
                 <div class="row">
@@ -333,7 +364,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-2 push-md-10">
-                        <h5 >To:</h5></div>
+                        <h5>To:</h5></div>
                     <div class="col-md-10 pull-md-2">
                         <input id="drTo" class="date form-control filterTo todatepicker" style="color:#000000; background: white;
                     display: block">
@@ -344,7 +375,9 @@
         </div>
 
         <div id="dialog" title="Filter Options">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could take a long time.</p>
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the
+                date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could
+                take a long time.</p>
 
             <div class="form-group">
                 <div class="row">
@@ -401,7 +434,8 @@
                 </div>
             </div>
 
-            <input type="checkbox" id="fullLoad" style="display: inline-block"><p style="display: inline-block; margin-left: 10px"><strong>Full Load (all days will be loaded)</strong></p>
+            <input type="checkbox" id="fullLoad" style="display: inline-block">
+            <p style="display: inline-block; margin-left: 10px"><strong>Full Load (all days will be loaded)</strong></p>
         </div>
     </div>
 
@@ -422,7 +456,9 @@
         <div class="dropdown" id="continentList" style="height: 10px">
         </div>
         <hr>
-        <h5>Layers <span id="refresh" class="glyphicon glyphicon-refresh btn"></span><span id="clear" class="glyphicon glyphicon-trash btn"></span>  <span id="navControls" class="glyphicon glyphicon-adjust btn"></span></h5>
+        <h5>Layers <span id="refresh" class="glyphicon glyphicon-refresh btn"></span><span id="clear"
+                                                                                           class="glyphicon glyphicon-trash btn"></span>
+            <span id="navControls" class="glyphicon glyphicon-adjust btn"></span></h5>
         <div class="list-group" id="layerList">
         </div>
         <hr>
@@ -439,21 +475,12 @@
     <div id="controls" class="col-sm-2 tabcontentLeft leftTabPadding"
          style="font-size: 12px !important; padding-bottom: 5% !important;">
         <h5>Disease Projection</h5>
-        <div class="dropdown" id="diseaseDropdown" style="height: 10px">
-        </div>
+        <div class="dropdown" id="diseaseDropdown" style="height: 10px"></div>
         <br><br><br><br>
         <h5>Famine and Food Projection</h5>
-        <div class="dropdown" id="agrosphereDropdown" style="height: 10px">
-<!--            <div class="dropdown" id="cropsDropdown" style="height: 10px">-->
-<!--            </div>-->
-<!--            <br><br><br><br>-->
-<!--            <div class="dropdown" id="countriesDropdown" style="height: 10px">-->
-<!--            </div>-->
-<!--            <br><br><br><br>-->
-<!--            <div class="dropdown" id="weatherDropdown" style="height: 10px">-->
-<!--            </div>-->
-<!--            <br><br><br><br>-->
-        </div>
+        <div class="dropdown" id="agrosphereDropdown" style="height: 10px"></div>
+        <br><br>
+        <div class="panel-group" id="accordion" style="width: 280px; height: 380px; overflow: scroll"></div>
         <br><br><br><br>
 
         <!---<a href="https://worldwind.arc.nasa.gov/agrosphere/" class="btn btn-info btn-block" type="button">Agrosphere<span class="caret"></span></a>--->
@@ -462,12 +489,12 @@
     <div id="drawing" class="col-sm-2 tabcontentLeft leftTabPadding"
          style="font-size: 12px !important; padding-bottom: 5% !important;">
         <h5>Timelapse of Coronavirus:</h5>
-<!--        <div style="height: 10px">-->
+        <!--        <div style="height: 10px">-->
         <button id="toggleTL" class="btn btn-primary" type="button">START</button>
         <button id="playTL" class="btn btn-primary" style="display: none" type="button">PLAY</button>
         <button id="pauseTL" class="btn btn-primary" style="display: none" type="button">PAUSE</button>
         <button id="stopTL" class="btn btn-primary" style="display: inline-block;" type="button">STOP</button>
-<!--        </div>-->
+        <!--        </div>-->
 
         <div class="form-group">
             <div class="row">
@@ -505,7 +532,8 @@
             <div class="input-group" id="annotationBox" style="width: 100%;text-align: center;align-content: center;">
                 <div class="smallRule">
                     <h5 id="titleCategory"><strong>Highest Infections (lowest to highest)</strong></h5>
-                    <div id="hInfectionSlider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
+                    <div id="hInfectionSlider"
+                         class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
                          style="width: 100%;">
                         <div class="ui-slider-range ui-widget-header ui-corner-all"
                              style="left: 61.4286%; width: 38.5714%;"></div>
@@ -530,32 +558,34 @@
         </div>
     </div>
 
-    <div id="information" class="col-sm-2 tabcontentRight" style="ps-container: ps-theme-default ps-active; font-size: 12px;width: 25% !important;">
+    <div id="information" class="col-sm-2 tabcontentRight"
+         style="ps-container: ps-theme-default ps-active; font-size: 12px;width: 25% !important;">
         <hr>
-        <h3 style="text-align: center; font-size: 20px !important;"><em><strong>CV-19 Pandemic: Returning to A Better Tomorrow</strong></em></h3>
+        <h3 style="text-align: center; font-size: 20px !important;"><em><strong>CV-19 Pandemic: Returning to A Better
+                    Tomorrow</strong></em></h3>
         <hr>
         <h4 style="text-align: center">The Plan</h4>
         <p style="text-align: justify">
-                During this time of great international need and severe personal difficulty, our goal for
-                returning to a better tomorrow is to provide Covid-19 pandemic solutions. These
-                solutions will be highly adaptable web apps, designed in response to the pandemic, and
-                referred to here as Covid Toolkits.
+            During this time of great international need and severe personal difficulty, our goal for
+            returning to a better tomorrow is to provide Covid-19 pandemic solutions. These
+            solutions will be highly adaptable web apps, designed in response to the pandemic, and
+            referred to here as Covid Toolkits.
         </p>
         <p style="text-align: justify">
-                By involving a cross-section of world-class technology experts and solutions providers,
-                we will maximize this international collaborative effort. These Covid Toolkits will
-                powerfully reveal our Covid state-of-the-world. This will allow the world to better
-                understand our actual circumstance.
+            By involving a cross-section of world-class technology experts and solutions providers,
+            we will maximize this international collaborative effort. These Covid Toolkits will
+            powerfully reveal our Covid state-of-the-world. This will allow the world to better
+            understand our actual circumstance.
         </p>
         <p style="text-align: justify">
-                This will include trend analyses, via dynamic and interactive web app visualizations,
-                along with future projected scenarios shown at planetary scale. Our purpose, to
-                dramatically increase the efficacy of any strategic response. This will inspire the world
-                to recognize how much we are in this together.
+            This will include trend analyses, via dynamic and interactive web app visualizations,
+            along with future projected scenarios shown at planetary scale. Our purpose, to
+            dramatically increase the efficacy of any strategic response. This will inspire the world
+            to recognize how much we are in this together.
         </p>
         <p style="text-align: justify">
-                To that end, UNITAR, FAO, the World Bank, Thales, Sinergise, Strategic News
-                Service, AWorldBridge and others will design and build a suite of Covid Toolkits.
+            To that end, UNITAR, FAO, the World Bank, Thales, Sinergise, Strategic News
+            Service, AWorldBridge and others will design and build a suite of Covid Toolkits.
         </p>
         <hr>
         <h4 style="text-align: center"><strong>Covid Toolkit Priorities</strong></h4>
@@ -564,17 +594,17 @@
         </p>
 
         <p style="text-align: justify;">
-        <strong>Priority 1, Severity &amp; Capacity:</strong> Key issues to be addressed will be trend analyses of
-        infection and resultant impact to medical supply chain and vulnerability thereof.
-        Mapping geographic region and medical facilities, with tracking of human infection rate
-        and regional ability to respond. Our over-arching goal is to most effectively respond to
-        the medical priorities of hospitalization resources, testing and case monitoring.
+            <strong>Priority 1, Severity &amp; Capacity:</strong> Key issues to be addressed will be trend analyses of
+            infection and resultant impact to medical supply chain and vulnerability thereof.
+            Mapping geographic region and medical facilities, with tracking of human infection rate
+            and regional ability to respond. Our over-arching goal is to most effectively respond to
+            the medical priorities of hospitalization resources, testing and case monitoring.
         </p>
         <p style="text-align: justify;">
-        <strong>Priority 2, Food Security &amp; Economy:</strong> Food security (agriculture) will become an
-        urgent continental-scale concern, especially in third-world areas. Economic instability
-        (poverty) and attendant geopolitical consequences will be exacerbated. Earth is already
-        witnessing internal and international migrations and increasing geopolitical violence.
+            <strong>Priority 2, Food Security &amp; Economy:</strong> Food security (agriculture) will become an
+            urgent continental-scale concern, especially in third-world areas. Economic instability
+            (poverty) and attendant geopolitical consequences will be exacerbated. Earth is already
+            witnessing internal and international migrations and increasing geopolitical violence.
         </p>
         <h5><strong>I. Priority 1 Goals: <i>Severity &amp; Capacity</i></strong></h5>
         <p style="padding-left: 5%"><strong>a. <i>Covid-19 Severity:</i></strong></p>
@@ -647,7 +677,8 @@
 
         <ol type="1">
             <li style="text-align: justify;">
-                <strong>Famines of Biblical Scale Increasing:</strong> <a href="https://www.theguardian.com/global-development/2020/apr/21/coronavirus-pandemic-will-cause-famine-of-biblical-proportions">https://www.theguardian.com/global-development/2020/apr/21/coronavirus-pandemic-will-cause-famine-of-biblical-proportions</a>
+                <strong>Famines of Biblical Scale Increasing:</strong> <a
+                        href="https://www.theguardian.com/global-development/2020/apr/21/coronavirus-pandemic-will-cause-famine-of-biblical-proportions">https://www.theguardian.com/global-development/2020/apr/21/coronavirus-pandemic-will-cause-famine-of-biblical-proportions</a>
             </li>
             <li style="text-align: justify">
                 Estimate crop productivity for the upcoming season using historical and real-
@@ -689,7 +720,8 @@
 
         <h4 style="text-align: center"><strong><i>Additional Priority III</i></strong></h4>
 
-        <p style="text-align: center"><strong>Proposal for University Student Crowd-sourced, Micro Data Set Development for CV-19 Strategic Response</strong></p>
+        <p style="text-align: center"><strong>Proposal for University Student Crowd-sourced, Micro Data Set Development
+                for CV-19 Strategic Response</strong></p>
         <p style="text-align: justify; padding-left: 5%;">
             <strong>Education &amp; Data Access:</strong> Children’s education and their teachers’ ability to
             teach is being severely compromised by the isolation required due to the
@@ -719,10 +751,13 @@
             <li><a class="tablinksInfo" onclick="openTabInfo(event, 'confirmed_cases');"
                    style="font-size: 16px">Confirmed Cases</a>
             </li>
-            <li><a class="tablinksInfo" id="conD" onclick="openTabInfo(event, 'confirmed_deaths')" style="font-size: 16px">Deaths</a>
+            <li><a class="tablinksInfo" id="conD" onclick="openTabInfo(event, 'confirmed_deaths')"
+                   style="font-size: 16px">Deaths</a>
             </li>
-            <li><a class="tablinksInfo" id="conR" onclick="openTabInfo(event, 'confirmed_recoveries')" style="font-size: 16px">Recovered</a></li>
-            <li><a class="tablinksInfo" id="conA" onclick="openTabInfo(event, 'confirmed_active')" style="font-size: 16px">Active Cases</a></li>
+            <li><a class="tablinksInfo" id="conR" onclick="openTabInfo(event, 'confirmed_recoveries')"
+                   style="font-size: 16px">Recovered</a></li>
+            <li><a class="tablinksInfo" id="conA" onclick="openTabInfo(event, 'confirmed_active')"
+                   style="font-size: 16px">Active Cases</a></li>
         </ul>
 
         <div id="confirmed_cases" class="col-sm-2 tabcontentInfo" style="display: initial">
@@ -753,16 +788,18 @@
     <div id="popover" style="border-style: solid; opacity: 0;" hidden></div>
 </div>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+        // $.get("path to csv", function (data){
+        //     console.log(data);
+        // })
         // flatpickr(".date", {
         //     defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
         //     dateFormat: "Y-m-d",
         //     time_24hr: true
         // });
-    //     alert('Welcome to CitySmart V2! Our application works best on the most recent version of Chrome. If you are experiencing any problems, try switching a browser.');
-    //     alert('Please wait for our application to finish loading before attempting to login.');
+        //     alert('Welcome to CitySmart V2! Our application works best on the most recent version of Chrome. If you are experiencing any problems, try switching a browser.');
+        //     alert('Please wait for our application to finish loading before attempting to login.');
     });
-
 
 
 </script>
