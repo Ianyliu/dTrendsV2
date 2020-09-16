@@ -7,6 +7,9 @@
 }
 .panel{
   font-size:15px;
+  /*opacity: 50%;*/
+  width: auto;
+  background-color: transparent;
 }
 .medium-3{
   width:22%;
@@ -91,8 +94,13 @@ ul.nav {
 
 .menuWords {
   /*color: #f56b56;*/
-  color: orange;
+  color: #daf3ca;
 }
+
+/*.Menu {*/
+/*  background-color: #b7b7b7;*/
+/*}*/
+
 /*
 .ec-menu {
   position: relative;
