@@ -8,7 +8,8 @@
   width: inherit;
 }
 .panel{
-  font-size:15px;
+  font-size:12px;
+  /*font-size:10vw;*/
   /*opacity: 50%;*/
   width: inherit;
   background-color: transparent;
@@ -16,13 +17,21 @@
 
 .panel-group{
   width: auto;
-  height: auto;
+  height: 800px;
   overflow: scroll;
 }
 
 .panel-body .panel-collapse{
   width: inherit;
 }
+
+.menuWords {
+  /*font-family: "Helvetica Neue,Helvetica,Arial,sans-serif";*/
+  font-family: Helvetica;
+  color: #daf3ca;
+  font-size: 1.2vw;
+}
+
 .medium-3{
   width:22%;
 }
@@ -104,10 +113,6 @@ ul.nav {
   position: relative;
 }
 
-.menuWords {
-  /*color: #f56b56;*/
-  color: #daf3ca;
-}
 
 /*.Menu {*/
 /*  background-color: #b7b7b7;*/
