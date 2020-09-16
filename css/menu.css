@@ -1,15 +1,27 @@
 
 .panel-group .panel-heading a:after {
   content: '-';
+  width: inherit;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
+  width: inherit;
 }
 .panel{
   font-size:15px;
   /*opacity: 50%;*/
-  width: auto;
+  width: inherit;
   background-color: transparent;
+}
+
+.panel-group{
+  width: auto;
+  height: auto;
+  overflow: scroll;
+}
+
+.panel-body .panel-collapse{
+  width: inherit;
 }
 .medium-3{
   width:22%;
