@@ -1,9 +1,9 @@
 define([
     './globeObject'
-    ,'./dataAll'
-    ,'./LayerManager'
-    ,'./createPK'
-], function (newGlobe, dataAll, layerManager,createPK) {
+    , './dataAll'
+    , './LayerManager'
+    , './createPK'
+], function (newGlobe, dataAll, layerManager, createPK) {
     "use strict";
 
     let categoryS = "Confirmed Cases";
@@ -11,6 +11,274 @@ define([
     let fromDate = $('.fromdatepicker');
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
+
+    let menuStructure;
+    let countryL = [
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "American Samoa",
+        "Andorra",
+        "Angola",
+        "Anguilla",
+        "Antarctica",
+        "Antigua and Barbuda",
+        "Argentina",
+        "Armenia",
+        "Aruba",
+        "Australia",
+        "Austria",
+        "Azerbaijan",
+        "Bahamas (the)",
+        "Bahrain",
+        "Bangladesh",
+        "Barbados",
+        "Belarus",
+        "Belgium",
+        "Belize",
+        "Benin",
+        "Bermuda",
+        "Bhutan",
+        "Bolivia (Plurinational State of)",
+        "Bonaire, Sint Eustatius and Saba",
+        "Bosnia and Herzegovina",
+        "Botswana",
+        "Bouvet Island",
+        "Brazil",
+        "British Indian Ocean Territory (the)",
+        "Brunei Darussalam",
+        "Bulgaria",
+        "Burkina Faso",
+        "Burundi",
+        "Cabo Verde",
+        "Cambodia",
+        "Cameroon",
+        "Canada",
+        "Cayman Islands (the)",
+        "Central African Republic (the)",
+        "Chad",
+        "Chile",
+        "China",
+        "Christmas Island",
+        "Cocos (Keeling) Islands (the)",
+        "Colombia",
+        "Comoros (the)",
+        "Congo (the Democratic Republic of the)",
+        "Congo (the)",
+        "Cook Islands (the)",
+        "Costa Rica",
+        "Croatia",
+        "Cuba",
+        "Curaçao",
+        "Cyprus",
+        "Czechia",
+        "Côte d'Ivoire",
+        "Denmark",
+        "Djibouti",
+        "Dominica",
+        "Dominican Republic (the)",
+        "Ecuador",
+        "Egypt",
+        "El Salvador",
+        "Equatorial Guinea",
+        "Eritrea",
+        "Estonia",
+        "Eswatini",
+        "Ethiopia",
+        "Falkland Islands (the) [Malvinas]",
+        "Faroe Islands (the)",
+        "Fiji",
+        "Finland",
+        "France",
+        "French Guiana",
+        "French Polynesia",
+        "French Southern Territories (the)",
+        "Gabon",
+        "Gambia (the)",
+        "Georgia",
+        "Germany",
+        "Ghana",
+        "Gibraltar",
+        "Greece",
+        "Greenland",
+        "Grenada",
+        "Guadeloupe",
+        "Guam",
+        "Guatemala",
+        "Guernsey",
+        "Guinea",
+        "Guinea-Bissau",
+        "Guyana",
+        "Haiti",
+        "Heard Island and McDonald Islands",
+        "Holy See (the)",
+        "Honduras",
+        "Hong Kong",
+        "Hungary",
+        "Iceland",
+        "India",
+        "Indonesia",
+        "Iran (Islamic Republic of)",
+        "Iraq",
+        "Ireland",
+        "Isle of Man",
+        "Israel",
+        "Italy",
+        "Jamaica",
+        "Japan",
+        "Jersey",
+        "Jordan",
+        "Kazakhstan",
+        "Kenya",
+        "Kiribati",
+        "Korea (the Democratic People's Republic of)",
+        "Korea (the Republic of)",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Lao People's Democratic Republic (the)",
+        "Latvia",
+        "Lebanon",
+        "Lesotho",
+        "Liberia",
+        "Libya",
+        "Liechtenstein",
+        "Lithuania",
+        "Luxembourg",
+        "Macao",
+        "Madagascar",
+        "Malawi",
+        "Malaysia",
+        "Maldives",
+        "Mali",
+        "Malta",
+        "Marshall Islands (the)",
+        "Martinique",
+        "Mauritania",
+        "Mauritius",
+        "Mayotte",
+        "Mexico",
+        "Micronesia (Federated States of)",
+        "Moldova (the Republic of)",
+        "Monaco",
+        "Mongolia",
+        "Montenegro",
+        "Montserrat",
+        "Morocco",
+        "Mozambique",
+        "Myanmar",
+        "Namibia",
+        "Nauru",
+        "Nepal",
+        "Netherlands (the)",
+        "New Caledonia",
+        "New Zealand",
+        "Nicaragua",
+        "Niger (the)",
+        "Nigeria",
+        "Niue",
+        "Norfolk Island",
+        "Northern Mariana Islands (the)",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Palau",
+        "Palestine, State of",
+        "Panama",
+        "Papua New Guinea",
+        "Paraguay",
+        "Peru",
+        "Philippines (the)",
+        "Pitcairn",
+        "Poland",
+        "Portugal",
+        "Puerto Rico",
+        "Qatar",
+        "Republic of North Macedonia",
+        "Romania",
+        "Russian Federation (the)",
+        "Rwanda",
+        "Réunion",
+        "Saint Barthélemy",
+        "Saint Helena, Ascension and Tristan da Cunha",
+        "Saint Kitts and Nevis",
+        "Saint Lucia",
+        "Saint Martin (French part)",
+        "Saint Pierre and Miquelon",
+        "Saint Vincent and the Grenadines",
+        "Samoa",
+        "San Marino",
+        "Sao Tome and Principe",
+        "Saudi Arabia",
+        "Senegal",
+        "Serbia",
+        "Seychelles",
+        "Sierra Leone",
+        "Singapore",
+        "Sint Maarten (Dutch part)",
+        "Slovakia",
+        "Slovenia",
+        "Solomon Islands",
+        "Somalia",
+        "South Africa",
+        "South Georgia and the South Sandwich Islands",
+        "South Sudan",
+        "Spain",
+        "Sri Lanka",
+        "Sudan (the)",
+        "Suriname",
+        "Svalbard and Jan Mayen",
+        "Sweden",
+        "Switzerland",
+        "Syrian Arab Republic",
+        "Taiwan",
+        "Tajikistan",
+        "Tanzania, United Republic of",
+        "Thailand",
+        "Timor-Leste",
+        "Togo",
+        "Tokelau",
+        "Tonga",
+        "Trinidad and Tobago",
+        "Tunisia",
+        "Turkey",
+        "Turkmenistan",
+        "Turks and Caicos Islands (the)",
+        "Tuvalu",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates (the)",
+        "United Kingdom of Great Britain and Northern Ireland (the)",
+        "United States Minor Outlying Islands (the)",
+        "United States of America (the)",
+        "Uruguay",
+        "Uzbekistan",
+        "Vanuatu",
+        "Venezuela (Bolivarian Republic of)",
+        "Viet Nam",
+        "Virgin Islands (British)",
+        "Virgin Islands (U.S.)",
+        "Wallis and Futuna",
+        "Western Sahara",
+        "Yemen",
+        "Zambia",
+        "Zimbabwe",
+        "Åland Islands"];
+    let cropsL = [
+        'Production',
+        'Price',
+        'Livestock',
+        'Emissions',
+        'Pesticides',
+        'Fertilizer',
+        'Yield'
+    ];
+    let weatherL = [
+        'GraphsandWeather',
+        'YearlyTemperature',
+        'MonthlyTemperature',
+        'YearlyPrecipitation',
+        'MonthlyPrecipitation'
+    ];
 
     let i = 0;
     let l;
@@ -57,7 +325,7 @@ define([
 
     //overlays sub dropdown menus over other items
     let subDropdown = function () {
-        $(".dropdown").on("show.bs.dropdown", function() {
+        $(".dropdown").on("show.bs.dropdown", function () {
             let $btnDropDown = $(this).find(".dropdown-toggle");
             let $listHolder = $(this).find(".dropdown-menu");
             let subMenu = $(this).find(".dropdown-submenu");
@@ -75,66 +343,50 @@ define([
             $listHolder.data("open", true);
         });
         //add BT DD hide event
-        $(".dropdown").on("hidden.bs.dropdown", function() {
+        $(".dropdown").on("hidden.bs.dropdown", function () {
             var $listHolder = $(this).find(".dropdown-menu");
             $listHolder.data("open", false);
         });
 
-        $(".agrotoggle").click(function(){
-            let visibility = $( "#agrosphere-dropdowndiv" ).css( "visibility");
-            let display = $( "#agrosphere-dropdowndiv" ).css( "display");
-            if (visibility === 'hidden' && display === "none"){
-                $( "#agrosphere-dropdowndiv" ).css( "visibility", "visible" );
-                $( "#agrosphere-dropdowndiv" ).css( "display", "block");
+        $(".agrotoggle").click(function () {
+            let visibility = $("#agrosphere-dropdowndiv").css("visibility");
+            let display = $("#agrosphere-dropdowndiv").css("display");
+            if (visibility === 'hidden' && display === "none") {
+                $("#agrosphere-dropdowndiv").css("visibility", "visible");
+                $("#agrosphere-dropdowndiv").css("display", "block");
             } else {
-                $( "#agrosphere-dropdowndiv" ).css( "visibility", "hidden" );
-                $( "#agrosphere-dropdowndiv" ).css( "display", "none");
-                $( "#CropsDropdown" ).css( "visibility", "hidden" );
-                $( "#CropsDropdown" ).css( "display", "none");
-                $( "#CountriesDropdown" ).css( "visibility", "hidden" );
-                $( "#CountriesDropdown" ).css( "display", "none");
-                $( "#WeatherStationsDropdown" ).css( "visibility", "hidden" );
-                $( "#WeatherStationsDropdown" ).css( "display", "none");
-                $( ".agroswitch" ).prop( "checked", false );
-                $( ".cropscheckbox" ).prop( "checked", false );
-                $( ".countrycheckbox" ).prop( "checked", false );
-                $( ".weathercheckbox" ).prop( "checked", true );
+                $("#agrosphere-dropdowndiv").css("visibility", "hidden");
+                $("#agrosphere-dropdowndiv").css("display", "none");
             }
         });
 
-        $("#Crops-switch").click(function(){
-            if($(this).is(":checked")){
-                $( "#CropsDropdown" ).css( "visibility", "visible" );
-                $( "#CropsDropdown" ).css( "display", "block");
-            }
-            else if($(this).is(":not(:checked)")){
-                $( "#CropsDropdown" ).css( "visibility", "hidden" );
-                $( "#CropsDropdown" ).css( "display", "none");
-                $( ".cropscheckbox" ).prop( "checked", false );
+        $("#Crops-switch").click(function () {
+            if ($(this).is(":checked")) {
+                $("#CropsDropdown").css("visibility", "visible");
+                $("#CropsDropdown").css("display", "block");
+            } else if ($(this).is(":not(:checked)")) {
+                $("#CropsDropdown").css("visibility", "hidden");
+                $("#CropsDropdown").css("display", "none");
             }
         });
 
-        $("#Countries-switch").click(function(){
-            if($(this).is(":checked")){
-                $( "#CountriesDropdown" ).css( "visibility", "visible" );
-                $( "#CountriesDropdown" ).css( "display", "block");
-            }
-            else if($(this).is(":not(:checked)")){
-                $( "#CountriesDropdown" ).css( "visibility", "hidden" );
-                $( "#CountriesDropdown" ).css( "display", "none");
-                $( ".countrycheckbox" ).prop( "checked", false );
+        $("#Countries-switch").click(function () {
+            if ($(this).is(":checked")) {
+                $("#CountriesDropdown").css("visibility", "visible");
+                $("#CountriesDropdown").css("display", "block");
+            } else if ($(this).is(":not(:checked)")) {
+                $("#CountriesDropdown").css("visibility", "hidden");
+                $("#CountriesDropdown").css("display", "none");
             }
         });
 
-        $("#WeatherStations-switch").click(function(){
-            if($(this).is(":checked")){
-                $( "#WeatherStationsDropdown" ).css( "visibility", "visible" );
-                $( "#WeatherStationsDropdown" ).css( "display", "block");
-            }
-            else if($(this).is(":not(:checked)")){
-                $( "#WeatherStationsDropdown" ).css( "visibility", "hidden" );
-                $( "#WeatherStationsDropdown" ).css( "display", "none");
-                $( ".weathercheckbox" ).prop( "checked", true );
+        $("#WeatherStations-switch").click(function () {
+            if ($(this).is(":checked")) {
+                $("#WeatherStationsDropdown").css("visibility", "visible");
+                $("#WeatherStationsDropdown").css("display", "block");
+            } else if ($(this).is(":not(:checked)")) {
+                $("#WeatherStationsDropdown").css("visibility", "hidden");
+                $("#WeatherStationsDropdown").css("display", "none");
             }
         });
     }
@@ -199,16 +451,38 @@ define([
 
     //under first left tab; used to switch display between
     let onAgrosphereClick = function (event) {
+
+        //grab the selection value
         let projectionName = event.target.innerText || event.target.innerHTML;
+        //refresh the option display
         $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
 
-        if (projectionName === "crop") {
-            crop();
-        } else if(projectionName === 'weather'){
-            weatherStation();
-        } else if(projectionName === 'country'){
-            countryPlacemark();
-        } else {}
+        //insert accordion menu corresponding to the selection
+        if (projectionName === "AgrosPhere") {
+            menuStructure = {
+                Level1: ["Country", "Crops", "Weather"],
+                Level2: [countryL, cropsL, weatherL],
+            }
+            accordionMenu(menuStructure);
+        } else if (projectionName === 'ECMWF Forecasts') {
+            menuStructure = {
+                Level1: ["Temperature", "Precipitation", "Wind"]
+            }
+            accordionMenu(menuStructure);
+        } else if (projectionName === 'Sentinel Satellite Data') {
+            menuStructure = {
+                Level1: [
+                    "Agriculture",
+                    "False Color (Urban)",
+                    "False Color (Vegetation)",
+                    "Geology",
+                    "Moisture Index",
+                    "Natural Color (True Color)",
+                    "NDVI"
+                ]
+            }
+            accordionMenu(menuStructure);
+        }
     };
 
     //under first left tab; activates COVID-19 display when selected for Disease Projection
@@ -256,10 +530,108 @@ define([
         }
     };
 
-    //
-    let crop = function (){};
-    let weatherStation = function () {};
-    let countryPlacemark = function () {};
+    let accordionMenu = function (menuObj) {
+        let parentMenu = document.getElementById("accordion");
+
+        //clear previous submenu
+        $('#accordion').empty();
+
+        if (!menuObj.Level2) {
+            //create level one menu
+            menuObj.Level1.forEach(function (ele) {
+                menuSecond("No Level1", ele)
+            });
+        } else {
+            //create level one menu
+            menuObj.Level1.forEach(async function (e1, i) {
+                await menuFirsL(e1);
+                menuObj.Level2[i].forEach(function (e2){
+                    menuSecond(e1, e2);
+                })
+            });
+        }
+
+        function menuFirsL(firstL) {
+            let panelDefault1 = document.createElement("div");
+            panelDefault1.className = "Menu panel panel-info " + firstL;
+
+            let panelHeading1 = document.createElement("div");
+            panelHeading1.className = "panel-heading";
+
+            let panelTitle1 = document.createElement("h4");
+            panelTitle1.className = "panel-title";
+
+            let collapsed1 = document.createElement("a");
+            collapsed1.className = "collapsed";
+            collapsed1.setAttribute("data-toggle", "collapse");
+            collapsed1.setAttribute("data-parent", "#accordion");
+            collapsed1.href = "#" + firstL;
+
+            let firstLayerName = document.createTextNode(firstL + "  ");
+            firstLayerName.className = "menuwords";
+
+            let collapseOne = document.createElement("div");
+            collapseOne.className = "panel-collapse collapse";
+            collapseOne.id = firstL;
+
+            let panelBody1 = document.createElement("div");
+            panelBody1.className = "panel-body";
+
+            let panelGroup1 = document.createElement("div");
+            panelGroup1.className = "panel-group " + firstL;
+            panelGroup1.id = "nested-" + firstL;
+
+            collapsed1.appendChild(firstLayerName);
+            panelTitle1.appendChild(collapsed1);
+            panelHeading1.appendChild(panelTitle1);
+            panelDefault1.appendChild(panelHeading1);
+
+            panelBody1.appendChild(panelGroup1);
+            collapseOne.appendChild(panelBody1);
+            panelDefault1.appendChild(collapseOne);
+
+            parentMenu.appendChild(panelDefault1);
+        }
+
+        function menuSecond(firstL, secondL) {
+            let checkboxDiv = document.createElement("div");
+            // checkboxDiv.className = "Menu " + thirdReplace + " " + countryNameStr + " " + stateNameStr + " " + cityNameStr;
+            checkboxDiv.className = "Menu "
+
+            let checkboxH4 = document.createElement("h4");
+            let checkboxA = document.createElement("a");
+            let checkboxAt = document.createTextNode(secondL + "   ");
+            checkboxA.className = "menuWords";
+
+            let checkboxLabel = document.createElement("label");
+            checkboxLabel.className = "switch right";
+
+            let checkboxInput = document.createElement("input");
+            checkboxInput.type = "checkbox";
+            // checkboxInput.className = element.LayerType + " input";
+            checkboxInput.className = " input";
+            // checkboxInput.setAttribute("value", element.LayerName);
+
+            let checkboxSpan = document.createElement("span");
+            checkboxSpan.className = "slider round";
+
+            checkboxA.appendChild(checkboxAt);
+            checkboxH4.appendChild(checkboxA);
+            checkboxLabel.appendChild(checkboxInput);
+            checkboxLabel.appendChild(checkboxSpan);
+            checkboxH4.appendChild(checkboxLabel);
+            checkboxDiv.appendChild(checkboxH4);
+
+            // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+            if (firstL === "No Level1") {
+                parentMenu.appendChild(checkboxDiv);
+            } else {
+                document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
+            }
+        }
+    };
+
+
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
     let onCategory = function (event) {
@@ -356,11 +728,11 @@ define([
     //under second left tab; controls display of navigation tools
     let onNav = function () {
         if (newGlobe.layers[2].enabled === true && newGlobe.layers[4].enabled === true) {
-            $('#navControls').css("background-color","transparent");
+            $('#navControls').css("background-color", "transparent");
             newGlobe.layers[2].enabled = false;
             newGlobe.layers[4].enabled = false;
         } else if (newGlobe.layers[2].enabled === false && newGlobe.layers[4].enabled === false) {
-            $('#navControls').css("background-color","#0db9f0");
+            $('#navControls').css("background-color", "#0db9f0");
             newGlobe.layers[2].enabled = true;
             newGlobe.layers[4].enabled = true;
         }
@@ -372,9 +744,9 @@ define([
             if (!play) {
                 //updates current date picker and date slider
                 curDate.val(dataAll.arrDate[i].Date);
-                let val = new Date(dataAll.arrDate[i].Date).getTime()/1000;
-                $( "#slider-range" ).slider( "value", val );
-                $( "#amount" ).val(dataAll.arrDate[i].Date);
+                let val = new Date(dataAll.arrDate[i].Date).getTime() / 1000;
+                $("#slider-range").slider("value", val);
+                $("#amount").val(dataAll.arrDate[i].Date);
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
@@ -449,7 +821,7 @@ define([
         });
 
         //sorts all enabled placemarks based on case number from least to greatest
-        sortLayers.sort(function(a, b) {
+        sortLayers.sort(function (a, b) {
             if (a.userProperties.Number === b.userProperties.Number) {
                 return 0;
             }
@@ -472,7 +844,7 @@ define([
 
     //under third left tab; changes starting date for timelapse when 'From' date is changed
     let onFrom = function () {
-        for(let j = 0; j < dataAll.arrDate.length -1; j++) {
+        for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
             if (dataAll.arrDate[j].Date === fromDate.val()) {
                 i = j;
             }
@@ -481,32 +853,32 @@ define([
 
     //under third left tab; filter slider for lowest to highest infections
     let infectionSlider = function () {
-        $( "#hInfectionSlider" ).slider({
+        $("#hInfectionSlider").slider({
             min: 0,
             max: 320,
-            values: [0,320],
-            slide: function( event, ui ) {
+            values: [0, 320],
+            slide: function (event, ui) {
                 //updates text
-                $( "#hInfectionsValue" ).text( ui.values[0] + " to " + ui.values[1] + " Locations");
+                $("#hInfectionsValue").text(ui.values[0] + " to " + ui.values[1] + " Locations");
 
                 //updates placemarks displayed based on infection slider range
                 updateHIS(ui.values[0], ui.values[1]);
             }
         });
         //display current numbers for locations shown
-        $( "#hInfectionsValue" ).text($("#hInfectionSlider").slider("values", 0) + " to " + $("#hInfectionsSlider").slider("values", 1) + " Locations");
+        $("#hInfectionsValue").text($("#hInfectionSlider").slider("values", 0) + " to " + $("#hInfectionsSlider").slider("values", 1) + " Locations");
     }
 
     //under third left tab; surface opacity slider
     let opacitySlider = function () {
-        $( "#opacitySlider" ).slider({
+        $("#opacitySlider").slider({
             value: 100,
             animate: true,
-            slide: function( event, ui ) {
+            slide: function (event, ui) {
                 //updates text
-                $( "#opacitySliderValue" ).text(ui.value + "% opacity");
+                $("#opacitySliderValue").text(ui.value + "% opacity");
             },
-            stop: function(event, ui) {
+            stop: function (event, ui) {
                 //when user releases mouse, sets opacity to that percentage
                 setOpacity(ui.value / 100);
             }
@@ -520,16 +892,16 @@ define([
     };
 
     //date slider
-    let dateSlider = function() {
-        $( "#slider-range" ).slider({
-            min: new Date(fromDate.val()).getTime()/1000,
-            max: new Date(toDate.val()).getTime()/1000,
+    let dateSlider = function () {
+        $("#slider-range").slider({
+            min: new Date(fromDate.val()).getTime() / 1000,
+            max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
-            value: new Date(toDate.val()).getTime()/1000,
-            slide: function( event, ui ) {
+            value: new Date(toDate.val()).getTime() / 1000,
+            slide: function (event, ui) {
                 //updates text
 
-                $("#amount").val( $.format.date(ui.value*1000,"yyyy-MM-dd" ));
+                $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
                 updateCurr($("#amount").val());
@@ -539,34 +911,34 @@ define([
             }
         });
         //display current date
-        curDate.val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
-        $('#amount').val($.format.date(new Date($( "#slider-range" ).slider( "value")*1000),"yyyy-MM-dd"));
+        curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
     };
 
     //range slider; sets date range for date slider
-    let rangeSlider = function() {
-        $( "#doubleSlider-range" ).slider({
-            min: new Date(fromDate.val()).getTime()/1000,
-            max: new Date(toDate.val()).getTime()/1000,
+    let rangeSlider = function () {
+        $("#doubleSlider-range").slider({
+            min: new Date(fromDate.val()).getTime() / 1000,
+            max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
-            values: [new Date(fromDate.val()).getTime()/1000, new Date(toDate.val()).getTime()/1000],
-            slide: function( event, ui ) {
+            values: [new Date(fromDate.val()).getTime() / 1000, new Date(toDate.val()).getTime() / 1000],
+            slide: function (event, ui) {
                 //updates text
-                $( "#amount2" ).val( $.format.date(ui.values[0]*1000,"yyyy-MM-dd" ) + " to " + $.format.date(ui.values[1]*1000,"yyyy-MM-dd" ));
+                $("#amount2").val($.format.date(ui.values[0] * 1000, "yyyy-MM-dd") + " to " + $.format.date(ui.values[1] * 1000, "yyyy-MM-dd"));
 
                 //updates date slider; date range, value, text
-                $('#slider-range').slider("option", "min", $( "#doubleSlider-range" ).slider( "values", 0));
-                $('#slider-range').slider("option", "max", $( "#doubleSlider-range" ).slider( "values", 1));
-                $('#slider-range').slider("option", "value", $( "#doubleSlider-range" ).slider( "values", 1));
-                $('#amount').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+                $('#slider-range').slider("option", "min", $("#doubleSlider-range").slider("values", 0));
+                $('#slider-range').slider("option", "max", $("#doubleSlider-range").slider("values", 1));
+                $('#slider-range').slider("option", "value", $("#doubleSlider-range").slider("values", 1));
+                $('#amount').val($.format.date(new Date($("#doubleSlider-range").slider("values", 1) * 1000), "yyyy-MM-dd"));
 
                 //updates date range pickers
-                $('.filterFrom').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd"));
-                $('.filterTo').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+                $('.filterFrom').val($.format.date(new Date($("#doubleSlider-range").slider("values", 0) * 1000), "yyyy-MM-dd"));
+                $('.filterTo').val($.format.date(new Date($("#doubleSlider-range").slider("values", 1) * 1000), "yyyy-MM-dd"));
             }
         });
         //display current date range
-        $('#amount2').val($.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 0)*1000),"yyyy-MM-dd") + " to " + $.format.date(new Date($( "#doubleSlider-range" ).slider( "values", 1)*1000),"yyyy-MM-dd"));
+        $('#amount2').val($.format.date(new Date($("#doubleSlider-range").slider("values", 0) * 1000), "yyyy-MM-dd") + " to " + $.format.date(new Date($("#doubleSlider-range").slider("values", 1) * 1000), "yyyy-MM-dd"));
     };
 
     //edit function to prompt date range adjustments
@@ -574,22 +946,22 @@ define([
         if ($('#edit').hasClass('edit-mode')) {
             $("#dialogDateRange").dialog("open");
             $('#edit').removeClass('edit-mode');
-            $('#edit').css('background-color','transparent');
-            $('#labelRangeSlider').css('display','none');
-            $('#labelSlider').css('display','inline-block');
-            $('#doubleSlider-range').css('display','none');
-            $('#amount2').css('display','none');
-            $('#slider-range').css('display','block');
-            $('#amount').css('display','inline-block');
+            $('#edit').css('background-color', 'transparent');
+            $('#labelRangeSlider').css('display', 'none');
+            $('#labelSlider').css('display', 'inline-block');
+            $('#doubleSlider-range').css('display', 'none');
+            $('#amount2').css('display', 'none');
+            $('#slider-range').css('display', 'block');
+            $('#amount').css('display', 'inline-block');
         } else {
             $('#edit').addClass('edit-mode');
-            $('#edit').css('background-color','#55d2d5');
-            $('#labelRangeSlider').css('display','inline-block');
-            $('#labelSlider').css('display','none');
-            $('#doubleSlider-range').css('display','block');
-            $('#amount2').css('display','inline-block');
-            $('#slider-range').css('display','none');
-            $('#amount').css('display','none');
+            $('#edit').css('background-color', '#55d2d5');
+            $('#labelRangeSlider').css('display', 'inline-block');
+            $('#labelSlider').css('display', 'none');
+            $('#doubleSlider-range').css('display', 'block');
+            $('#amount2').css('display', 'inline-block');
+            $('#slider-range').css('display', 'none');
+            $('#amount').css('display', 'none');
         }
     }
 
@@ -611,14 +983,14 @@ define([
 
     //dialog box for filter options for date slider; contains date range picker, continent selector, and full load option
     let filterOptionDialog = function () {
-        $( "#dialog" ).dialog({
+        $("#dialog").dialog({
             resizable: false,
             height: "auto",
             width: 450,
             autoOpen: false,
             modal: true,
             buttons: {
-                "Apply": function() {
+                "Apply": function () {
                     speed = true;
 
                     //changes dates across all date range pickers
@@ -626,14 +998,14 @@ define([
                     $('#drTo').val($("#foTo").val());
 
                     //changes date slider value range
-                    $('#slider-range').slider("values", 0) === new Date($('#foFrom').val()).getTime()/1000;
-                    $('#slider-range').slider("values", 1) === new Date($('#foTo').val()).getTime()/1000;
-                    $( "#amount2" ).val( $('#foFrom' ).val() + " to " + $('#foTo').val());
+                    $('#slider-range').slider("values", 0) === new Date($('#foFrom').val()).getTime() / 1000;
+                    $('#slider-range').slider("values", 1) === new Date($('#foTo').val()).getTime() / 1000;
+                    $("#amount2").val($('#foFrom').val() + " to " + $('#foTo').val());
 
                     //changes date slider min and max valuesm current value, and text display
-                    $('#slider-range').slider("option", "min", new Date($('#foFrom').val()).getTime()/1000);
-                    $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime()/1000);
-                    $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime()/1000);
+                    $('#slider-range').slider("option", "min", new Date($('#foFrom').val()).getTime() / 1000);
+                    $('#slider-range').slider("option", "max", new Date($('#foTo').val()).getTime() / 1000);
+                    $('#slider-range').slider("option", "value", new Date($('#foTo').val()).getTime() / 1000);
                     $('#amount').val($('#foTo').val());
 
                     //creates placemarks based on range selected
@@ -644,18 +1016,18 @@ define([
 
                     //ensures date slider is shown and range slider is hidden; edit mode is closed
                     $('#edit').removeClass('edit-mode');
-                    $('#edit').css('background-color','transparent');
-                    $('#labelRangeSlider').css('display','none');
-                    $('#labelSlider').css('display','inline-block');
-                    $('#doubleSlider-range').css('display','none');
-                    $('#amount2').css('display','none');
-                    $('#slider-range').css('display','block');
-                    $('#amount').css('display','inline-block');
+                    $('#edit').css('background-color', 'transparent');
+                    $('#labelRangeSlider').css('display', 'none');
+                    $('#labelSlider').css('display', 'inline-block');
+                    $('#doubleSlider-range').css('display', 'none');
+                    $('#amount2').css('display', 'none');
+                    $('#slider-range').css('display', 'block');
+                    $('#amount').css('display', 'inline-block');
 
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 },
-                Cancel: function() {
-                    $( this ).dialog( "close" );
+                Cancel: function () {
+                    $(this).dialog("close");
                 }
             }
         });
@@ -663,28 +1035,28 @@ define([
 
     //dialog box for edit mode for date slider; contains date range picker
     let editDialog = function () {
-        $( "#dialogDateRange" ).dialog({
+        $("#dialogDateRange").dialog({
             resizable: false,
             height: "auto",
             width: 450,
             autoOpen: false,
             modal: true,
             buttons: {
-                "Confirm": function() {
+                "Confirm": function () {
                     speed = true;
                     //changes dates across all date range pickers
                     $('#foFrom').val($("#drFrom").val());
                     $('#foTo').val($("#drTo").val());
 
                     //changes date slider value range
-                    $('#slider-range').slider("values", 0) === new Date($('#drFrom').val()).getTime()/1000;
-                    $('#slider-range').slider("values", 1) === new Date($('#drTo').val()).getTime()/1000;
-                    $( "#amount2" ).val( $('#drFrom' ).val() + " to " + $('#drTo').val());
+                    $('#slider-range').slider("values", 0) === new Date($('#drFrom').val()).getTime() / 1000;
+                    $('#slider-range').slider("values", 1) === new Date($('#drTo').val()).getTime() / 1000;
+                    $("#amount2").val($('#drFrom').val() + " to " + $('#drTo').val());
 
                     //changes date slider min and max valuesm current value, and text display
-                    $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime()/1000);
-                    $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime()/1000);
-                    $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime()/1000);
+                    $('#slider-range').slider("option", "min", new Date($('#drFrom').val()).getTime() / 1000);
+                    $('#slider-range').slider("option", "max", new Date($('#drTo').val()).getTime() / 1000);
+                    $('#slider-range').slider("option", "value", new Date($('#drTo').val()).getTime() / 1000);
                     $('#amount').val($('#drTo').val());
 
                     //creates placemarks based on range selected
@@ -693,19 +1065,19 @@ define([
                         createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
                     }
 
-                    $( this ).dialog( "close" );
+                    $(this).dialog("close");
                 },
-                Cancel: function() {
+                Cancel: function () {
                     //edit mode remains active
                     $('#edit').addClass('edit-mode');
-                    $('#edit').css('background-color','#55d2d5');
-                    $('#labelRangeSlider').css('display','inline-block');
-                    $('#labelSlider').css('display','none');
-                    $('#doubleSlider-range').css('display','block');
-                    $('#amount2').css('display','inline-block');
-                    $('#slider-range').css('display','none');
-                    $('#amount').css('display','none');
-                    $( this ).dialog( "close" );
+                    $('#edit').css('background-color', '#55d2d5');
+                    $('#labelRangeSlider').css('display', 'inline-block');
+                    $('#labelSlider').css('display', 'none');
+                    $('#doubleSlider-range').css('display', 'block');
+                    $('#amount2').css('display', 'inline-block');
+                    $('#slider-range').css('display', 'none');
+                    $('#amount').css('display', 'none');
+                    $(this).dialog("close");
                 }
             }
         });
@@ -741,27 +1113,37 @@ define([
         button0.id = button0.value = "1";
         button0.textContent = "Current";
         button0.className = "chartsB";
-        button0.onclick = function () {chartDFun(button0, PM)};
+        button0.onclick = function () {
+            chartDFun(button0, PM)
+        };
         let button1 = document.createElement("button");
         button1.id = button1.value = "7";
         button1.textContent = "Past 7 Days";
         button1.className = "chartsB";
-        button1.onclick = function () {chartDFun(button1, PM)};
+        button1.onclick = function () {
+            chartDFun(button1, PM)
+        };
         let button2 = document.createElement("button");
         button2.id = button2.value = "14";
         button2.textContent = "Past 2 Weeks";
         button2.className = "chartsB";
-        button2.onclick = function () {chartDFun(button2, PM)};
+        button2.onclick = function () {
+            chartDFun(button2, PM)
+        };
         let button3 = document.createElement("button");
         button3.id = button3.value = "30";
         button3.textContent = "Past 1 Month";
         button3.className = "chartsB";
-        button3.onclick = function () {chartDFun(button3, PM)};
+        button3.onclick = function () {
+            chartDFun(button3, PM)
+        };
         let button4 = document.createElement("button");
         button4.id = button4.value = "63";
         button4.textContent = "Past 2 Months";
         button4.className = "chartsB";
-        button4.onclick = function () {chartDFun(button4, PM)};
+        button4.onclick = function () {
+            chartDFun(button4, PM)
+        };
 
         popupBodyItem.append(popupBodyName);
         popupBodyItem.append(popupBodyDesc);
@@ -793,14 +1175,14 @@ define([
 
     let chartDFun = function (objButton, PM) {
         // get button value to reset chart duration time
-        let pDate = dataAll.arrDate[dataAll.arrDate.length-1].Date;
-        let d0 = new Date(""+ pDate + "")
+        let pDate = dataAll.arrDate[dataAll.arrDate.length - 1].Date;
+        let d0 = new Date("" + pDate + "")
         let dFrom = $.format.date(d0.setDate(d0.getDate() - objButton.id + 1), "yyyy-MM-dd");
         let dTo = dataAll.arrDate[dataAll.arrDate.length - 1].Date;
 
         // disable this button and enable previous button disabled
         $(".chartsB").prop('disabled', false);
-        $("#"+objButton.value).prop('disabled', true);
+        $("#" + objButton.value).prop('disabled', true);
         $("#chartText").html(objButton.textContent);
 
         // set label date value
@@ -812,45 +1194,45 @@ define([
             lArr.push(pDate);
         } else if (objButton.value === "7") {
             lArr.push($.format.date(d1.setDate(d1.getDate() - 5), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
             )
         } else if (objButton.value === "14") {
             lArr.push($.format.date(d1.setDate(d1.getDate() - 12), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd")
             )
         } else if (objButton.value === "30") {
             lArr.push($.format.date(d1.setDate(d1.getDate() - 26), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
             )
         } else if (objButton.value === "63") {
             lArr.push($.format.date(d1.setDate(d1.getDate() - 61), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6 ), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
-                ,$.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
+                , $.format.date(d1.setDate(d1.getDate() + 1), "MM-dd") + "_" + $.format.date(d1.setDate(d1.getDate() + 6), "MM-dd")
             )
         }
 
@@ -884,7 +1266,7 @@ define([
                     let rArr = [];
                     let aArr = [];
 
-                    for (i = 0; i < resp.data.length -1; i++) {
+                    for (i = 0; i < resp.data.length - 1; i++) {
                         dArr.push(resp.data[i].DeathNum);
                         rArr.push(resp.data[i].RecovNum);
                         aArr.push(resp.data[i].CaseNum - resp.data[i].DeathNum - resp.data[i].RecovNum);
@@ -912,7 +1294,7 @@ define([
                         options: {
                             tooltips: {
                                 displayColors: true,
-                                callbacks:{
+                                callbacks: {
                                     mode: 'x',
                                 },
                             },
@@ -933,7 +1315,7 @@ define([
                             },
                             responsive: true,
                             maintainAspectRatio: true,
-                            legend: { position: 'bottom' },
+                            legend: {position: 'bottom'},
                         }
                     })
                 }
@@ -976,5 +1358,30 @@ define([
 
     }
 
-    return {initCaseNum, subDropdown, updateCurr, onDiseaseClick, onAgrosphereClick, onCategory, onContinent, onNav, timelapse, pause, clearI, updateHIS, onFrom, infectionSlider, opacitySlider, dateSlider, rangeSlider, edit, fullLoad, filterOptionDialog, editDialog, handleMouseCLK, enableAllToggle, closeAllToggle}
+    return {
+        initCaseNum,
+        subDropdown,
+        updateCurr,
+        onDiseaseClick,
+        onAgrosphereClick,
+        onCategory,
+        onContinent,
+        onNav,
+        timelapse,
+        pause,
+        clearI,
+        updateHIS,
+        onFrom,
+        infectionSlider,
+        opacitySlider,
+        dateSlider,
+        rangeSlider,
+        edit,
+        fullLoad,
+        filterOptionDialog,
+        editDialog,
+        handleMouseCLK,
+        enableAllToggle,
+        closeAllToggle
+    }
 })

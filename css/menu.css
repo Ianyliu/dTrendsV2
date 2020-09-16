@@ -16,8 +16,8 @@
   position: relative;
   margin-bottom:-1px;
   display: inline-block;
-  width: 30px;
-  height: 12px;
+  width: 40px;
+  height: 16px;
 }
 
 .switch input
@@ -87,6 +87,11 @@ ul.nav {
 
 .dropdown-submenu {
   position: relative;
+}
+
+.menuWords {
+  /*color: #f56b56;*/
+  color: orange;
 }
 /*
 .ec-menu {
