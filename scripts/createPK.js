@@ -1,8 +1,9 @@
 define([
-    './globeObject'
-    ,'./pkObject'
+    './globeObject',
+    './canvasPKobject',
+    './imgPKobject'
     // ,'./initPL'
-], function (newGlobe, pkObject){
+], function (newGlobe, pkObject,imagePK){
     "use strict";
 
 

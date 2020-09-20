@@ -13,7 +13,7 @@ define([
     let curDate = $("#currentdatepicker");
 
     let menuStructure;
-    let countryL = [
+    const countryL = [
         "Afghanistan",
         "Albania",
         "Algeria",
