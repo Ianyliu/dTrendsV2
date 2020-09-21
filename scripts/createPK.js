@@ -1,14 +1,15 @@
 define([
     './globeObject',
     './canvasPKobject',
-    './imgPKobject'
+    './imgPKobject',
+    './DataArray'
     // ,'./initPL'
 ], function (newGlobe, pkObject,imagePK){
     "use strict";
 
 
     let pLayer;
-    function createPK(date, type, flag, countries, continents) {
+    function createPK(date, type, flag, countries, continents,DataArray) {
 
         // request the data for placemarks with given date and country
         $.ajax({
@@ -111,6 +112,97 @@ define([
                 }
             }
         })
+
+        //Loading the files (raw data)
+        let countryData =
+            new DataArray(loadCSVData('csvdata/countries.csv'), {});
+        let stationData =
+            new DataArray(loadCSVData('csvdata/weatherstations.csv'), {});
+        let agriDef = new DataArray(loadCSVData('csvdata/cropAcros.csv'));
+
+        loadCountryLayer(newGlobe, countryData);
+        loadWeatherLayer(newGlobe, stationData);
+
+        function loadCSVData(csvAddress) {
+            //Find the file
+            let csvString = "";
+
+            let csvData = [];
+            let i = 0;
+            let csvRequest = $.ajax({
+                async: false,
+                url: csvAddress,
+                success: function(file_content) {
+                    csvString = file_content;
+                    csvData = $.csv.toObjects(csvString);
+                }
+            });
+            return csvData;
+        }
+
+        /**
+         * Loads weather stations CSV Data Array into Array of Weather Stations
+         * @param {DataArray} csvData contains the weather station location and
+         * details.
+         * @returns {Array<GlobalDataPoint>} A datastructure that maps a value
+         * to a location.
+         */
+
+        function loadWeatherStation(csvData) {
+            let i = 0;
+            let temp = [];
+            for (i = 0; i < csvData.values.length; i++) {
+                temp.push(new GlobalDataPoint(csvData.values[i].stationName,
+                    csvData.values[i].lat, csvData.values[i].lon, {
+                        icon_code: '',
+                        type: 'Weather Station'
+                    }));
+            }
+            return temp;
+        }
+
+        /**
+         * Loads the weather station layer
+         * @param {WorldWindow} wwd is the  world window of the globe
+         * @param {Array<DataLayer>} weatherDataArray is
+         * an array containing the WMS Layers that needs to be loaded
+         */
+
+        function loadWeatherLayer(wwd, weatherDataArray) {
+            let weatherLayer = new DataLayer('Weather Station');
+            let weatherData = loadWeatherStation(weatherDataArray);
+            weatherLayer.loadFlags(weatherData, 'images/sun', '.png',
+                null, null);
+            console.log(weatherLayer);
+            wwd.addLayer(weatherLayer.layer);
+        }
+
+
+        function loadCountries(countryDataArray) {
+            let i = 0;
+            let temp = [];
+            for (i = 0; i < countryDataArray.values.length; i++) {
+                temp.push(new GlobalDataPoint(countryDataArray.values[i].country,
+                    countryDataArray.values[i].lat,
+                    countryDataArray.values[i].lon, {
+                        code_2: countryDataArray.values[i].code2,
+                        code_3: countryDataArray.values[i].code3,
+                        icon_code: countryDataArray.values[i].iconCode,
+                        name: countryDataArray.values[i].country,
+                        type: 'Country'
+                    }));
+            }
+            return temp;
+        }
+
+        function loadCountryLayer(wwd, countryDataArray) {
+            let countryLayer = new DataLayer('Countries');
+            let countryData = loadCountries(countryDataArray);
+            countryLayer.loadFlags(countryData, './flags/', '.png', null, null);
+            wwd.addLayer(countryLayer.layer);
+            return countryLayer;
+        }
+
     }
 
     function sizePK(num) {
