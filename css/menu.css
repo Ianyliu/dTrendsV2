@@ -31,8 +31,9 @@
 
 .panel-group{
   width: auto;
-  height: 28%;
-  overflow: scroll;
+  height: 280px;
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
 }
 
 .panel-body .panel-collapse{
