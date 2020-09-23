@@ -441,6 +441,7 @@ define([
     let onDiseaseClick = function (event) {
         let projectionName = event.target.innerText || event.target.innerHTML;
         $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+        console.log(projectionName)
 
         if (projectionName === "COVID-19") {
             covid19();

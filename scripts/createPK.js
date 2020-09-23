@@ -1,14 +1,16 @@
 define([
     './globeObject',
     './canvasPKobject',
-    './imgPKobject'
+    './imgPKobject',
+    './jquery-csv-1.0.11'
     // ,'./initPL'
-], function (newGlobe, pkObject,imagePK){
+], function (newGlobe, canvasPKobject,imagePK,jquery){
     "use strict";
 
 
     let pLayer;
     function createPK(date, type, flag, countries, continents) {
+        console.log(loadCSVData());
 
         // request the data for placemarks with given date and country
         $.ajax({
@@ -45,10 +47,10 @@ define([
                         let cRecovered = colorR.split(' ');
                         let cActive = colorA.split(' ');
 
-                        let confirmedPK = new pkObject(cConfirmed, el.Latitude, el.Longitude, sizePK(el.CaseNum));
-                        let deathPK = new pkObject(cDeath, el.Latitude, el.Longitude, sizePK(el.DeathNum));
-                        let recoveredPK = new pkObject(cRecovered, el.Latitude, el.Longitude, sizePK(el.RecovNum));
-                        let activePK = new pkObject(cActive, el.Latitude, el.Longitude, sizePK(el.CaseNum-el.DeathNum-el.RecovNum));
+                        let confirmedPK = new canvasPKobject(cConfirmed, el.Latitude, el.Longitude, sizePK(el.CaseNum));
+                        let deathPK = new canvasPKobject(cDeath, el.Latitude, el.Longitude, sizePK(el.DeathNum));
+                        let recoveredPK = new canvasPKobject(cRecovered, el.Latitude, el.Longitude, sizePK(el.RecovNum));
+                        let activePK = new canvasPKobject(cActive, el.Latitude, el.Longitude, sizePK(el.CaseNum-el.DeathNum-el.RecovNum));
 
                         confirmedPK.pk.userProperties.Date = el.Date;
                         confirmedPK.pk.userProperties.Type = "Confirmed Cases";
@@ -111,6 +113,7 @@ define([
                 }
             }
         })
+
     }
 
     function sizePK(num) {
@@ -150,5 +153,29 @@ define([
         }
     }
 
+    function loadCSVData() {
+        let csvList = ['./countries.csv',
+            './weatherstations.csv'
+        ];
+        //Find the file
+        let csvString = "";
+
+        let csvData = [];
+        let i = 0;
+        for (i = 0; i < csvList.length; i++) {
+            let csvRequest = $.ajax({
+                async: false,
+                url: csvList[i],
+                success: function(file_content) {
+                    csvString = file_content;
+                    csvData.push($.csv.toObjects(csvString));
+                    console.log($.csv.toObjects(csvString))
+                }
+            });
+        }
+        return csvData;
+    }
+
     return createPK;
 });
+
