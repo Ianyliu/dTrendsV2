@@ -102,21 +102,22 @@ requirejs([
         })
 
         //dropdown menu for diseases and influenzas
-        $("#diseaseDropdown").find(" li").on("click", function (e) {
+        $("#diseaseDropdown").find("li").on("click", function (e) {
             controls.onDiseaseClick(e);
+            console.log(e)
         });
 
-        $("#agrosphereDropdown").find(" li").on("click", function (e) {
+        $("#agrosphereDropdown").find("li").on("click", function (e) {
             controls.onAgrosphereClick(e);
         });
 
         //dropdown menu for placemark category
-        $("#categoryList").find(" li").on("click", function (e) {
+        $("#categoryList").find("li").on("click", function (e) {
             controls.onCategory(e);
         });
 
         //dropdown menu for continent selection
-        $("#continentList").find(" li").on("click", function (e) {
+        $("#continentList").find("li").on("click", function (e) {
             controls.onContinent(e);
         });
 
