@@ -154,8 +154,8 @@ define([
     }
 
     function loadCSVData() {
-        let csvList = ['./countries.csv',
-            './weatherstations.csv'
+        let csvList = ['scripts/countries.csv',
+            'scripts/weatherstations.csv'
         ];
         //Find the file
         let csvString = "";
