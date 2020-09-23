@@ -1,3 +1,17 @@
+.projectionTitle {
+  font-size:16px;
+}
+
+.modal-body{
+  color: white;
+}
+
+#tutorial {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 99;
+}
 
 .panel-group .panel-heading a:after {
   content: '-';
@@ -17,8 +31,9 @@
 
 .panel-group{
   width: auto;
-  height: 800px;
-  overflow: scroll;
+  height: 280px;
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
 }
 
 .panel-body .panel-collapse{
