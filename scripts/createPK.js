@@ -228,8 +228,8 @@ define([
                 // Create the placemark and its label.
                 // let placemark = new WorldWind.Placemark(new WorldWind.Position(parseFloat(csvData[i][j].lat),
                 //     parseFloat(csvData[i][j].lon), 1e2), true, null);
-                let lat = parseFloat(csvData[i][j]);
-                let lon = parseFloat(csvData[i][j])
+                let lat = parseFloat(csvData[i][j].lat);
+                let lon = parseFloat(csvData[i][j].lon)
                 let labelString = '';
                 let imgsource = "";
                 let userobject;
