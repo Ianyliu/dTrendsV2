@@ -240,21 +240,18 @@ define([
                 if (type == 'Country') {
                     labelString = csvData[i][j].country + ' - ' +
                         csvData[i][j].code3;
-                    imgsource = '/flags/' + csvData[i][j].iconCode + '.png';
+                    imgsource = 'flags/' + csvData[i][j].iconCode + '.png';
                     userobject = {
                         code3: csvData[i][j].code3,
                         country: csvData[i][j].country
                     };
                 } else if (type == 'Weather Station') {
                     labelString = csvData[i][j].code3;
-                    imgsource = '/images/sun.png';
+                    imgsource = 'images/sun.png';
 
                 }
-                console.log('Placemark Info')
-                console.log(lat)
-                console.log(lon)
-                console.log(imgsource)
-                console.log((labelString))
+                console.log(labelString)
+
                 // //
                 // // placemark.label = labelString;
                 // // placemark.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
@@ -300,6 +297,7 @@ define([
                 // // Add the placemark to the layer.
                 // placemarkLayer.addRenderable(placemark);
                 let agroplacemark =  new imagePK(lat, lon, type, labelString, imgsource)
+                console.log(agroplacemark)
                 // console.log(agroplacemark)
             }
             //Before adding to the layer, attach a type to it
