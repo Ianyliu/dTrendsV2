@@ -184,7 +184,7 @@ define([
     //The types are predetermined in order
     //This assumes the CSV data is loaded in order too obviously
     //Assumption is dataType 1 maps to csvData 1
-    function generatePlacemarkLayer(wwd, csvData) {
+    function generatePlacemarkLayer(csvData) {
         //Data type list
         let dataTypes = ['Country', 'Weather Station'];
 
