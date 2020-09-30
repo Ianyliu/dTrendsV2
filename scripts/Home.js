@@ -56,7 +56,7 @@ requirejs([
 
         //load dialog boxes for filter options and edit mode
         controls.filterOptionDialog();
-        controls.editDialog();
+        // controls.editDialog();
 
         //overlays sub dropdown menus
         $('.dropdown-submenu a.test').on("click", function(e) {
