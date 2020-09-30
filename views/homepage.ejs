@@ -274,7 +274,7 @@
     </style>
 
 </head>
-<body>
+<body onload="hideDialog()">
 
 <ul class="tab"
     style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
@@ -348,7 +348,7 @@
             </div>
         </div>
 
-        <div id="dialogDateRange" title="Date Range Confirmation">
+        <div id="dialogDateRange" title="Date Range Confirmation"  style="visibility: hidden; display: none">
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Are you sure you
                 would like to select these dates?</p>
 
@@ -375,7 +375,7 @@
 
         </div>
 
-        <div id="dialog" title="Filter Options">
+        <div id="dialog" title="Filter Options" style="visibility: hidden; display: none">
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the
                 date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could
                 take a long time.</p>
@@ -908,8 +908,18 @@
         // });
         //     alert('Welcome to CitySmart V2! Our application works best on the most recent version of Chrome. If you are experiencing any problems, try switching a browser.');
         //     alert('Please wait for our application to finish loading before attempting to login.');
-    });
 
+
+    });
+    function hidedialog() {
+        document.getElementById("dialog").style.visibility = "visible";
+        document.getElementById("dialog").style.display = "block";
+        document.getElementById("dialogDateRange").style.visibility = "visible";
+        document.getElementById("dialogDateRange").style.display = "block";
+        document.getElementById("pop").style.visibility = "visible";
+        document.getElementById("dialog").style.display = "block";
+
+    }
 
 </script>
 </body>

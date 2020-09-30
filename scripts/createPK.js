@@ -187,6 +187,7 @@ define([
                             let agroPK = new imagePK(lat,lon, type, labelString, imgsource)
                             newGlobe.redraw();
                             newGlobe.addLayer(agroPK);
+                            agroPK.enabled = true;
                             newGlobe.redraw();
                             agroPK.enabled = true;
                             // //
