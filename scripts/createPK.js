@@ -185,11 +185,12 @@ define([
                             }
 
                             let agroPK = new imagePK(lat,lon, type, labelString, imgsource)
-                            newGlobe.redraw();
-                            newGlobe.addLayer(agroPK);
-                            agroPK.enabled = true;
-                            newGlobe.redraw();
-                            agroPK.enabled = true;
+                            console.log(agroPK)
+                            // newGlobe.redraw();
+                            // newGlobe.addLayer(agroPK);
+                            // agroPK.enabled = true;
+                            // newGlobe.redraw();
+                            // agroPK.enabled = true;
                             // //
                             // // placemark.label = labelString;
                             // // placemark.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
