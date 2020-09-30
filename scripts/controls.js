@@ -327,9 +327,13 @@ define([
     let subDropdown = function () {
         $(".dropdown").on("show.bs.dropdown", function () {
             let $btnDropDown = $(this).find(".dropdown-toggle");
+            console.log($btnDropDown)
             let $listHolder = $(this).find(".dropdown-menu");
+            console.log($listHolder)
             let subMenu = $(this).find(".dropdown-submenu");
+            console.log(subMenu)
             let subMenu2 = subMenu.find(".dropdown-menu");
+            console.log(subMenu2)
             //reset position property for DD container
             $(this).css("position", "static");
             $listHolder.css({
@@ -513,7 +517,9 @@ define([
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
+            console.log(layer)
             let layerButton = $('#' + layer.displayName + '');
+            console.log(layer.layerType)
             if (layer.layerType === "H_PKLayer" || layer.layerType === "INA_PKLayer") {
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
