@@ -455,6 +455,33 @@ define([
     };
 
     //under first left tab; used to switch display between
+    let onInfluenzaClick = function (event) {
+
+        //grab the selection value
+        let projectionName = event.target.innerText || event.target.innerHTML;
+        //refresh the option display
+        // $("#InfluA").find("button").html(projectionName + ' <span class="caret"></span>');
+
+        //insert accordion menu corresponding to the selection
+        if (projectionName === "InfluA") {
+            menuStructure = {
+                Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1"]
+                // ,Level2: [countryL, cropsL, weatherL],
+            }
+            accordionMenu(menuStructure);
+        } else if (projectionName === 'InfluB') {
+            menuStructure = {
+                Level1: [
+                    "Yamagata",
+                    "Victoria",
+                    "Not Determined"
+                ]
+            }
+            accordionMenu(menuStructure);
+        }
+    };
+
+    //under first left tab; used to switch display between
     let onAgrosphereClick = function (event) {
 
         //grab the selection value
@@ -1371,6 +1398,7 @@ define([
         updateCurr,
         onDiseaseClick,
         onAgrosphereClick,
+        onInfluenzaClick,
         onCategory,
         onContinent,
         onNav,
