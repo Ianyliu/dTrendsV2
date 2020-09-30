@@ -4,7 +4,7 @@ define(['./WorldWindShim'],function (WorldWind) {
         const  agro_url = "https://worldwind.arc.nasa.gov/agrosphere/"
         // wrap up World Wind Placemark object
         let placemarkAttributes = new WorldWind.PlacemarkAttributes(null);
-        placemarkAttributes.imageSource = WorldWind.configuration.baseUrl;
+        placemarkAttributes.imageSource = agro_url + imgSource;
 
         placemarkAttributes.imageScale = 0.005; //placemark size!
 
