@@ -7,7 +7,7 @@ define([
 ], function (newGlobe, canvasPKobject,imagePK){
     "use strict";
 
-
+    let aLayer;
     let pLayer;
     function createPK(date, type, flag, countries, continents) {
 
@@ -246,8 +246,7 @@ define([
 
                     }
 
-
-
+                    aLayer.enabled = true;
                 }
             }
         })
