@@ -188,8 +188,8 @@ define([
                             console.log(agroPK)
                             // newGlobe.redraw();
                             // newGlobe.addLayer(agroPK);
-                            // agroPK.enabled = true;
-                            // newGlobe.redraw();
+                            agroPK.enabled = true;
+                            newGlobe.redraw();
                             // agroPK.enabled = true;
                             // //
                             // // placemark.label = labelString;
@@ -245,6 +245,8 @@ define([
 
 
                     }
+
+
 
                 }
             }

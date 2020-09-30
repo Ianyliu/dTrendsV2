@@ -348,7 +348,7 @@ define([
         });
         //add BT DD hide event
         $(".dropdown").on("hidden.bs.dropdown", function () {
-            var $listHolder = $(this).find(".dropdown-menu");
+            let $listHolder = $(this).find(".dropdown-menu");
             $listHolder.data("open", false);
         });
 
