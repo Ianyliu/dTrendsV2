@@ -260,7 +260,6 @@ define([
 
                     }
 
-                    aLayer.addRenderables([agroPK]);
                     newGlobe.addLayer(aLayer);
                     newGlobe.redraw();
                     aLayer = new WorldWind.RenderableLayer(imagePK);
