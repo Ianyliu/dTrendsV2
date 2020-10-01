@@ -186,6 +186,12 @@ define([
 
                             let agroPK = new imagePK(lat,lon, type, labelString, imgsource)
                             console.log(agroPK)
+                            aLayer.addRenderables([agroPK]);
+                            newGlobe.addLayer(aLayer);
+                            newGlobe.redraw();
+                            aLayer = new WorldWind.RenderableLayer(imgsource);
+                            aLayer.enabled = true;
+
                             // newGlobe.redraw();
                             // newGlobe.addLayer(agroPK);
                             agroPK.enabled = true;
