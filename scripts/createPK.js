@@ -163,12 +163,6 @@ define([
                             // let placemark = new WorldWind.Placemark(new WorldWind.Position(parseFloat(csvData[i][j].lat),
                             //     parseFloat(csvData[i][j].lon), 1e2), true, null);
 
-                            if (j === 0) {
-                                //create placemark layer
-                                aLayer = new WorldWind.RenderableLayer;
-                                aLayer.enabled = true;
-                                aLayer.layerType = 'H_PKLayer';
-                            }
                             let lat = parseFloat(csvdata[i][j].lat);
                             let lon = parseFloat(csvdata[i][j].lon)
                             let labelString = '';
@@ -192,14 +186,14 @@ define([
 
                             }
 
-                            if (j === 0) {
                                 //create placemark layer
                                 aLayer = new WorldWind.RenderableLayer(labelString);
                                 aLayer.enabled = true;
                                 aLayer.layerType = 'H_PKLayer';
-                            }
+                                aLayer.continent(labelString)
 
                             let agroPK = new imagePK(lat,lon, type, labelString, imgsource)
+                            newGlobe.redraw();
                             aLayer.addRenderables([agroPK]);
                             newGlobe.addLayer(aLayer);
                             newGlobe.redraw();
@@ -266,6 +260,10 @@ define([
 
                     }
 
+                    aLayer.addRenderables([agroPK]);
+                    newGlobe.addLayer(aLayer);
+                    newGlobe.redraw();
+                    aLayer = new WorldWind.RenderableLayer(imagePK);
                     aLayer.enabled = true;
                 }
             }
