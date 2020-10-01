@@ -271,10 +271,46 @@
             background: #888888;
         }
 
+        .spinner{
+            width: 80px;
+            height: 80px;
+
+            border: 2px solid #f3f3f3;
+            border-top:3px solid #f25a41;
+            border-radius: 100%;
+
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right: 0;
+            margin: auto;
+
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            from{
+                transform: rotate(0deg);
+            }to{
+                 transform: rotate(360deg);
+             }
+        }
+
+        #overlay{
+            height:100%;
+            width:100%;
+            background: rgb(0, 0, 0);
+            position:fixed;
+            left:0;
+            top:0;
+        }
+
     </style>
 
 </head>
 <body onload="hideDialog()">
+
 
 <ul class="tab"
     style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
@@ -348,7 +384,7 @@
             </div>
         </div>
 
-        <div id="dialogDateRange" title="Date Range Confirmation"  style="visibility: hidden; display: none">
+        <div id="dialogDateRange" title="Date Range Confirmation">
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Are you sure you
                 would like to select these dates?</p>
 
@@ -375,7 +411,7 @@
 
         </div>
 
-        <div id="dialog" title="Filter Options" style="visibility: hidden; display: none">
+        <div id="dialog" title="Filter Options">
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> Utilizing the
                 date slider requires a filter to be set. Please select your desired settings. NOTE: A full load could
                 take a long time.</p>
@@ -897,6 +933,9 @@
 
 
 </div>
+<div id="overlay">
+    <div class="spinner"></div>
+</div>
 <script>
     $(document).ready(function () {
         // $.get("path to csv", function (data){
@@ -912,11 +951,10 @@
 
 
     });
-    function hideDialog() {
-        document.getElementById("dialog").style.visibility = "visible";
-        document.getElementById("dialog").style.display = "block";
-        document.getElementById("dialogDateRange").style.visibility = "visible";
-        document.getElementById("dialogDateRange").style.display = "block";
+    let overlay = document.getElementById("overlay");
+
+    function hideDialog (){
+        overlay.style.display = 'none';
     }
 
 </script>
