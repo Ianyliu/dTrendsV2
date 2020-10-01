@@ -468,6 +468,7 @@ define([
             menuStructure = {
                 Level1: ["COVID-19", "Influenza A", "Influenza B"]
             }
+            accordionMenu2(menuStructure);
         } else if (projectionName === 'Influenza A') {
             influenzaA();
             menuStructure = {
@@ -705,7 +706,7 @@ define([
             let collapsed1 = document.createElement("a");
             collapsed1.className = "collapsed";
             collapsed1.setAttribute("data-toggle", "collapse");
-            collapsed1.setAttribute("data-parent", "#accordion");
+            collapsed1.setAttribute("data-parent", "#accordion2");
             collapsed1.href = "#" + firstL;
 
             let firstLayerName = document.createTextNode(firstL + "  ");
