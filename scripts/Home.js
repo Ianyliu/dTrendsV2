@@ -104,15 +104,10 @@ requirejs([
         //dropdown menu for diseases and influenzas
         $("#diseaseDropdown").find("li").on("click", function (e) {
             controls.onDiseaseClick(e);
-            console.log(e)
         });
 
         $("#agrosphereDropdown").find("li").on("click", function (e) {
             controls.onAgrosphereClick(e);
-        });
-
-        $("#InfluA").on("click", function (e) {
-            controls.onInfluenzaClick(e);
         });
 
         //dropdown menu for placemark category

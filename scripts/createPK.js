@@ -156,11 +156,13 @@ define([
                         // let placemarkLayer = new WorldWind.RenderableLayer(dataTypes[i] +
                         //     " Placemarks");
                         //Create the pins
+
                         let j = 0;
                         for (j = 0; j < csvdata[i].length; j++) {
                             // Create the placemark and its label.
                             // let placemark = new WorldWind.Placemark(new WorldWind.Position(parseFloat(csvData[i][j].lat),
                             //     parseFloat(csvData[i][j].lon), 1e2), true, null);
+
                             let lat = parseFloat(csvdata[i][j].lat);
                             let lon = parseFloat(csvdata[i][j].lon)
                             let labelString = '';
@@ -184,12 +186,18 @@ define([
 
                             }
 
+                                //create placemark layer
+                                aLayer = new WorldWind.RenderableLayer(labelString);
+                                aLayer.enabled = true;
+                                aLayer.layerType = 'H_PKLayer';
+                                aLayer.continent(labelString)
+
                             let agroPK = new imagePK(lat,lon, type, labelString, imgsource)
-                            console.log(agroPK)
+                            newGlobe.redraw();
                             aLayer.addRenderables([agroPK]);
                             newGlobe.addLayer(aLayer);
                             newGlobe.redraw();
-                            aLayer = new WorldWind.RenderableLayer(imgsource);
+                            aLayer = new WorldWind.RenderableLayer(imagePK);
                             aLayer.enabled = true;
 
                             // newGlobe.redraw();
@@ -252,6 +260,9 @@ define([
 
                     }
 
+                    newGlobe.addLayer(aLayer);
+                    newGlobe.redraw();
+                    aLayer = new WorldWind.RenderableLayer(imagePK);
                     aLayer.enabled = true;
                 }
             }
