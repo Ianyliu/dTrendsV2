@@ -441,35 +441,37 @@ define([
         $('#conActive').text(numA);
     };
 
-    //under first left tab; used to switch display between diseases/influenzas
-    let onDiseaseClick = function (event) {
-        let projectionName = event.target.innerText || event.target.innerHTML;
-        $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-        console.log(projectionName)
-
-        if (projectionName === "COVID-19") {
-            covid19();
-        } else {
-            influenzaA();
-        }
-    };
+    // //under first left tab; used to switch display between diseases/influenzas
+    // let onDiseaseClicke = function (event) {
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //     console.log(projectionName)
+    //
+    //     if (projectionName === "COVID-19") {
+    //         covid19();
+    //     } else {
+    //         influenzaA();
+    //     }
+    // };
 
     //under first left tab; used to switch display between
-    let onInfluenzaClick = function (event) {
+    let onDiseaseClick = function (event) {
 
         //grab the selection value
         let projectionName = event.target.innerText || event.target.innerHTML;
         //refresh the option display
-        // $("#InfluA").find("button").html(projectionName + ' <span class="caret"></span>');
+        $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
 
         //insert accordion menu corresponding to the selection
-        if (projectionName === "InfluA") {
+        if (projectionName === "COVID-19") {
+            covid19();
+        } else if (projectionName === 'Influenza A') {
+            influenzaA();
             menuStructure = {
-                Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1"]
-                // ,Level2: [countryL, cropsL, weatherL],
+                Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1", "Not Determined"]
             }
             accordionMenu(menuStructure);
-        } else if (projectionName === 'InfluB') {
+        } else if (projectionName === 'Influenza B') {
             menuStructure = {
                 Level1: [
                     "Yamagata",
@@ -480,6 +482,7 @@ define([
             accordionMenu(menuStructure);
         }
     };
+
 
     //under first left tab; used to switch display between
     let onAgrosphereClick = function (event) {
@@ -1398,7 +1401,6 @@ define([
         updateCurr,
         onDiseaseClick,
         onAgrosphereClick,
-        onInfluenzaClick,
         onCategory,
         onContinent,
         onNav,
