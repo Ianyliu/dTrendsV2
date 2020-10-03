@@ -7,9 +7,8 @@ define([
     "use strict";
 
     let aLayer;
-    let pLayer;
 
-    function createimgPK(date, type, flag, countries, continents) {
+    function createimgPK() {
 
         let csvdata = loadCSVData();
 
@@ -84,8 +83,7 @@ define([
                         country: csvdata[i][j].country
                     };
                 } else if (type === 'Weather Station') {
-                    let stationName = parseFloat(csvdata[i][j].station)
-                    labelString = csvdata[i][j].code3;
+                    labelString = parseFloat(csvdata[i][j].station)
                     imgsource = '/images/sun.png';
 
                 }
@@ -162,42 +160,7 @@ define([
 
     }
 
-    function sizePK(num) {
-        let magnitude = 0;
-        if (num > 0 && num <= 5) {
-            magnitude = 0.05;
-        } else if (num > 5 && num <= 25) {
-            magnitude = 0.07;
-        } else if (num > 25 && num <= 75) {
-            magnitude = 0.13;
-        } else if (num > 75 && num <= 150) {
-            magnitude = 0.17;
-        } else if (num > 150 && num <= 250) {
-            magnitude = 0.22;
-        } else if (num > 250 && num <= 350) {
-            magnitude = 0.25;
-        } else if (num > 350 && num <= 600) {
-            magnitude = 0.28;
-        } else if (num > 600 && num <= 1100) {
-            magnitude = 0.3;
-        } else if (num > 1100 && num <= 2500) {
-            magnitude = 0.40;
-        } else if (num > 2500 && num <= 7500) {
-            magnitude = 0.45;
-        } else if (num > 7500 && num <= 11000) {
-            magnitude = 0.5;
-        } else if (num > 11000) {
-            magnitude = 0.6;
-        }
 
-        return magnitude
-    }
-
-    function deletePK() {
-        for (let i = 6; i < newGlobe.layers.length - 1; i++) {
-            newGlobe.removeLayer(newGlobe.layers[i]);
-        }
-    }
 
     function loadCSVData() {
         let csvList = ['csvdata/countries.csv',

@@ -2,8 +2,9 @@ define([
     './globeObject'
     , './dataAll'
     , './LayerManager'
-    , './createPK'
-], function (newGlobe, dataAll, layerManager, createPK) {
+    , './createPK',
+    './createimgPK'
+], function (newGlobe, dataAll, layerManager, createPK,createimgPK) {
     "use strict";
 
     let categoryS = "Confirmed Cases";

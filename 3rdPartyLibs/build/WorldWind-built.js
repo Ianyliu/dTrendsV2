@@ -35641,7 +35641,7 @@ define('../../src/layer/RenderableLayer',[
 
         /**
          * Adds an array of renderables to this layer.
-         * @param {Renderable[]} renderables The renderables to add.
+         * @param {(imagePK|exports)[]} renderables The renderables to add.
          * @throws {ArgumentError} If the specified renderables array is null or undefined.
          */
         RenderableLayer.prototype.addRenderables = function (renderables) {
