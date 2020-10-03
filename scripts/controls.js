@@ -467,16 +467,18 @@ define([
         if (projectionName === "COVID-19") {
             covid19();
             menuStructure = {
-                Level1: ["COVID-19", "Influenza A", "Influenza B"]
+                Level1: ["COVID-19", "Influenza A", "Influenza B"],
             }
             accordionMenu2(menuStructure);
         } else if (projectionName === 'Influenza A') {
             influenzaA();
+            $("#accordion2").css('visibility', 'visible');
             menuStructure = {
                 Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1", "Not Determined"]
             }
             accordionMenu2(menuStructure);
         } else if (projectionName === 'Influenza B') {
+            $("#accordion2").css('visibility', 'visible');
             menuStructure = {
                 Level1: [
                     "Yamagata",
@@ -527,11 +529,17 @@ define([
 
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
+        // if(document.getElementById('accordion2').css.visiblity === 'visible') {
+        //     $("#accordion2").css('visibility', 'hidden');
+        // } else {
+        //     $("#accordion2").css('visibility', 'visible');
+        // }
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
+                $("#accordion2").css('visibility', 'hidden');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass("active");
@@ -539,6 +547,7 @@ define([
                 } else {
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
+                    $("#accordion2").css('visibility', 'hidden');
                 }
             }
 
