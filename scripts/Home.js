@@ -10,7 +10,7 @@ requirejs([
     , '3rdPartyLibs/Chart-2.9.3.min.js'
     , 'createPK'
     , 'controls'
-    //, 'initPL'
+    , 'cAgrosPK'
 ], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls) {
     "use strict";
 
