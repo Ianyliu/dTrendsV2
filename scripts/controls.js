@@ -547,7 +547,6 @@ define([
                 } else {
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
-                    $("#accordion2").css('visibility', 'hidden');
                 }
             }
 
@@ -1245,6 +1244,7 @@ define([
             let pickedPM = value.userObject;
             if (pickedPM instanceof WorldWind.Placemark) {
                 sitePopUp(pickedPM);
+                console.log(pickedPM.layer.displayName)
             }
         })
     }
@@ -1309,17 +1309,21 @@ define([
         let modal = document.getElementById('popupBox');
         let span = document.getElementById('closeIt');
 
-        modal.style.display = "block";
+        if (PM.userProperties.dName !== 'undefined') {
+            modal.style.display = "block";
 
-        span.onclick = function () {
-            modal.style.display = "none";
-        };
-
-        window.onclick = function (event) {
-            if (event.target === modal) {
+            span.onclick = function () {
                 modal.style.display = "none";
+            };
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
             }
+
         }
+
 
         //load chart data
         button0.click();
