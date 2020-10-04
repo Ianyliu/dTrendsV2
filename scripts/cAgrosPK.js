@@ -59,6 +59,7 @@ requirejs([
                         code3: csvData[i][j].code3,
                         country: csvData[i][j].country
                     };
+                    console.log(csvData[i][j])
                 } else if (layerType[i] == 'Weather Station') {
                     // labelString = csvData[i][j].code3;
                     aLayer.layerType = 'Weather_Station_Placemarks'
