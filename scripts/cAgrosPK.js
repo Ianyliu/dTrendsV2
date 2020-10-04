@@ -1,6 +1,7 @@
 requirejs([
     './globeObject'
     , './imgPKobject'
+    ,'./jquery-csv-1.0.11'
 ], function (newGlobe, imagePK) {
     "use strict";
 
@@ -59,17 +60,21 @@ requirejs([
                         code3: csvData[i][j].code3,
                         country: csvData[i][j].country
                     };
-                    console.log(csvData[i][j])
                 } else if (layerType[i] == 'Weather Station') {
                     // labelString = csvData[i][j].code3;
                     aLayer.layerType = 'Weather_Station_Placemarks'
                     imgsource = '/images/sun.png';
+                    userobject = {
+                        // code3: csvData[i][j].code3,
+                        // country: csvData[i][j].country
+                    };
                 } else {
                     console.log("Read layer type in error");
                 }
 
                 // create AgroSphere placemark
                 let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
+                agroPK.placemark.country = userobject.country;
 
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);
