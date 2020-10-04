@@ -19,9 +19,9 @@ define([
 
     for (let i = 0; i < dataTypes.length; i++) {
         for (let j = 0; j < csvD[i].length; j++) {
-            if (dataTypes[i] == 'Country') {
+            if (dataTypes[i] === 'Country') {
                 countryL.push(csvD[i][j].country)
-            } else if (dataTypes[i] == 'Weather Station') {
+            } else if (dataTypes[i] === 'Weather Station') {
             } else {
                 console.log("Read layer type in error");
             }
@@ -668,7 +668,7 @@ define([
             let checkboxAt = document.createTextNode(secondL + "   ");
             checkboxA.className = "menuWords";
             let idname = secondL.replace(/\s+/g, '');
-            checkboxA.id = idname;
+            checkboxA.id = idname + '-atag';
 
             let checkboxLabel = document.createElement("label");
             checkboxLabel.className = "switch right";
@@ -676,7 +676,11 @@ define([
             let checkboxInput = document.createElement("input");
             checkboxInput.type = "checkbox";
             // checkboxInput.className = element.LayerType + " input";
-            checkboxInput.className = " input";
+            checkboxInput.className = "input";
+            checkboxInput.id = idname;
+            if (firstL === "Country") {
+                checkboxInput.defaultChecked = 'true';
+            }
             // checkboxInput.setAttribute("value", element.LayerName);
 
             let checkboxSpan = document.createElement("span");
@@ -777,7 +781,7 @@ define([
             let checkboxInput = document.createElement("input");
             checkboxInput.type = "checkbox";
             // checkboxInput.className = element.LayerType + " input";
-            checkboxInput.className = " input";
+            checkboxInput.className = "input";
             // checkboxInput.setAttribute("value", element.LayerName);
 
             let checkboxSpan = document.createElement("span");
@@ -799,6 +803,13 @@ define([
         }
     };
 
+    //triggers flag and weather station placemarks
+    let onCountryClick = function (event) {
+        //grab the selection value
+        categoryS = event.target.innerText || event.target.innerHTML;
+
+        console.log(categoryS);
+    };
 
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
@@ -1558,6 +1569,7 @@ define([
         editDialog,
         handleMouseCLK,
         enableAllToggle,
-        closeAllToggle
+        closeAllToggle,
+        onCountryClick
     }
 })

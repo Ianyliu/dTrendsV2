@@ -75,6 +75,7 @@ requirejs([
                 // create AgroSphere placemark
                 let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
                 agroPK.placemark.country = userobject.country;
+                // console.log(agroPK.placemark.country)
 
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);

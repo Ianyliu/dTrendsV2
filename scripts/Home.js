@@ -110,6 +110,10 @@ requirejs([
             controls.onAgrosphereClick(e);
         });
 
+        $("#Country").find("a").on("click", function (e) {
+            controls.onCountryClick(e);
+        });
+
         //dropdown menu for placemark category
         $("#categoryList").find("li").on("click", function (e) {
             controls.onCategory(e);
