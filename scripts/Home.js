@@ -9,10 +9,9 @@ requirejs([
     , 'LayerManager'
     , '3rdPartyLibs/Chart-2.9.3.min.js'
     , 'createPK'
-    , 'controls',
-    'createimgPK'
-    //, 'initPL'
-], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls,createimgPK) {
+    , 'controls'
+    , 'cAgrosPK'
+], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls) {
     "use strict";
 
     let layerManager = new LayerManager(newGlobe);
@@ -20,7 +19,6 @@ requirejs([
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
     createPK([dataAll.arrDate[0].Date, dataAll.arrDate[dataAll.arrDate.length - 1].Date], "Confirmed", "init");
-    createimgPK();
 
     let fromDate = $('.fromdatepicker');
     let toDate = $('.todatepicker');
