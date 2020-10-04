@@ -328,13 +328,9 @@ define([
     let subDropdown = function () {
         $(".dropdown").on("show.bs.dropdown", function () {
             let $btnDropDown = $(this).find(".dropdown-toggle");
-            console.log($btnDropDown)
             let $listHolder = $(this).find(".dropdown-menu");
-            console.log($listHolder)
             let subMenu = $(this).find(".dropdown-submenu");
-            console.log(subMenu)
             let subMenu2 = subMenu.find(".dropdown-menu");
-            console.log(subMenu2)
             //reset position property for DD container
             $(this).css("position", "static");
             $listHolder.css({
@@ -619,6 +615,8 @@ define([
 
             let firstLayerName = document.createTextNode(firstL + "  ");
             firstLayerName.className = "menuwords";
+            let idname = firstL.replace(/\s+/g, '');
+            firstLayerName.id = idname;
 
             let collapseOne = document.createElement("div");
             collapseOne.className = "panel-collapse collapse";
@@ -652,6 +650,8 @@ define([
             let checkboxA = document.createElement("a");
             let checkboxAt = document.createTextNode(secondL + "   ");
             checkboxA.className = "menuWords";
+            let idname = secondL.replace(/\s+/g, '');
+            checkboxA.id = idname;
 
             let checkboxLabel = document.createElement("label");
             checkboxLabel.className = "switch right";
@@ -809,11 +809,13 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            console.log(elem)
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type == categoryS) {
                             d.enabled = true;
+                            console.log(d)
                         } else {
                             d.enabled = false;
                         }
@@ -847,7 +849,7 @@ define([
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
-                if (elem.continent != continentS) {
+                if (elem.continent !== continentS) {
                     if (continentS == 'All Continents') {
                         elem.hide = false;
                         elem.enabled = true;
@@ -1242,9 +1244,9 @@ define([
 
         pickListCLK.objects.forEach(function (value) {
             let pickedPM = value.userObject;
-            if (pickedPM instanceof WorldWind.Placemark) {
+            if (pickedPM instanceof WorldWind.Placemark && pickedPM.layer.displayName !== 'Country_Placemarks' && pickedPM.layer.displayName !== 'Weather_Station_Placemarks') {
                 sitePopUp(pickedPM);
-                console.log(pickedPM.layer.displayName)
+                console.log(pickedPM)
             }
         })
     }
@@ -1483,6 +1485,7 @@ define([
     function enableAllToggle() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
+            console.log(layer)
             // layer.enabled = true;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL") {

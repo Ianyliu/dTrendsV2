@@ -52,21 +52,23 @@ requirejs([
 
                 //Handle the string is based on the type we determine
                 if (layerType[i] == 'Country') {
-                    labelString = csvData[i][j].country + ' - ' + csvData[i][j].code3;
+                    // labelString = csvData[i][j].country + ' - ' + csvData[i][j].code3;
                     imgsource = '/flags/' + csvData[i][j].iconCode + '.png';
+                    aLayer.layerType = 'Country_Placemarks';
                     userobject = {
                         code3: csvData[i][j].code3,
                         country: csvData[i][j].country
                     };
                 } else if (layerType[i] == 'Weather Station') {
-                    labelString = csvData[i][j].code3;
+                    // labelString = csvData[i][j].code3;
+                    aLayer.layerType = 'Weather_Station_Placemarks'
                     imgsource = '/images/sun.png';
                 } else {
                     console.log("Read layer type in error");
                 }
 
                 // create AgroSphere placemark
-                let agroPK = new imagePK(lat, lon, layerType[i], labelString, imgsource)
+                let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
 
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);
