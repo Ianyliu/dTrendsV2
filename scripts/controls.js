@@ -872,7 +872,7 @@ define([
                     }
                 })
 
-                layerManager.synchronizeLayerList();
+                LayerManager.synchronizeLayerList();
             }
         })
     };
