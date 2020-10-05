@@ -1531,7 +1531,7 @@ define([
 
     //disables all layers; if layer is enabled, force disable it
     function closeAllToggle() {
-        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             layer.enabled = false;
             let layerButton = $('#' + layer.displayName + '');
