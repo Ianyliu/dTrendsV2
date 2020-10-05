@@ -837,13 +837,12 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            console.log(elem)
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type == categoryS) {
                             d.enabled = true;
-                            console.log(d)
+                            // console.log(d)
                         } else {
                             d.enabled = false;
                         }
