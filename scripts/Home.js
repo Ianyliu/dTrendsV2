@@ -24,8 +24,6 @@ requirejs([
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
 
-    console.log(newGlobe.layers);
-
     //All the event listeners
     $(document).ready(function () {
 
@@ -190,13 +188,8 @@ requirejs([
 
     async function togglePK(countryN, status){
         // use countryN to look pk
-        console.log(countryN);
         let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_Placemarks');
-        console.log(findLayerIndex);
-        console.log(newGlobe.layers[findLayerIndex].renderables);
         let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
-        console.log(findPKIndex);
-        console.log(newGlobe.layers[findLayerIndex].renderables[findPKIndex].position);
 
         //turn on/off the pk
         newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
