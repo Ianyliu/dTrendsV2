@@ -298,7 +298,6 @@ define([
 
         for (let i = 0; i < diseaseName.length; i++) {
             let diseaseItem = $('<li id="'+ diseaseId[i] + '"><a >' + diseaseName[i] + '</a></li>');
-            console.log(diseaseItem)
             ulItem2.append(diseaseItem);
         }
 

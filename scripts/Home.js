@@ -24,6 +24,8 @@ requirejs([
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
 
+    console.log(newGlobe.layers);
+
     //All the event listeners
     $(document).ready(function () {
 
@@ -106,12 +108,12 @@ requirejs([
             controls.onDiseaseClick(e);
         });
 
-        $("#agrosphereDropdown").find("li").on("click", function (e) {
-            controls.onAgrosphereClick(e);
-        });
-
-        $("#Country").find("a").on("click", function (e) {
-            controls.onCountryClick(e);
+        $("#agrosphereDropdown").find("li").on("click", async function (e) {
+            await controls.onAgrosphereClick(e);
+            $(".countries-check").click(function(){
+                let toggle = this;
+                togglePK(toggle.value, toggle.checked)
+            });
         });
 
         //dropdown menu for placemark category
@@ -184,6 +186,27 @@ requirejs([
         //selecting placemark creates pop-up
         newGlobe.addEventListener("click", controls.handleMouseCLK);
 
-
     });
+
+    async function togglePK(countryN, status){
+        // use countryN to look pk
+        console.log(countryN);
+        let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_Placemarks');
+        console.log(findLayerIndex);
+        console.log(newGlobe.layers[findLayerIndex].renderables);
+        let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
+        console.log(findPKIndex);
+        console.log(newGlobe.layers[findLayerIndex].renderables[findPKIndex].position);
+
+        //turn on/off the pk
+        newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
+        newGlobe.redraw();
+
+        newGlobe.goTo(new WorldWind.Position(
+            newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
+            newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
+            newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
+        ));
+    }
+
 });

@@ -28,8 +28,6 @@ define([
         }
     }
 
-    console.log(countryL)
-    console.log(csvD)
     let menuStructure;
     // const countryL = [
     //     "Afghanistan",
@@ -677,9 +675,11 @@ define([
             checkboxInput.type = "checkbox";
             // checkboxInput.className = element.LayerType + " input";
             checkboxInput.className = "input";
-            checkboxInput.id = idname;
+            checkboxInput.value = secondL;
             if (firstL === "Country") {
                 checkboxInput.defaultChecked = 'true';
+                checkboxInput.className = "input countries-check";
+                checkboxA.className = "menuWords countries-atag";
             }
             // checkboxInput.setAttribute("value", element.LayerName);
 
@@ -803,13 +803,13 @@ define([
         }
     };
 
-    //triggers flag and weather station placemarks
-    let onCountryClick = function (event) {
-        //grab the selection value
-        categoryS = event.target.innerText || event.target.innerHTML;
-
-        console.log(categoryS);
-    };
+    // //triggers flag and weather station placemarks
+    // let onCountryClick = function (event) {
+    //     //grab the selection value
+    //     categoryS = event.target.innerText || event.target.innerHTML;
+    //
+    //     console.log(categoryS);
+    // };
 
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
@@ -1570,6 +1570,6 @@ define([
         handleMouseCLK,
         enableAllToggle,
         closeAllToggle,
-        onCountryClick
+        // onCountryClick
     }
 })
