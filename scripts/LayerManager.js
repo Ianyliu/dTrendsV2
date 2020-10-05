@@ -308,14 +308,14 @@ define([
     // Agrosphere Menu
     LayerManager.prototype.agrosList = function () {
         const agrosName = [
-            'AgrosPhere',
+            'AgroSphere',
             'ECMWF Forecasts',
             'Sentinel Satellite Data'
         ]
 
         let agrosDropdown = $("#agrosphereDropdown");
 
-        let agrosOptions = $('<button class="btn btn-info btn-block dropdown-toggle" type="button" data-toggle="dropdown">AgrosPhere<span class="caret"></span></button>');
+        let agrosOptions = $('<button class="btn btn-info btn-block dropdown-toggle" type="button" data-toggle="dropdown">AgroSphere<span class="caret"></span></button>');
 
         agrosDropdown.append(agrosOptions);
 

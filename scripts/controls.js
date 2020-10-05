@@ -511,7 +511,7 @@ define([
         $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
 
         //insert accordion menu corresponding to the selection
-        if (projectionName === "AgrosPhere") {
+        if (projectionName === "AgroSphere") {
             menuStructure = {
                 Level1: ["Country", "Crops", "Weather"],
                 Level2: [countryL, cropsL, weatherL],
