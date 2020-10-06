@@ -18,6 +18,8 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
+    console.log(newGlobe.layers);
+
     createPK([dataAll.arrDate[0].Date, dataAll.arrDate[dataAll.arrDate.length - 1].Date], "Confirmed", "init");
 
     let fromDate = $('.fromdatepicker');

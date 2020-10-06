@@ -102,6 +102,7 @@ define([
             if (layer.displayName === layerName) {
                 layer.enabled = !layer.enabled;
                 this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
+                // this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude));
                 if (layer.enabled) {
                     layerButton.addClass("active");
                     layerButton.css("color", "white");

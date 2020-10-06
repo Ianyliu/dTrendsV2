@@ -571,9 +571,7 @@ define([
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            console.log(layer)
             let layerButton = $('#' + layer.displayName + '');
-            console.log(layer.layerType)
             if (layer.layerType === "H_PKLayer" || layer.layerType === "INA_PKLayer") {
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
