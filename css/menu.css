@@ -8,9 +8,13 @@
 
 .accordion {
   width: auto;
-  height: 380px;
+  height: 300px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
+}
+
+#accordion2 {
+  height: 150px;
 }
 
 #tutorial {
@@ -23,10 +27,12 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
+  height: 30px;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
+  height: 30px;
 }
 .panel{
   font-size:10px;

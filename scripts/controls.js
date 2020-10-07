@@ -233,7 +233,7 @@ define([
             }
             accordionMenu2(menuStructure);
         } else if (projectionName === 'Influenza A') {
-            influenzaA();
+            // influenzaA();
             $("#accordion2").css('visibility', 'visible');
             menuStructure = {
                 Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1", "Not Determined"]
@@ -338,7 +338,7 @@ define([
             }
 
         }
-        layerManager.synchronizeLayerList();
+        // layerManager.synchronizeLayerList();
     };
 
     let accordionMenu = function (menuObj) {
