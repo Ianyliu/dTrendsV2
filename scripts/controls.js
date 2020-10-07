@@ -478,6 +478,7 @@ define([
         if (projectionName === "COVID-19") {
             covid19();
             menuStructure = {
+                accordian: 'diseases',
                 Level1: ["COVID-19", "Influenza A", "Influenza B"],
             }
             accordionMenu2(menuStructure);
@@ -485,12 +486,18 @@ define([
             influenzaA();
             $("#accordion2").css('visibility', 'visible');
             menuStructure = {
-                Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1", "Not Determined"]
+                accordian: 'diseases',
+                Level1: [
+                    "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+                    "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+                    "H7N9","H6N1", "Not Determined"
+                ]
             }
             accordionMenu2(menuStructure);
         } else if (projectionName === 'Influenza B') {
             $("#accordion2").css('visibility', 'visible');
             menuStructure = {
+                accordian: 'diseases',
                 Level1: [
                     "Yamagata",
                     "Victoria",
@@ -513,17 +520,20 @@ define([
         //insert accordion menu corresponding to the selection
         if (projectionName === "AgroSphere") {
             menuStructure = {
+                accordian: 'foodSecurity',
                 Level1: ["Country", "Crops", "Weather"],
                 Level2: [countryL, cropsL, weatherL],
             }
             accordionMenu(menuStructure);
         } else if (projectionName === 'ECMWF Forecasts') {
             menuStructure = {
+                accordian: 'foodSecurity',
                 Level1: ["Temperature", "Precipitation", "Wind"]
             }
             accordionMenu(menuStructure);
         } else if (projectionName === 'Sentinel Satellite Data') {
             menuStructure = {
+                accordian: 'foodSecurity',
                 Level1: [
                     "Agriculture",
                     "False Color (Urban)",
@@ -598,19 +608,19 @@ define([
         if (!menuObj.Level2) {
             //create level one menu
             menuObj.Level1.forEach(function (ele) {
-                menuSecond("No Level1", ele)
+                menuL2("No Level1", ele)
             });
         } else {
             //create level one menu
             menuObj.Level1.forEach(async function (e1, i) {
-                await menuFirsL(e1);
+                await menuL1(e1);
                 menuObj.Level2[i].forEach(function (e2){
-                    menuSecond(e1, e2);
+                    menuL2(e1, e2);
                 })
             });
         }
 
-        function menuFirsL(firstL) {
+        function menuL1(firstL) {
             let panelDefault1 = document.createElement("div");
             panelDefault1.className = "Menu panel panel-info " + firstL;
 
@@ -654,7 +664,7 @@ define([
             parentMenu.appendChild(panelDefault1);
         }
 
-        function menuSecond(firstL, secondL) {
+        function menuL2(firstL, secondL) {
             let checkboxDiv = document.createElement("div");
             // checkboxDiv.className = "Menu " + thirdReplace + " " + countryNameStr + " " + stateNameStr + " " + cityNameStr;
             checkboxDiv.className = "Menu "
