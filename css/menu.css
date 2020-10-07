@@ -6,6 +6,13 @@
   color: white;
 }
 
+.accordion {
+  width: auto;
+  height: 380px;
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
+}
+
 #tutorial {
   position: fixed;
   bottom: 80px;
@@ -22,7 +29,7 @@
   width: inherit;
 }
 .panel{
-  font-size:12px;
+  font-size:10px;
   /*font-size:10vw;*/
   /*opacity: 50%;*/
   width: inherit;

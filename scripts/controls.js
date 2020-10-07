@@ -369,7 +369,7 @@ define([
             let panelHeading1 = document.createElement("div");
             panelHeading1.className = "panel-heading";
 
-            let panelTitle1 = document.createElement("h4");
+            let panelTitle1 = document.createElement("h5");
             panelTitle1.className = "panel-title";
 
             let collapsed1 = document.createElement("a");
