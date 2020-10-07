@@ -1,8 +1,9 @@
 requirejs([
     './globeObject'
     , './imgPKobject'
+    ,'./csvData'
     ,'./jquery-csv-1.0.11'
-], function (newGlobe, imagePK) {
+], function (newGlobe, imagePK,csvData) {
     "use strict";
 
     // load csv data
@@ -14,27 +15,28 @@ requirejs([
     //Data type list
     let dataTypes = ['Country', 'Weather Station'];
 
-    genPLPK(dataTypes, loadCSVData(csvFiles));
+    genPLPK(dataTypes, csvData);
+    console.log(csvData)
 
-    function loadCSVData(csvList) {
-        //Find the file
-        let csvString = "";
-
-        let csvData = [];
-        let i = 0;
-        for (i = 0; i < csvList.length; i++) {
-            let csvRequest = $.ajax({
-                async: false,
-                url: csvList[i],
-                success: function (file_content) {
-                    csvString = file_content;
-                    csvData.push($.csv.toObjects(csvString));
-                    // console.log($.csv.toObjects(csvString))
-                }
-            });
-        }
-        return csvData;
-    }
+    // function loadCSVData(csvList) {
+    //     //Find the file
+    //     let csvString = "";
+    //
+    //     let csvData = [];
+    //     let i = 0;
+    //     for (i = 0; i < csvList.length; i++) {
+    //         let csvRequest = $.ajax({
+    //             async: false,
+    //             url: csvList[i],
+    //             success: function (file_content) {
+    //                 csvString = file_content;
+    //                 csvData.push($.csv.toObjects(csvString));
+    //                 // console.log($.csv.toObjects(csvString))
+    //             }
+    //         });
+    //     }
+    //     return csvData;
+    // }
 
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere

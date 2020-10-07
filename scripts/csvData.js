@@ -4,7 +4,7 @@ define(['./jquery-csv-1.0.11'], function () {
     // load csv data
     let csvFiles = [
         '../csvdata/countries.csv',
-        '../csvdata/weatherstations.csv'
+        '../csvdata/weatherstations.csv', '../csvdata/cropAcros.csv'
     ];
 
     function loadCSVdata(csvList) {
