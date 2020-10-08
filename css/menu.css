@@ -6,6 +6,17 @@
   color: white;
 }
 
+.accordion {
+  width: auto;
+  height: 300px;
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
+}
+
+#accordion2 {
+  height: 150px;
+}
+
 #tutorial {
   position: fixed;
   bottom: 80px;
@@ -16,13 +27,15 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
+  height: 30px;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
+  height: 30px;
 }
 .panel{
-  font-size:12px;
+  font-size:10px;
   /*font-size:10vw;*/
   /*opacity: 50%;*/
   width: inherit;
@@ -31,7 +44,7 @@
 
 .panel-group{
   width: auto;
-  height: 150px;
+  height: 280px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }

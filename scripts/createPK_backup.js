@@ -60,7 +60,7 @@ define([
                 // let placemark = new WorldWind.Placemark(new WorldWind.Position(parseFloat(csvData[i][j].lat),
                 //     parseFloat(csvData[i][j].lon), 1e2), true, null);
                 //create placemark layer
-                if (j == 0) {
+                if (j === 0) {
                     aLayer = new WorldWind.RenderableLayer(dataTypes[i]);
                     aLayer.enabled = true;
                     // newGlobe.redraw();
@@ -76,7 +76,7 @@ define([
                 let type = dataTypes[i];
 
                 //Handle the string is based on the type we determine
-                if (type == 'Country') {
+                if (type === 'Country') {
                     labelString = csvdata[i][j].country + ' - ' +
                         csvdata[i][j].code3;
                     imgsource = '/flags/' + csvdata[i][j].iconCode + '.png';
@@ -84,7 +84,7 @@ define([
                         code3: csvdata[i][j].code3,
                         country: csvdata[i][j].country
                     };
-                } else if (type == 'Weather Station') {
+                } else if (type === 'Weather Station') {
                     let stationName = parseFloat(csvdata[i][j].station)
                     labelString = csvdata[i][j].code3;
                     imgsource = '/images/sun.png';

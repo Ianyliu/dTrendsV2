@@ -368,7 +368,7 @@ define([
             let panelHeading1 = document.createElement("div");
             panelHeading1.className = "panel-heading";
 
-            let panelTitle1 = document.createElement("h4");
+            let panelTitle1 = document.createElement("h5");
             panelTitle1.className = "panel-title";
 
             let collapsed1 = document.createElement("a");
@@ -409,7 +409,7 @@ define([
             let checkboxDiv = document.createElement("div");
             checkboxDiv.className = "Menu "
 
-            let checkboxH4 = document.createElement("h4");
+            let checkboxH4 = document.createElement("h5");
             let checkboxA = document.createElement("a");
             let checkboxAt = document.createTextNode(secondL + "   ");
             checkboxA.className = "menuWords";

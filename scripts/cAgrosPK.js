@@ -1,8 +1,9 @@
 requirejs([
     './globeObject'
     , './imgPKobject'
+    ,'./csvData'
     ,'./jquery-csv-1.0.11'
-], function (newGlobe, imagePK) {
+], function (newGlobe, imagePK,csvData) {
     "use strict";
 
     // load csv data
@@ -14,27 +15,28 @@ requirejs([
     //Data type list
     let dataTypes = ['Country', 'Weather Station'];
 
-    genPLPK(dataTypes, loadCSVData(csvFiles));
+    genPLPK(dataTypes, csvData);
+    console.log(csvData)
 
-    function loadCSVData(csvList) {
-        //Find the file
-        let csvString = "";
-
-        let csvData = [];
-        let i = 0;
-        for (i = 0; i < csvList.length; i++) {
-            let csvRequest = $.ajax({
-                async: false,
-                url: csvList[i],
-                success: function (file_content) {
-                    csvString = file_content;
-                    csvData.push($.csv.toObjects(csvString));
-                    // console.log($.csv.toObjects(csvString))
-                }
-            });
-        }
-        return csvData;
-    }
+    // function loadCSVData(csvList) {
+    //     //Find the file
+    //     let csvString = "";
+    //
+    //     let csvData = [];
+    //     let i = 0;
+    //     for (i = 0; i < csvList.length; i++) {
+    //         let csvRequest = $.ajax({
+    //             async: false,
+    //             url: csvList[i],
+    //             success: function (file_content) {
+    //                 csvString = file_content;
+    //                 csvData.push($.csv.toObjects(csvString));
+    //                 // console.log($.csv.toObjects(csvString))
+    //             }
+    //         });
+    //     }
+    //     return csvData;
+    // }
 
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere
@@ -52,7 +54,7 @@ requirejs([
                 let userobject;
 
                 //Handle the string is based on the type we determine
-                if (layerType[i] == 'Country') {
+                if (layerType[i] === 'Country') {
                     // labelString = csvData[i][j].country + ' - ' + csvData[i][j].code3;
                     imgsource = '/flags/' + csvData[i][j].iconCode + '.png';
                     aLayer.layerType = 'Country_Placemarks';
@@ -60,7 +62,7 @@ requirejs([
                         code3: csvData[i][j].code3,
                         country: csvData[i][j].country
                     };
-                } else if (layerType[i] == 'Weather Station') {
+                } else if (layerType[i] === 'Weather Station') {
                     // labelString = csvData[i][j].code3;
                     aLayer.layerType = 'Weather_Station_Placemarks'
                     imgsource = '/images/sun.png';
@@ -80,7 +82,7 @@ requirejs([
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);
                 // Add the placemarks layer to the World Window's layer list.
-                if (j == csvData[i].length - 1) {
+                if (j === csvData[i].length - 1) {
                     newGlobe.addLayer(aLayer);
                     newGlobe.redraw();
                     // console.log(newGlobe.layers);
