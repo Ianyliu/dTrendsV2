@@ -8,13 +8,13 @@
 
 .accordion {
   width: auto;
-  height: 300px;
+  height: 200px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
 
 #accordion2 {
-  height: 150px;
+  height: 120px;
 }
 
 #tutorial {
@@ -44,7 +44,7 @@
 
 .panel-group{
   width: auto;
-  height: 280px;
+  height: 200px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
