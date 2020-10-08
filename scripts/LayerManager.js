@@ -24,21 +24,21 @@ define([
 
         this.roundGlobe = this.wwd.globe;
 
-        this.createProjectionList();
-        $("#projectionDropdown").find(" li").on("click", function (e) {
-            thisExplorer.onProjectionClick(e);
-        });
-
-        this.diseaseList();
-
-        this.agrosList();
-
-
-        this.synchronizeLayerList();
-
-        this.continentList();
-
-        this.categoryList();
+        // this.createProjectionList();
+        // $("#projectionDropdown").find(" li").on("click", function (e) {
+        //     thisExplorer.onProjectionClick(e);
+        // });
+        //
+        // this.diseaseList();
+        //
+        // this.agrosList();
+        //
+        //
+        // this.synchronizeLayerList();
+        //
+        // this.continentList();
+        //
+        // this.categoryList();
 
         $("#searchBox").find("button").on("click", function (e) {
             thisExplorer.onSearchButton(e);

@@ -27,8 +27,22 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        //generates layer menu
+        //Initialize projection menu
+        layerManager.createProjectionList();
+        $("#projectionDropdown").find(" li").on("click", function (e) {
+            layerManager.onProjectionClick(e);
+        });
+
+        layerManager.diseaseList();
+
+        layerManager.agrosList();
+
+
         layerManager.synchronizeLayerList();
+
+        layerManager.continentList();
+
+        layerManager.categoryList();
 
         //sets date picker values
         fromDate.val(dataAll.arrDate[0].Date);
