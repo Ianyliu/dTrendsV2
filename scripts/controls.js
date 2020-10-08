@@ -219,7 +219,6 @@ define([
                 accordianID: '#diseases',
                 Level1: ["COVID-19", "Influenza A", "Influenza B"],
             }
-            // accordionMenu2(menuStructure);
             accordionMenu(menuStructure);
         } else if (projectionName === 'Influenza A') {
             influenza();

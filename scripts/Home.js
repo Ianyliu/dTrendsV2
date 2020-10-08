@@ -34,14 +34,9 @@ requirejs([
         });
 
         layerManager.diseaseList();
-
         layerManager.agrosList();
-
-
         layerManager.synchronizeLayerList();
-
         layerManager.continentList();
-
         layerManager.categoryList();
 
         //sets date picker values
