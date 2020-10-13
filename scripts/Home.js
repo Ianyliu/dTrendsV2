@@ -24,8 +24,40 @@ requirejs([
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
 
+    const firstL = ['Disease Projection','Food Security']
+    const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
+    const foodsecondL = ["Agrosphere","ECMWF Forecasts","Sentinel Satellite Data"]
+
     //All the event listeners
     $(document).ready(function () {
+
+        let parentMenu = document.getElementById("accordion");
+
+        // controls.createFirstLayer('Disease Projection')
+        // controls.createFirstLayer('Food Security')
+
+        // for (let i = 0; i < firstL.length; i++) {
+        //     controls.createFirstLayer(firstL[i])
+        // }
+
+        for (let i = 0; i < firstL.length; i++) {
+            controls.createFirstLayer(firstL[i]);
+            if (firstL[i] === 'Disease Projection') {
+                for (let j = 0; j < diseasesecondL.length; j++) {
+                    controls.createSecondLayer('Disease Projection',diseasesecondL[j]);
+                }
+            }
+            else if (firstL[i] === 'Food Security') {
+                for (let k = 0; k < foodsecondL.length; k++) {
+                    controls.createSecondLayer('Food Security',foodsecondL[k]);
+                }
+            } else {
+                throw "Error!"
+            }
+        }
+
+        controls.createSecondLayer('Disease Projection')
+
 
         //Initialize projection menu
         layerManager.createProjectionList();
