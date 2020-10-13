@@ -8,13 +8,13 @@
 
 .accordion {
   width: auto;
-  height: 300px;
+  height: 200px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
 
 #accordion2 {
-  height: 150px;
+  height: 120px;
 }
 
 #tutorial {
@@ -44,7 +44,7 @@
 
 .panel-group{
   width: auto;
-  height: 280px;
+  height: 200px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -57,7 +57,7 @@
   /*font-family: "Helvetica Neue,Helvetica,Arial,sans-serif";*/
   font-family: Helvetica;
   color: #daf3ca;
-  font-size: 1.1vw;
+  font-size: 0.8vw;
 }
 
 .medium-3{

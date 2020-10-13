@@ -16,27 +16,6 @@ requirejs([
     let dataTypes = ['Country', 'Weather Station'];
 
     genPLPK(dataTypes, csvData);
-    console.log(csvData)
-
-    // function loadCSVData(csvList) {
-    //     //Find the file
-    //     let csvString = "";
-    //
-    //     let csvData = [];
-    //     let i = 0;
-    //     for (i = 0; i < csvList.length; i++) {
-    //         let csvRequest = $.ajax({
-    //             async: false,
-    //             url: csvList[i],
-    //             success: function (file_content) {
-    //                 csvString = file_content;
-    //                 csvData.push($.csv.toObjects(csvString));
-    //                 // console.log($.csv.toObjects(csvString))
-    //             }
-    //         });
-    //     }
-    //     return csvData;
-    // }
 
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere

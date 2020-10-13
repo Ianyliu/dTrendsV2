@@ -5,9 +5,10 @@ define([
     , './LayerManager'
     , './createPK',
     './createimgPK'
-], function (newGlobe, dataAll,csvD, layerManager, createPK,createimgPK) {
+], function (newGlobe, dataAll,csvD, LayerManager, createPK,createimgPK) {
     "use strict";
 
+    let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
     let fromDate = $('.fromdatepicker');
@@ -29,7 +30,6 @@ define([
     }
 
     let menuStructure;
-
     let cropsL = [
         'Production',
         'Price',
@@ -204,19 +204,6 @@ define([
         $('#conActive').text(numA);
     };
 
-    // //under first left tab; used to switch display between diseases/influenzas
-    // let onDiseaseClicke = function (event) {
-    //     let projectionName = event.target.innerText || event.target.innerHTML;
-    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-    //     console.log(projectionName)
-    //
-    //     if (projectionName === "COVID-19") {
-    //         covid19();
-    //     } else {
-    //         influenzaA();
-    //     }
-    // };
-
     //under first left tab; used to switch display between
     let onDiseaseClick = function (event) {
 
@@ -225,33 +212,39 @@ define([
         //refresh the option display
         $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
 
-        //insert accordion menu corresponding to the selection
+        //insert foodSecurity menu corresponding to the selection
         if (projectionName === "COVID-19") {
             covid19();
             menuStructure = {
+                accordianID: '#diseases',
                 Level1: ["COVID-19", "Influenza A", "Influenza B"],
             }
-            accordionMenu2(menuStructure);
+            accordionMenu(menuStructure);
         } else if (projectionName === 'Influenza A') {
-            // influenzaA();
-            $("#accordion2").css('visibility', 'visible');
+            influenza();
+            $("#diseases").css('visibility', 'visible');
             menuStructure = {
-                Level1: ["H1N1", "H2N2", "H3N2", "H5N1", "H7N7", "H1N2", "H9N2", "H7N2", "H7N3", "H10N7", "H7N9","H6N1", "Not Determined"]
+                accordianID: '#diseases',
+                Level1: [
+                    "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+                    "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+                    "H7N9","H6N1", "Not Determined"
+                ]
             }
-            accordionMenu2(menuStructure);
+            accordionMenu(menuStructure);
         } else if (projectionName === 'Influenza B') {
-            $("#accordion2").css('visibility', 'visible');
+            $("#diseases").css('visibility', 'visible');
             menuStructure = {
+                accordianID: '#diseases',
                 Level1: [
                     "Yamagata",
                     "Victoria",
                     "Not Determined"
                 ]
             }
-            accordionMenu2(menuStructure);
+            accordionMenu(menuStructure);
         }
     };
-
 
     //under first left tab; used to switch display between
     let onAgrosphereClick = function (event) {
@@ -261,20 +254,23 @@ define([
         //refresh the option display
         $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
 
-        //insert accordion menu corresponding to the selection
-        if (projectionName === "AgrosPhere") {
+        //insert foodSecurity menu corresponding to the selection
+        if (projectionName === "AgroSphere") {
             menuStructure = {
+                accordianID: '#foodSecurity',
                 Level1: ["Country", "Crops", "Weather"],
                 Level2: [countryL, cropsL, weatherL],
             }
             accordionMenu(menuStructure);
         } else if (projectionName === 'ECMWF Forecasts') {
             menuStructure = {
+                accordianID: '#foodSecurity',
                 Level1: ["Temperature", "Precipitation", "Wind"]
             }
             accordionMenu(menuStructure);
         } else if (projectionName === 'Sentinel Satellite Data') {
             menuStructure = {
+                accordianID: '#foodSecurity',
                 Level1: [
                     "Agriculture",
                     "False Color (Urban)",
@@ -291,17 +287,17 @@ define([
 
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
-        // if(document.getElementById('accordion2').css.visiblity === 'visible') {
-        //     $("#accordion2").css('visibility', 'hidden');
+        // if(document.getElementById('diseases').css.visiblity === 'visible') {
+        //     $("#diseases").css('visibility', 'hidden');
         // } else {
-        //     $("#accordion2").css('visibility', 'visible');
+        //     $("#diseases").css('visibility', 'visible');
         // }
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
-                $("#accordion2").css('visibility', 'hidden');
+                $("#diseases").css('visibility', 'hidden');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass("active");
@@ -311,19 +307,20 @@ define([
                     layerButton.css("color", "black");
                 }
             }
-
+            if (i == newGlobe.layers.length - 1) {
+                layerManager.synchronizeLayerList();
+            }
         }
-
-        layerManager.synchronizeLayerList();
     };
 
     //under first left tab; activates Influenza A display when selected for Disease Projection
-    let influenzaA = function () {
+    let influenza = function () {
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             let layerButton = $('#' + layer.displayName + '');
-            if (layer.layerType === "H_PKLayer" || layer.layerType === "INA_PKLayer") {
+            // if (layer.layerType === "H_PKLayer" || layer.layerType === "INA_PKLayer") {
+            if (layer.layerType === "INA_PKLayer") {
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.removeClass("active");
@@ -337,32 +334,34 @@ define([
                 layerButton.remove();
             }
 
+            if (i == newGlobe.layers.length - 1) {
+                layerManager.synchronizeLayerList();
+            }
         }
-        // layerManager.synchronizeLayerList();
     };
 
     let accordionMenu = function (menuObj) {
-        let parentMenu = document.getElementById("accordion");
+        let parentMenu = document.getElementById(menuObj.accordianID.replace('#', ''));
 
         //clear previous submenu
-        $('#accordion').empty();
+        $(menuObj.accordianID).empty();
 
         if (!menuObj.Level2) {
             //create level one menu
             menuObj.Level1.forEach(function (ele) {
-                menuSecond("No Level1", ele)
+                menuL2("No Level1", ele)
             });
         } else {
             //create level one menu
             menuObj.Level1.forEach(async function (e1, i) {
-                await menuFirsL(e1);
+                await menuL1(menuObj.accordianID, e1);
                 menuObj.Level2[i].forEach(function (e2){
-                    menuSecond(e1, e2);
+                    menuL2(e1, e2);
                 })
             });
         }
 
-        function menuFirsL(firstL) {
+        function menuL1(id, firstL) {
             let panelDefault1 = document.createElement("div");
             panelDefault1.className = "Menu panel panel-info " + firstL;
 
@@ -375,7 +374,7 @@ define([
             let collapsed1 = document.createElement("a");
             collapsed1.className = "collapsed";
             collapsed1.setAttribute("data-toggle", "collapse");
-            collapsed1.setAttribute("data-parent", "#accordion");
+            collapsed1.setAttribute("data-parent", id);
             collapsed1.href = "#" + firstL;
 
             let firstLayerName = document.createTextNode(firstL + "  ");
@@ -406,9 +405,8 @@ define([
             parentMenu.appendChild(panelDefault1);
         }
 
-        function menuSecond(firstL, secondL) {
+        function menuL2(firstL, secondL) {
             let checkboxDiv = document.createElement("div");
-            // checkboxDiv.className = "Menu " + thirdReplace + " " + countryNameStr + " " + stateNameStr + " " + cityNameStr;
             checkboxDiv.className = "Menu "
 
             let checkboxH4 = document.createElement("h5");
@@ -423,15 +421,14 @@ define([
 
             let checkboxInput = document.createElement("input");
             checkboxInput.type = "checkbox";
-            // checkboxInput.className = element.LayerType + " input";
             checkboxInput.className = "input";
             checkboxInput.value = secondL;
+
             if (firstL === "Country") {
-                checkboxInput.defaultChecked = 'true';
+                checkboxInput.defaultChecked = true;
                 checkboxInput.className = "input countries-check";
                 checkboxA.className = "menuWords countries-atag";
             }
-            // checkboxInput.setAttribute("value", element.LayerName);
 
             let checkboxSpan = document.createElement("span");
             checkboxSpan.className = "slider round";
@@ -451,116 +448,6 @@ define([
             }
         }
     };
-
-    let accordionMenu2 = function (menuObj) {
-        let parentMenu = document.getElementById("accordion2");
-
-        //clear previous submenu
-        $('#accordion2').empty();
-
-        if (!menuObj.Level2) {
-            //create level one menu
-            menuObj.Level1.forEach(function (ele) {
-                menuSecond("No Level1", ele)
-            });
-        } else {
-            //create level one menu
-            menuObj.Level1.forEach(async function (e1, i) {
-                await menuFirsL(e1);
-                menuObj.Level2[i].forEach(function (e2){
-                    menuSecond(e1, e2);
-                })
-            });
-        }
-
-        function menuFirsL(firstL) {
-            let panelDefault1 = document.createElement("div");
-            panelDefault1.className = "Menu panel panel-info " + firstL;
-
-            let panelHeading1 = document.createElement("div");
-            panelHeading1.className = "panel-heading";
-
-            let panelTitle1 = document.createElement("h4");
-            panelTitle1.className = "panel-title";
-
-            let collapsed1 = document.createElement("a");
-            collapsed1.className = "collapsed";
-            collapsed1.setAttribute("data-toggle", "collapse");
-            collapsed1.setAttribute("data-parent", "#accordion2");
-            collapsed1.href = "#" + firstL;
-
-            let firstLayerName = document.createTextNode(firstL + "  ");
-            firstLayerName.className = "menuwords";
-
-            let collapseOne = document.createElement("div");
-            collapseOne.className = "panel-collapse collapse";
-            collapseOne.id = firstL;
-
-            let panelBody1 = document.createElement("div");
-            panelBody1.className = "panel-body";
-
-            let panelGroup1 = document.createElement("div");
-            panelGroup1.className = "panel-group " + firstL;
-            panelGroup1.id = "nested-" + firstL;
-
-            collapsed1.appendChild(firstLayerName);
-            panelTitle1.appendChild(collapsed1);
-            panelHeading1.appendChild(panelTitle1);
-            panelDefault1.appendChild(panelHeading1);
-
-            panelBody1.appendChild(panelGroup1);
-            collapseOne.appendChild(panelBody1);
-            panelDefault1.appendChild(collapseOne);
-
-            parentMenu.appendChild(panelDefault1);
-        }
-
-        function menuSecond(firstL, secondL) {
-            let checkboxDiv = document.createElement("div");
-            // checkboxDiv.className = "Menu " + thirdReplace + " " + countryNameStr + " " + stateNameStr + " " + cityNameStr;
-            checkboxDiv.className = "Menu "
-
-            let checkboxH4 = document.createElement("h4");
-            let checkboxA = document.createElement("a");
-            let checkboxAt = document.createTextNode(secondL + "   ");
-            checkboxA.className = "menuWords";
-
-            let checkboxLabel = document.createElement("label");
-            checkboxLabel.className = "switch right";
-
-            let checkboxInput = document.createElement("input");
-            checkboxInput.type = "checkbox";
-            // checkboxInput.className = element.LayerType + " input";
-            checkboxInput.className = "input";
-            // checkboxInput.setAttribute("value", element.LayerName);
-
-            let checkboxSpan = document.createElement("span");
-            checkboxSpan.className = "slider round";
-
-            checkboxA.appendChild(checkboxAt);
-            checkboxH4.appendChild(checkboxA);
-            checkboxLabel.appendChild(checkboxInput);
-            checkboxLabel.appendChild(checkboxSpan);
-            checkboxH4.appendChild(checkboxLabel);
-            checkboxDiv.appendChild(checkboxH4);
-
-            // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
-            if (firstL === "No Level1") {
-                parentMenu.appendChild(checkboxDiv);
-            } else {
-                document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
-            }
-        }
-    };
-
-    // //triggers flag and weather station placemarks
-    // let onCountryClick = function (event) {
-    //     //grab the selection value
-    //     categoryS = event.target.innerText || event.target.innerHTML;
-    //
-    //     console.log(categoryS);
-    // };
-
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
     let onCategory = function (event) {
@@ -650,7 +537,7 @@ define([
                     }
                 })
 
-                LayerManager.synchronizeLayerList();
+                layerManager.synchronizeLayerList();
             }
         })
     };
@@ -1319,6 +1206,5 @@ define([
         handleMouseCLK,
         enableAllToggle,
         closeAllToggle,
-        // onCountryClick
     }
 })
