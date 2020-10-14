@@ -10,8 +10,9 @@ requirejs([
     , '3rdPartyLibs/Chart-2.9.3.min.js'
     , 'createPK'
     , 'controls'
+    ,'csvData'
     , 'cAgrosPK'
-], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls) {
+], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls, csvD) {
     "use strict";
 
     let layerManager = new LayerManager(newGlobe);
@@ -28,6 +29,20 @@ requirejs([
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
     const foodsecondL = ["Agrosphere","ECMWF Forecasts","Sentinel Satellite Data"]
     const thirdL = ["Country", "Crops", "Weather"]
+
+    let dataTypes = ['Country', 'Weather Station'];
+    let countryL = []
+
+    for (let i = 0; i < dataTypes.length; i++) {
+        for (let j = 0; j < csvD[i].length; j++) {
+            if (dataTypes[i] === 'Country') {
+                countryL.push(csvD[i][j].country)
+            } else if (dataTypes[i] === 'Weather Station') {
+            } else {
+                console.log("Read layer type in error");
+            }
+        }
+    }
 
     //All the event listeners
     $(document).ready(function () {
@@ -54,6 +69,15 @@ requirejs([
                     if (foodsecondL[k] === 'Agrosphere') {
                         for (let h = 0; h < thirdL.length; h++) {
                             controls.createThirdLayers(firstL[i],foodsecondL[k], thirdL[h]);
+                            if (thirdL[h] === "Country") {
+                                controls.createThirdLayers(firstL[i],foodsecondL[k], thirdL[h]);
+                            } else if (thirdL[h] === "Crops") {
+
+                            } else if (thirdL[h] === "Weather") {
+
+                            } else {
+                                throw error
+                            }
                         }
                     } else {
 

@@ -487,7 +487,7 @@ define([
         document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
     }
 
-    function createThirdLayer(element) {
+    function createThirdLayerold(element) {
 
         let thirdReplace = element.ThirdLayer.replace(/\s+/g, '');
         let countryNameStr = element.CountryName.replace(/\s+/g, '');
@@ -528,34 +528,36 @@ define([
         document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
     }
 
-    function create(firstL, secondL, thirdL = 'none') {
-        if (thirdL === 'none') {
-            let checkboxDiv = document.createElement("div");
-            checkboxDiv.className = "Menu "
+    function createThirdLayer(FirstL, SecondL, ThirdL, FourthL = 'none') {
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
+        let thirdL = ThirdL.replace(/\s+/g, '');
+        let fourthL = FourthL.replace(/\s+/g, '');
 
-            let checkboxH4 = document.createElement("h5");
-            let checkboxA = document.createElement("a");
-            let checkboxAt = document.createTextNode(ThirdL + "   ");
+        let checkboxDiv = document.createElement("div");
+        checkboxDiv.className = "Menu "
+        let checkboxH4 = document.createElement("h5");
+        let checkboxA = document.createElement("a");
+        let idname;
+
+        let checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "switch right";
+
+        let checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.className = "input";
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.className = "slider round";
+
+        if (FourthL === 'none') {
+
+
+            let checkboxAt = document.createTextNode(thirdL + "   ");
             checkboxA.className = "menuWords";
-            let idname = secondL.replace(/\s+/g, '');
+            idname = thirdL
             checkboxA.id = idname + '-atag';
-
-            let checkboxLabel = document.createElement("label");
-            checkboxLabel.className = "switch right";
-
-            let checkboxInput = document.createElement("input");
-            checkboxInput.type = "checkbox";
-            checkboxInput.className = "input";
-            checkboxInput.value = secondL;
-
-            if (firstL === "Country") {
-                checkboxInput.defaultChecked = true;
-                checkboxInput.className = "input countries-check";
-                checkboxA.className = "menuWords countries-atag";
-            }
-
-            let checkboxSpan = document.createElement("span");
-            checkboxSpan.className = "slider round";
+            checkboxInput.value = ThirdL;
 
             checkboxA.appendChild(checkboxAt);
             checkboxH4.appendChild(checkboxA);
@@ -565,14 +567,40 @@ define([
             checkboxDiv.appendChild(checkboxH4);
 
             // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
-            if (firstL === "No Level1") {
+            // if (firstL === "No Level1") {
                 parentMenu.appendChild(checkboxDiv);
-            } else {
-                document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
-            }
+            // } else {
+            //     document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
+            // }
 
         } else {
 
+            let checkboxAt = document.createTextNode(fourthL + "   ");
+            checkboxA.className = "menuWords";
+            idname = fourthL;
+            checkboxA.id = idname + '-atag';
+
+            checkboxInput.value = FourthL;
+
+            if (ThirdL === "Country") {
+                checkboxInput.defaultChecked = true;
+                checkboxInput.className = "input countries-check";
+                checkboxA.className = "menuWords countries-atag";
+            }
+
+            checkboxA.appendChild(checkboxAt);
+            checkboxH4.appendChild(checkboxA);
+            checkboxLabel.appendChild(checkboxInput);
+            checkboxLabel.appendChild(checkboxSpan);
+            checkboxH4.appendChild(checkboxLabel);
+            checkboxDiv.appendChild(checkboxH4);
+
+            // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+            // if (firstL === "No Level1") {
+            //     parentMenu.appendChild(checkboxDiv);
+            // } else {
+                document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+            // }
         }
 
     }
