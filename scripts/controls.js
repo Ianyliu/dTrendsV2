@@ -528,11 +528,10 @@ define([
         document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
     }
 
-    function createThirdLayer(FirstL, SecondL, ThirdL, FourthL = 'none') {
+    function createThirdLayer(FirstL, SecondL, ThirdL) {
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
-        let fourthL = FourthL.replace(/\s+/g, '');
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
@@ -550,7 +549,7 @@ define([
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
 
-        if (FourthL === 'none') {
+        // if (FourthL === 'none') {
 
 
             let checkboxAt = document.createTextNode(thirdL + "   ");
@@ -573,8 +572,61 @@ define([
             //     document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
             // }
 
-        } else {
+        // } else {
+        //
+        //     let checkboxAt = document.createTextNode(fourthL + "   ");
+        //     checkboxA.className = "menuWords";
+        //     idname = fourthL;
+        //     checkboxA.id = idname + '-atag';
+        //
+        //     checkboxInput.value = FourthL;
+        //
+        //     if (ThirdL === "Country") {
+        //         checkboxInput.defaultChecked = true;
+        //         checkboxInput.className = "input countries-check";
+        //         checkboxA.className = "menuWords countries-atag";
+        //     }
+        //
+        //     checkboxA.appendChild(checkboxAt);
+        //     checkboxH4.appendChild(checkboxA);
+        //     checkboxLabel.appendChild(checkboxInput);
+        //     checkboxLabel.appendChild(checkboxSpan);
+        //     checkboxH4.appendChild(checkboxLabel);
+        //     checkboxDiv.appendChild(checkboxH4);
+        //
+        //     // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+        //     // if (firstL === "No Level1") {
+        //     //     parentMenu.appendChild(checkboxDiv);
+        //     // } else {
+        //         document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+        //     // }
+        // }
 
+    }
+
+    function createFourthLayer(FirstL, SecondL, ThirdL, FourthL = 'none') {
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
+        let thirdL = ThirdL.replace(/\s+/g, '');
+        let fourthL = FourthL.replace(/\s+/g, '');
+
+        let checkboxDiv = document.createElement("div");
+        checkboxDiv.className = "Menu "
+        let checkboxH4 = document.createElement("h5");
+        let checkboxA = document.createElement("a");
+        let idname;
+
+        let checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "switch right";
+
+        let checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.className = "input";
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.className = "slider round";
+
+        if (FourthL !== 'none') {
             let checkboxAt = document.createTextNode(fourthL + "   ");
             checkboxA.className = "menuWords";
             idname = fourthL;
@@ -599,9 +651,10 @@ define([
             // if (firstL === "No Level1") {
             //     parentMenu.appendChild(checkboxDiv);
             // } else {
-                document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+            document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
             // }
-        }
+
+        } else {}
 
     }
 

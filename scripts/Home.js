@@ -29,7 +29,43 @@ requirejs([
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
     const foodsecondL = ["Agrosphere","ECMWF Forecasts","Sentinel Satellite Data"]
     const thirdL = ["Country", "Crops", "Weather"]
+    const satellite_data = [
+        "Agriculture",
+        "False Color (Urban)",
+        "False Color (Vegetation)",
+        "Geology",
+        "Moisture Index",
+        "Natural Color (True Color)",
+        "NDVI"
+    ]
+    const cropsL = [
+        'Production',
+        'Price',
+        'Livestock',
+        'Emissions',
+        'Pesticides',
+        'Fertilizer',
+        'Yield'
+    ];
+    const weatherL = [
+        'GraphsandWeather',
+        'YearlyTemperature',
+        'MonthlyTemperature',
+        'YearlyPrecipitation',
+        'MonthlyPrecipitation'
+    ];
+    const influenzaA = [
+        "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+        "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+        "H7N9","H6N1", "Not Determined"
+    ];
+    const influenzaB = [
+        "Yamagata",
+        "Victoria",
+        "Not Determined"
+    ]
 
+    const ecmwf_forecasts = ["Temperature", "Precipitation", "Wind"]
     let dataTypes = ['Country', 'Weather Station'];
     let countryL = []
 
@@ -61,6 +97,15 @@ requirejs([
             if (firstL[i] === 'Disease Projection') {
                 for (let j = 0; j < diseasesecondL.length; j++) {
                     controls.createSecondLayer(firstL[i],diseasesecondL[j]);
+                    if (diseasesecondL[j] === "Influenza A") {
+
+                    } else if (diseasesecondL[j] === "Influenza B") {
+
+                    } else if (diseasesecondL[j] === "COVID-19") {
+
+                    } else {
+                        throw error
+                    }
                 }
             }
             else if (firstL[i] === 'Food Security') {
@@ -70,7 +115,7 @@ requirejs([
                         for (let h = 0; h < thirdL.length; h++) {
                             controls.createThirdLayers(firstL[i],foodsecondL[k], thirdL[h]);
                             if (thirdL[h] === "Country") {
-                                controls.createThirdLayers(firstL[i],foodsecondL[k], thirdL[h]);
+
                             } else if (thirdL[h] === "Crops") {
 
                             } else if (thirdL[h] === "Weather") {
@@ -79,8 +124,12 @@ requirejs([
                                 throw error
                             }
                         }
+                    } else if (foodsecondL[k] === 'Crops') {
+                        controls.createThirdLayer(firstL[i],foodsecondL[k]);
+                    } else if (foodsecondL[k] === 'Weather') {
+                        controls.createThirdLayer(firstL[i],foodsecondL[k]);
                     } else {
-
+                        throw error
                     }
                 }
             } else {
