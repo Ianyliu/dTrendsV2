@@ -566,7 +566,7 @@ define([
 
             // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
             // if (firstL === "No Level1") {
-                parentMenu.appendChild(checkboxDiv);
+        document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
             // } else {
             //     document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
             // }

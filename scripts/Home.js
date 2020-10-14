@@ -85,7 +85,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        let parentMenu = document.getElementById("accordion");
+        // let parentMenu = document.getElementById("accordion");
 
         // controls.createFirstLayer('Disease Projection')
         // controls.createFirstLayer('Food Security')
@@ -151,7 +151,7 @@ requirejs([
                     }
                 }
             } else {
-                throw "Error!"
+                throw error
             }
         }
 
