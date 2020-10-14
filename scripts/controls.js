@@ -98,10 +98,10 @@ define([
             let subMenu = $(this).find(".dropdown-submenu");
             let subMenu2 = subMenu.find(".dropdown-menu");
             //reset position property for DD container
-            $(this).css("position", "static");
+            $(this).css("position", "relative");
             $listHolder.css({
-                "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
-                "left": $btnDropDown.offset().left + "px"
+                // "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
+                // "left": $btnDropDown.offset().left + "px"
             });
             subMenu2.css({
                 "left": $listHolder.outerWidth(true) + "px"
@@ -307,7 +307,7 @@ define([
                     layerButton.css("color", "black");
                 }
             }
-            if (i == newGlobe.layers.length - 1) {
+            if (i === newGlobe.layers.length - 1) {
                 layerManager.synchronizeLayerList();
             }
         }
@@ -334,7 +334,7 @@ define([
                 layerButton.remove();
             }
 
-            if (i == newGlobe.layers.length - 1) {
+            if (i === newGlobe.layers.length - 1) {
                 layerManager.synchronizeLayerList();
             }
         }

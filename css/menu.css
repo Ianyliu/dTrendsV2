@@ -27,12 +27,15 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
-  height: 30px;
+  height: 28px;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
-  height: 30px;
+  height: 28px;
+}
+.panel-title {
+  font-size: 12px;
 }
 .panel{
   font-size:10px;
@@ -233,7 +236,7 @@ ul.nav {
 */
 @media (min-width: 768px) {
   ul.nav li.dropdown:hover ul.dropdown-menu {
-    display: block;
+    display: inline-block;
   }
 
   ul.nav li.dropdown:hover ul.dropdown-menu li.dropdown-submenu ul.dropdown-menu {
@@ -241,10 +244,19 @@ ul.nav {
   }
 
   ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu:hover ul.dropdown-menu {
-    display: block;
+    display: inline-block;
   }
 }
 
+.dropdown-menu {
+  position: relative;
+  width: 0.8vw;
+}
+
+.dropdown-menu>li>a {
+  position: relative;
+  display: inline-block;
+}
 
 /*
   ul.ec-menu {
