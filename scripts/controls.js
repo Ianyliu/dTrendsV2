@@ -440,6 +440,53 @@ define([
         document.getElementById("nested-" + firstL).appendChild(panelDefault2);
     }
 
+    function createThirdLayers(FirstL, SecondL, ThirdL) {
+
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
+        let thirdL = ThirdL.replace(/\s+/g, '');
+
+        let panelDefault3 = document.createElement("div");
+        panelDefault3.id = thirdL;
+        panelDefault3.className = "Menu panel panel-info " + thirdL + " " + secondL + " " + firstL + "-" + secondL + " " + firstL + "-" + secondL + "-" + thirdL;
+
+        let panelHeading3 = document.createElement("div");
+        panelHeading3.className = "panel-heading " + firstL + "-" + secondL + "-" + thirdL;
+
+        let panelTitle3 = document.createElement("h5");
+        panelTitle3.className = "panel-title " + firstL + "-" + secondL + "-" + thirdL;
+
+        let collapsed3 = document.createElement("a");
+        collapsed3.className = "collapsed";
+        collapsed3.setAttribute("data-toggle", "collapse");
+        collapsed3.setAttribute("data-parent", "#nested");
+        collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
+
+        let thirdLayerName = document.createTextNode(ThirdL + "  ");
+        thirdLayerName.className = "menuwords";
+
+        let nested1c1 = document.createElement("div");
+        nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
+        nested1c1.className = "panel-collapse collapse";
+
+        let panelBody4 = document.createElement("div");
+        panelBody4.className = "panel-body " + thirdL;
+        panelBody4.id = firstL + "--" + secondL + "--" + thirdL;
+
+        collapsed3.appendChild(thirdLayerName);
+        panelTitle3.appendChild(collapsed3);
+        panelHeading3.appendChild(panelTitle3);
+        panelDefault3.appendChild(panelHeading3);
+        panelDefault3.appendChild(nested1c1);
+
+        nested1c1.appendChild(panelBody4);
+
+        // secondLayers.push(panelBody3.id);
+
+        // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
+        document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
+    }
+
     function createThirdLayer(element) {
 
         let thirdReplace = element.ThirdLayer.replace(/\s+/g, '');
@@ -479,6 +526,55 @@ define([
 
         // document.getElementsByClassName("panel-body " + element.SecondLayer)[0].appendChild(checkboxDiv);
         document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+    }
+
+    function create(firstL, secondL, thirdL = 'none') {
+        if (thirdL === 'none') {
+            let checkboxDiv = document.createElement("div");
+            checkboxDiv.className = "Menu "
+
+            let checkboxH4 = document.createElement("h5");
+            let checkboxA = document.createElement("a");
+            let checkboxAt = document.createTextNode(ThirdL + "   ");
+            checkboxA.className = "menuWords";
+            let idname = secondL.replace(/\s+/g, '');
+            checkboxA.id = idname + '-atag';
+
+            let checkboxLabel = document.createElement("label");
+            checkboxLabel.className = "switch right";
+
+            let checkboxInput = document.createElement("input");
+            checkboxInput.type = "checkbox";
+            checkboxInput.className = "input";
+            checkboxInput.value = secondL;
+
+            if (firstL === "Country") {
+                checkboxInput.defaultChecked = true;
+                checkboxInput.className = "input countries-check";
+                checkboxA.className = "menuWords countries-atag";
+            }
+
+            let checkboxSpan = document.createElement("span");
+            checkboxSpan.className = "slider round";
+
+            checkboxA.appendChild(checkboxAt);
+            checkboxH4.appendChild(checkboxA);
+            checkboxLabel.appendChild(checkboxInput);
+            checkboxLabel.appendChild(checkboxSpan);
+            checkboxH4.appendChild(checkboxLabel);
+            checkboxDiv.appendChild(checkboxH4);
+
+            // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+            if (firstL === "No Level1") {
+                parentMenu.appendChild(checkboxDiv);
+            } else {
+                document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
+            }
+
+        } else {
+
+        }
+
     }
 
     let accordionMenu = function (menuObj) {
@@ -1349,6 +1445,7 @@ define([
         closeAllToggle,
         createFirstLayer,
         createSecondLayer,
-        createThirdLayer
+        createThirdLayer,
+        createThirdLayers
     }
 })

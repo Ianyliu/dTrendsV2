@@ -27,6 +27,7 @@ requirejs([
     const firstL = ['Disease Projection','Food Security']
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
     const foodsecondL = ["Agrosphere","ECMWF Forecasts","Sentinel Satellite Data"]
+    const thirdL = ["Country", "Crops", "Weather"]
 
     //All the event listeners
     $(document).ready(function () {
@@ -44,12 +45,19 @@ requirejs([
             controls.createFirstLayer(firstL[i]);
             if (firstL[i] === 'Disease Projection') {
                 for (let j = 0; j < diseasesecondL.length; j++) {
-                    controls.createSecondLayer('Disease Projection',diseasesecondL[j]);
+                    controls.createSecondLayer(firstL[i],diseasesecondL[j]);
                 }
             }
             else if (firstL[i] === 'Food Security') {
                 for (let k = 0; k < foodsecondL.length; k++) {
-                    controls.createSecondLayer('Food Security',foodsecondL[k]);
+                    controls.createSecondLayer(firstL[i],foodsecondL[k]);
+                    if (foodsecondL[k] === 'Agrosphere') {
+                        for (let h = 0; h < thirdL.length; h++) {
+                            controls.createThirdLayers(firstL[i],foodsecondL[k], thirdL[h]);
+                        }
+                    } else {
+
+                    }
                 }
             } else {
                 throw "Error!"
