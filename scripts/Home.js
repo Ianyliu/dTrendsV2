@@ -56,8 +56,6 @@ requirejs([
             }
         }
 
-        controls.createSecondLayer('Disease Projection')
-
 
         //Initialize projection menu
         layerManager.createProjectionList();

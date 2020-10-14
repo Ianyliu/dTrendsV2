@@ -348,7 +348,10 @@ define([
         }
     };
 
-    function createFirstLayer(firstL) {
+    function createFirstLayer(FirstL) {
+
+        let firstL = FirstL.replace(/\s+/g, '');
+
         let panelDefault1 = document.createElement("div");
         panelDefault1.className = "Menu panel panel-info " + firstL;
 
@@ -362,9 +365,9 @@ define([
         collapsed1.className = "collapsed";
         collapsed1.setAttribute("data-toggle", "collapse");
         collapsed1.setAttribute("data-parent", "#accordion");
-        collapsed1.href = "#" + firstL.replace(/\s+/g, '');
+        collapsed1.href = "#" + firstL;
 
-        let firstLayerName = document.createTextNode(firstL + "  ");
+        let firstLayerName = document.createTextNode(FirstL + "  ");
         firstLayerName.className = "menuwords";
 
         let collapseOne = document.createElement("div");
@@ -391,7 +394,10 @@ define([
         // firstLayers.push(firstL);
     }
 
-    function createSecondLayer(firstL, secondL) {
+    function createSecondLayer(FirstL, SecondL) {
+
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
 
         let panelDefault2 = document.createElement("div");
         panelDefault2.id = secondL;
@@ -407,9 +413,9 @@ define([
         collapsed2.className = "collapsed";
         collapsed2.setAttribute("data-toggle", "collapse");
         collapsed2.setAttribute("data-parent", "#nested");
-        collapsed2.href = "#" + firstL.replace(/\s+/g, '') + "-" + secondL.replace(/\s+/g, '');
+        collapsed2.href = "#" + firstL + "-" + secondL;
 
-        let secondLayerName = document.createTextNode(secondL + "  ");
+        let secondLayerName = document.createTextNode(SecondL + "  ");
         secondLayerName.className = "menuwords";
 
         let nested1c1 = document.createElement("div");
