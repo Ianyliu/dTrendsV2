@@ -551,7 +551,6 @@ define([
 
         // if (FourthL === 'none') {
 
-
             let checkboxAt = document.createTextNode(thirdL + "   ");
             checkboxA.className = "menuWords";
             idname = thirdL
@@ -651,10 +650,12 @@ define([
             // if (firstL === "No Level1") {
             //     parentMenu.appendChild(checkboxDiv);
             // } else {
-            document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+            document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
             // }
 
-        } else {}
+        } else {
+            throw error
+        }
 
     }
 
@@ -1527,6 +1528,9 @@ define([
         createFirstLayer,
         createSecondLayer,
         createThirdLayer,
-        createThirdLayers
+        createThirdLayers,
+        createFourthLayer,
+        covid19,
+        influenza
     }
 })
