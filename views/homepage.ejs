@@ -312,7 +312,7 @@
     </style>
 
 </head>
-<body onload="hideDialog()">
+<body onload="hideDialog()" ononline="onFunction()" onoffline="offFunction()">
 
 
 <ul class="tab"
@@ -960,6 +960,14 @@
 
     function hideDialog (){
         overlay.style.display = 'none';
+    }
+
+    function onFunction() {
+        alert ("You are now online.");
+    }
+
+    function offFunction() {
+        alert ("Your are offline. Some functionality may be unavailable.");
     }
 
 </script>
