@@ -8,7 +8,7 @@
 
 .accordion {
   width: auto;
-  height: 400px;
+  height: 800px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -27,12 +27,12 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
-  height: 28px;
+  height: 400px;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
-  height: 28px;
+  height: 400px;
 }
 .panel-title {
   font-size: 12px;
@@ -47,7 +47,7 @@
 
 .panel-group{
   width: auto;
-  height: 200px;
+  height: 800px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -143,12 +143,6 @@ ul.nav {
 .dropdown-submenu {
   position: relative;
 }
-
-
-/*.Menu {*/
-/*  background-color: #b7b7b7;*/
-/*}*/
-
 /*
 .ec-menu {
   position: relative;
@@ -236,7 +230,7 @@ ul.nav {
 */
 @media (min-width: 768px) {
   ul.nav li.dropdown:hover ul.dropdown-menu {
-    display: inline-block;
+    display: block;
   }
 
   ul.nav li.dropdown:hover ul.dropdown-menu li.dropdown-submenu ul.dropdown-menu {
@@ -244,18 +238,8 @@ ul.nav {
   }
 
   ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu:hover ul.dropdown-menu {
-    display: inline-block;
+    display: block;
   }
-}
-
-.dropdown-menu {
-  position: relative;
-  width: 0.8vw;
-}
-
-.dropdown-menu>li>a {
-  position: relative;
-  display: inline-block;
 }
 
 /*
