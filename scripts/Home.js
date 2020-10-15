@@ -261,18 +261,18 @@ requirejs([
             controls.onNav();
         })
 
-        //dropdown menu for diseases and influenzas
-        $("#diseaseDropdown").find("li").on("click", function (e) {
-            controls.onDiseaseClick(e);
-        });
-
-        $("#agrosphereDropdown").find("li").on("click", async function (e) {
-            await controls.onAgrosphereClick(e);
-            $(".countries-check").click(function(){
-                let toggle = this;
-                togglePK(toggle.value, toggle.checked)
-            });
-        });
+        // //dropdown menu for diseases and influenzas
+        // $("#diseaseDropdown").find("li").on("click", function (e) {
+        //     controls.onDiseaseClick(e);
+        // });
+        //
+        // $("#agrosphereDropdown").find("li").on("click", async function (e) {
+        //     await controls.onAgrosphereClick(e);
+        //     $(".countries-check").click(function(){
+        //         let toggle = this;
+        //         togglePK(toggle.value, toggle.checked)
+        //     });
+        // });
 
         //dropdown menu for placemark category
         $("#categoryList").find("li").on("click", function (e) {
