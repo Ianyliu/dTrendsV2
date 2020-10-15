@@ -8,7 +8,7 @@
 
 .accordion {
   width: auto;
-  height: 500px;
+  height: 800px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -27,12 +27,12 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
-  height: 200px;
+  height: 400px;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
-  height: 200px;
+  height: 400px;
 }
 .panel-title {
   font-size: 12px;
@@ -47,7 +47,7 @@
 
 .panel-group{
   width: auto;
-  height: 360px;
+  height: 800px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
