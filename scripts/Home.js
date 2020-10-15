@@ -155,6 +155,18 @@ requirejs([
             }
         }
 
+        $("#FoodSecurity--Agrosphere--Country").find("input").on("click", async function (e) {
+            await controls.onAgrosphereClick(e);
+            $(".countries-check").click(function(){
+                let toggle = this;
+                togglePK(toggle.value, toggle.checked)
+            });
+        });
+
+        $("#DiseaseProjection").find("input").on("click", function (e) {
+            controls.onDiseaseClick(e);
+        });
+
 
         //Initialize projection menu
         layerManager.createProjectionList();
