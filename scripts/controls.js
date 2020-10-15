@@ -556,6 +556,8 @@ define([
             idname = thirdL
             checkboxA.id = idname + '-atag';
             checkboxInput.value = ThirdL;
+            checkboxInput.id = idname + '-checkbox';
+
 
             checkboxA.appendChild(checkboxAt);
             checkboxH4.appendChild(checkboxA);

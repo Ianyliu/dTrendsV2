@@ -47,7 +47,7 @@
 
 .panel-group{
   width: auto;
-  height: 200px;
+  height: 280px;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -236,7 +236,7 @@ ul.nav {
 */
 @media (min-width: 768px) {
   ul.nav li.dropdown:hover ul.dropdown-menu {
-    display: inline-block;
+    display: block;
   }
 
   ul.nav li.dropdown:hover ul.dropdown-menu li.dropdown-submenu ul.dropdown-menu {
@@ -244,7 +244,7 @@ ul.nav {
   }
 
   ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu:hover ul.dropdown-menu {
-    display: inline-block;
+    display: block;
   }
 }
 

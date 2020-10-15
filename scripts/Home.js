@@ -121,6 +121,7 @@ requirejs([
                     controls.createSecondLayer(firstL[i],foodsecondL[j]);
                     if (foodsecondL[j] === 'Agrosphere') {
                         for (let h = 0; h < thirdL.length; h++) {
+
                             controls.createThirdLayers(firstL[i],foodsecondL[j], thirdL[h]);
                             if (thirdL[h] === "Country") {
                                 for (let k = 0; k <countryL.length; k++) {
@@ -155,15 +156,24 @@ requirejs([
             }
         }
 
-        $("#FoodSecurity--Agrosphere--Country").find("input").on("click", async function (e) {
-            await controls.onAgrosphereClick(e);
+        $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
             $(".countries-check").click(function(){
                 let toggle = this;
-                togglePK(toggle.value, toggle.checked)
+                console.log(this.value);
+                console.log(this.checked)
+                togglePK(toggle.value, toggle.checked);
             });
+            console.log('clicked')
         });
 
-        $("#DiseaseProjection").find("input").on("click", function (e) {
+        $("#COVID-19-checkbox").on("click", function (e) {
+            // if (this.checked) {
+                controls.covid19();
+                console.log('clickedd')
+            // }
+        });
+
+        $("#DiseaseProjection").on("click", function (e) {
             controls.onDiseaseClick(e);
         });
 
@@ -339,7 +349,11 @@ requirejs([
     async function togglePK(countryN, status){
         // use countryN to look pk
         let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_Placemarks');
+        console.log(newGlobe.layers)
+        console.log(findLayerIndex);
         let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
+
+        console.log(findPKIndex)
 
         //turn on/off the pk
         newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
