@@ -143,12 +143,6 @@ ul.nav {
 .dropdown-submenu {
   position: relative;
 }
-
-
-/*.Menu {*/
-/*  background-color: #b7b7b7;*/
-/*}*/
-
 /*
 .ec-menu {
   position: relative;
@@ -246,16 +240,6 @@ ul.nav {
   ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu:hover ul.dropdown-menu {
     display: block;
   }
-}
-
-.dropdown-menu {
-  position: relative;
-  width: 0.8vw;
-}
-
-.dropdown-menu>li>a {
-  position: relative;
-  display: inline-block;
 }
 
 /*

@@ -306,6 +306,7 @@ define([
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
                 $("#diseases").css('visibility', 'hidden');
+                $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass("active");

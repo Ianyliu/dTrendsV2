@@ -348,7 +348,7 @@ requirejs([
 
     async function togglePK(countryN, status){
         // use countryN to look pk
-        let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_Placemarks');
+        let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
         console.log(newGlobe.layers)
         console.log(findLayerIndex);
         let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
