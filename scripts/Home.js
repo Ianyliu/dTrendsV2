@@ -173,9 +173,9 @@ requirejs([
             // }
         });
 
-        $("#DiseaseProjection").on("click", function (e) {
-            controls.onDiseaseClick(e);
-        });
+        // $("#DiseaseProjection").on("click", function (e) {
+        //     controls.onDiseaseClick(e);
+        // });
 
 
         //Initialize projection menu
