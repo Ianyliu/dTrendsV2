@@ -93,6 +93,7 @@ requirejs([
         // for (let i = 0; i < firstL.length; i++) {
         //     controls.createFirstLayer(firstL[i])
         // }
+        console.log(newGlobe.layers)
 
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
