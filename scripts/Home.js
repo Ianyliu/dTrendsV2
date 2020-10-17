@@ -157,7 +157,7 @@ requirejs([
         }
 
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
-            $(".countries-check").click(function(){
+            $(".countries-check").change(function(){
                 let toggle = this;
                 console.log(this.value);
                 console.log(this.checked)

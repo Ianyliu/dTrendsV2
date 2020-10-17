@@ -427,6 +427,10 @@ define([
         panelBody3.className = "panel-body " + secondL;
         panelBody3.id = firstL + "--" + secondL;
 
+        let panelGroup2 = document.createElement("div");
+        panelGroup2.className = "panel-group " + secondL;
+        panelGroup2.id = "nested-" + secondL;
+
         collapsed2.appendChild(secondLayerName);
         panelTitle2.appendChild(collapsed2);
         panelHeading2.appendChild(panelTitle2);
