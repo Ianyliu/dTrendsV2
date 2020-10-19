@@ -27,20 +27,26 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
-  height: 30px;
+  height: inherit;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
-  height: 30px;
+  height: inherit;
 }
 .panel{
   font-size:10px;
   /*font-size:10vw;*/
   /*opacity: 50%;*/
   width: inherit;
+  /*height: 70%;*/
   background-color: transparent;
 }
+
+.panel-heading {
+  height: 28px;
+}
+
 
 .panel-group{
   width: auto;
@@ -142,9 +148,9 @@ ul.nav {
 }
 
 
-/*.Menu {*/
-/*  background-color: #b7b7b7;*/
-/*}*/
+.Menu {
+  /*height: 30px;*/
+}
 
 /*
 .ec-menu {
