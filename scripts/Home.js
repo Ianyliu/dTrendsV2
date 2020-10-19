@@ -224,7 +224,8 @@ requirejs([
                 .attr("href");
             console.log(hrefvalue);
 
-            if (hrefvalue !== undefined) {
+            if (hrefvalue !== undefined && hrefvalue !== '#FoodSecurity-Agrosphere') {
+                console.log(hrefvalue);
                 document.getElementById(hrefvalue.substring(1)).setAttribute("class","collapsing");
                 document.getElementById(hrefvalue.substring(1)).removeAttribute("class","collapsing");
                 document.getElementById(hrefvalue.substring(1)).style.visibility = 'hidden';
