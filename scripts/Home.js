@@ -71,8 +71,6 @@ requirejs([
         'MonthlyPrecipitation'
     ]
 
-    let expandedArr = [];
-
     for (let i = 0; i < dataTypes.length; i++) {
         for (let j = 0; j < csvD[i].length; j++) {
             if (dataTypes[i] === 'Country') {
@@ -96,7 +94,7 @@ requirejs([
         //     controls.createFirstLayer(firstL[i])
         // }
 
-        // console.log(newGlobe.layers)
+        console.log(newGlobe.layers)
 
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
@@ -180,140 +178,114 @@ requirejs([
         //     controls.onDiseaseClick(e);
         // });
 
-        $('#accordion').find("a").on('click', function(e){
-            console.log("start");
-            if (expandedArr.length > 0) {
-                expandedArr.forEach(function (ele, i) {
-                    // collapse previous menu
-                    console.log(ele);
-                    $(ele).collapse();
-                    console.log(ele);
 
-                    if (i == expandedArr.length - 1) {
-                        console.log("clear end");
-                        expandedArr = []
-                        console.log(expandedArr);
-                    }
-                })
+        $('#accordion').find("a").on('click', function(e){
+            console.log(e);
+            let divid = e.target.hash + '';
+            let atag = this;
+            let dataParent = atag.getAttribute('data-parent');
+
+            document.getElementById(divid.substring(1)).style.visibility = 'visible';
+            // console.log(divid)
+            // console.log(this.nextElementSibling)
+
+            // console.log($('#accordion').find("a"))
+            // if() {
+            //     console.log('hey!!!')
+            //     console.log(divid.substring(1) + "-a")
+            // }
+            console.log($('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a" ))
+            );
+
+            $('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+                .addClass('collapsed');
+
+
+
+            let hrefvalue = $('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+                .attr("href");
+            console.log(hrefvalue);
+
+            if (hrefvalue !== undefined && hrefvalue !== '#FoodSecurity-Agrosphere') {
+                console.log(hrefvalue);
+                document.getElementById(hrefvalue.substring(1)).setAttribute("class","collapsing");
+                document.getElementById(hrefvalue.substring(1)).removeAttribute("class","collapsing");
+                document.getElementById(hrefvalue.substring(1)).style.visibility = 'hidden';
+                document.getElementById(hrefvalue.substring(1)).removeAttribute("class","in");
+                document.getElementById(hrefvalue.substring(1)).setAttribute("aria-expanded","false");
+                document.getElementById(hrefvalue.substring(1)).style.height = '0px';
+
             }
 
-            // collect current menu data
-            $(".collapse").on('shown.bs.collapse', function(){
-                console.log("new collection expanded");
-                expandedArr.push(this);
-                console.log(expandedArr);
-            });
-        });
+            // $("a[aria-expanded='true']")
+            //     .not("a[data-parent='#accordion']")
+            //     .not(this)
+            //     .not(document.getElementById(divid.substring(1) + "-a" ))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+            //     .closest('div').removeClass('in');
+            //
+            // $("a[aria-expanded='true']")
+            //     .not("a[data-parent='#accordion']")
+            //     .not(this)
+            //     .not(document.getElementById(divid.substring(1) + "-a" ))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+            //     .next('div').removeClass('in');
 
-        // $('#accordion').find("a").on('click', function(e){
-        //     console.log(e);
-        //     let divid = e.target.hash + '';
-        //     // let atag = this;
-        //     // let dataParent = atag.getAttribute('data-parent');
-        //     console.log(divid);
-        //     console.log(divid.substring(1));
-        //     console.log($('#accordion').find("a[aria-expanded='true']"));
-        //
-        //     document.getElementById(divid.substring(1)).style.visibility = 'visible';
-        //     // console.log(divid)
-        //     // console.log(this.nextElementSibling)
-        //
-        //     // console.log($('#accordion').find("a"))
-        //     // if() {
-        //     //     console.log('hey!!!')
-        //     //     console.log(divid.substring(1) + "-a")
-        //     // }
-        //     console.log($('#accordion').find("a[aria-expanded='true']")
-        //         .not("a[data-parent='#accordion']")
-        //         .not(this)
-        //         .not(document.getElementById(divid.substring(1) + "-a" ))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a" ))
-        //     );
-        //
-        //     $('#accordion').find("a[aria-expanded='true']")
-        //         .not("a[data-parent='#accordion']")
-        //         .not(this)
-        //         .not(document.getElementById(divid.substring(1) + "-a" ))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
-        //         .addClass('collapsed')
-        //         .attr('aria-expanded','true');
-        //
-        //     let hrefvalue = $('#accordion').find("a[aria-expanded='true']")
-        //         .not("a[data-parent='#accordion']")
-        //         .not(this)
-        //         .not(document.getElementById(divid.substring(1) + "-a" ))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-        //         .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
-        //         .attr("href");
-        //     console.log(hrefvalue);
-        //
-        //     if (hrefvalue !== undefined) {
-        //         document.getElementById(hrefvalue.substring(1)).setAttribute("class","collapsing");
-        //         document.getElementById(hrefvalue.substring(1)).removeAttribute("class","collapsing");
-        //         document.getElementById(hrefvalue.substring(1)).style.visibility = 'hidden';
-        //         document.getElementById(hrefvalue.substring(1)).removeAttribute("class","in");
-        //         document.getElementById(hrefvalue.substring(1)).setAttribute("aria-expanded","false");
-        //         document.getElementById(hrefvalue.substring(1)).style.height = '0px';
-        //
-        //     }
-        //
-        //     // $("a[aria-expanded='true']")
-        //     //     .not("a[data-parent='#accordion']")
-        //     //     .not(this)
-        //     //     .not(document.getElementById(divid.substring(1) + "-a" ))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
-        //     //     .closest('div').removeClass('in');
-        //     //
-        //     // $("a[aria-expanded='true']")
-        //     //     .not("a[data-parent='#accordion']")
-        //     //     .not(this)
-        //     //     .not(document.getElementById(divid.substring(1) + "-a" ))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
-        //     //     .next('div').removeClass('in');
-        //
-        //     // $('#accordion').find("a[aria-expanded='true']")
-        //     //     .not("a[data-parent='#accordion']")
-        //     //     .not(this)
-        //     //     .not(document.getElementById(divid.substring(1) + "-a" ))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-        //     //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
-        //     //     .attr('aria-expanded','false');
-        //
-        //     // if ("a[data-toggle='collapse']" !== e) {
-        //     //     console.log(this)
-        //     //     console.log("not");
-        //     // } else {
-        //     //     console.log('yes')
-        //     // }
-        //
-        //     // $('.in').not(divid).removeClass('in');
-        //         // $('.in').find('.galleryImageInput')
-        //         // $('.in').attr('name', 'galleryImage[]');
-        //
-        //     // $("a[aria-expanded='true']").not(this).next('div').removeClass('in');
-        //     // $("a[aria-expanded='true']").not(this).closest('div').removeClass('in');
-        //     // $("a[data-toggle='collapse']").not(this).next('div').removeClass('in');
-        //     // $("a[data-toggle='collapse']").not(this).closest('div').removeClass('in');
-        //     // $("a[data-toggle='collapse']").not(this).setAttribute('aria-expanded','false')
-        //     // $("a[data-toggle='collapse']").not(this).next('div').removeClass('in');
-        //     // $("div[class='in']").not(document.getElementById(divid )).not(document.getElementsByClassName('panel-group' )).removeClass('in');
-        //     // $("div[class='in']").not(document.getElementById(divid )).removeClass('in');
-        //     // $("div[class='in']").not(document.getElementById(divid )).setAttribute('aria-expanded','false');
-        //     // let divID = e.getAttribute("href");
-        //     // console.log(divID)
-        //     // console.log(typeof divID);
-        //     //alert('clicked');
-        // });
+            $('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+                .attr('aria-expanded','false');
+            // if ("a[data-toggle='collapse']" !== e) {
+            //     console.log(this)
+            //     console.log("not");
+            // } else {
+            //     console.log('yes')
+            // }
+
+            // $('.in').not(divid).removeClass('in');
+                // $('.in').find('.galleryImageInput')
+                // $('.in').attr('name', 'galleryImage[]');
+
+            // $("a[aria-expanded='true']").not(this).next('div').removeClass('in');
+            // $("a[aria-expanded='true']").not(this).closest('div').removeClass('in');
+            // $("a[data-toggle='collapse']").not(this).next('div').removeClass('in');
+            // $("a[data-toggle='collapse']").not(this).closest('div').removeClass('in');
+            // $("a[data-toggle='collapse']").not(this).setAttribute('aria-expanded','false')
+            // $("a[data-toggle='collapse']").not(this).next('div').removeClass('in');
+            // $("div[class='in']").not(document.getElementById(divid )).not(document.getElementsByClassName('panel-group' )).removeClass('in');
+            // $("div[class='in']").not(document.getElementById(divid )).removeClass('in');
+            // $("div[class='in']").not(document.getElementById(divid )).setAttribute('aria-expanded','false');
+            // let divID = e.getAttribute("href");
+            // console.log(divID)
+            // console.log(typeof divID);
+            //alert('clicked');
+        });
 
 
         //Initialize projection menu
