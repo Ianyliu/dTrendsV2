@@ -10,8 +10,9 @@ requirejs([
     , '3rdPartyLibs/Chart-2.9.3.min.js'
     , 'createPK'
     , 'controls'
+    ,'csvData'
     , 'cAgrosPK'
-], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls) {
+], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls, csvD) {
     "use strict";
 
     let layerManager = new LayerManager(newGlobe);
@@ -24,8 +25,267 @@ requirejs([
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
 
+    const firstL = ['Disease Projection','Food Security']
+    const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
+    const foodsecondL = ["Agrosphere","ECMWF Forecasts","Sentinel Satellite Data"]
+    const thirdL = ["Country", "Crops", "Weather"]
+
+    const influenzaA = [
+        "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+        "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+        "H7N9","H6N1", "Not Determined"
+    ];
+    const influenzaB = [
+        "Yamagata",
+        "Victoria",
+        "Not Determined"
+    ]
+    const ecmwf_forecasts = ["Temperature", "Precipitation", "Wind"]
+    const dataTypes = ['Country', 'Weather Station'];
+    let countryL = []
+
+    const satellite_data = [
+        "Agriculture",
+        "False Color (Urban)",
+        "False Color (Vegetation)",
+        "Geology",
+        "Moisture Index",
+        "Natural Color (True Color)",
+        "NDVI"
+    ]
+    const cropsL = [
+        'Production',
+        'Price',
+        'Livestock',
+        'Emissions',
+        'Pesticides',
+        'Fertilizer',
+        'Yield'
+    ];
+
+    const weatherL = [
+        'GraphsandWeather',
+        'YearlyTemperature',
+        'MonthlyTemperature',
+        'YearlyPrecipitation',
+        'MonthlyPrecipitation'
+    ]
+
+    for (let i = 0; i < dataTypes.length; i++) {
+        for (let j = 0; j < csvD[i].length; j++) {
+            if (dataTypes[i] === 'Country') {
+                countryL.push(csvD[i][j].country)
+            } else if (dataTypes[i] === 'Weather Station') {
+            } else {
+                console.log("Read layer type in error");
+            }
+        }
+    }
+
     //All the event listeners
     $(document).ready(function () {
+
+        // let parentMenu = document.getElementById("accordion");
+
+        // controls.createFirstLayer('Disease Projection')
+        // controls.createFirstLayer('Food Security')
+
+        // for (let i = 0; i < firstL.length; i++) {
+        //     controls.createFirstLayer(firstL[i])
+        // }
+
+        console.log(newGlobe.layers)
+
+        for (let i = 0; i < firstL.length; i++) {
+            controls.createFirstLayer(firstL[i]);
+            if (firstL[i] === 'Disease Projection') {
+                for (let j = 0; j < diseasesecondL.length; j++) {
+                    controls.createSecondLayer(firstL[i],diseasesecondL[j]);
+                    if (diseasesecondL[j] === "Influenza A") {
+                        for (let h = 0; h < influenzaA.length; h++) {
+                            controls.createThirdLayer(firstL[i],diseasesecondL[j],influenzaA[h]);
+                            controls.influenza();
+                        }
+                    } else if (diseasesecondL[j] === "Influenza B") {
+                        for (let h = 0; h < influenzaB.length; h++) {
+                            controls.createThirdLayer(firstL[i],diseasesecondL[j],influenzaB[h]);
+                        }
+                    } else if (diseasesecondL[j] === "COVID-19") {
+                        controls.createThirdLayer(firstL[i],diseasesecondL[j],"COVID-19");
+                        controls.covid19();
+                    } else {
+                        throw error
+                    }
+                }
+            }
+            else if (firstL[i] === 'Food Security') {
+                for (let j = 0; j < foodsecondL.length; j++) {
+                    controls.createSecondLayer(firstL[i],foodsecondL[j]);
+                    if (foodsecondL[j] === 'Agrosphere') {
+                        for (let h = 0; h < thirdL.length; h++) {
+
+                            controls.createThirdLayers(firstL[i],foodsecondL[j], thirdL[h]);
+                            if (thirdL[h] === "Country") {
+                                for (let k = 0; k <countryL.length; k++) {
+                                    controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],countryL[k]);
+                                }
+                            } else if (thirdL[h] === "Crops") {
+                                for (let k = 0; k <cropsL.length; k++) {
+                                    controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],cropsL[k]);
+                                }
+                            } else if (thirdL[h] === "Weather") {
+                                for (let k = 0; k <weatherL.length; k++) {
+                                    controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],weatherL[k]);
+                                }
+                            } else {
+                                throw error
+                            }
+                        }
+                    } else if (foodsecondL[j] === 'ECMWF Forecasts') {
+                        for (let h = 0; h < ecmwf_forecasts.length; h++) {
+                            controls.createThirdLayer(firstL[i],foodsecondL[j],ecmwf_forecasts[h]);
+                        }
+                    } else if (foodsecondL[j] === 'Sentinel Satellite Data') {
+                        for (let h = 0; h < satellite_data.length; h++) {
+                            controls.createThirdLayer(firstL[i],foodsecondL[j],satellite_data[h]);
+                        }
+                    } else {
+                        throw error
+                    }
+                }
+            } else {
+                throw error
+            }
+        }
+
+        $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
+            $(".countries-check").change(function(){
+                let toggle = this;
+                console.log(this.value);
+                console.log(this.checked)
+                togglePK(toggle.value, toggle.checked);
+            });
+            console.log('clicked')
+        });
+
+        $("#COVID-19-checkbox").on("click", function (e) {
+            // if (this.checked) {
+                controls.covid19();
+            // }
+        });
+
+        // $("#DiseaseProjection").on("click", function (e) {
+        //     controls.onDiseaseClick(e);
+        // });
+
+
+        $('#accordion').find("a").on('click', function(e){
+            console.log(e);
+            let divid = e.target.hash + '';
+            let atag = this;
+            let dataParent = atag.getAttribute('data-parent');
+
+            document.getElementById(divid.substring(1)).style.visibility = 'visible';
+            // console.log(divid)
+            // console.log(this.nextElementSibling)
+
+            // console.log($('#accordion').find("a"))
+            // if() {
+            //     console.log('hey!!!')
+            //     console.log(divid.substring(1) + "-a")
+            // }
+            console.log($('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a" ))
+            );
+
+            $('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+                .addClass('collapsed');
+
+
+
+            let hrefvalue = $('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+                .attr("href");
+            console.log(hrefvalue);
+
+            if (hrefvalue !== undefined) {
+                document.getElementById(hrefvalue.substring(1)).setAttribute("class","collapsing");
+                document.getElementById(hrefvalue.substring(1)).removeAttribute("class","collapsing");
+                document.getElementById(hrefvalue.substring(1)).style.visibility = 'hidden';
+                document.getElementById(hrefvalue.substring(1)).removeAttribute("class","in");
+                document.getElementById(hrefvalue.substring(1)).setAttribute("aria-expanded","false");
+                document.getElementById(hrefvalue.substring(1)).style.height = '0px';
+
+            }
+
+            // $("a[aria-expanded='true']")
+            //     .not("a[data-parent='#accordion']")
+            //     .not(this)
+            //     .not(document.getElementById(divid.substring(1) + "-a" ))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+            //     .closest('div').removeClass('in');
+            //
+            // $("a[aria-expanded='true']")
+            //     .not("a[data-parent='#accordion']")
+            //     .not(this)
+            //     .not(document.getElementById(divid.substring(1) + "-a" ))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+            //     .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+            //     .next('div').removeClass('in');
+
+            $('#accordion').find("a[aria-expanded='true']")
+                .not("a[data-parent='#accordion']")
+                .not(this)
+                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
+                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
+                .attr('aria-expanded','false');
+            // if ("a[data-toggle='collapse']" !== e) {
+            //     console.log(this)
+            //     console.log("not");
+            // } else {
+            //     console.log('yes')
+            // }
+
+            // $('.in').not(divid).removeClass('in');
+                // $('.in').find('.galleryImageInput')
+                // $('.in').attr('name', 'galleryImage[]');
+
+            // $("a[aria-expanded='true']").not(this).next('div').removeClass('in');
+            // $("a[aria-expanded='true']").not(this).closest('div').removeClass('in');
+            // $("a[data-toggle='collapse']").not(this).next('div').removeClass('in');
+            // $("a[data-toggle='collapse']").not(this).closest('div').removeClass('in');
+            // $("a[data-toggle='collapse']").not(this).setAttribute('aria-expanded','false')
+            // $("a[data-toggle='collapse']").not(this).next('div').removeClass('in');
+            // $("div[class='in']").not(document.getElementById(divid )).not(document.getElementsByClassName('panel-group' )).removeClass('in');
+            // $("div[class='in']").not(document.getElementById(divid )).removeClass('in');
+            // $("div[class='in']").not(document.getElementById(divid )).setAttribute('aria-expanded','false');
+            // let divID = e.getAttribute("href");
+            // console.log(divID)
+            // console.log(typeof divID);
+            //alert('clicked');
+        });
+
 
         //Initialize projection menu
         layerManager.createProjectionList();
@@ -110,18 +370,18 @@ requirejs([
             controls.onNav();
         })
 
-        //dropdown menu for diseases and influenzas
-        $("#diseaseDropdown").find("li").on("click", function (e) {
-            controls.onDiseaseClick(e);
-        });
-
-        $("#agrosphereDropdown").find("li").on("click", async function (e) {
-            await controls.onAgrosphereClick(e);
-            $(".countries-check").click(function(){
-                let toggle = this;
-                togglePK(toggle.value, toggle.checked)
-            });
-        });
+        // //dropdown menu for diseases and influenzas
+        // $("#diseaseDropdown").find("li").on("click", function (e) {
+        //     controls.onDiseaseClick(e);
+        // });
+        //
+        // $("#agrosphereDropdown").find("li").on("click", async function (e) {
+        //     await controls.onAgrosphereClick(e);
+        //     $(".countries-check").click(function(){
+        //         let toggle = this;
+        //         togglePK(toggle.value, toggle.checked)
+        //     });
+        // });
 
         //dropdown menu for placemark category
         $("#categoryList").find("li").on("click", function (e) {
@@ -197,8 +457,12 @@ requirejs([
 
     async function togglePK(countryN, status){
         // use countryN to look pk
-        let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_Placemarks');
+        let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+        console.log(newGlobe.layers)
+        console.log(findLayerIndex);
         let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
+
+        console.log(findPKIndex)
 
         //turn on/off the pk
         newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;

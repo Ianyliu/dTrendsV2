@@ -8,7 +8,7 @@
 
 .accordion {
   width: auto;
-  height: 200px;
+  height: 70%;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -27,30 +27,27 @@
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;
-  height: inherit;
+  height: 70%;
 }
 .panel-group .panel-heading a.collapsed:after {
   content: '+';
   width: inherit;
-  height: inherit;
+  height: 70%;
+}
+.panel-title {
+  font-size: 12px;
 }
 .panel{
   font-size:10px;
   /*font-size:10vw;*/
   /*opacity: 50%;*/
   width: inherit;
-  /*height: 70%;*/
   background-color: transparent;
 }
 
-.panel-heading {
-  height: 28px;
-}
-
-
 .panel-group{
   width: auto;
-  height: 200px;
+  height: 70%;
   overflow: auto;
   overflow: -moz-scrollbars-none;
 }
@@ -146,12 +143,6 @@ ul.nav {
 .dropdown-submenu {
   position: relative;
 }
-
-
-.Menu {
-  /*height: 30px;*/
-}
-
 /*
 .ec-menu {
   position: relative;
@@ -250,7 +241,6 @@ ul.nav {
     display: block;
   }
 }
-
 
 /*
   ul.ec-menu {

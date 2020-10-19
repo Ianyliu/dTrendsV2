@@ -11,12 +11,20 @@ define([
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
+    let firstLayers =[];
+    let secondLayers =[];
+
     let fromDate = $('.fromdatepicker');
     let toDate = $('.todatepicker');
     let curDate = $("#currentdatepicker");
 
     let dataTypes = ['Country', 'Weather Station'];
     let countryL = []
+
+    // document.addEventListener("DOMContentLoaded", function(event) {
+        //Equivalent to document.ready, does not work on IE8 but is supported by over 98% of browsers
+        let parentMenu = document.getElementById("accordion");
+    // });
 
     for (let i = 0; i < dataTypes.length; i++) {
         for (let j = 0; j < csvD[i].length; j++) {
@@ -62,7 +70,7 @@ define([
     //underinitial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
@@ -98,10 +106,10 @@ define([
             let subMenu = $(this).find(".dropdown-submenu");
             let subMenu2 = subMenu.find(".dropdown-menu");
             //reset position property for DD container
-            $(this).css("position", "static");
+            $(this).css("position", "relative");
             $listHolder.css({
-                "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
-                "left": $btnDropDown.offset().left + "px"
+                // "top": ($btnDropDown.offset().top + $btnDropDown.outerHeight(true)) + "px",
+                // "left": $btnDropDown.offset().left + "px"
             });
             subMenu2.css({
                 "left": $listHolder.outerWidth(true) + "px"
@@ -170,7 +178,7 @@ define([
 
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == currentD) {
@@ -204,86 +212,86 @@ define([
         $('#conActive').text(numA);
     };
 
-    //under first left tab; used to switch display between
-    let onDiseaseClick = function (event) {
+    // //under first left tab; used to switch display between
+    // let onDiseaseClick = function (event) {
+    //
+    //     //grab the selection value
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     //refresh the option display
+    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //
+    //     //insert foodSecurity menu corresponding to the selection
+    //     if (projectionName === "COVID-19") {
+    //         covid19();
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: ["COVID-19", "Influenza A", "Influenza B"],
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Influenza A') {
+    //         influenza();
+    //         $("#diseases").css('visibility', 'visible');
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: [
+    //                 "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+    //                 "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+    //                 "H7N9","H6N1", "Not Determined"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Influenza B') {
+    //         $("#diseases").css('visibility', 'visible');
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: [
+    //                 "Yamagata",
+    //                 "Victoria",
+    //                 "Not Determined"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     }
+    // };
 
-        //grab the selection value
-        let projectionName = event.target.innerText || event.target.innerHTML;
-        //refresh the option display
-        $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-
-        //insert foodSecurity menu corresponding to the selection
-        if (projectionName === "COVID-19") {
-            covid19();
-            menuStructure = {
-                accordianID: '#diseases',
-                Level1: ["COVID-19", "Influenza A", "Influenza B"],
-            }
-            accordionMenu(menuStructure);
-        } else if (projectionName === 'Influenza A') {
-            influenza();
-            $("#diseases").css('visibility', 'visible');
-            menuStructure = {
-                accordianID: '#diseases',
-                Level1: [
-                    "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
-                    "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
-                    "H7N9","H6N1", "Not Determined"
-                ]
-            }
-            accordionMenu(menuStructure);
-        } else if (projectionName === 'Influenza B') {
-            $("#diseases").css('visibility', 'visible');
-            menuStructure = {
-                accordianID: '#diseases',
-                Level1: [
-                    "Yamagata",
-                    "Victoria",
-                    "Not Determined"
-                ]
-            }
-            accordionMenu(menuStructure);
-        }
-    };
-
-    //under first left tab; used to switch display between
-    let onAgrosphereClick = function (event) {
-
-        //grab the selection value
-        let projectionName = event.target.innerText || event.target.innerHTML;
-        //refresh the option display
-        $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-
-        //insert foodSecurity menu corresponding to the selection
-        if (projectionName === "AgroSphere") {
-            menuStructure = {
-                accordianID: '#foodSecurity',
-                Level1: ["Country", "Crops", "Weather"],
-                Level2: [countryL, cropsL, weatherL],
-            }
-            accordionMenu(menuStructure);
-        } else if (projectionName === 'ECMWF Forecasts') {
-            menuStructure = {
-                accordianID: '#foodSecurity',
-                Level1: ["Temperature", "Precipitation", "Wind"]
-            }
-            accordionMenu(menuStructure);
-        } else if (projectionName === 'Sentinel Satellite Data') {
-            menuStructure = {
-                accordianID: '#foodSecurity',
-                Level1: [
-                    "Agriculture",
-                    "False Color (Urban)",
-                    "False Color (Vegetation)",
-                    "Geology",
-                    "Moisture Index",
-                    "Natural Color (True Color)",
-                    "NDVI"
-                ]
-            }
-            accordionMenu(menuStructure);
-        }
-    };
+    // //under first left tab; used to switch display between
+    // let onAgrosphereClick = function (event) {
+    //
+    //     //grab the selection value
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     //refresh the option display
+    //     $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //
+    //     //insert foodSecurity menu corresponding to the selection
+    //     if (projectionName === "AgroSphere") {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: ["Country", "Crops", "Weather"],
+    //             Level2: [countryL, cropsL, weatherL],
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'ECMWF Forecasts') {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: ["Temperature", "Precipitation", "Wind"]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Sentinel Satellite Data') {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: [
+    //                 "Agriculture",
+    //                 "False Color (Urban)",
+    //                 "False Color (Vegetation)",
+    //                 "Geology",
+    //                 "Moisture Index",
+    //                 "Natural Color (True Color)",
+    //                 "NDVI"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     }
+    // };
 
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
@@ -298,6 +306,7 @@ define([
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
                 $("#diseases").css('visibility', 'hidden');
+                $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass("active");
@@ -307,7 +316,7 @@ define([
                     layerButton.css("color", "black");
                 }
             }
-            if (i == newGlobe.layers.length - 1) {
+            if (i === newGlobe.layers.length - 1) {
                 layerManager.synchronizeLayerList();
             }
         }
@@ -334,104 +343,229 @@ define([
                 layerButton.remove();
             }
 
-            if (i == newGlobe.layers.length - 1) {
+            if (i === newGlobe.layers.length - 1) {
                 layerManager.synchronizeLayerList();
             }
         }
     };
 
-    let accordionMenu = function (menuObj) {
-        let parentMenu = document.getElementById(menuObj.accordianID.replace('#', ''));
+    function createFirstLayer(FirstL) {
 
-        //clear previous submenu
-        $(menuObj.accordianID).empty();
+        let firstL = FirstL.replace(/\s+/g, '');
 
-        if (!menuObj.Level2) {
-            //create level one menu
-            menuObj.Level1.forEach(function (ele) {
-                menuL2("No Level1", ele)
-            });
-        } else {
-            //create level one menu
-            menuObj.Level1.forEach(async function (e1, i) {
-                await menuL1(menuObj.accordianID, e1);
-                menuObj.Level2[i].forEach(function (e2){
-                    menuL2(e1, e2);
-                })
-            });
-        }
+        let panelDefault1 = document.createElement("div");
+        panelDefault1.className = "Menu panel panel-info " + firstL;
 
-        function menuL1(id, firstL) {
-            let panelDefault1 = document.createElement("div");
-            panelDefault1.className = "Menu panel panel-info " + firstL;
+        let panelHeading1 = document.createElement("div");
+        panelHeading1.className = "panel-heading";
 
-            let panelHeading1 = document.createElement("div");
-            panelHeading1.className = "panel-heading";
+        let panelTitle1 = document.createElement("h4");
+        panelTitle1.className = "panel-title";
 
-            let panelTitle1 = document.createElement("h5");
-            panelTitle1.className = "panel-title";
+        let collapsed1 = document.createElement("a");
+        collapsed1.className = "collapsed";
+        collapsed1.setAttribute("data-toggle", "collapse");
+        collapsed1.setAttribute("data-parent", "#accordion");
+        collapsed1.href = "#" + firstL;
+        collapsed1.id = firstL + '-a';
 
-            let collapsed1 = document.createElement("a");
-            collapsed1.className = "collapsed";
-            collapsed1.setAttribute("data-toggle", "collapse");
-            collapsed1.setAttribute("data-parent", id);
-            collapsed1.href = "#" + firstL;
+        let firstLayerName = document.createTextNode(FirstL + "  ");
+        firstLayerName.className = "menuwords";
 
-            let firstLayerName = document.createTextNode(firstL + "  ");
-            firstLayerName.className = "menuwords";
-            let idname = firstL.replace(/\s+/g, '');
-            firstLayerName.id = idname;
+        let collapseOne = document.createElement("div");
+        collapseOne.className = "panel-collapse collapse";
+        collapseOne.id = firstL;
 
-            let collapseOne = document.createElement("div");
-            collapseOne.className = "panel-collapse collapse";
-            collapseOne.id = firstL;
+        let panelBody1 = document.createElement("div");
+        panelBody1.className = "panel-body";
 
-            let panelBody1 = document.createElement("div");
-            panelBody1.className = "panel-body";
+        let panelGroup1 = document.createElement("div");
+        panelGroup1.className = "panel-group " + firstL;
+        panelGroup1.id = "nested-" + firstL;
 
-            let panelGroup1 = document.createElement("div");
-            panelGroup1.className = "panel-group " + firstL;
-            panelGroup1.id = "nested-" + firstL;
+        collapsed1.appendChild(firstLayerName);
+        panelTitle1.appendChild(collapsed1);
+        panelHeading1.appendChild(panelTitle1);
+        panelDefault1.appendChild(panelHeading1);
+        panelDefault1.appendChild(collapseOne);
+        parentMenu.appendChild(panelDefault1);
 
-            collapsed1.appendChild(firstLayerName);
-            panelTitle1.appendChild(collapsed1);
-            panelHeading1.appendChild(panelTitle1);
-            panelDefault1.appendChild(panelHeading1);
+        panelBody1.appendChild(panelGroup1);
+        collapseOne.appendChild(panelBody1);
 
-            panelBody1.appendChild(panelGroup1);
-            collapseOne.appendChild(panelBody1);
-            panelDefault1.appendChild(collapseOne);
+        // firstLayers.push(firstL);
+    }
 
-            parentMenu.appendChild(panelDefault1);
-        }
+    function createSecondLayer(FirstL, SecondL) {
 
-        function menuL2(firstL, secondL) {
-            let checkboxDiv = document.createElement("div");
-            checkboxDiv.className = "Menu "
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
 
-            let checkboxH4 = document.createElement("h5");
-            let checkboxA = document.createElement("a");
-            let checkboxAt = document.createTextNode(secondL + "   ");
+        let panelDefault2 = document.createElement("div");
+        panelDefault2.id = secondL;
+        panelDefault2.className = "Menu panel panel-info " + secondL + " " + firstL + "-" + secondL;
+
+        let panelHeading2 = document.createElement("div");
+        panelHeading2.className = "panel-heading " + firstL + "-" + secondL;
+
+        let panelTitle2 = document.createElement("h4");
+        panelTitle2.className = "panel-title " + firstL + "-" + secondL;
+
+        let collapsed2 = document.createElement("a");
+        collapsed2.className = "collapsed";
+        collapsed2.setAttribute("data-toggle", "collapse");
+        collapsed2.setAttribute("data-parent", "#nested");
+        collapsed2.href = "#" + firstL + "-" + secondL;
+        collapsed2.id = firstL + "-" + secondL + '-a';
+
+        let secondLayerName = document.createTextNode(SecondL + "  ");
+        secondLayerName.className = "menuwords";
+
+        let nested1c1 = document.createElement("div");
+        nested1c1.id = firstL + "-" + secondL;
+        nested1c1.className = "panel-collapse collapse";
+
+        let panelBody3 = document.createElement("div");
+        panelBody3.className = "panel-body " + secondL;
+        panelBody3.id = firstL + "--" + secondL;
+
+        let panelGroup2 = document.createElement("div");
+        panelGroup2.className = "panel-group " + secondL;
+        panelGroup2.id = "nested-" + secondL;
+
+        collapsed2.appendChild(secondLayerName);
+        panelTitle2.appendChild(collapsed2);
+        panelHeading2.appendChild(panelTitle2);
+        panelDefault2.appendChild(panelHeading2);
+        panelDefault2.appendChild(nested1c1);
+
+        nested1c1.appendChild(panelBody3);
+
+        // secondLayers.push(panelBody3.id);
+
+        // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
+        document.getElementById("nested-" + firstL).appendChild(panelDefault2);
+    }
+
+    function createThirdLayers(FirstL, SecondL, ThirdL) {
+
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
+        let thirdL = ThirdL.replace(/\s+/g, '');
+
+        let panelDefault3 = document.createElement("div");
+        panelDefault3.id = thirdL;
+        panelDefault3.className = "Menu panel panel-info " + thirdL + " " + secondL + " " + firstL + "-" + secondL + " " + firstL + "-" + secondL + "-" + thirdL;
+
+        let panelHeading3 = document.createElement("div");
+        panelHeading3.className = "panel-heading " + firstL + "-" + secondL + "-" + thirdL;
+
+        let panelTitle3 = document.createElement("h5");
+        panelTitle3.className = "panel-title " + firstL + "-" + secondL + "-" + thirdL;
+
+        let collapsed3 = document.createElement("a");
+        collapsed3.className = "collapsed";
+        collapsed3.setAttribute("data-toggle", "collapse");
+        collapsed3.setAttribute("data-parent", "#nested");
+        collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
+        collapsed3.id = firstL + "-" + secondL + "-" + thirdL + '-a';
+
+        let thirdLayerName = document.createTextNode(ThirdL + "  ");
+        thirdLayerName.className = "menuwords";
+
+        let nested1c1 = document.createElement("div");
+        nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
+        nested1c1.className = "panel-collapse collapse";
+
+        let panelBody4 = document.createElement("div");
+        panelBody4.className = "panel-body " + thirdL;
+        panelBody4.id = firstL + "--" + secondL + "--" + thirdL;
+
+        collapsed3.appendChild(thirdLayerName);
+        panelTitle3.appendChild(collapsed3);
+        panelHeading3.appendChild(panelTitle3);
+        panelDefault3.appendChild(panelHeading3);
+        panelDefault3.appendChild(nested1c1);
+
+        nested1c1.appendChild(panelBody4);
+
+        // secondLayers.push(panelBody3.id);
+
+        // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
+        document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
+    }
+
+    // function createThirdLayerold(element) {
+    //
+    //     let thirdReplace = element.ThirdLayer.replace(/\s+/g, '');
+    //     let countryNameStr = element.CountryName.replace(/\s+/g, '');
+    //     let stateNameStr = element.StateName.replace(/\s+/g, '');
+    //     let cityNameStr = element.CityName.replace(/\s+/g, '');
+    //
+    //     if (thirdReplace !== element.ThirdLayer) {
+    //         console.log(thirdReplace);
+    //         console.log(element.ThirdLayer);
+    //     }
+    //
+    //     let checkboxDiv = document.createElement("div");
+    //     checkboxDiv.className = "Menu " + thirdReplace + " " + countryNameStr + " " + stateNameStr + " " + cityNameStr;
+    //     let checkboxH5 = document.createElement("h5");
+    //
+    //     let checkboxA = document.createElement("a");
+    //     let checkAboxAt = document.createTextNode(element.ThirdLayer + "   ");
+    //
+    //     let checkboxLabel = document.createElement("label");
+    //     checkboxLabel.className = "switch right";
+    //
+    //     let checkboxInput = document.createElement("input");
+    //     checkboxInput.type = "checkbox";
+    //     checkboxInput.className = element.LayerType + " input";
+    //     checkboxInput.setAttribute("value", element.LayerName);
+    //
+    //     let checkboxSpan = document.createElement("span");
+    //     checkboxSpan.className = "slider round";
+    //
+    //     checkboxA.appendChild(checkAboxAt);
+    //     checkboxH5.appendChild(checkboxA);
+    //     checkboxLabel.appendChild(checkboxInput);
+    //     checkboxLabel.appendChild(checkboxSpan);
+    //     checkboxH5.appendChild(checkboxLabel);
+    //     checkboxDiv.appendChild(checkboxH5);
+    //
+    //     // document.getElementsByClassName("panel-body " + element.SecondLayer)[0].appendChild(checkboxDiv);
+    //     document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+    // }
+
+    function createThirdLayer(FirstL, SecondL, ThirdL) {
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
+        let thirdL = ThirdL.replace(/\s+/g, '');
+
+        let checkboxDiv = document.createElement("div");
+        checkboxDiv.className = "Menu "
+        let checkboxH4 = document.createElement("h5");
+        let checkboxA = document.createElement("a");
+        let idname;
+
+        let checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "switch right";
+
+        let checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.className = "input";
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.className = "slider round";
+
+        // if (FourthL === 'none') {
+
+            let checkboxAt = document.createTextNode(thirdL + "   ");
             checkboxA.className = "menuWords";
-            let idname = secondL.replace(/\s+/g, '');
+            idname = thirdL
             checkboxA.id = idname + '-atag';
+            checkboxInput.value = ThirdL;
+            checkboxInput.id = idname + '-checkbox';
 
-            let checkboxLabel = document.createElement("label");
-            checkboxLabel.className = "switch right";
-
-            let checkboxInput = document.createElement("input");
-            checkboxInput.type = "checkbox";
-            checkboxInput.className = "input";
-            checkboxInput.value = secondL;
-
-            if (firstL === "Country") {
-                checkboxInput.defaultChecked = true;
-                checkboxInput.className = "input countries-check";
-                checkboxA.className = "menuWords countries-atag";
-            }
-
-            let checkboxSpan = document.createElement("span");
-            checkboxSpan.className = "slider round";
 
             checkboxA.appendChild(checkboxAt);
             checkboxH4.appendChild(checkboxA);
@@ -441,13 +575,208 @@ define([
             checkboxDiv.appendChild(checkboxH4);
 
             // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
-            if (firstL === "No Level1") {
-                parentMenu.appendChild(checkboxDiv);
-            } else {
-                document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
+            // if (firstL === "No Level1") {
+        document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+            // } else {
+            //     document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
+            // }
+
+        // } else {
+        //
+        //     let checkboxAt = document.createTextNode(fourthL + "   ");
+        //     checkboxA.className = "menuWords";
+        //     idname = fourthL;
+        //     checkboxA.id = idname + '-atag';
+        //
+        //     checkboxInput.value = FourthL;
+        //
+        //     if (ThirdL === "Country") {
+        //         checkboxInput.defaultChecked = true;
+        //         checkboxInput.className = "input countries-check";
+        //         checkboxA.className = "menuWords countries-atag";
+        //     }
+        //
+        //     checkboxA.appendChild(checkboxAt);
+        //     checkboxH4.appendChild(checkboxA);
+        //     checkboxLabel.appendChild(checkboxInput);
+        //     checkboxLabel.appendChild(checkboxSpan);
+        //     checkboxH4.appendChild(checkboxLabel);
+        //     checkboxDiv.appendChild(checkboxH4);
+        //
+        //     // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+        //     // if (firstL === "No Level1") {
+        //     //     parentMenu.appendChild(checkboxDiv);
+        //     // } else {
+        //         document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+        //     // }
+        // }
+
+    }
+
+    function createFourthLayer(FirstL, SecondL, ThirdL, FourthL = 'none') {
+        let firstL = FirstL.replace(/\s+/g, '');
+        let secondL = SecondL.replace(/\s+/g, '');
+        let thirdL = ThirdL.replace(/\s+/g, '');
+        let fourthL = FourthL.replace(/\s+/g, '');
+
+        let checkboxDiv = document.createElement("div");
+        checkboxDiv.className = "Menu "
+        let checkboxH4 = document.createElement("h5");
+        let checkboxA = document.createElement("a");
+        let idname;
+
+        let checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "switch right";
+
+        let checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.className = "input";
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.className = "slider round";
+
+        if (FourthL !== 'none') {
+            let checkboxAt = document.createTextNode(fourthL + "   ");
+            checkboxA.className = "menuWords";
+            idname = fourthL;
+            checkboxA.id = idname + '-atag';
+
+            checkboxInput.value = FourthL;
+
+            if (ThirdL === "Country") {
+                checkboxInput.defaultChecked = true;
+                checkboxInput.className = "input countries-check";
+                checkboxA.className = "menuWords countries-atag";
             }
+
+            checkboxA.appendChild(checkboxAt);
+            checkboxH4.appendChild(checkboxA);
+            checkboxLabel.appendChild(checkboxInput);
+            checkboxLabel.appendChild(checkboxSpan);
+            checkboxH4.appendChild(checkboxLabel);
+            checkboxDiv.appendChild(checkboxH4);
+
+            // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+            // if (firstL === "No Level1") {
+            //     parentMenu.appendChild(checkboxDiv);
+            // } else {
+            document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
+            // }
+
+        } else {
+            throw error
         }
-    };
+
+    }
+
+    // let accordionMenu = function (menuObj) {
+    //     let parentMenu = document.getElementById(menuObj.accordianID.replace('#', ''));
+    //
+    //     //clear previous submenu
+    //     $(menuObj.accordianID).empty();
+    //
+    //     if (!menuObj.Level2) {
+    //         //create level one menu
+    //         menuObj.Level1.forEach(function (ele) {
+    //             menuL2("No Level1", ele)
+    //         });
+    //     } else {
+    //         //create level one menu
+    //         menuObj.Level1.forEach(async function (e1, i) {
+    //             await menuL1(menuObj.accordianID, e1);
+    //             menuObj.Level2[i].forEach(function (e2){
+    //                 menuL2(e1, e2);
+    //             })
+    //         });
+    //     }
+    //
+    //     function menuL1(id, firstL) {
+    //         let panelDefault1 = document.createElement("div");
+    //         panelDefault1.className = "Menu panel panel-info " + firstL;
+    //
+    //         let panelHeading1 = document.createElement("div");
+    //         panelHeading1.className = "panel-heading";
+    //
+    //         let panelTitle1 = document.createElement("h5");
+    //         panelTitle1.className = "panel-title";
+    //
+    //         let collapsed1 = document.createElement("a");
+    //         collapsed1.className = "collapsed";
+    //         collapsed1.setAttribute("data-toggle", "collapse");
+    //         collapsed1.setAttribute("data-parent", id);
+    //         collapsed1.href = "#" + firstL;
+    //
+    //         let firstLayerName = document.createTextNode(firstL + "  ");
+    //         firstLayerName.className = "menuwords";
+    //         let idname = firstL.replace(/\s+/g, '');
+    //         firstLayerName.id = idname;
+    //
+    //         let collapseOne = document.createElement("div");
+    //         collapseOne.className = "panel-collapse collapse";
+    //         collapseOne.id = firstL;
+    //
+    //         let panelBody1 = document.createElement("div");
+    //         panelBody1.className = "panel-body";
+    //
+    //         let panelGroup1 = document.createElement("div");
+    //         panelGroup1.className = "panel-group " + firstL;
+    //         panelGroup1.id = "nested-" + firstL;
+    //
+    //         collapsed1.appendChild(firstLayerName);
+    //         panelTitle1.appendChild(collapsed1);
+    //         panelHeading1.appendChild(panelTitle1);
+    //         panelDefault1.appendChild(panelHeading1);
+    //
+    //         panelBody1.appendChild(panelGroup1);
+    //         collapseOne.appendChild(panelBody1);
+    //         panelDefault1.appendChild(collapseOne);
+    //
+    //         parentMenu.appendChild(panelDefault1);
+    //     }
+    //
+    //     function menuL2(firstL, secondL) {
+    //         let checkboxDiv = document.createElement("div");
+    //         checkboxDiv.className = "Menu "
+    //
+    //         let checkboxH4 = document.createElement("h5");
+    //         let checkboxA = document.createElement("a");
+    //         let checkboxAt = document.createTextNode(secondL + "   ");
+    //         checkboxA.className = "menuWords";
+    //         let idname = secondL.replace(/\s+/g, '');
+    //         checkboxA.id = idname + '-atag';
+    //
+    //         let checkboxLabel = document.createElement("label");
+    //         checkboxLabel.className = "switch right";
+    //
+    //         let checkboxInput = document.createElement("input");
+    //         checkboxInput.type = "checkbox";
+    //         checkboxInput.className = "input";
+    //         checkboxInput.value = secondL;
+    //
+    //         if (firstL === "Country") {
+    //             checkboxInput.defaultChecked = true;
+    //             checkboxInput.className = "input countries-check";
+    //             checkboxA.className = "menuWords countries-atag";
+    //         }
+    //
+    //         let checkboxSpan = document.createElement("span");
+    //         checkboxSpan.className = "slider round";
+    //
+    //         checkboxA.appendChild(checkboxAt);
+    //         checkboxH4.appendChild(checkboxA);
+    //         checkboxLabel.appendChild(checkboxInput);
+    //         checkboxLabel.appendChild(checkboxSpan);
+    //         checkboxH4.appendChild(checkboxLabel);
+    //         checkboxDiv.appendChild(checkboxH4);
+    //
+    //         // document.getElementById(element.FirstLayer + "--" + element.SecondLayer).appendChild(checkboxDiv);
+    //         if (firstL === "No Level1") {
+    //             parentMenu.appendChild(checkboxDiv);
+    //         } else {
+    //             document.getElementById("nested-" + firstL).appendChild(checkboxDiv);
+    //         }
+    //     }
+    // };
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
     let onCategory = function (event) {
@@ -567,15 +896,10 @@ define([
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer) {
-                        elem.renderables.forEach(function (d) {
+                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {                        elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
                                 if (d.userProperties.Date === dataAll.arrDate[i].Date) {
-                                    if (d.userProperties.Type === categoryS) {
-                                        d.enabled = true;
-                                    } else {
-                                        d.enabled = false;
-                                    }
+                                    d.enabled = d.userdProperties.Type === categoryS;
                                 } else {
                                     d.enabled = false;
                                 }
@@ -618,7 +942,7 @@ define([
 
         //enables placemark based on the placemark properties current date and type
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
@@ -1185,8 +1509,8 @@ define([
         initCaseNum,
         subDropdown,
         updateCurr,
-        onDiseaseClick,
-        onAgrosphereClick,
+        // onDiseaseClick,
+        // onAgrosphereClick,
         onCategory,
         onContinent,
         onNav,
@@ -1206,5 +1530,12 @@ define([
         handleMouseCLK,
         enableAllToggle,
         closeAllToggle,
+        createFirstLayer,
+        createSecondLayer,
+        createThirdLayer,
+        createThirdLayers,
+        createFourthLayer,
+        covid19,
+        influenza
     }
 })
