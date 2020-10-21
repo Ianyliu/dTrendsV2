@@ -92,10 +92,8 @@ define([
     LayerManager.prototype.onLayerClick = function (layerButton) {
         let layerName = layerButton.text();
 
-        if (layerName !== 'Country_PK' && layerName !== 'Weather_Station_PK') {
-
         // Update the layer state for the selected layer.
-        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+        for (let i = 8, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
             if (layer.hide) {
                 continue;
@@ -115,7 +113,6 @@ define([
                 break;
             }
         }
-        }
     };
 
     LayerManager.prototype.synchronizeLayerList = function () {
@@ -126,7 +123,7 @@ define([
 
 
         // Synchronize the displayed layer list with the World Window's layer list.
-        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+        for (let i = 8, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
             // console.log(layer);
             if (layer.hide) {

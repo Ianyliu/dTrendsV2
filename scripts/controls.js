@@ -621,6 +621,8 @@ define([
         let thirdL = ThirdL.replace(/\s+/g, '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
+        if (FourthL !== 'none') {
+
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
         let checkboxH4 = document.createElement("h5");
@@ -637,7 +639,6 @@ define([
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
 
-        if (FourthL !== 'none') {
             let checkboxAt = document.createTextNode(FourthL + "   ");
             checkboxA.className = "menuWords";
             idname = fourthL;
@@ -1473,7 +1474,7 @@ define([
 
     //enables all layers; if layer is disabled, force enable it
     function enableAllToggle() {
-        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             console.log(layer);
             // layer.enabled = true;
