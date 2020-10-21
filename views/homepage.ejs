@@ -8,7 +8,7 @@
     <!--NOTE: Most Web WorldWind bak use jquery, Bootstrap and requirejs but those technologies are NOT-->
     <!--required by Web WorldWind. See SimplestExample.html for an example of using Web WorldWind without them.-->
     <meta charset="utf-8"/>
-    <title>AWB Disease Trends</title>
+    <title>AWB COVID Toolkit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <!--    <link rel="icon" href="/images/download%20(2).jpeg">-->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -312,13 +312,13 @@
     </style>
 
 </head>
-<body onload="hideDialog()">
+<body onload="hideDialog()" ononline="onFunction()" onoffline="offFunction()">
 
 
 <ul class="tab"
     style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
 <!--    <li><a class="tablinksLeft logo" title="Info"><strong>AWB Disease Trends</strong></a></li>-->
-    <li><a class="tablinksLeft logo" title="Info"><strong>Covid Toolkit</strong></a></li>
+    <li><a class="tablinksLeft logo" title="Info"><strong>AWB COVID Toolkit</strong></a></li>
     <li>
         <a class="tablinksLeft" onclick="openTabLeft(event, 'controls')" title="Controls">
             <span class="glyphicon glyphicon-tasks"></span></a>
@@ -515,13 +515,12 @@
 
     <div id="controls" class="col-sm-2 tabcontentLeft leftTabPadding"
          style="font-size: 12px !important; padding-bottom: 5% !important;">
-        <div class="panel-group" id="accordion" style="width: 100%; height: 600px; overflow: scroll"></div>
+        <div class="panel-group" id="accordion" style="width: 100%; height: 70%; overflow: scroll"></div>
 <!--        <h4>Disease Projection</h4>-->
 <!--        <div class="dropdown" id="diseaseDropdown" style="height: 10px"></div>-->
 <!--        <br><br>-->
 <!--        <div class="panel-group accordion" id="diseases" ></div>-->
 <!--        <br>-->
-
 
 <!--        <h5 class="projectionTitle">Food Security</h5>-->
 <!--        <div class="dropdown" id="agrosphereDropdown" style="height: 10px"></div>-->
@@ -963,6 +962,14 @@
 
     function hideDialog (){
         overlay.style.display = 'none';
+    }
+
+    function onFunction() {
+        alert ("You are now online.");
+    }
+
+    function offFunction() {
+        alert ("Your are offline. Some functionality may be unavailable.");
     }
 
 </script>

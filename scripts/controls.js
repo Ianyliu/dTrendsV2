@@ -70,7 +70,7 @@ define([
     //underinitial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
@@ -178,7 +178,7 @@ define([
 
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == currentD) {
@@ -367,6 +367,7 @@ define([
         collapsed1.setAttribute("data-toggle", "collapse");
         collapsed1.setAttribute("data-parent", "#accordion");
         collapsed1.href = "#" + firstL;
+        collapsed1.id = firstL + '-a';
 
         let firstLayerName = document.createTextNode(FirstL + "  ");
         firstLayerName.className = "menuwords";
@@ -415,6 +416,7 @@ define([
         collapsed2.setAttribute("data-toggle", "collapse");
         collapsed2.setAttribute("data-parent", "#nested");
         collapsed2.href = "#" + firstL + "-" + secondL;
+        collapsed2.id = firstL + "-" + secondL + '-a';
 
         let secondLayerName = document.createTextNode(SecondL + "  ");
         secondLayerName.className = "menuwords";
@@ -426,6 +428,10 @@ define([
         let panelBody3 = document.createElement("div");
         panelBody3.className = "panel-body " + secondL;
         panelBody3.id = firstL + "--" + secondL;
+
+        let panelGroup2 = document.createElement("div");
+        panelGroup2.className = "panel-group " + secondL;
+        panelGroup2.id = "nested-" + secondL;
 
         collapsed2.appendChild(secondLayerName);
         panelTitle2.appendChild(collapsed2);
@@ -462,6 +468,7 @@ define([
         collapsed3.setAttribute("data-toggle", "collapse");
         collapsed3.setAttribute("data-parent", "#nested");
         collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
+        collapsed3.id = firstL + "-" + secondL + "-" + thirdL + '-a';
 
         let thirdLayerName = document.createTextNode(ThirdL + "  ");
         thirdLayerName.className = "menuwords";
@@ -889,15 +896,10 @@ define([
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer) {
-                        elem.renderables.forEach(function (d) {
+                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {                        elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
                                 if (d.userProperties.Date === dataAll.arrDate[i].Date) {
-                                    if (d.userProperties.Type === categoryS) {
-                                        d.enabled = true;
-                                    } else {
-                                        d.enabled = false;
-                                    }
+                                    d.enabled = d.userdProperties.Type === categoryS;
                                 } else {
                                     d.enabled = false;
                                 }
@@ -940,7 +942,7 @@ define([
 
         //enables placemark based on the placemark properties current date and type
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer) {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
