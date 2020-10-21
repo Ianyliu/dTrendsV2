@@ -806,7 +806,7 @@ define([
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type == categoryS) {
+                        if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
                             // console.log(d)
                         } else {
@@ -1471,7 +1471,7 @@ define([
 
     //enables all layers; if layer is disabled, force enable it
     function enableAllToggle() {
-        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             console.log(layer)
             // layer.enabled = true;
