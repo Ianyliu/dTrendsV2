@@ -92,6 +92,8 @@ define([
     LayerManager.prototype.onLayerClick = function (layerButton) {
         let layerName = layerButton.text();
 
+        if (layerName !== 'Country_PK' && layerName !== 'Weather_Station_PK') {
+
         // Update the layer state for the selected layer.
         for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
@@ -112,6 +114,7 @@ define([
                 this.wwd.redraw();
                 break;
             }
+        }
         }
     };
 

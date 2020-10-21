@@ -20,6 +20,8 @@ define([
 
     let dataTypes = ['Country', 'Weather Station'];
     let countryL = []
+    let active = "active";
+    let activecases = "Active Cases";
 
     // document.addEventListener("DOMContentLoaded", function(event) {
         //Equivalent to document.ready, does not work on IE8 but is supported by over 98% of browsers
@@ -80,7 +82,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
+                            } else if (d.userProperties.Type == activecases) {
                                 numA += d.userProperties.Number;
                             }
                         }
@@ -193,7 +195,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
+                            } else if (d.userProperties.Type == activecases) {
                                 numA += d.userProperties.Number;
                             }
                         } else {
@@ -309,10 +311,10 @@ define([
                 $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
-                    layerButton.addClass("active");
+                    layerButton.addClass(active);
                     layerButton.css("color", "white");
                 } else {
-                    layerButton.removeClass("active");
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
             }
@@ -332,11 +334,11 @@ define([
             if (layer.layerType === "INA_PKLayer") {
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
-                    layerButton.removeClass("active");
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 } else {
                     layer.enabled = false;
-                    layerButton.removeClass("active");
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
 
@@ -636,7 +638,7 @@ define([
         checkboxSpan.className = "slider round";
 
         if (FourthL !== 'none') {
-            let checkboxAt = document.createTextNode(fourthL + "   ");
+            let checkboxAt = document.createTextNode(FourthL + "   ");
             checkboxA.className = "menuWords";
             idname = fourthL;
             checkboxA.id = idname + '-atag';
@@ -795,7 +797,7 @@ define([
         } else if (categoryS === "Recoveries") {
             $("#categoryList").find("button").css("background-color", "#7cfc00");
             $("#titleCategory").text("Highest Recoveries (lowest to highest)");
-        } else if (categoryS === "Active Cases") {
+        } else if (categoryS === activecases) {
             $("#categoryList").find("button").css("background-color", "#F9910A");
             $("#titleCategory").text("Highest Active Cases (lowest to highest)");
         }
@@ -1424,7 +1426,7 @@ define([
                             labels: lArr,
                             datasets: [
                                 {
-                                    label: 'Active Cases',
+                                    label: activecases,
                                     backgroundColor: "#45c498",
                                     data: aArr,
                                 }, {
@@ -1471,15 +1473,15 @@ define([
 
     //enables all layers; if layer is disabled, force enable it
     function enableAllToggle() {
-        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            console.log(layer)
+            console.log(layer);
             // layer.enabled = true;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL") {
                 layer.enabled = true;
-                if (!layerButton.hasClass("active")) {
-                    layerButton.addClass("active");
+                if (!layerButton.hasClass(active)) {
+                    layerButton.addClass(active);
                     layerButton.css("color", "white");
                 }
             }
@@ -1496,8 +1498,8 @@ define([
             layer.enabled = false;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL") {
-                if (layerButton.hasClass("active")) {
-                    layerButton.removeClass("active");
+                if (layerButton.hasClass(active)) {
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
             }
