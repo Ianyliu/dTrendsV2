@@ -1535,7 +1535,7 @@ define([
         closeAllToggle,
         createFirstLayer,
         createSecondLayer,
-        createThirdLayer,
+        // createThirdLayer,
         createThirdLayers,
         createFourthLayer,
         covid19,
