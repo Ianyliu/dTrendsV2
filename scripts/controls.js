@@ -454,6 +454,7 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        let allToggle = thirdL + '-alltoggle';
 
         let panelDefault3 = document.createElement("div");
         panelDefault3.id = thirdL;
@@ -475,6 +476,25 @@ define([
         let thirdLayerName = document.createTextNode(ThirdL + "  ");
         thirdLayerName.className = "menuwords";
 
+        let checkboxDiv = document.createElement("div");
+        // checkboxDiv.className = "Menu "
+
+        let checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "switch right";
+
+        let checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.className = "input";
+        checkboxInput.id = allToggle;
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.className = "slider round";
+
+        checkboxInput.value = allToggle;
+        checkboxInput.className = "input alltoggle";
+
+        if (ThirdL === "Country") {checkboxInput.defaultChecked = true;}
+
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
         nested1c1.className = "panel-collapse collapse";
@@ -489,9 +509,22 @@ define([
         panelDefault3.appendChild(panelHeading3);
         panelDefault3.appendChild(nested1c1);
 
+            //checkboxA.appendChild(checkboxAt);
+            //checkboxH4.appendChild(checkboxA);
+            //checkboxLabel.appendChild(checkboxInput);
+            //checkboxLabel.appendChild(checkboxSpan);
+            //checkboxH4.appendChild(checkboxLabel);
+           //checkboxDiv.appendChild(checkboxH4);
+           //document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
+
         nested1c1.appendChild(panelBody4);
 
         // secondLayers.push(panelBody3.id);
+        checkboxLabel.appendChild(checkboxInput);
+        checkboxLabel.appendChild(checkboxSpan);
+        checkboxDiv.appendChild(checkboxLabel);
+
+        document.getElementById(firstL + "-" + secondL).appendChild(checkboxDiv);
 
         // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
         document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
@@ -1535,7 +1568,7 @@ define([
         closeAllToggle,
         createFirstLayer,
         createSecondLayer,
-        // createThirdLayer,
+        createThirdLayer,
         createThirdLayers,
         createFourthLayer,
         covid19,
