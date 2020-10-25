@@ -181,6 +181,13 @@ requirejs([
                     console.log('unchecked');
                 }
             });
+
+            $(".countries-check").change(function(){
+                let toggle = this;
+                console.log(this.value);
+                console.log(this.checked)
+                togglePK(toggle.value, toggle.checked);
+            });
             console.log('clicked')
         });
 
