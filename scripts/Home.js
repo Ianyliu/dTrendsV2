@@ -158,6 +158,32 @@ requirejs([
             }
         }
 
+        $("#FoodSecurity-Agrosphere").find("input").on("click", function (e) {
+            $("#Country-alltoggle ").change(function(){
+
+                let toggle = this;
+                let countries = document.getElementsByClassName('countries-check');
+                console.log(this.value);
+                // console.log(toggle.checked);
+                if (toggle.checked === true) {
+                    console.log('checked');
+                    $(".countries-check").prop("checked", true);
+                    console.log(countries.value);
+                    console.log(countries.checked);
+                    togglePK(countries.value,countries.checked);
+                } else if(toggle.indeterminate === true) {
+                    alert('Error!');
+                } else if(toggle.checked === false) {
+                    $(".countries-check").prop("checked", false);
+                    console.log(countries.value);
+                    console.log(countries.checked);
+                    togglePK(countries.value,countries.checked);
+                    console.log('unchecked');
+                }
+            });
+            console.log('clicked')
+        });
+
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
             $(".countries-check").change(function(){
                 let toggle = this;

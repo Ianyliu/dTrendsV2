@@ -525,7 +525,8 @@ define([
         checkboxDiv.appendChild(checkboxLabel);
 
         document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
-        document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
+        panelHeading3.appendChild(checkboxDiv);
+        // document.getElementById(thirdL).style.width = '50%';
 
         // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
 
