@@ -524,10 +524,11 @@ define([
         checkboxLabel.appendChild(checkboxSpan);
         checkboxDiv.appendChild(checkboxLabel);
 
-        document.getElementById(firstL + "-" + secondL).appendChild(checkboxDiv);
+        document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
+        document.getElementById(firstL + "--" + secondL).appendChild(checkboxDiv);
 
         // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
-        document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
+
     }
 
     // function createThirdLayerold(element) {
