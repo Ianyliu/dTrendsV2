@@ -93,7 +93,7 @@ define([
         let layerName = layerButton.text();
 
         // Update the layer state for the selected layer.
-        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+        for (let i = 8, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
             if (layer.hide) {
                 continue;
@@ -123,7 +123,7 @@ define([
 
 
         // Synchronize the displayed layer list with the World Window's layer list.
-        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+        for (let i = 8, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
             // console.log(layer);
             if (layer.hide) {

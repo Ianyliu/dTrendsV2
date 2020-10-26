@@ -20,6 +20,8 @@ define([
 
     let dataTypes = ['Country', 'Weather Station'];
     let countryL = []
+    let active = "active";
+    let activecases = "Active Cases";
 
     // document.addEventListener("DOMContentLoaded", function(event) {
         //Equivalent to document.ready, does not work on IE8 but is supported by over 98% of browsers
@@ -80,7 +82,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
+                            } else if (d.userProperties.Type == activecases) {
                                 numA += d.userProperties.Number;
                             }
                         }
@@ -193,7 +195,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == "Active Cases") {
+                            } else if (d.userProperties.Type == activecases) {
                                 numA += d.userProperties.Number;
                             }
                         } else {
@@ -309,10 +311,10 @@ define([
                 $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
-                    layerButton.addClass("active");
+                    layerButton.addClass(active);
                     layerButton.css("color", "white");
                 } else {
-                    layerButton.removeClass("active");
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
             }
@@ -332,11 +334,11 @@ define([
             if (layer.layerType === "INA_PKLayer") {
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
-                    layerButton.removeClass("active");
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 } else {
                     layer.enabled = false;
-                    layerButton.removeClass("active");
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
 
@@ -452,6 +454,7 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        let allToggle = thirdL + '-alltoggle';
 
         let panelDefault3 = document.createElement("div");
         panelDefault3.id = thirdL;
@@ -473,6 +476,25 @@ define([
         let thirdLayerName = document.createTextNode(ThirdL + "  ");
         thirdLayerName.className = "menuwords";
 
+        let checkboxDiv = document.createElement("div");
+        // checkboxDiv.className = "Menu "
+
+        let checkboxLabel = document.createElement("label");
+        checkboxLabel.className = "switch right";
+
+        let checkboxInput = document.createElement("input");
+        checkboxInput.type = "checkbox";
+        checkboxInput.className = "input";
+        checkboxInput.id = allToggle;
+
+        let checkboxSpan = document.createElement("span");
+        checkboxSpan.className = "slider round";
+
+        checkboxInput.value = allToggle;
+        checkboxInput.className = "input alltoggle";
+
+        if (ThirdL === "Country") {checkboxInput.defaultChecked = true;}
+
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
         nested1c1.className = "panel-collapse collapse";
@@ -487,12 +509,27 @@ define([
         panelDefault3.appendChild(panelHeading3);
         panelDefault3.appendChild(nested1c1);
 
+            //checkboxA.appendChild(checkboxAt);
+            //checkboxH4.appendChild(checkboxA);
+            //checkboxLabel.appendChild(checkboxInput);
+            //checkboxLabel.appendChild(checkboxSpan);
+            //checkboxH4.appendChild(checkboxLabel);
+           //checkboxDiv.appendChild(checkboxH4);
+           //document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
+
         nested1c1.appendChild(panelBody4);
 
         // secondLayers.push(panelBody3.id);
+        checkboxLabel.appendChild(checkboxInput);
+        checkboxLabel.appendChild(checkboxSpan);
+        checkboxDiv.appendChild(checkboxLabel);
+
+        document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
+        panelHeading3.appendChild(checkboxDiv);
+        // document.getElementById(thirdL).style.width = '50%';
 
         // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
-        document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
+
     }
 
     // function createThirdLayerold(element) {
@@ -619,6 +656,8 @@ define([
         let thirdL = ThirdL.replace(/\s+/g, '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
+        if (FourthL !== 'none') {
+
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
         let checkboxH4 = document.createElement("h5");
@@ -635,8 +674,7 @@ define([
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
 
-        if (FourthL !== 'none') {
-            let checkboxAt = document.createTextNode(fourthL + "   ");
+            let checkboxAt = document.createTextNode(FourthL + "   ");
             checkboxA.className = "menuWords";
             idname = fourthL;
             checkboxA.id = idname + '-atag';
@@ -795,7 +833,7 @@ define([
         } else if (categoryS === "Recoveries") {
             $("#categoryList").find("button").css("background-color", "#7cfc00");
             $("#titleCategory").text("Highest Recoveries (lowest to highest)");
-        } else if (categoryS === "Active Cases") {
+        } else if (categoryS === activecases) {
             $("#categoryList").find("button").css("background-color", "#F9910A");
             $("#titleCategory").text("Highest Active Cases (lowest to highest)");
         }
@@ -806,7 +844,7 @@ define([
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type == categoryS) {
+                        if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
                             // console.log(d)
                         } else {
@@ -1424,7 +1462,7 @@ define([
                             labels: lArr,
                             datasets: [
                                 {
-                                    label: 'Active Cases',
+                                    label: activecases,
                                     backgroundColor: "#45c498",
                                     data: aArr,
                                 }, {
@@ -1471,15 +1509,15 @@ define([
 
     //enables all layers; if layer is disabled, force enable it
     function enableAllToggle() {
-        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            console.log(layer)
+            console.log(layer);
             // layer.enabled = true;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL") {
                 layer.enabled = true;
-                if (!layerButton.hasClass("active")) {
-                    layerButton.addClass("active");
+                if (!layerButton.hasClass(active)) {
+                    layerButton.addClass(active);
                     layerButton.css("color", "white");
                 }
             }
@@ -1496,8 +1534,8 @@ define([
             layer.enabled = false;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL") {
-                if (layerButton.hasClass("active")) {
-                    layerButton.removeClass("active");
+                if (layerButton.hasClass(active)) {
+                    layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
             }

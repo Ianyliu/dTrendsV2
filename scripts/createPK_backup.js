@@ -305,7 +305,7 @@ define([
     }
 
     function deletePK() {
-        for (let i = 6; i < newGlobe.layers.length - 1; i++) {
+        for (let i = 8; i < newGlobe.layers.length - 1; i++) {
             newGlobe.removeLayer(newGlobe.layers[i]);
         }
     }
