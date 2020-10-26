@@ -3,8 +3,8 @@ define([
     , './dataAll'
     , './csvData'
     , './LayerManager'
-    , './createPK',
-    './createimgPK'
+    , './cCovidPK',
+    './cAgrosPK'
 ], function (newGlobe, dataAll,csvD, LayerManager, createPK,createimgPK) {
     "use strict";
 
@@ -22,10 +22,11 @@ define([
     let countryL = []
     let active = "active";
     let activecases = "Active Cases";
+    let parentMenu = document.getElementById("accordion");
 
     // document.addEventListener("DOMContentLoaded", function(event) {
         //Equivalent to document.ready, does not work on IE8 but is supported by over 98% of browsers
-        let parentMenu = document.getElementById("accordion");
+        // let parentMenu = document.getElementById("accordion");
     // });
 
     for (let i = 0; i < dataTypes.length; i++) {
