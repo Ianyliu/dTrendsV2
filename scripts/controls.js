@@ -3,7 +3,7 @@ define([
     , './dataAll'
     , './csvData'
     , './LayerManager'
-    , './cCovidPK',
+    , './createPK',
     './cAgrosPK'
 ], function (newGlobe, dataAll,csvD, LayerManager, createPK,createimgPK) {
     "use strict";
