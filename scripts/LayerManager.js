@@ -123,7 +123,7 @@ define([
 
 
         // Synchronize the displayed layer list with the World Window's layer list.
-        for (let i = 8, len = this.wwd.layers.length; i < len; i++) {
+        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
             // console.log(layer);
             if (layer.hide) {
@@ -131,48 +131,53 @@ define([
             }
             // console.log(layer.renderables[0].userProperties.layerName);
 
+
             if (layer.displayName.includes(' ')) {
                 layer.displayName = layer.displayName.replace(/ /g, '_');
             }
 
-            let layerItem = $('<button class="list-group-item btn btn-block" id="' + layer.displayName + '" style="color: white">' + layer.displayName + '</button>');
-            layerListItem.append(layerItem);
-
-            if (layer.showSpinner && Spinner) {
-                let opts = {
-                    scale: 0.9
-                };
-                let spinner = new Spinner(opts).spin();
-                layerItem.append(spinner.el);
-            }
-
-            if (layer.enabled) {
-                layerItem.addClass("active");
-                layerItem.css("color", "white");
+            if (layer.displayName.includes('Country_PK') || layer.displayName.includes('Weather_Station_PK')) {
             } else {
-                layerItem.removeClass("active");
-                layerItem.css("color", "black");
-            }
-            if (layer.showSpinner && Spinner) {
-                let opts = {
-                    scale: 0.9
-                };
-                let spinner = new Spinner(opts).spin();
-                layerItem.append(spinner.el);
-            }
-            if (layer.enabled) {
-                layerItem.addClass("active");
-                layerItem.css("color", "white");
-            } else {
-                layerItem.removeClass("active");
-                layerItem.css("color", "black");
-            }
-        }
+                let layerItem = $('<button class="list-group-item btn btn-block" id="' + layer.displayName + '" style="color: white">' + layer.displayName + '</button>');
+                layerListItem.append(layerItem);
 
-        let self = this;
-        layerListItem.find("button").on("click", function (e) {
-            self.onLayerClick($(this));
-        });
+                if (layer.showSpinner && Spinner) {
+                    let opts = {
+                        scale: 0.9
+                    };
+                    let spinner = new Spinner(opts).spin();
+                    layerItem.append(spinner.el);
+                }
+
+                if (layer.enabled) {
+                    layerItem.addClass("active");
+                    layerItem.css("color", "white");
+                } else {
+                    layerItem.removeClass("active");
+                    layerItem.css("color", "black");
+                }
+                if (layer.showSpinner && Spinner) {
+                    let opts = {
+                        scale: 0.9
+                    };
+                    let spinner = new Spinner(opts).spin();
+                    layerItem.append(spinner.el);
+                }
+                if (layer.enabled) {
+                    layerItem.addClass("active");
+                    layerItem.css("color", "white");
+                } else {
+                    layerItem.removeClass("active");
+                    layerItem.css("color", "black");
+                }
+            }
+
+            let self = this;
+            layerListItem.find("button").on("click", function (e) {
+                self.onLayerClick($(this));
+            });
+
+            }
     };
 
     //LayerManager.prototype.updateVisibilityState = function (WorldWindow) {
