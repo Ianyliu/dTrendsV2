@@ -506,16 +506,17 @@ define([
         collapsed3.appendChild(thirdLayerName);
         panelTitle3.appendChild(collapsed3);
         panelHeading3.appendChild(panelTitle3);
+        panelHeading3.appendChild(checkboxDiv);
         panelDefault3.appendChild(panelHeading3);
         panelDefault3.appendChild(nested1c1);
 
-            //checkboxA.appendChild(checkboxAt);
-            //checkboxH4.appendChild(checkboxA);
-            //checkboxLabel.appendChild(checkboxInput);
-            //checkboxLabel.appendChild(checkboxSpan);
-            //checkboxH4.appendChild(checkboxLabel);
-           //checkboxDiv.appendChild(checkboxH4);
-           //document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
+            //// checkboxA.appendChild(checkboxAt);
+            //// checkboxH4.appendChild(checkboxA);
+            // checkboxLabel.appendChild(checkboxInput);
+            // checkboxLabel.appendChild(checkboxSpan);
+            /////checkboxH4.appendChild(checkboxLabel);
+           /////checkboxDiv.appendChild(checkboxH4);
+           //// document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
 
         nested1c1.appendChild(panelBody4);
 
@@ -525,7 +526,7 @@ define([
         checkboxDiv.appendChild(checkboxLabel);
 
         document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
-        panelHeading3.appendChild(checkboxDiv);
+
         // document.getElementById(thirdL).style.width = '50%';
 
         // document.getElementsByClassName("panel-group " + firstL)[0].appendChild(panelDefault2);
@@ -844,7 +845,7 @@ define([
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type === categoryS) {
+                        if (d.userProperties.Type == categoryS) {
                             d.enabled = true;
                             // console.log(d)
                         } else {
