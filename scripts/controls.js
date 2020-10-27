@@ -493,7 +493,7 @@ define([
         checkboxInput.value = allToggle;
         checkboxInput.className = "input alltoggle";
 
-        if (ThirdL === "Country") {checkboxInput.defaultChecked = true;}
+        if (ThirdL === "Country" || ThirdL === "Weather") {checkboxInput.defaultChecked = true;}
 
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
