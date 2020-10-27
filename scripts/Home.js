@@ -163,6 +163,7 @@ requirejs([
 
                 let toggle = this;
                 let countries = document.getElementsByClassName('countries-check');
+                let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
                 console.log(this.value);
                 // console.log(toggle.checked);
                 if (toggle.checked === true) {
@@ -170,16 +171,57 @@ requirejs([
                     $(".countries-check").prop("checked", true);
                     console.log(countries.value);
                     console.log(countries.checked);
-                    togglePK(countries.value,countries.checked);
+                    togglePK(countries.value,true);
+                    console.log(newGlobe.layers)
+                    console.log(findLayerIndex);
+                    newGlobe.layers[findLayerIndex].enabled = true;
                 } else if(toggle.indeterminate === true) {
                     alert('Error!');
                 } else if(toggle.checked === false) {
                     $(".countries-check").prop("checked", false);
                     console.log(countries.value);
                     console.log(countries.checked);
-                    togglePK(countries.value,countries.checked);
+                    togglePK(countries.value,false);
                     console.log('unchecked');
+                    console.log(newGlobe.layers)
+                    console.log(findLayerIndex);
+                    newGlobe.layers[findLayerIndex].enabled = false;
                 }
+            });
+            $("#Weather-alltoggle ").change(function(){
+
+                let toggle = this;
+                // let countries = document.getElementsByClassName('countries-check');
+                let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Weather_Station_PK');
+                console.log(this.value);
+                // console.log(toggle.checked);
+                if (toggle.checked === true) {
+                    // console.log('checked');
+                    // $(".countries-check").prop("checked", true);
+                    // console.log(countries.value);
+                    // console.log(countries.checked);
+                    // togglePK(countries.value,true);
+                    // console.log(newGlobe.layers)
+                    // console.log(findLayerIndex);
+                    newGlobe.layers[findLayerIndex].enabled = true;
+                } else if(toggle.indeterminate === true) {
+                    alert('Error!');
+                } else if(toggle.checked === false) {
+                    // $(".countries-check").prop("checked", false);
+                    // console.log(countries.value);
+                    // console.log(countries.checked);
+                    // togglePK(countries.value,false);
+                    // console.log('unchecked');
+                    // console.log(newGlobe.layers)
+                    // console.log(findLayerIndex);
+                    newGlobe.layers[findLayerIndex].enabled = false;
+                }
+            });
+            $(".countries-check").change(function(){
+                let toggle = this;
+                console.log(this.value);
+                console.log(this.checked)
+                togglePK(toggle.value, toggle.checked);
             });
             console.log('clicked')
         });
@@ -192,6 +234,13 @@ requirejs([
                 togglePK(toggle.value, toggle.checked);
             });
             console.log('clicked')
+        });
+
+        $(".countries-check").change(function(){
+            let toggle = this;
+            console.log(this.value);
+            console.log(this.checked)
+            togglePK(toggle.value, toggle.checked);
         });
 
         $("#COVID-19-checkbox").on("click", function (e) {
@@ -490,17 +539,20 @@ requirejs([
             console.log(findLayerIndex);
             let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
 
-            console.log(findPKIndex)
+            console.log(findPKIndex);
 
             //turn on/off the pk
-            newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
-            newGlobe.redraw();
+            if (findPKIndex >= 0) {
+                newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
+                newGlobe.redraw();
 
-            newGlobe.goTo(new WorldWind.Position(
-                newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
-                newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
-                newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
-            ));
+
+                newGlobe.goTo(new WorldWind.Position(
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
+                ));
+            }
         } else {
             // throw error;
         }
