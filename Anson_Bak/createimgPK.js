@@ -1,5 +1,5 @@
 define([
-    './globeObject',
+    '../scripts/globeObject',
     './imgPKobject',
     './jquery-csv-1.0.11'
     // ,'./initPL'
@@ -160,8 +160,6 @@ define([
 
     }
 
-
-
     function loadCSVData() {
         let csvList = ['csvdata/countries.csv',
             'csvdata/weatherstations.csv'
@@ -192,37 +190,6 @@ define([
     function generatePlacemarkLayer(csvData) {
         //Data type list
         let dataTypes = ['Country', 'Weather Station'];
-
-        // //Common features
-        // let pinLibrary = WorldWind.configuration.baseUrl +
-        //     "images/pushpins/",
-        //     placemarkAttributes = new WorldWind.PlacemarkAttributes(null),
-        //     highlightAttributes;
-        // placemarkAttributes.imageScale = 1;
-        // placemarkAttributes.imageOffset = new WorldWind.Offset(
-        //     WorldWind.OFFSET_FRACTION, 0.3,
-        //     WorldWind.OFFSET_FRACTION, 0.0);
-        // placemarkAttributes.imageColor = WorldWind.Color.WHITE;
-        // placemarkAttributes.labelAttributes.offset = new WorldWind.Offset(
-        //     WorldWind.OFFSET_FRACTION, 0.5,
-        //     WorldWind.OFFSET_FRACTION, 1.0);
-        // placemarkAttributes.labelAttributes.color = WorldWind.Color.WHITE;
-        // placemarkAttributes.drawLeaderLine = true;
-        // placemarkAttributes.leaderLineAttributes.outlineColor =
-        //     WorldWind.Color.RED;
-
-        // Define the images we'll use for the placemarks.
-        // let images = [
-        //     "plain-black.png", "plain-blue.png", "plain-brown.png",
-        //     "plain-gray.png", "plain-green.png", "plain-orange.png",
-        //     "plain-purple.png", "plain-red.png", "plain-teal.png",
-        //     "plain-white.png", "plain-yellow.png", "castshadow-black.png",
-        //     "castshadow-blue.png", "castshadow-brown.png",
-        //     "castshadow-gray.png",
-        //     "castshadow-green.png", "castshadow-orange.png",
-        //     "castshadow-purple.png", "castshadow-red.png",
-        //     "castshadow-teal.png", "castshadow-white.png"
-        // ];
 
         let i = 0;
         for (i = 0; i < dataTypes.length; i++) {

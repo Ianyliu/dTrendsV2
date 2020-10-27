@@ -1,5 +1,5 @@
 define([
-    './globeObject',
+    '../scripts/globeObject',
     './canvasPKobject',
     './imgPKobject',
     './jquery-csv-1.0.11'
