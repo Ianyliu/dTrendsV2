@@ -886,7 +886,7 @@ define([
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
-                if (elem.continent !== continentS) {
+                if (elem.continent !== continentS && elem.layerType !== 'Country_Placemarks' && elem.layerType !== 'Weather_Station_Placemarks') {
                     if (continentS == 'All Continents') {
                         elem.hide = false;
                         elem.enabled = true;
