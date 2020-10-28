@@ -369,8 +369,10 @@ define([
         // collapsed1.className = "collapsed";
         collapsed1.setAttribute("data-toggle", "collapse");
         collapsed1.setAttribute("data-parent", "#accordion");
+        // collapsed1.setAttribute("aria-expanded", "false");
         collapsed1.href = "#" + firstL;
         collapsed1.id = firstL + '-a';
+        collapsed1.className = "collapsed";
 
         let firstLayerName = document.createTextNode(FirstL + "  ");
         firstLayerName.className = "menuwords";
@@ -420,6 +422,7 @@ define([
         collapsed2.setAttribute("data-parent", "#nested");
         collapsed2.href = "#" + firstL + "-" + secondL;
         collapsed2.id = firstL + "-" + secondL + '-a';
+        collapsed2.className = "collapsed";
 
         let secondLayerName = document.createTextNode(SecondL + "  ");
         secondLayerName.className = "menuwords";
@@ -473,6 +476,7 @@ define([
         collapsed3.setAttribute("data-parent", "#nested");
         collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
         collapsed3.id = firstL + "-" + secondL + "-" + thirdL + '-a';
+        collapsed3.className = "collapsed";
 
         let thirdLayerName = document.createTextNode(ThirdL + "  ");
         thirdLayerName.className = "menuwords";
@@ -1272,7 +1276,7 @@ define([
 
         pickListCLK.objects.forEach(function (value) {
             let pickedPM = value.userObject;
-            if (pickedPM instanceof WorldWind.Placemark && pickedPM.layer.displayName !== 'Country_Placemarks' && pickedPM.layer.displayName !== 'Weather_Station_Placemarks') {
+            if (pickedPM instanceof WorldWind.Placemark && pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                 sitePopUp(pickedPM);
                 console.log(pickedPM)
             }
