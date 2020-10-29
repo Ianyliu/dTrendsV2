@@ -215,6 +215,10 @@ requirejs([
                     // console.log(newGlobe.layers)
                     // console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = true;
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("class","in");
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").style.visibility = 'visible';
+                    $("#FoodSecurity-Agrosphere-Weather").css("height", "");
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("aria-expanded","true");
                 } else if(toggle.indeterminate === true) {
                     alert('Error!');
                 } else if(toggle.checked === false) {
@@ -226,6 +230,12 @@ requirejs([
                     // console.log(newGlobe.layers)
                     // console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = false;
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").style.height = '0px';
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("class","collapsing");
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").removeAttribute("class","collapsing");
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").removeAttribute("class","in");
+                    document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("aria-expanded","false");
                 }
             });
             $(".countries-check").change(function(){
