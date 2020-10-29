@@ -160,7 +160,7 @@ requirejs([
 
         $("#FoodSecurity-Agrosphere").find("input").on("click", function (e) {
             $("#Country-alltoggle ").change(function(){
-
+                //Shows/hides menu below, sets country placemarks' layer to .enabled and toggles all the toggles beneath it
                 let toggle = this;
                 let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
@@ -200,7 +200,7 @@ requirejs([
                 }
             });
             $("#Weather-alltoggle ").change(function(){
-
+                //Shows/hides menu below, sets weather placemarks' layer to .enabled
                 let toggle = this;
                 // let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Weather_Station_PK');
@@ -236,6 +236,28 @@ requirejs([
                     document.getElementById("FoodSecurity-Agrosphere-Weather").removeAttribute("class","collapsing");
                     document.getElementById("FoodSecurity-Agrosphere-Weather").removeAttribute("class","in");
                     document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("aria-expanded","false");
+                }
+            });
+
+            $("#Crops-alltoggle ").change(function(){
+                //Shows/hides menu below
+                let toggle = this;
+
+                if (toggle.checked === true) {
+
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("class","in");
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").style.visibility = 'visible';
+                    $("#FoodSecurity-Agrosphere-Crops").css("height", "");
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("aria-expanded","true");
+                } else if(toggle.indeterminate === true) {
+                    alert('Error!');
+                } else if(toggle.checked === false) {
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").style.height = '0px';
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("class","collapsing");
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").removeAttribute("class","collapsing");
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").removeAttribute("class","in");
+                    document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("aria-expanded","false");
                 }
             });
             $(".countries-check").change(function(){

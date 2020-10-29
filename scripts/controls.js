@@ -455,6 +455,7 @@ define([
 
     function createThirdLayers(FirstL, SecondL, ThirdL) {
 
+        //Third Layer for Agrosphere Menu
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
@@ -498,7 +499,7 @@ define([
         checkboxInput.value = allToggle;
         checkboxInput.className = "input alltoggle";
 
-        if (ThirdL === "Country" || ThirdL === "Weather") {checkboxInput.defaultChecked = true;}
+        if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
 
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
@@ -580,6 +581,7 @@ define([
     // }
 
     function createThirdLayer(FirstL, SecondL, ThirdL) {
+        //Third layer for non-Agrosphere menus
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
