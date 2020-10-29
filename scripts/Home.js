@@ -265,6 +265,9 @@ requirejs([
                 console.log(this.value);
                 console.log(this.checked)
                 togglePK(toggle.value, toggle.checked);
+                if (toggle.checked === true) {
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
+                } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
             });
             console.log('clicked')
         });
@@ -275,16 +278,13 @@ requirejs([
                 console.log(this.value);
                 console.log(this.checked)
                 togglePK(toggle.value, toggle.checked);
+                if (toggle.checked === true) {
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
+                } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
             });
             console.log('clicked')
         });
 
-        $(".countries-check").change(function(){
-            let toggle = this;
-            console.log(this.value);
-            console.log(this.checked)
-            togglePK(toggle.value, toggle.checked);
-        });
 
         $("#COVID-19-checkbox").on("click", function (e) {
             // if (this.checked) {
