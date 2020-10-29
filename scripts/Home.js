@@ -175,6 +175,10 @@ requirejs([
                     console.log(newGlobe.layers)
                     console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = true;
+                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","in");
+                    document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'visible';
+                    $("#FoodSecurity-Agrosphere-Country").css("height", "");
+                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("aria-expanded","true");
                 } else if(toggle.indeterminate === true) {
                     alert('Error!');
                 } else if(toggle.checked === false) {
@@ -186,6 +190,13 @@ requirejs([
                     console.log(newGlobe.layers)
                     console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = false;
+
+                    document.getElementById("FoodSecurity-Agrosphere-Country").style.height = '0px';
+                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","collapsing");
+                    document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-Agrosphere-Country").removeAttribute("class","collapsing");
+                    document.getElementById("FoodSecurity-Agrosphere-Country").removeAttribute("class","in");
+                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("aria-expanded","false");
                 }
             });
             $("#Weather-alltoggle ").change(function(){
@@ -269,14 +280,6 @@ requirejs([
             //     console.log('hey!!!')
             //     console.log(divid.substring(1) + "-a")
             // }
-            console.log($('#accordion').find("a[aria-expanded='true']")
-                .not("a[data-parent='#accordion']")
-                .not(this)
-                .not(document.getElementById(divid.substring(1) + "-a" ))
-                .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
-                .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
-                .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a" ))
-            );
 
             $('#accordion').find("a[aria-expanded='true']")
                 .not("a[data-parent='#accordion']")
