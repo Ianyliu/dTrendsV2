@@ -869,6 +869,10 @@ define([
     let onContinent = function (event) {
         //grab the continent value when selected by user.
         let continentS = event.target.innerText || event.target.innerHTML;
+        let findCountryIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+        let country_status = newGlobe.layers[findCountryIndex].enabled
+        let findWeatherIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Weather_Station_PK');
+        let weather_status = newGlobe.layers[findWeatherIndex].enabled
 
         //refresh the option display
         $("#continentList").find("button").html(continentS + ' <span class="caret"></span>');
@@ -911,6 +915,15 @@ define([
                 })
 
                 layerManager.synchronizeLayerList();
+
+                if (country_status === false) {
+                    newGlobe.layers[findCountryIndex].enabled = false;
+                }
+
+                if (weather_status === false) {
+                    newGlobe.layers[findWeatherIndex].enabled = false;
+                }
+
             }
         })
     };

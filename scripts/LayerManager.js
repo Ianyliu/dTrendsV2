@@ -99,7 +99,7 @@ define([
                 continue;
             }
 
-            if (layer.displayName === layerName) {
+            if (layer.displayName === layerName && this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
                 layer.enabled = !layer.enabled;
                 this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
                 if (layer.enabled) {
@@ -136,7 +136,7 @@ define([
                 layer.displayName = layer.displayName.replace(/ /g, '_');
             }
 
-            if (this.wwd.layers[i].layerType !== "Country_Placemarks" || this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
+            if (this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
                 let layerItem = $('<button class="list-group-item btn btn-block" id="' + layer.displayName + '" style="color: white">' + layer.displayName + '</button>');
                 layerListItem.append(layerItem);
 
