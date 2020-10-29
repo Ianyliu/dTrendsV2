@@ -369,8 +369,10 @@ define([
         // collapsed1.className = "collapsed";
         collapsed1.setAttribute("data-toggle", "collapse");
         collapsed1.setAttribute("data-parent", "#accordion");
+        // collapsed1.setAttribute("aria-expanded", "false");
         collapsed1.href = "#" + firstL;
         collapsed1.id = firstL + '-a';
+        collapsed1.className = "collapsed";
 
         let firstLayerName = document.createTextNode(FirstL + "  ");
         firstLayerName.className = "menuwords";
@@ -420,6 +422,7 @@ define([
         collapsed2.setAttribute("data-parent", "#nested");
         collapsed2.href = "#" + firstL + "-" + secondL;
         collapsed2.id = firstL + "-" + secondL + '-a';
+        collapsed2.className = "collapsed";
 
         let secondLayerName = document.createTextNode(SecondL + "  ");
         secondLayerName.className = "menuwords";
@@ -452,6 +455,7 @@ define([
 
     function createThirdLayers(FirstL, SecondL, ThirdL) {
 
+        //Third Layer for Agrosphere Menu
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
@@ -473,6 +477,7 @@ define([
         collapsed3.setAttribute("data-parent", "#nested");
         collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
         collapsed3.id = firstL + "-" + secondL + "-" + thirdL + '-a';
+        collapsed3.className = "collapsed";
 
         let thirdLayerName = document.createTextNode(ThirdL + "  ");
         thirdLayerName.className = "menuwords";
@@ -494,7 +499,7 @@ define([
         checkboxInput.value = allToggle;
         checkboxInput.className = "input alltoggle";
 
-        if (ThirdL === "Country" || ThirdL === "Weather") {checkboxInput.defaultChecked = true;}
+        if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
 
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
@@ -576,6 +581,7 @@ define([
     // }
 
     function createThirdLayer(FirstL, SecondL, ThirdL) {
+        //Third layer for non-Agrosphere menus
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
@@ -865,6 +871,10 @@ define([
     let onContinent = function (event) {
         //grab the continent value when selected by user.
         let continentS = event.target.innerText || event.target.innerHTML;
+        let findCountryIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+        let country_status = newGlobe.layers[findCountryIndex].enabled
+        let findWeatherIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Weather_Station_PK');
+        let weather_status = newGlobe.layers[findWeatherIndex].enabled
 
         //refresh the option display
         $("#continentList").find("button").html(continentS + ' <span class="caret"></span>');
@@ -882,7 +892,7 @@ define([
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
-                if (elem.continent !== continentS) {
+                if (elem.continent !== continentS && elem.layerType !== 'Country_Placemarks' && elem.layerType !== 'Weather_Station_Placemarks') {
                     if (continentS == 'All Continents') {
                         elem.hide = false;
                         elem.enabled = true;
@@ -907,6 +917,15 @@ define([
                 })
 
                 layerManager.synchronizeLayerList();
+
+                if (country_status === false) {
+                    newGlobe.layers[findCountryIndex].enabled = false;
+                }
+
+                if (weather_status === false) {
+                    newGlobe.layers[findWeatherIndex].enabled = false;
+                }
+
             }
         })
     };
@@ -1272,7 +1291,7 @@ define([
 
         pickListCLK.objects.forEach(function (value) {
             let pickedPM = value.userObject;
-            if (pickedPM instanceof WorldWind.Placemark && pickedPM.layer.displayName !== 'Country_Placemarks' && pickedPM.layer.displayName !== 'Weather_Station_Placemarks') {
+            if (pickedPM instanceof WorldWind.Placemark && pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                 sitePopUp(pickedPM);
                 console.log(pickedPM)
             }

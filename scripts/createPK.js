@@ -163,9 +163,8 @@ define([
 
     function deletePK() {
         for (let j = 6; j < newGlobe.layers.length - 1; j++) {
-            newGlobe.removeLayer(newGlobe.layers[i]);
             if (newGlobe.layers[j].layerType === 'H_PKLayer') {
-                console.log('hi')
+                newGlobe.removeLayer(newGlobe.layers[j]);
             }
         }
     }
