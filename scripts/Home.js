@@ -261,25 +261,33 @@ requirejs([
                 }
             });
             $(".countries-check").change(function(){
+                let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
                 let toggle = this;
                 console.log(this.value);
                 console.log(this.checked)
                 togglePK(toggle.value, toggle.checked);
                 if (toggle.checked === true) {
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + this.value;
+                    document.getElementById("Country-alltoggle").checked= true;
+                    newGlobe.layers[findLayerIndex].enabled = true;
+
                 } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
             });
             console.log('clicked')
         });
 
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
+            let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
             $(".countries-check").change(function(){
                 let toggle = this;
                 console.log(this.value);
                 console.log(this.checked)
                 togglePK(toggle.value, toggle.checked);
                 if (toggle.checked === true) {
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + this.value;
+                    document.getElementById("Country-alltoggle").checked= true;
+                    newGlobe.layers[findLayerIndex].enabled = true;
+
                 } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
             });
             console.log('clicked')
@@ -289,6 +297,12 @@ requirejs([
         $("#COVID-19-checkbox").on("click", function (e) {
             // if (this.checked) {
                 controls.covid19();
+                let toggle = this;
+                if (toggle.checked === true) {
+                    document.getElementById("COVID-category").disabled = false;
+                } else {
+                    document.getElementById("COVID-category").disabled = true;
+                }
             // }
         });
 
@@ -332,7 +346,6 @@ requirejs([
                 .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
                 .attr("href");
-            console.log(hrefvalue);
 
             if (hrefvalue !== undefined && hrefvalue !== '#FoodSecurity-Agrosphere') {
                 console.log(hrefvalue);
