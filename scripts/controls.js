@@ -1530,12 +1530,12 @@ define([
 
     //enables all layers; if layer is disabled, force enable it
     function enableAllToggle() {
-        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             console.log(layer);
             // layer.enabled = true;
             let layerButton = $('#' + layer.displayName + '');
-            if (layer.displayName !== "TL") {
+            if (layer.displayName !== "TL" || layer.displayName !== "Country_PK" || layer.displayName !== "Weather_Station_PK") {
                 layer.enabled = true;
                 if (!layerButton.hasClass(active)) {
                     layerButton.addClass(active);
@@ -1550,11 +1550,11 @@ define([
 
     //disables all layers; if layer is enabled, force disable it
     function closeAllToggle() {
-        for (let i = 8, len = newGlobe.layers.length; i < len; i++) {
+        for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
             layer.enabled = false;
             let layerButton = $('#' + layer.displayName + '');
-            if (layer.displayName !== "TL") {
+            if (layer.displayName !== "TL" || layer.displayName !== "Country_PK" || layer.displayName !== "Weather_Station_PK") {
                 if (layerButton.hasClass(active)) {
                     layerButton.removeClass(active);
                     layerButton.css("color", "black");
