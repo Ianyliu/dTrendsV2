@@ -19,7 +19,17 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
-    createPK([dataAll.arrDate[0].Date, dataAll.arrDate[dataAll.arrDate.length - 1].Date], "Confirmed", "init");
+    let date1 = dataAll.arrDate[0];
+    let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
+
+    console.log(date1)
+    console.log(date2)
+
+    if(date1 !== undefined && date2 !== undefined) {
+        createPK([date1.Date, date2.Date], "Confirmed", "init");
+    } else {
+        alert("Error! COVID data couldn't be loaded!")
+    }
 
     let fromDate = $('.fromdatepicker');
     let toDate = $('.todatepicker');
@@ -164,6 +174,7 @@ requirejs([
                 let toggle = this;
                 let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+                let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === true);
                 console.log(this.value);
                 // console.log(toggle.checked);
                 if (toggle.checked === true) {
@@ -260,27 +271,116 @@ requirejs([
                     document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("aria-expanded","false");
                 }
             });
-            $(".countries-check").change(function(){
-                let toggle = this;
-                console.log(this.value);
-                console.log(this.checked)
-                togglePK(toggle.value, toggle.checked);
-                if (toggle.checked === true) {
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
-                } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
-            });
+            // $(".countries-check").change(function(){
+            //     let toggle = this;
+            //     console.log(this.value);
+            //     console.log(this.checked)
+            //     togglePK(toggle.value, toggle.checked);
+            //     if (toggle.checked === true) {
+            //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
+            //     } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
+            // });
             console.log('clicked')
         });
 
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
             $(".countries-check").change(function(){
+                let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
                 let toggle = this;
                 console.log(this.value);
                 console.log(this.checked)
-                togglePK(toggle.value, toggle.checked);
+
+
                 if (toggle.checked === true) {
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
-                } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + toggle.value;
+                    document.getElementById("Country-alltoggle").checked= true;
+                    newGlobe.layers[findLayerIndex].enabled = true;
+
+                    let othertoggles = $('#FoodSecurity--Agrosphere--Country').find("input")
+                        .not(toggle); //Selects all other toggles besides the one just checked
+                    console.log(othertoggles)//this selects all of the other toggles
+
+                    $('.countries-check').each(function() {
+                        let eachothertoggle = this;
+                        // //For each other check box under countries in Agrosphere
+                        // let other_val = othertoggles.val() //Gets the value of the other toggles
+                        // //if the other toggles are not checked, enable the country layer and turn all of the other placemarks on the globe off
+                        // if (othertoggles.checked === false) {
+                        //     console.log('false');
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         newGlobe.layers[findLayerIndex].enabled = true;
+                        //         togglePK(other_val, false); // turns off the other placemarks
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         newGlobe.layers[findLayerIndex].enabled = false;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // togglePK(other_val, false); // turns off the other placemarks
+                        //
+                        //     }
+                        // } else {
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // newGlobe.layers[findLayerIndex].enabled = true;
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         document.getElementById("Country-alltoggle").checked= false;
+                        //     }
+                        // }
+                        if (eachothertoggle !== toggle) {
+                            eachothertoggle.checked = false;
+                            togglePK(eachothertoggle.value, false);
+                        }
+                        console.log(this);//this selects individual checkboxes one by one
+                    });
+                } else {
+
+                    $('.countries-check').each(function() {
+                        let eachothertoggle = this;
+                        // //For each other check box under countries in Agrosphere
+                        // let other_val = othertoggles.val() //Gets the value of the other toggles
+                        // //if the other toggles are not checked, enable the country layer and turn all of the other placemarks on the globe off
+                        // if (othertoggles.checked === false) {
+                        //     console.log('false');
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         newGlobe.layers[findLayerIndex].enabled = true;
+                        //         togglePK(other_val, false); // turns off the other placemarks
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         newGlobe.layers[findLayerIndex].enabled = false;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // togglePK(other_val, false); // turns off the other placemarks
+                        //
+                        //     }
+                        // } else {
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // newGlobe.layers[findLayerIndex].enabled = true;
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         document.getElementById("Country-alltoggle").checked= false;
+                        //     }
+                        // }
+
+                        // if (eachothertoggle !== toggle && eachothertoggle.value === false) {
+                        //     eachothertoggle.checked = false;
+                        //     togglePK(eachothertoggle.value, false);
+                        // }
+                        if (eachothertoggle !== toggle && eachothertoggle.checked === false) {
+                            document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
+                            document.getElementById("Country-alltoggle").checked= false;
+                            newGlobe.layers[findLayerIndex].enabled = false;
+                        }
+                        console.log(this);//this selects individual checkboxes one by one
+                    });
+                }
+
+                togglePK(toggle.value, toggle.checked);
             });
             console.log('clicked')
         });
