@@ -174,7 +174,7 @@ requirejs([
                 let toggle = this;
                 let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
-                let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === true);
+                let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
                 console.log(this.value);
                 // console.log(toggle.checked);
                 if (toggle.checked === true) {
@@ -186,6 +186,7 @@ requirejs([
                     console.log(newGlobe.layers)
                     console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = true;
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = true;
                     document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","in");
                     document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'visible';
                     $("#FoodSecurity-Agrosphere-Country").css("height", "");
