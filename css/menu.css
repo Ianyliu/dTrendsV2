@@ -22,6 +22,9 @@
   bottom: 80px;
   right: 20px;
   z-index: 99;
+  height: 2.5%;
+  font-size: inherit;
+  text-align: center;
 }
 
 .panel-group .panel-heading a:after {
