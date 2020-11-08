@@ -416,9 +416,15 @@ requirejs([
 
 
         $("#COVID-19-checkbox").on("click", function (e) {
-            // if (this.checked) {
             controls.covid19();
-            // }
+            let toggle = this;
+            if (toggle.checked === true) {
+                document.getElementById("COVID-category").disabled = false;
+                document.getElementById("options_div").visibility = "hidden";
+            } else {
+                document.getElementById("COVID-category").disabled = true;
+                document.getElementById("options_div").visibility = "visible";
+            }
         });
 
         $("#FoodSecurity-Agrosphere-Country-a").click(function () {
