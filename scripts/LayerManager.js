@@ -261,7 +261,7 @@ define([
         ];
         let projectionDropdown = $("#categoryList");
 
-        let dropdownButton = $('<button class="btn btn-info btn-block dropdown-toggle" type="button" data-toggle="dropdown">Confirmed Cases<span class="caret"></span></button>');
+        let dropdownButton = $('<button class="btn btn-info btn-block dropdown-toggle" id="COVID-category" type="button" data-toggle="dropdown" disabled>Confirmed Cases<span class="caret"></span></button>');
         projectionDropdown.append(dropdownButton);
         projectionDropdown.find("button").css("background-color","red");
         let ulItem = $('<ul class="dropdown-menu">');
