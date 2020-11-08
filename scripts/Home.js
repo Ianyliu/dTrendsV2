@@ -19,7 +19,17 @@ requirejs([
 
     newGlobe.goTo(new WorldWind.Position(30.5928, 114.3055, 11000000));
 
-    createPK([dataAll.arrDate[0].Date, dataAll.arrDate[dataAll.arrDate.length - 1].Date], "Confirmed", "init");
+    let date1 = dataAll.arrDate[0];
+    let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
+
+    console.log(date1)
+    console.log(date2)
+
+    if(date1 !== undefined && date2 !== undefined) {
+        createPK([date1.Date, date2.Date], "Confirmed", "init");
+    } else {
+        alert("Error! COVID data couldn't be loaded!")
+    }
 
     let fromDate = $('.fromdatepicker');
     let toDate = $('.todatepicker');
@@ -114,7 +124,8 @@ requirejs([
                         controls.createThirdLayer(firstL[i],diseasesecondL[j],"COVID-19");
                         controls.covid19();
                     } else {
-                        throw error
+                        alert('Error! Some layers might not have been created properly. ');
+                        // throw error
                     }
                 }
             }
@@ -126,9 +137,9 @@ requirejs([
 
                             controls.createThirdLayers(firstL[i],foodsecondL[j], thirdL[h]);
                             if (thirdL[h] === "Country") {
-                                for (let k = 0; k <countryL.length; k++) {
-                                    controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],countryL[k]);
-                                }
+                                // for (let k = 0; k <countryL.length; k++) {
+                                //     controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],countryL[k]);
+                                // }
                             } else if (thirdL[h] === "Crops") {
                                 for (let k = 0; k <cropsL.length; k++) {
                                     controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],cropsL[k]);
@@ -138,7 +149,8 @@ requirejs([
                                     controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],weatherL[k]);
                                 }
                             } else {
-                                throw error
+                                alert('Error! Some layers might not have been created properly. ');
+                                // throw error
                             }
                         }
                     } else if (foodsecondL[j] === 'ECMWF Forecasts') {
@@ -150,11 +162,13 @@ requirejs([
                             controls.createThirdLayer(firstL[i],foodsecondL[j],satellite_data[h]);
                         }
                     } else {
-                        throw error
+                        // throw error
+                        alert('Error! Some layers might not have been created properly. ');
                     }
                 }
             } else {
-                throw error
+                // throw error
+                alert('Error! Some layers might not have been created properly. ');
             }
         }
 
@@ -162,41 +176,51 @@ requirejs([
             $("#Country-alltoggle ").change(function(){
                 //Shows/hides menu below, sets country placemarks' layer to .enabled and toggles all the toggles beneath it
                 let toggle = this;
-                let countries = document.getElementsByClassName('countries-check');
+                // let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+                let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
                 console.log(this.value);
                 // console.log(toggle.checked);
                 if (toggle.checked === true) {
                     console.log('checked');
-                    $(".countries-check").prop("checked", true);
-                    console.log(countries.value);
-                    console.log(countries.checked);
-                    togglePK(countries.value,true);
+                    // $(".countries-check").prop("checked", true);
+                    // console.log(countries.value);
+                    // console.log(countries.checked);
+                    // console.log(countries.length)
+                    // togglePK(countries.value,true);
                     console.log(newGlobe.layers)
-                    console.log(findLayerIndex);
+                    console.log(findPKIndex);
                     newGlobe.layers[findLayerIndex].enabled = true;
-                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","in");
-                    document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'visible';
-                    $("#FoodSecurity-Agrosphere-Country").css("height", "");
-                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("aria-expanded","true");
-                } else if(toggle.indeterminate === true) {
-                    alert('Error!');
+                    // for (let i =0; i <countries.length; i++) {
+                    //     let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
+                    //     if (findPKIndex !== undefined && findLayerIndex !== undefined) {
+                    //         newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = true;
+                    //     }
+                    // }//enables individual placemarks
+
+
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","in");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'visible';
+                    // $("#FoodSecurity-Agrosphere-Country").css("height", "");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("aria-expanded","true");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
                 } else if(toggle.checked === false) {
-                    $(".countries-check").prop("checked", false);
-                    console.log(countries.value);
-                    console.log(countries.checked);
-                    togglePK(countries.value,false);
+                    // $(".countries-check").prop("checked", false);
+                    // console.log(countries.value);
+                    // console.log(countries.checked);
+                    // togglePK(countries.value,false);
                     console.log('unchecked');
                     console.log(newGlobe.layers)
                     console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = false;
 
-                    document.getElementById("FoodSecurity-Agrosphere-Country").style.height = '0px';
-                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","collapsing");
-                    document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'hidden';
-                    document.getElementById("FoodSecurity-Agrosphere-Country").removeAttribute("class","collapsing");
-                    document.getElementById("FoodSecurity-Agrosphere-Country").removeAttribute("class","in");
-                    document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("aria-expanded","false");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").style.height = '0px';
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("class","collapsing");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").style.visibility = 'hidden';
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").removeAttribute("class","collapsing");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").removeAttribute("class","in");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country").setAttribute("aria-expanded","false");
+                    // document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
                 }
             });
             $("#Weather-alltoggle ").change(function(){
@@ -219,8 +243,6 @@ requirejs([
                     document.getElementById("FoodSecurity-Agrosphere-Weather").style.visibility = 'visible';
                     $("#FoodSecurity-Agrosphere-Weather").css("height", "");
                     document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("aria-expanded","true");
-                } else if(toggle.indeterminate === true) {
-                    alert('Error!');
                 } else if(toggle.checked === false) {
                     // $(".countries-check").prop("checked", false);
                     // console.log(countries.value);
@@ -249,8 +271,6 @@ requirejs([
                     document.getElementById("FoodSecurity-Agrosphere-Crops").style.visibility = 'visible';
                     $("#FoodSecurity-Agrosphere-Crops").css("height", "");
                     document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("aria-expanded","true");
-                } else if(toggle.indeterminate === true) {
-                    alert('Error!');
                 } else if(toggle.checked === false) {
                     document.getElementById("FoodSecurity-Agrosphere-Crops").style.height = '0px';
                     document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("class","collapsing");
@@ -260,35 +280,136 @@ requirejs([
                     document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("aria-expanded","false");
                 }
             });
-            $(".countries-check").change(function(){
-                let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
-                let toggle = this;
-                console.log(this.value);
-                console.log(this.checked)
-                togglePK(toggle.value, toggle.checked);
-                if (toggle.checked === true) {
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + this.value;
-                    document.getElementById("Country-alltoggle").checked= true;
-                    newGlobe.layers[findLayerIndex].enabled = true;
-
-                } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
-            });
+            // $(".countries-check").change(function(){
+            //     let toggle = this;
+            //     console.log(this.value);
+            //     console.log(this.checked)
+            //     togglePK(toggle.value, toggle.checked);
+            //     if (toggle.checked === true) {
+            //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
+            //     } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
+            // });
             console.log('clicked')
         });
 
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
-            let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
             $(".countries-check").change(function(){
+                let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+                let unchecked_num = document.getElementsByClassName('countries-check').checked = false;
+                let checked_num = document.getElementsByClassName('countries-check').checked = true;
                 let toggle = this;
                 console.log(this.value);
                 console.log(this.checked)
-                togglePK(toggle.value, toggle.checked);
+                console.log(checked_num.length)
+                console.log(unchecked_num.length)
+
+
                 if (toggle.checked === true) {
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + this.value;
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + toggle.value;
                     document.getElementById("Country-alltoggle").checked= true;
                     newGlobe.layers[findLayerIndex].enabled = true;
 
-                } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
+                    let othertoggles = $('#FoodSecurity--Agrosphere--Country').find("input")
+                        .not(toggle); //Selects all other toggles besides the one just checked
+                    console.log(othertoggles)//this selects all of the other toggles
+
+                    $('.countries-check').each(function() {
+                        let eachothertoggle = this;
+                        // //For each other check box under countries in Agrosphere
+                        // let other_val = othertoggles.val() //Gets the value of the other toggles
+                        // //if the other toggles are not checked, enable the country layer and turn all of the other placemarks on the globe off
+                        // if (othertoggles.checked === false) {
+                        //     console.log('false');
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         newGlobe.layers[findLayerIndex].enabled = true;
+                        //         togglePK(other_val, false); // turns off the other placemarks
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         newGlobe.layers[findLayerIndex].enabled = false;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // togglePK(other_val, false); // turns off the other placemarks
+                        //
+                        //     }
+                        // } else {
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // newGlobe.layers[findLayerIndex].enabled = true;
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         document.getElementById("Country-alltoggle").checked= false;
+                        //     }
+                        // }
+
+                        if (eachothertoggle !== toggle) {
+                            eachothertoggle.checked = false;
+                            togglePK(eachothertoggle.value, false);
+                        }
+                        console.log(this);//this selects individual checkboxes one by one
+
+                        // if(checked_num.length >= 2) {
+                        //     document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
+                        //     document.getElementById("Country-alltoggle").checked= false;
+                        //     newGlobe.layers[findLayerIndex].enabled = false;
+                        // } else {
+                        //     eachothertoggle.checked = false;
+                        //     togglePK(eachothertoggle.value, false)
+                        // }
+                    });
+                } else {
+
+                    $('.countries-check').each(function() {
+                        let eachothertoggle = this;
+                        // //For each other check box under countries in Agrosphere
+                        // let other_val = othertoggles.val() //Gets the value of the other toggles
+                        // //if the other toggles are not checked, enable the country layer and turn all of the other placemarks on the globe off
+                        // if (othertoggles.checked === false) {
+                        //     console.log('false');
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         newGlobe.layers[findLayerIndex].enabled = true;
+                        //         togglePK(other_val, false); // turns off the other placemarks
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         newGlobe.layers[findLayerIndex].enabled = false;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // togglePK(other_val, false); // turns off the other placemarks
+                        //
+                        //     }
+                        // } else {
+                        //     if (toggle.checked === true) {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country: " + toggle.value;
+                        //         document.getElementById("Country-alltoggle").checked= true;
+                        //         // newGlobe.layers[findLayerIndex].enabled = true;
+                        //     } else {
+                        //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "
+                        //         document.getElementById("Country-alltoggle").checked= false;
+                        //     }
+                        // }
+
+                        // if (eachothertoggle !== toggle && eachothertoggle.value === false) {
+                        //     eachothertoggle.checked = false;
+                        //     togglePK(eachothertoggle.value, false);
+                        // }
+                        if (eachothertoggle !== toggle && eachothertoggle.checked === false) {
+                            document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
+                            document.getElementById("Country-alltoggle").checked= false;
+                            newGlobe.layers[findLayerIndex].enabled = false;
+                        }
+                        console.log(this);//this selects individual checkboxes one by one
+                    });
+
+                    // if(unchecked_num.length = 0) {
+                    //     document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
+                    //     document.getElementById("Country-alltoggle").checked= false;
+                    //     newGlobe.layers[findLayerIndex].enabled = false;
+                    // }
+                }
+
+                // togglePK(toggle.value, toggle.checked);
             });
             console.log('clicked')
         });
@@ -296,14 +417,22 @@ requirejs([
 
         $("#COVID-19-checkbox").on("click", function (e) {
             // if (this.checked) {
-                controls.covid19();
-                let toggle = this;
-                if (toggle.checked === true) {
-                    document.getElementById("COVID-category").disabled = false;
-                } else {
-                    document.getElementById("COVID-category").disabled = true;
-                }
+            controls.covid19();
             // }
+        });
+
+        $("#FoodSecurity-Agrosphere-Country-a").click(function () {
+            let toggle =  document.getElementById("Country-alltoggle");
+            let findLayerIndex =  newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
+            if (toggle.checked === false) {
+                console.log('checked');
+                newGlobe.layers[findLayerIndex].enabled = true;
+                toggle.checked = true;
+            } else if(toggle.checked === true) {
+                toggle.checked = false;
+                console.log('unchecked');
+                newGlobe.layers[findLayerIndex].enabled = false;
+            }
         });
 
         // $("#DiseaseProjection").on("click", function (e) {
@@ -311,11 +440,15 @@ requirejs([
         // });
 
 
-        $('#accordion').find("a").on('click', function(e){
-            console.log(e);
+        $('#accordion').find("a").on('click', function(e) {
+            // console.log(e);
             let divid = e.target.hash + '';
             let atag = this;
             let dataParent = atag.getAttribute('data-parent');
+            if (atag.id !== 'FoodSecurity-Agrosphere-Country-a') {
+                // country_toggled;
+                // console.log('CLICKED!')
+            // } else {
 
             document.getElementById(divid.substring(1)).style.visibility = 'visible';
             // console.log(divid)
@@ -327,21 +460,21 @@ requirejs([
             //     console.log(divid.substring(1) + "-a")
             // }
 
+
             $('#accordion').find("a[aria-expanded='true']")
                 .not("a[data-parent='#accordion']")
                 .not(this)
-                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById(divid.substring(1) + "-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
                 .addClass('collapsed');
 
 
-
             let hrefvalue = $('#accordion').find("a[aria-expanded='true']")
                 .not("a[data-parent='#accordion']")
                 .not(this)
-                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById(divid.substring(1) + "-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
@@ -349,11 +482,11 @@ requirejs([
 
             if (hrefvalue !== undefined && hrefvalue !== '#FoodSecurity-Agrosphere') {
                 console.log(hrefvalue);
-                document.getElementById(hrefvalue.substring(1)).setAttribute("class","collapsing");
-                document.getElementById(hrefvalue.substring(1)).removeAttribute("class","collapsing");
+                document.getElementById(hrefvalue.substring(1)).setAttribute("class", "collapsing");
+                document.getElementById(hrefvalue.substring(1)).removeAttribute("class", "collapsing");
                 document.getElementById(hrefvalue.substring(1)).style.visibility = 'hidden';
-                document.getElementById(hrefvalue.substring(1)).removeAttribute("class","in");
-                document.getElementById(hrefvalue.substring(1)).setAttribute("aria-expanded","false");
+                document.getElementById(hrefvalue.substring(1)).removeAttribute("class", "in");
+                document.getElementById(hrefvalue.substring(1)).setAttribute("aria-expanded", "false");
                 document.getElementById(hrefvalue.substring(1)).style.height = '0px';
 
             }
@@ -379,11 +512,11 @@ requirejs([
             $('#accordion').find("a[aria-expanded='true']")
                 .not("a[data-parent='#accordion']")
                 .not(this)
-                .not(document.getElementById(divid.substring(1) + "-a" ))
+                .not(document.getElementById(divid.substring(1) + "-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Country-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Crops-a"))
                 .not(document.getElementById("FoodSecurity-Agrosphere-Weather-a"))
-                .attr('aria-expanded','false');
+                .attr('aria-expanded', 'false');
             // if ("a[data-toggle='collapse']" !== e) {
             //     console.log(this)
             //     console.log("not");
@@ -392,8 +525,8 @@ requirejs([
             // }
 
             // $('.in').not(divid).removeClass('in');
-                // $('.in').find('.galleryImageInput')
-                // $('.in').attr('name', 'galleryImage[]');
+            // $('.in').find('.galleryImageInput')
+            // $('.in').attr('name', 'galleryImage[]');
 
             // $("a[aria-expanded='true']").not(this).next('div').removeClass('in');
             // $("a[aria-expanded='true']").not(this).closest('div').removeClass('in');
@@ -408,6 +541,7 @@ requirejs([
             // console.log(divID)
             // console.log(typeof divID);
             //alert('clicked');
+        }
         });
 
 
@@ -583,11 +717,11 @@ requirejs([
         // use countryN to look pk
         if (countryN !== undefined || status !== undefined) {
             let findLayerIndex = await newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
-            console.log(newGlobe.layers)
-            console.log(findLayerIndex);
+            // console.log(newGlobe.layers)
+            // console.log(findLayerIndex);
             let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
 
-            console.log(findPKIndex);
+            // console.log(findPKIndex);
 
             //turn on/off the pk
             if (findPKIndex >= 0) {
@@ -602,6 +736,7 @@ requirejs([
                 ));
             }
         } else {
+            alert('Error!');
             // throw error;
         }
     }
