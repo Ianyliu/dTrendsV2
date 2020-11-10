@@ -19,9 +19,13 @@
 
 #tutorial {
   position: fixed;
-  bottom: 80px;
+  bottom: 13%;
   right: 20px;
   z-index: 99;
+  font-size: 13px;
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 1%;
 }
 
 .panel-group .panel-heading a:after {
