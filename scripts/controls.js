@@ -1294,10 +1294,35 @@ define([
 
         pickListCLK.objects.forEach(function (value) {
             let pickedPM = value.userObject;
-            if (pickedPM instanceof WorldWind.Placemark && pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
-                sitePopUp(pickedPM);
-                console.log(pickedPM)
+            console.log(pickedPM)
+
+            if (pickedPM instanceof WorldWind.Placemark) {
+                if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
+                    sitePopUp(pickedPM);
+                } else if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                    let foodsecuritya = "FoodSecurity-a";
+                    let foodsecurity = "FoodSecurity"
+                    let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
+                    let agrofoodsecurity = "FoodSecurity-Agrosphere"
+
+                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    document.getElementById("controls").style.display = 'block';
+                    document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
+                    document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
+                    document.getElementById(foodsecurity).setAttribute("aria-expanded", "true");
+                    document.getElementById(foodsecurity).setAttribute("class", "in");
+                    document.getElementById(foodsecurity).style.visibility = 'visible';
+                    document.getElementById(foodsecurity).style.height = '';
+
+                    document.getElementById(agrofoodsecuritya).removeAttribute("class", "collapsed");
+                    document.getElementById(agrofoodsecuritya).setAttribute("aria-expanded", "true");
+                    document.getElementById(agrofoodsecurity).setAttribute("aria-expanded", "true");
+                    document.getElementById(agrofoodsecurity).setAttribute("class", "in");
+                    document.getElementById(agrofoodsecurity).style.visibility = 'visible';
+                    document.getElementById(agrofoodsecurity).style.height = '';
+                }
             }
+
         })
     }
 
@@ -1307,78 +1332,82 @@ define([
         //clears pop-up contents
         popupBodyItem.children().remove();
 
-        //inserts title and discription for placemark
-        let popupBodyName = $('<p class="site-name"><h4>' + PM.userProperties.dName + '</h4></p>');
-        let popupBodyDesc = $('<p class="site-description">' + "Total Cases = Active + Deceased + Recoveries" + '</p><br>');
-        let br = $('<br><br>');
+        if(PM.layer.layerType !== "Country_Placemarks" && PM.layer.layerType !== "Weather_Station_PK") {
+            //inserts title and discription for placemark
+            let popupBodyName = $('<p class="site-name"><h4>' + PM.userProperties.dName + '</h4></p>');
+            let popupBodyDesc = $('<p class="site-description">' + "Total Cases = Active + Deceased + Recoveries" + '</p><br>');
+            let br = $('<br><br>');
 
-        //tab buttons for different date ranges for chart data shown
-        let button0 = document.createElement("button");
-        button0.id = button0.value = "1";
-        button0.textContent = "Current";
-        button0.className = "chartsB";
-        button0.onclick = function () {
-            chartDFun(button0, PM)
-        };
-        let button1 = document.createElement("button");
-        button1.id = button1.value = "7";
-        button1.textContent = "Past 7 Days";
-        button1.className = "chartsB";
-        button1.onclick = function () {
-            chartDFun(button1, PM)
-        };
-        let button2 = document.createElement("button");
-        button2.id = button2.value = "14";
-        button2.textContent = "Past 2 Weeks";
-        button2.className = "chartsB";
-        button2.onclick = function () {
-            chartDFun(button2, PM)
-        };
-        let button3 = document.createElement("button");
-        button3.id = button3.value = "30";
-        button3.textContent = "Past 1 Month";
-        button3.className = "chartsB";
-        button3.onclick = function () {
-            chartDFun(button3, PM)
-        };
-        let button4 = document.createElement("button");
-        button4.id = button4.value = "63";
-        button4.textContent = "Past 2 Months";
-        button4.className = "chartsB";
-        button4.onclick = function () {
-            chartDFun(button4, PM)
-        };
-
-        popupBodyItem.append(popupBodyName);
-        popupBodyItem.append(popupBodyDesc);
-        popupBodyItem.append(button0);
-        popupBodyItem.append(button1);
-        popupBodyItem.append(button2);
-        popupBodyItem.append(button3);
-        popupBodyItem.append(button4);
-        popupBodyItem.append(br);
-
-        let modal = document.getElementById('popupBox');
-        let span = document.getElementById('closeIt');
-
-        if (PM.userProperties.dName !== 'undefined') {
-            modal.style.display = "block";
-
-            span.onclick = function () {
-                modal.style.display = "none";
+            //tab buttons for different date ranges for chart data shown
+            let button0 = document.createElement("button");
+            button0.id = button0.value = "1";
+            button0.textContent = "Current";
+            button0.className = "chartsB";
+            button0.onclick = function () {
+                chartDFun(button0, PM)
+            };
+            let button1 = document.createElement("button");
+            button1.id = button1.value = "7";
+            button1.textContent = "Past 7 Days";
+            button1.className = "chartsB";
+            button1.onclick = function () {
+                chartDFun(button1, PM)
+            };
+            let button2 = document.createElement("button");
+            button2.id = button2.value = "14";
+            button2.textContent = "Past 2 Weeks";
+            button2.className = "chartsB";
+            button2.onclick = function () {
+                chartDFun(button2, PM)
+            };
+            let button3 = document.createElement("button");
+            button3.id = button3.value = "30";
+            button3.textContent = "Past 1 Month";
+            button3.className = "chartsB";
+            button3.onclick = function () {
+                chartDFun(button3, PM)
+            };
+            let button4 = document.createElement("button");
+            button4.id = button4.value = "63";
+            button4.textContent = "Past 2 Months";
+            button4.className = "chartsB";
+            button4.onclick = function () {
+                chartDFun(button4, PM)
             };
 
-            window.onclick = function (event) {
-                if (event.target === modal) {
+            popupBodyItem.append(popupBodyName);
+            popupBodyItem.append(popupBodyDesc);
+            popupBodyItem.append(button0);
+            popupBodyItem.append(button1);
+            popupBodyItem.append(button2);
+            popupBodyItem.append(button3);
+            popupBodyItem.append(button4);
+            popupBodyItem.append(br);
+
+            let modal = document.getElementById('popupBox');
+            let span = document.getElementById('closeIt');
+
+            if (PM.userProperties.dName !== 'undefined') {
+                modal.style.display = "block";
+
+                span.onclick = function () {
                     modal.style.display = "none";
+                };
+
+                window.onclick = function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
                 }
+
             }
 
+
+            //load chart data
+            button0.click();
         }
 
 
-        //load chart data
-        button0.click();
     }
 
     let chartDFun = function (objButton, PM) {
