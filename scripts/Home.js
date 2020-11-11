@@ -22,8 +22,8 @@ requirejs([
     let date1 = dataAll.arrDate[0];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
-    console.log(date1)
-    console.log(date2)
+    // console.log(date1)
+    // console.log(date2)
 
     if(date1 !== undefined && date2 !== undefined) {
         createPK([date1.Date, date2.Date], "Confirmed", "init");
@@ -95,17 +95,6 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        // let parentMenu = document.getElementById("accordion");
-
-        // controls.createFirstLayer('Disease Projection')
-        // controls.createFirstLayer('Food Security')
-
-        // for (let i = 0; i < firstL.length; i++) {
-        //     controls.createFirstLayer(firstL[i])
-        // }
-
-        console.log(newGlobe.layers)
-
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
             if (firstL[i] === 'Disease Projection') {
@@ -128,8 +117,7 @@ requirejs([
                         // throw error
                     }
                 }
-            }
-            else if (firstL[i] === 'Food Security') {
+            } else if (firstL[i] === 'Food Security') {
                 for (let j = 0; j < foodsecondL.length; j++) {
                     controls.createSecondLayer(firstL[i],foodsecondL[j]);
                     if (foodsecondL[j] === 'Agrosphere') {
