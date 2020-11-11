@@ -17,6 +17,8 @@ requirejs([
 
     genPLPK(dataTypes, csvData);
 
+    console.log(csvData)
+
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere
         for (let i = 0; i < layerType.length; i++) {
@@ -55,9 +57,12 @@ requirejs([
 
                 // create AgroSphere placemark
                 let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
-                agroPK.placemark.country = userobject.country;
-                // console.log(agroPK.placemark.country)
+                console.log(aLayer.layerType)
+                console.log(agroPK)
+                if (layerType[i] === 'Country') {agroPK.placemark.country = userobject.country;}
 
+                // console.log(agroPK.placemark.country)
+                console.log(aLayer)
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);
                 // Add the placemarks layer to the World Window's layer list.
