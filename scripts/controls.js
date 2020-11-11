@@ -24,11 +24,6 @@ define([
     let activecases = "Active Cases";
     let parentMenu = document.getElementById("accordion");
 
-    // document.addEventListener("DOMContentLoaded", function(event) {
-        //Equivalent to document.ready, does not work on IE8 but is supported by over 98% of browsers
-        // let parentMenu = document.getElementById("accordion");
-    // });
-
     for (let i = 0; i < dataTypes.length; i++) {
         for (let j = 0; j < csvD[i].length; j++) {
             if (dataTypes[i] === 'Country') {
@@ -1286,6 +1281,51 @@ define([
         });
     }
 
+    let handleMouseMove = function (o) {
+        if ($("#popover").is(":visible")) {
+            $("#popover").hide();
+        }
+
+        // The input argument is either an Event or a TapRecognizer. Both have the same properties for determining
+        // the mouse or tap location.
+        let x = o.clientX,
+            y = o.clientY;
+
+        // Perform the pick. Must first convert from window coordinates to canvas coordinates, which are
+        // relative to the upper left corner of the canvas rather than the upper left corner of the page.
+
+        let pickList = newGlobe.pick(newGlobe.canvasCoordinates(x, y));
+
+        pickList.objects.forEach(function (value) {
+            let pickedPM = value.userObject;
+
+            if (pickedPM instanceof WorldWind.Placemark) {
+                let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+                let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+                let content;
+
+                let popover = document.getElementById('popover');
+                popover.style.position = "absolute";
+                popover.style.left = (x + xOffset - 3) + 'px';
+                popover.style.top = (y + yOffset - 3) + 'px';
+
+                // if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
+                //     sitePopUp(pickedPM);
+                // }
+                if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                    content = "<p><strong>Country:</strong> " + pickedPM.country + "</p>";
+                } else if (pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
+                    content = "<p><strong>Weather Station:</strong> " + pickedPM.displayName +
+                         "</p>";
+                }
+
+                $("#popover").attr('data-content', content);
+                $("#popover").show();
+            }
+
+        })
+    }
+
     //on clicking placemark
     let handleMouseCLK = function (e) {
         let x = e.clientX,
@@ -1619,6 +1659,7 @@ define([
         filterOptionDialog,
         editDialog,
         handleMouseCLK,
+        handleMouseMove,
         enableAllToggle,
         closeAllToggle,
         createFirstLayer,
