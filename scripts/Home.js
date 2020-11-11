@@ -95,6 +95,19 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
+        // let parentMenu = document.getElementById("accordion");
+
+        // controls.createFirstLayer('Disease Projection')
+        // controls.createFirstLayer('Food Security')
+
+        // for (let i = 0; i < firstL.length; i++) {
+        //     controls.createFirstLayer(firstL[i])
+        // }
+
+        console.log(newGlobe.layers)
+
+        alert('Welcome to the A World Bridge COVID Toolkit! Our application works best on the most recent version of Chrome. If you are experiencing any problems, please try switching a browser.')
+
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
             if (firstL[i] === 'Disease Projection') {
@@ -704,6 +717,8 @@ requirejs([
 
         //selecting placemark creates pop-up
         newGlobe.addEventListener("click", controls.handleMouseCLK);
+        //hovering over placemark creates pop-up
+        newGlobe.addEventListener("hover", controls.handleMouseMove);
 
     });
 

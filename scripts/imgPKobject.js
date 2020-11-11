@@ -7,7 +7,7 @@ define(['./WorldWindShim'],function (WorldWind) {
         placemarkAttributes.imageSource = agro_url + imgSource;
         // console.log(placemarkAttributes.imageSource);
 
-        placemarkAttributes.imageScale = 3; //placemark size!
+        placemarkAttributes.imageScale = 5; //placemark size!
 
         placemarkAttributes.imageOffset = new WorldWind.Offset(
             WorldWind.OFFSET_FRACTION, 0.3,

@@ -57,12 +57,10 @@ requirejs([
 
                 // create AgroSphere placemark
                 let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
-                console.log(aLayer.layerType)
-                console.log(agroPK)
                 if (layerType[i] === 'Country') {agroPK.placemark.country = userobject.country;}
 
                 // console.log(agroPK.placemark.country)
-                console.log(aLayer)
+
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);
                 // Add the placemarks layer to the World Window's layer list.
