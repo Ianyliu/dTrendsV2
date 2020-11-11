@@ -117,8 +117,7 @@ requirejs([
                         // throw error
                     }
                 }
-            }
-            else if (firstL[i] === 'Food Security') {
+            } else if (firstL[i] === 'Food Security') {
                 for (let j = 0; j < foodsecondL.length; j++) {
                     controls.createSecondLayer(firstL[i],foodsecondL[j]);
                     if (foodsecondL[j] === 'Agrosphere') {
