@@ -420,10 +420,12 @@ requirejs([
             let toggle = this;
             if (toggle.checked === true) {
                 document.getElementById("COVID-category").disabled = false;
-                document.getElementById("options_div").visibility = "hidden";
+                // document.getElementById("options_div").visibility = "visible";
+                // document.getElementById("continentList").visibility = "visible";
             } else {
                 document.getElementById("COVID-category").disabled = true;
-                document.getElementById("options_div").visibility = "visible";
+                // document.getElementById("options_div").visibility = "hidden";
+                // document.getElementById("continentList").visibility = "hidden";
             }
         });
 
@@ -465,8 +467,6 @@ requirejs([
             //     console.log('hey!!!')
             //     console.log(divid.substring(1) + "-a")
             // }
-
-
             $('#accordion').find("a[aria-expanded='true']")
                 .not("a[data-parent='#accordion']")
                 .not(this)
