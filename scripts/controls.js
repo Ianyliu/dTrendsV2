@@ -961,7 +961,7 @@ define([
                     if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {                        elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
                                 if (d.userProperties.Date === dataAll.arrDate[i].Date) {
-                                    d.enabled = d.userdProperties.Type === categoryS;
+                                    d.enabled = d.userProperties.Type === categoryS;
                                 } else {
                                     d.enabled = false;
                                 }
