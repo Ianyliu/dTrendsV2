@@ -17,6 +17,8 @@ requirejs([
 
     genPLPK(dataTypes, csvData);
 
+    console.log(csvData)
+
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere
         for (let i = 0; i < layerType.length; i++) {
@@ -31,6 +33,8 @@ requirejs([
                 let labelString = '';
                 let imgsource = "";
                 let userobject;
+                let stationName;
+                let country;
 
                 //Handle the string is based on the type we determine
                 if (layerType[i] === 'Country') {
@@ -41,6 +45,8 @@ requirejs([
                         code3: csvData[i][j].code3,
                         country: csvData[i][j].country
                     };
+                    country = csvData[i][j].country;
+                    console.log(country)
                 } else if (layerType[i] === 'Weather Station') {
                     // labelString = csvData[i][j].code3;
                     aLayer.layerType = 'Weather_Station_Placemarks'
@@ -49,13 +55,16 @@ requirejs([
                         // code3: csvData[i][j].code3,
                         // country: csvData[i][j].country
                     };
+                    stationName = csvData[i][j].stationName;
+                    country = stationName.slice(0, 5);
                 } else {
                     console.log("Read layer type in error");
                 }
 
                 // create AgroSphere placemark
                 let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
-                agroPK.placemark.country = userobject.country;
+                    agroPK.placemark.country = country;
+
                 // console.log(agroPK.placemark.country)
 
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.

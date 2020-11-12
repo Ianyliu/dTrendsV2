@@ -95,6 +95,19 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
+        // let parentMenu = document.getElementById("accordion");
+
+        // controls.createFirstLayer('Disease Projection')
+        // controls.createFirstLayer('Food Security')
+
+        // for (let i = 0; i < firstL.length; i++) {
+        //     controls.createFirstLayer(firstL[i])
+        // }
+
+        console.log(newGlobe.layers)
+
+        alert('Welcome to the A World Bridge COVID Toolkit! Our application works best on the most recent version of Chrome. If you are experiencing any problems, please try switching a browser.')
+
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
             if (firstL[i] === 'Disease Projection') {
@@ -408,10 +421,12 @@ requirejs([
             let toggle = this;
             if (toggle.checked === true) {
                 document.getElementById("COVID-category").disabled = false;
-                document.getElementById("options_div").visibility = "hidden";
+                // document.getElementById("options_div").visibility = "visible";
+                // document.getElementById("continentList").visibility = "visible";
             } else {
                 document.getElementById("COVID-category").disabled = true;
-                document.getElementById("options_div").visibility = "visible";
+                // document.getElementById("options_div").visibility = "hidden";
+                // document.getElementById("continentList").visibility = "hidden";
             }
         });
 
@@ -453,8 +468,6 @@ requirejs([
             //     console.log('hey!!!')
             //     console.log(divid.substring(1) + "-a")
             // }
-
-
             $('#accordion').find("a[aria-expanded='true']")
                 .not("a[data-parent='#accordion']")
                 .not(this)
@@ -704,6 +717,8 @@ requirejs([
 
         //selecting placemark creates pop-up
         newGlobe.addEventListener("click", controls.handleMouseCLK);
+        //hovering over placemark creates pop-up
+        newGlobe.addEventListener("mousemove", controls.handleMouseMove);
 
     });
 
