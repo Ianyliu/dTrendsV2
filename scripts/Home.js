@@ -718,7 +718,7 @@ requirejs([
         //selecting placemark creates pop-up
         newGlobe.addEventListener("click", controls.handleMouseCLK);
         //hovering over placemark creates pop-up
-        newGlobe.addEventListener("hover", controls.handleMouseMove);
+        newGlobe.addEventListener("mousemove", controls.handleMouseMove);
 
     });
 

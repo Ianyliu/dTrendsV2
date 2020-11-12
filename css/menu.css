@@ -23,7 +23,7 @@
   right: 20px;
   z-index: 99;
   font-size: 13px;
-  display: table-cell;
+  display: none;
   vertical-align: middle;
   line-height: 1%;
 }
