@@ -36,7 +36,7 @@ let serverConfig = {
     Session_db: 'dtrends',
     Upload_db: 'dtrends',
 
-    Server_Port: 9091,
+    Server_Port: 9092,
 
     // local_URL : "",
     // local_URL : "http://viewer.usgs.aworldbridgelabs.com",

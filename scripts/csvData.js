@@ -20,7 +20,7 @@ define(['./jquery-csv-1.0.11'], function () {
                 success: function (file_content) {
                     csvString = file_content;
                     csvData.push($.csv.toObjects(csvString));
-                     console.log($.csv.toObjects(csvString))
+                     // console.log($.csv.toObjects(csvString))
                 }
             });
         }
