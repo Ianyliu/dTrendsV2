@@ -17,7 +17,7 @@ requirejs([
 
     genPLPK(dataTypes, csvData);
 
-    console.log(csvData)
+    // console.log(csvData)
 
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere
@@ -46,14 +46,15 @@ requirejs([
                         country: csvData[i][j].country
                     };
                     country = csvData[i][j].country;
-                    console.log(country)
+                    //console.log(country)
+                    //console.log(csvData[i][j].code3)
                 } else if (layerType[i] === 'Weather Station') {
                     // labelString = csvData[i][j].code3;
                     aLayer.layerType = 'Weather_Station_Placemarks'
                     imgsource = '/images/sun.png';
                     userobject = {
-                        // code3: csvData[i][j].code3,
-                        // country: csvData[i][j].country
+                        code3: csvData[i][j].code3,
+                        country: csvData[i][j].stationName
                     };
                     stationName = csvData[i][j].stationName;
                     country = stationName.slice(0, 5);
@@ -64,9 +65,9 @@ requirejs([
                 // create AgroSphere placemark
                 let agroPK = new imagePK(lat, lon, layerType[i], aLayer.layerType, imgsource)
                     agroPK.placemark.country = country;
-
-                // console.log(agroPK.placemark.country)
-
+                    agroPK.placemark.stationName = stationName;
+                 //console.log(agroPK.placemark.country)
+                //console.log(agroPK.placemark.stationName)
                 // add AgroSphere placemark onto AgroSphere Placemark Layer.
                 aLayer.addRenderable(agroPK.placemark);
                 // Add the placemarks layer to the World Window's layer list.
