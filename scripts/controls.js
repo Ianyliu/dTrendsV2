@@ -1295,7 +1295,7 @@ define([
             //  console.log(pickedPM)
 
             if (pickedPM instanceof WorldWind.Placemark) {
-                console.log("picked");
+                // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
                 } else if (pickedPM.layer.layerType === 'Country_Placemarks') {

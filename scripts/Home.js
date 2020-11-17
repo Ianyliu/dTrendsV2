@@ -104,7 +104,7 @@ requirejs([
         //     controls.createFirstLayer(firstL[i])
         // }
 
-        console.log(newGlobe.layers)
+        // console.log(newGlobe.layers)
 
         alert('Welcome to the A World Bridge COVID Toolkit! Our application works best on the most recent version of Chrome. If you are experiencing any problems, please try switching a browser.')
 
@@ -290,7 +290,7 @@ requirejs([
             //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
             //     } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
             // });
-            console.log('clicked')
+            // console.log('clicked')
         });
 
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {

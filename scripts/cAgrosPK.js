@@ -17,7 +17,7 @@ requirejs([
 
     genPLPK(dataTypes, csvData);
 
-    console.log(csvData)
+    // console.log(csvData)
 
     function genPLPK(layerType, csvData) {
         // create placemark layer for AgroSphere
