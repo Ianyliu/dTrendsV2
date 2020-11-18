@@ -1096,6 +1096,7 @@ define([
             max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
+            // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
                 //updates text
 
@@ -1110,7 +1111,10 @@ define([
         });
         //display current date
         curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
-        $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        // $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+
+        // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        $('#amount').val(toDate.val());
     };
 
     //range slider; sets date range for date slider
@@ -1298,13 +1302,19 @@ define([
                 // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
-                } else if (pickedPM.layer.layerType === 'Country_Placemarks'||pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
+                } else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
                     let foodsecuritya = "FoodSecurity-a";
                     let foodsecurity = "FoodSecurity"
                     let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
                     let agrofoodsecurity = "FoodSecurity-Agrosphere"
 
                     //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    } else {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.stationName + " ";
+                    }
+
                     document.getElementById("controls").style.display = 'block';
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
