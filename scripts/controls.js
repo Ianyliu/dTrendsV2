@@ -1292,19 +1292,19 @@ define([
 
         pickListCLK.objects.forEach(function (value) {
             let pickedPM = value.userObject;
-            //  console.log(pickedPM)
+              //console.log(pickedPM)
 
             if (pickedPM instanceof WorldWind.Placemark) {
                 // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
-                } else if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                } else if (pickedPM.layer.layerType === 'Country_Placemarks'||pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
                     let foodsecuritya = "FoodSecurity-a";
                     let foodsecurity = "FoodSecurity"
                     let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
                     let agrofoodsecurity = "FoodSecurity-Agrosphere"
 
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
                     document.getElementById("controls").style.display = 'block';
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
@@ -1320,6 +1320,7 @@ define([
                     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
                     document.getElementById(agrofoodsecurity).style.height = '';
                 }
+
             }
 
         })
