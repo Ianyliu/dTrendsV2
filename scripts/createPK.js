@@ -15,7 +15,6 @@ define([
 
         // generatePlacemarkLayer(csvdata);
 
-
         // request the data for placemarks with given date and country
         $.ajax({
             url: '/1dData',

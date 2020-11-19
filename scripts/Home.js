@@ -22,8 +22,8 @@ requirejs([
     let date1 = dataAll.arrDate[0];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
-    console.log(date1)
-    console.log(date2)
+    // console.log(date1)
+    // console.log(date2)
 
     if(date1 !== undefined && date2 !== undefined) {
         createPK([date1.Date, date2.Date], "Confirmed", "init");
