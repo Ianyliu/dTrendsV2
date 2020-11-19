@@ -3,9 +3,8 @@ define([
     , './dataAll'
     , './csvData'
     , './LayerManager'
-    , './createPK',
-    './cAgrosPK'
-], function (newGlobe, dataAll,csvD, LayerManager, createPK,createimgPK) {
+    , './covidPK'
+], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
 
     let layerManager = new LayerManager(newGlobe);
@@ -68,7 +67,7 @@ define([
     //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
@@ -78,7 +77,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == activecases) {
+                            } else if (d.userProperties.Type == "Active Cases") {
                                 numA += d.userProperties.Number;
                             }
                         }
@@ -849,7 +848,7 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type == categoryS) {
@@ -892,7 +891,7 @@ define([
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
-                if (elem.continent !== continentS && elem.layerType !== 'Country_Placemarks' && elem.layerType !== 'Weather_Station_Placemarks') {
+                if (elem.continent !== continentS && elem.layerType == "H_PKLayer") {
                     if (continentS == 'All Continents') {
                         elem.hide = false;
                         elem.enabled = true;
@@ -955,7 +954,7 @@ define([
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {                        elem.renderables.forEach(function (d) {
+                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {                        elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
                                 if (d.userProperties.Date === dataAll.arrDate[i].Date) {
                                     d.enabled = d.userProperties.Type === categoryS;
@@ -1215,7 +1214,7 @@ define([
                     //creates placemarks based on range selected
                     if (speed) {
                         console.log("fast");
-                        createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
                     }
 
                     //ensures date slider is shown and range slider is hidden; edit mode is closed
@@ -1265,8 +1264,8 @@ define([
 
                     //creates placemarks based on range selected
                     if (speed) {
-                        console.log("fast");
-                        createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        // console.log("fast");
+                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
                     }
 
                     $(this).dialog("close");
@@ -1312,9 +1311,9 @@ define([
 
                     //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
                     if (pickedPM.layer.layerType === 'Country_Placemarks') {
-                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.userProperties.country + " ";
                     } else {
-                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.stationName + " ";
+                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
                     }
 
                     document.getElementById("controls").style.display = 'block';
@@ -1372,9 +1371,9 @@ define([
                 //     sitePopUp(pickedPM);
                 // }
                 if (pickedPM.layer.layerType === 'Country_Placemarks') {
-                    content = "<p><strong>Country:</strong> " + pickedPM.country + "</p>";
+                    content = "<p><strong>Country:</strong> " + pickedPM.userProperties.country + "</p>";
                 } else if (pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
-                    content = "<p><strong>Weather Station:</strong> " + pickedPM.stationName +
+                    content = "<p><strong>Weather Station:</strong> " + pickedPM.userProperties.stationName +
                         "</p>";
                 }
 
