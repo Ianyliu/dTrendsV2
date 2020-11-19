@@ -3,9 +3,6 @@ requirejs.config({
     baseUrl: "scripts"
 });
 
-
-
-
 requirejs([
     'globeObject'
     , 'dataAll'
