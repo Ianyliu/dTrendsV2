@@ -65,7 +65,7 @@ define([
 
     let speed = false;
 
-    //underinitial load for case numbers
+    //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
@@ -176,12 +176,14 @@ define([
 
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == currentD) {
-                            if (d.userProperties.Type === categoryS) {
+                            // console.log(currentD, categoryS);
+                            if (d.userProperties.Type == categoryS) {
                                 d.enabled = true;
+                                // console.log(d);
                             } else {
                                 d.enabled = false;
                             }
@@ -191,7 +193,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == activecases) {
+                            } else if (d.userProperties.Type == "Active Cases") {
                                 numA += d.userProperties.Number;
                             }
                         } else {
@@ -999,11 +1001,11 @@ define([
 
         //enables placemark based on the placemark properties current date and type
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type === categoryS) {
+                            if (d.userProperties.Type == categoryS) {
                                 sortLayers.push(d);
                                 d.enabled = true;
                             } else {
