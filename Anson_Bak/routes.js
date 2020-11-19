@@ -14,12 +14,59 @@ module.exports = function (app) {
         })
     });
 
+    // let firstDate, lastSecondDate;
     app.get('/validateDate', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
         // let validDateQuery = "SELECT SUBSTRING(RID, 1, 10) AS newRID From dtrends.layers GROUP BY SUBSTRING(RID,1,10);";
         let validDateQuery = "SELECT Date From dtrends.layers GROUP BY Date order by Date;";
         con_DT.query(validDateQuery, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                // firstDate = results[0].Date;
+                // lastSecondDate = results[results.length - 1].Date;
+
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
+
+    app.get('/1dData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        let oneDaysQ = "select * from dtrends.layers where Date >= ? AND Date <= ? order by CountryName, Date;";
+        con_DT.query(oneDaysQ, [req.query.date[0], req.query.date[1]], function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                // console.log(results);
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
+
+    app.get('/majorData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        let majorQ = "select * from dtrends.layers where Date < ? order by CountryName, Date";
+        con_DT.query(majorQ, req.query.Date, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
+
+    app.get('/lastData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        let lastQ = "select * from dtrends.layers where Date = ? order by CountryName, Date";
+        con_DT.query(lastQ, req.query.Date, function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});
@@ -58,11 +105,11 @@ module.exports = function (app) {
 
     });
 
-    app.get('/allPKLayers', function (req, res) {
+    app.get('/allCountry', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
-        let PKLayersQ = "select CountryName, ContinentName from dtrends.layers group by CountryName;";
-        con_DT.query(PKLayersQ, function (err, results) {
+        let countryQ = "select CountryName, ContinentName from dtrends.layers group by CountryName;";
+        con_DT.query(countryQ, function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});
@@ -73,11 +120,12 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/allPKs', function (req, res) {
+    app.post('/byCountry', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
+        // console.log(req.body);
 
         let pkQ = "select * from dtrends.layers where CountryName = ?;";
-        con_DT.query(pkQ, req.query.country, function (err, results) {
+        con_DT.query(pkQ, req.body.country, function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "An unexpected error occurred !"});
@@ -99,6 +147,25 @@ module.exports = function (app) {
                 res.json({"error": true, "message": "An unexpected error occurred !"});
             } else {
                 // console.log(results);
+                res.json({"error": false, "data": results});
+            }
+        });
+    });
+
+    app.get('/chartData', function (req, res) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        let dName = req.query.dName;
+        let dTo = req.query.dateTo;
+        let dFrom = req.query.dateFrom;
+
+        // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.layers;";
+        let statAll = "SELECT * From dtrends.layers WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "';";
+
+        con_DT.query(statAll, function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
                 res.json({"error": false, "data": results});
             }
         });

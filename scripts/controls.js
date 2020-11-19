@@ -65,7 +65,7 @@ define([
 
     let speed = false;
 
-    //underinitial load for case numbers
+    //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
@@ -176,12 +176,14 @@ define([
 
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == currentD) {
-                            if (d.userProperties.Type === categoryS) {
+                            // console.log(currentD, categoryS);
+                            if (d.userProperties.Type == categoryS) {
                                 d.enabled = true;
+                                // console.log(d);
                             } else {
                                 d.enabled = false;
                             }
@@ -191,7 +193,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == activecases) {
+                            } else if (d.userProperties.Type == "Active Cases") {
                                 numA += d.userProperties.Number;
                             }
                         } else {
@@ -999,11 +1001,11 @@ define([
 
         //enables placemark based on the placemark properties current date and type
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type === categoryS) {
+                            if (d.userProperties.Type == categoryS) {
                                 sortLayers.push(d);
                                 d.enabled = true;
                             } else {
@@ -1096,6 +1098,7 @@ define([
             max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
+            // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
                 //updates text
 
@@ -1110,7 +1113,10 @@ define([
         });
         //display current date
         curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
-        $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        // $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+
+        // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        $('#amount').val(toDate.val());
     };
 
     //range slider; sets date range for date slider
@@ -1298,13 +1304,19 @@ define([
                 // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
-                } else if (pickedPM.layer.layerType === 'Country_Placemarks'||pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
+                } else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
                     let foodsecuritya = "FoodSecurity-a";
                     let foodsecurity = "FoodSecurity"
                     let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
                     let agrofoodsecurity = "FoodSecurity-Agrosphere"
 
                     //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    } else {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.stationName + " ";
+                    }
+
                     document.getElementById("controls").style.display = 'block';
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
@@ -1348,7 +1360,7 @@ define([
                 //console.log("hovered");
                 let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
                 let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-                let content;
+                let content = "";
 
                 let popover = document.getElementById('popover');
                 popover.style.position = "absolute";

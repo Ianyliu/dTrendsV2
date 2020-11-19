@@ -25,6 +25,8 @@ requirejs([
     // console.log(date1)
     // console.log(date2)
 
+    // console.log(newGlobe.layers);
+
     if(date1 !== undefined && date2 !== undefined) {
         createPK([date1.Date, date2.Date], "Confirmed", "init");
     } else {
@@ -180,17 +182,17 @@ requirejs([
                 // let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
                 let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
-                console.log(this.value);
+                // console.log(this.value);
                 // console.log(toggle.checked);
                 if (toggle.checked === true) {
-                    console.log('checked');
+                    // console.log('checked');
                     // $(".countries-check").prop("checked", true);
                     // console.log(countries.value);
                     // console.log(countries.checked);
                     // console.log(countries.length)
                     // togglePK(countries.value,true);
-                    console.log(newGlobe.layers)
-                    console.log(findPKIndex);
+                    // console.log(newGlobe.layers)
+                    // console.log(findPKIndex);
                     newGlobe.layers[findLayerIndex].enabled = true;
                     // for (let i =0; i <countries.length; i++) {
                     //     let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
@@ -210,9 +212,9 @@ requirejs([
                     // console.log(countries.value);
                     // console.log(countries.checked);
                     // togglePK(countries.value,false);
-                    console.log('unchecked');
-                    console.log(newGlobe.layers)
-                    console.log(findLayerIndex);
+                    // console.log('unchecked');
+                    // console.log(newGlobe.layers)
+                    // console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = false;
 
                     // document.getElementById("FoodSecurity-Agrosphere-Country").style.height = '0px';
@@ -299,10 +301,10 @@ requirejs([
                 let unchecked_num = document.getElementsByClassName('countries-check').checked = false;
                 let checked_num = document.getElementsByClassName('countries-check').checked = true;
                 let toggle = this;
-                console.log(this.value);
-                console.log(this.checked)
-                console.log(checked_num.length)
-                console.log(unchecked_num.length)
+                // console.log(this.value);
+                // console.log(this.checked)
+                // console.log(checked_num.length)
+                // console.log(unchecked_num.length)
 
 
                 if (toggle.checked === true) {
@@ -312,7 +314,7 @@ requirejs([
 
                     let othertoggles = $('#FoodSecurity--Agrosphere--Country').find("input")
                         .not(toggle); //Selects all other toggles besides the one just checked
-                    console.log(othertoggles)//this selects all of the other toggles
+                    // console.log(othertoggles)//this selects all of the other toggles
 
                     $('.countries-check').each(function() {
                         let eachothertoggle = this;
@@ -348,7 +350,7 @@ requirejs([
                             eachothertoggle.checked = false;
                             togglePK(eachothertoggle.value, false);
                         }
-                        console.log(this);//this selects individual checkboxes one by one
+                        // console.log(this);//this selects individual checkboxes one by one
 
                         // if(checked_num.length >= 2) {
                         //     document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
@@ -400,7 +402,7 @@ requirejs([
                             document.getElementById("Country-alltoggle").checked= false;
                             newGlobe.layers[findLayerIndex].enabled = false;
                         }
-                        console.log(this);//this selects individual checkboxes one by one
+                        // console.log(this);//this selects individual checkboxes one by one
                     });
 
                     // if(unchecked_num.length = 0) {
@@ -412,7 +414,7 @@ requirejs([
 
                 // togglePK(toggle.value, toggle.checked);
             });
-            console.log('clicked')
+            // console.log('clicked')
         });
 
 
@@ -434,12 +436,12 @@ requirejs([
             let toggle =  document.getElementById("Country-alltoggle");
             let findLayerIndex =  newGlobe.layers.findIndex(ele =>  ele.displayName === 'Country_PK');
             if (toggle.checked === false) {
-                console.log('checked');
+                // console.log('checked');
                 newGlobe.layers[findLayerIndex].enabled = true;
                 toggle.checked = true;
             } else if(toggle.checked === true) {
                 toggle.checked = false;
-                console.log('unchecked');
+                // console.log('unchecked');
                 newGlobe.layers[findLayerIndex].enabled = false;
             }
         });
