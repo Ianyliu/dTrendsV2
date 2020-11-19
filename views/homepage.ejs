@@ -851,7 +851,7 @@
     <div id="popover" style="border-style: solid; opacity: 0;" hidden></div>
 
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" id="tutorial" data-toggle="modal" data-target="#tutorialmodal">Tutorial</button>
+    <button type="button" class="btn btn-info btn-lg" id="tutorial" data-toggle="modal" data-target="#tutorialmodal" disabled hidden>Tutorial</button>
 
     <!-- Tutorial Modal -->
     <div id="tutorialmodal" class="modal fade" role="dialog">
@@ -943,6 +943,7 @@
 <div id="overlay">
     <div class="spinner"></div>
 </div>
+<div id="popover" style="border-style: solid; opacity: 0;" hidden></div>
 <script>
     $(document).ready(function () {
         // $.get("path to csv", function (data){
@@ -959,9 +960,13 @@
 
     });
     let overlay = document.getElementById("overlay");
+    let tutorial = document.getElementById("tutorial");
 
     function hideDialog (){
         overlay.style.display = 'none';
+        tutorial.hidden = false;
+        tutorial.disabled = false;
+        tutorial.style.display = 'table-cell';
     }
 
     function onFunction() {

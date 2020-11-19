@@ -104,7 +104,9 @@ requirejs([
         //     controls.createFirstLayer(firstL[i])
         // }
 
-        console.log(newGlobe.layers)
+        // console.log(newGlobe.layers)
+
+        alert('Welcome to the A World Bridge COVID Toolkit! Our application works best on the most recent version of Chrome. If you are experiencing any problems, please try switching a browser.')
 
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
@@ -128,8 +130,7 @@ requirejs([
                         // throw error
                     }
                 }
-            }
-            else if (firstL[i] === 'Food Security') {
+            } else if (firstL[i] === 'Food Security') {
                 for (let j = 0; j < foodsecondL.length; j++) {
                     controls.createSecondLayer(firstL[i],foodsecondL[j]);
                     if (foodsecondL[j] === 'Agrosphere') {
@@ -289,7 +290,7 @@ requirejs([
             //         document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country " + this.value;
             //     } else {document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country "}
             // });
-            console.log('clicked')
+            // console.log('clicked')
         });
 
         $("#FoodSecurity--Agrosphere--Country").find("input").on("click", function (e) {
@@ -716,6 +717,10 @@ requirejs([
 
         //selecting placemark creates pop-up
         newGlobe.addEventListener("click", controls.handleMouseCLK);
+        //selecting popover creates pop-up
+        document.getElementById("popover").addEventListener("click", controls.handleMouseCLK);
+        //hovering over placemark creates pop-up
+        newGlobe.addEventListener("mousemove", controls.handleMouseMove);
 
     });
 
