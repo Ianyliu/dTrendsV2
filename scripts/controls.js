@@ -1360,7 +1360,7 @@ define([
                 //console.log("hovered");
                 let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
                 let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-                let content;
+                let content = "";
 
                 let popover = document.getElementById('popover');
                 popover.style.position = "absolute";
