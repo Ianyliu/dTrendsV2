@@ -212,9 +212,9 @@ requirejs([
                     // console.log(countries.value);
                     // console.log(countries.checked);
                     // togglePK(countries.value,false);
-                    console.log('unchecked');
-                    console.log(newGlobe.layers)
-                    console.log(findLayerIndex);
+                    // console.log('unchecked');
+                    // console.log(newGlobe.layers)
+                    // console.log(findLayerIndex);
                     newGlobe.layers[findLayerIndex].enabled = false;
 
                     // document.getElementById("FoodSecurity-Agrosphere-Country").style.height = '0px';
