@@ -944,18 +944,25 @@ define([
     }
 
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
-    let timelapse = function () {
+    let timelapse = function (fromdate, todate) {
         l = setInterval(function () {
             if (!play) {
+                let j = dataAll.arrDate.findIndex(arrDate => arrDate.Date === fromdate);
+                console.log(j)
                 //updates current date picker and date slider
                 curDate.val(dataAll.arrDate[i].Date);
                 let val = new Date(dataAll.arrDate[i].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
+
                 $("#amount").val(dataAll.arrDate[i].Date);
+                console.log(i)
+                console.log(fromdate)
+                console.log(dataAll.arrDate[i].Date)
+                console.log(val)
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {                        elem.renderables.forEach(function (d) {
+                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
                                 if (d.userProperties.Date === dataAll.arrDate[i].Date) {
                                     d.enabled = d.userProperties.Type === categoryS;
@@ -971,7 +978,7 @@ define([
                 i++;
 
                 //when date reaches 'To' date aka end of date range, stop animation
-                if (toDate.val() === dataAll.arrDate[i].Date) {
+                if (todate === dataAll.arrDate[i].Date) {
                     curDate.val(dataAll.arrDate[i].Date);
 
                     $('#pauseTL').hide();
@@ -1100,8 +1107,11 @@ define([
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
+                console.log(ui.value)
+                console.log(ui.value.type) //undefined
+                console.log(toDate.val())
+                console.log(new Date(toDate.val()).getTime())
                 //updates text
-
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
@@ -1117,6 +1127,7 @@ define([
 
         // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
         $('#amount').val(toDate.val());
+        console.log($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"))
     };
 
     //range slider; sets date range for date slider
@@ -1317,7 +1328,7 @@ define([
                         document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.stationName + " ";
                     }
 
-                    document.getElementById("controls").style.display = 'block';
+                    openTabLeft(event, 'controls');
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
                     document.getElementById(foodsecurity).setAttribute("aria-expanded", "true");

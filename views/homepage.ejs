@@ -325,11 +325,11 @@
             <span class="glyphicon glyphicon-tasks"></span></a>
     </li>
     <li>
-        <a class="tablinksLeft" onclick="openTabLeft(event, 'options_div')" title="Disease Trends">
+        <a id="diseasetrends-tab" class="tablinksLeft" onclick="openTabLeft(event, 'options_div')" style="visibility: hidden" title="Disease Trends">
             <span class="glyphicon glyphicon-globe"></span></a>
     </li>
     <li>
-        <a class="tablinksLeft" onclick="openTabLeft(event, 'drawing')" title="Drawing Tools">
+        <a id="drawingtools-tab" class="tablinksLeft" onclick="openTabLeft(event, 'drawing')" style="visibility: hidden" title="Drawing Tools">
             <span class="glyphicon glyphicon-pencil"></span></a>
     </li>
     <li>
@@ -355,7 +355,7 @@
             Your browser does not support HTML5 Canvas.
         </canvas>
 
-        <div style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;">
+        <div id="datesliderdiv" style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;" hidden>
             <h4 id="labelSlider" style="color: white; display: inline-block;">Date Slider:</h4>
             <h4 id="labelRangeSlider" style="color: white; display: none;">Date Range Selector (select slider min/max
                 dates):</h4>
