@@ -34,11 +34,9 @@ requirejs([
     }
 
     let fromDate = $('#fromdatepicker');
-    console.log($('.fromdatepicker'))
 
     let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
-    console.log(curDate)
 
     const firstL = ['Disease Projection','Food Security']
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
@@ -586,8 +584,6 @@ requirejs([
         });
         fromDate.val(dataAll.arrDate[0].Date);
         toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        console.log(dataAll.arrDate[0].Date)
-        console.log(dataAll.arrDate[dataAll.arrDate.length - 1].Date)
         curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         //loads initial case numbers
         controls.initCaseNum();
