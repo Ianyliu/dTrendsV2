@@ -6,7 +6,7 @@ define([
     , './covidPK'
 ], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
-    console.log(csvD)
+
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
