@@ -1,5 +1,5 @@
 define(['./WorldWindShim'],function (WorldWind) {
-    let imagePK = function (lat, long,datatype, iconcode,imgSource) {
+    let imagePK = function (lat, long,imgSource) {
         //assigns the agroshere url for images to be located
         const  agro_url = "https://worldwind.arc.nasa.gov/agrosphere"
         // wrap up World Wind Placemark object
@@ -7,7 +7,7 @@ define(['./WorldWindShim'],function (WorldWind) {
         placemarkAttributes.imageSource = agro_url + imgSource;
         // console.log(placemarkAttributes.imageSource);
 
-        placemarkAttributes.imageScale = 5; //placemark size!
+        placemarkAttributes.imageScale = 0.5; //placemark size!
 
         placemarkAttributes.imageOffset = new WorldWind.Offset(
             WorldWind.OFFSET_FRACTION, 0.3,
@@ -20,14 +20,14 @@ define(['./WorldWindShim'],function (WorldWind) {
 
 
         let highlightAttributes = new WorldWind.PlacemarkAttributes(placemarkAttributes);
-        highlightAttributes.imageScale = 5;
+        highlightAttributes.imageScale = 1;
 
         let placemarkPosition = new WorldWind.Position(lat, long, 0);
 
-        this.placemark = new WorldWind.Placemark(placemarkPosition, true, placemarkAttributes);
-        this.placemark.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
-        this.placemark.attributes = placemarkAttributes;
-        this.placemark.highlightAttributes = highlightAttributes;
+        this.pk = new WorldWind.Placemark(placemarkPosition, false, placemarkAttributes);
+        this.pk.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
+        this.pk.attributes = placemarkAttributes;
+        this.pk.highlightAttributes = highlightAttributes;
     };
 
     return imagePK

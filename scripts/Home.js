@@ -8,11 +8,11 @@ requirejs([
     , 'dataAll'
     , 'LayerManager'
     , '3rdPartyLibs/Chart-2.9.3.min.js'
-    , 'createPK'
+    , 'covidPK'
     , 'controls'
     ,'csvData'
     , 'cAgrosPK'
-], function (newGlobe, dataAll, LayerManager, Chart, createPK, controls, csvD) {
+], function (newGlobe, dataAll, LayerManager, Chart, covidPK, controls, csvD) {
     "use strict";
 
     let layerManager = new LayerManager(newGlobe);
@@ -25,10 +25,10 @@ requirejs([
     // console.log(date1)
     // console.log(date2)
 
-    // console.log(newGlobe.layers);
+    console.log(newGlobe.layers);
 
     if(date1 !== undefined && date2 !== undefined) {
-        createPK([date1.Date, date2.Date], "Confirmed", "init");
+        covidPK([date1.Date, date2.Date], "Confirmed", "init");
     } else {
         alert("Error! COVID data couldn't be loaded!")
     }

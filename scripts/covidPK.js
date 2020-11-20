@@ -9,7 +9,7 @@ define([
 
     let pLayer;
 
-    function createPK(date, type, flag, countries, continents) {
+    function covidPK(date, type, flag, countries, continents) {
 
         // let csvdata = loadCSVData();
 
@@ -168,6 +168,6 @@ define([
         }
     }
 
-    return createPK;
+    return covidPK;
 });
 
