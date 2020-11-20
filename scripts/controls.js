@@ -63,7 +63,7 @@ define([
     let numA = 0;
 
     let speed = false;
-    console.log(newGlobe.layers)
+    // console.log(newGlobe.layers)
     //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
@@ -954,23 +954,29 @@ define([
 
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
     let timelapse = function () {
+        var a = dataAll.arrDate.findIndex(dat => dat.Date === fromDate.val())
         l = setInterval(function () {
             if (!play) {
                 //updates current date picker and date slider
-                curDate.val(dataAll.arrDate[i].Date);
-                console.log(dataAll.arrDate[i].Date)
-                console.log(fromDate.val())
-                //console.log(newGlobe.layers.findIndex(ele => ele.name == fromDate.val()))
-                console.log(toDate.val())
-                let val = new Date(dataAll.arrDate[i].Date).getTime() / 1000;
+
+
+                // console.log(dataAll)
+                // console.log(fromDate.val())
+
+                // console.log(toDate.val())
+                // console.log(a)
+                // console.log(dataAll.arrDate[a].Date)
+                curDate.val(dataAll.arrDate[a].Date);
+                let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
-                $("#amount").val(dataAll.arrDate[i].Date);
+                $("#amount").val(dataAll.arrDate[a].Date);
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {                        elem.renderables.forEach(function (d) {
+                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                        elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
-                                if (d.userProperties.Date === dataAll.arrDate[i].Date) {
+                                if (d.userProperties.Date === dataAll.arrDate[a].Date) {
                                     d.enabled = d.userProperties.Type === categoryS;
                                 } else {
                                     d.enabled = false;
@@ -978,20 +984,22 @@ define([
                             }
                         })
                     }
+
                     newGlobe.redraw()
                 });
 
-                i++;
+
 
                 //when date reaches 'To' date aka end of date range, stop animation
-                if (toDate.val() === dataAll.arrDate[i].Date) {
-                    curDate.val(dataAll.arrDate[i].Date);
+                if (toDate.val() === dataAll.arrDate[a].Date) {
+                    curDate.val(dataAll.arrDate[a].Date);
 
                     $('#pauseTL').hide();
                     $('#toggleTL').show();
 
                     clearI();
                 }
+                a++;
             }
 
 
