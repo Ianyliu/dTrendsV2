@@ -959,13 +959,6 @@ define([
             if (!play) {
                 //updates current date picker and date slider
 
-
-                // console.log(dataAll)
-                // console.log(fromDate.val())
-
-                // console.log(toDate.val())
-                // console.log(a)
-                // console.log(dataAll.arrDate[a].Date)
                 curDate.val(dataAll.arrDate[a].Date);
                 let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
