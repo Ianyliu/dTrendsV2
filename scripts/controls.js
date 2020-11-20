@@ -7,15 +7,15 @@ define([
     './cAgrosPK'
 ], function (newGlobe, dataAll,csvD, LayerManager, createPK,createimgPK) {
     "use strict";
-
+    console.log(csvD)
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
     let firstLayers =[];
     let secondLayers =[];
 
-    let fromDate = $('.fromdatepicker');
-    let toDate = $('.todatepicker');
+    let fromDate = $('#fromdatepicker');
+    let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
 
     let dataTypes = ['Country', 'Weather Station'];
@@ -64,7 +64,7 @@ define([
     let numA = 0;
 
     let speed = false;
-
+    console.log(newGlobe.layers)
     //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
@@ -163,7 +163,15 @@ define([
             }
         });
     }
-
+    let updateFrom = function (fromD){
+        fromDate.val(fromD);
+        console.log(fromD)
+        console.log(fromDate.val(fromD))
+    }
+    let updateTo = function (toD){
+        toDate.val(toD);
+        console.log(toD)
+    }
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
     let updateCurr = function (currentD) {
         //reset case numbers
@@ -173,7 +181,8 @@ define([
         numA = 0;
 
         curDate.val(currentD);
-
+        console.log(currentD)
+        console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
@@ -189,6 +198,7 @@ define([
                             }
                             if (d.userProperties.Type == "Confirmed Cases") {
                                 numC += d.userProperties.Number;
+                                // console.log(d.userProperties.Number)
                             } else if (d.userProperties.Type == "Deaths") {
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
@@ -949,6 +959,10 @@ define([
             if (!play) {
                 //updates current date picker and date slider
                 curDate.val(dataAll.arrDate[i].Date);
+                console.log(dataAll.arrDate[i].Date)
+                console.log(fromDate.val())
+                //console.log(newGlobe.layers.findIndex(ele => ele.name == fromDate.val()))
+                console.log(toDate.val())
                 let val = new Date(dataAll.arrDate[i].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
                 $("#amount").val(dataAll.arrDate[i].Date);
@@ -1043,13 +1057,13 @@ define([
     }
 
     //under third left tab; changes starting date for timelapse when 'From' date is changed
-    let onFrom = function () {
-        for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
-            if (dataAll.arrDate[j].Date === fromDate.val()) {
-                i = j;
-            }
-        }
-    };
+    // let onFrom = function () {
+    //     for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
+    //         if (dataAll.arrDate[j].Date === fromDate.val()) {
+    //             i = j;
+    //         }
+    //     }
+    // };
 
     //under third left tab; filter slider for lowest to highest infections
     let infectionSlider = function () {
@@ -1657,6 +1671,8 @@ define([
     return {
         initCaseNum,
         subDropdown,
+        updateFrom,
+        updateTo,
         updateCurr,
         // onDiseaseClick,
         // onAgrosphereClick,
@@ -1667,7 +1683,7 @@ define([
         pause,
         clearI,
         updateHIS,
-        onFrom,
+        // onFrom,
         infectionSlider,
         opacitySlider,
         dateSlider,

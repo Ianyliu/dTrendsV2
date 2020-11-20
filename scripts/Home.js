@@ -33,9 +33,12 @@ requirejs([
         alert("Error! COVID data couldn't be loaded!")
     }
 
-    let fromDate = $('.fromdatepicker');
-    let toDate = $('.todatepicker');
+    let fromDate = $('#fromdatepicker');
+    console.log($('.fromdatepicker'))
+
+    let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
+    console.log(curDate)
 
     const firstL = ['Disease Projection','Food Security']
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
@@ -567,9 +570,7 @@ requirejs([
         layerManager.categoryList();
 
         //sets date picker values
-        fromDate.val(dataAll.arrDate[0].Date);
-        toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+
 
         //when user changes the date, globe will redraw to show the placemarks of current day
         curDate.change(function () {
@@ -578,9 +579,16 @@ requirejs([
 
         //when user changes the 'From' date, updates starting date for timelapse
         fromDate.change(function () {
-            controls.onFrom();
+            controls.updateFrom(fromDate.val());
         });
-
+        toDate.change(function (){
+            controls.updateTo(toDate.val());
+        });
+        fromDate.val(dataAll.arrDate[0].Date);
+        toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        console.log(dataAll.arrDate[0].Date)
+        console.log(dataAll.arrDate[dataAll.arrDate.length - 1].Date)
+        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         //loads initial case numbers
         controls.initCaseNum();
 
@@ -665,7 +673,8 @@ requirejs([
             $('#pauseTL').show();
             $('#toggleTL').hide();
 
-            curDate.val(fromDate.val());
+            curDate.val(fromDate);
+            console.log(curDate)
 
             controls.timelapse();
         });
