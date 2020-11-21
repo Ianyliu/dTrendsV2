@@ -3,37 +3,33 @@ define([
     , './dataAll'
     , './csvData'
     , './LayerManager'
-    , './createPK',
-    './cAgrosPK'
-], function (newGlobe, dataAll,csvD, LayerManager, createPK,createimgPK) {
+    , './covidPK'
+], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
 
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
-    let firstLayers =[];
-    let secondLayers =[];
-
-    let fromDate = $('.fromdatepicker');
-    let toDate = $('.todatepicker');
+    let fromDate = $('#fromdatepicker');
+    let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
 
-    let dataTypes = ['Country', 'Weather Station'];
-    let countryL = []
+    // let dataTypes = ['Country', 'Weather Station'];
+    // let countryL = []
     let active = "active";
     let activecases = "Active Cases";
     let parentMenu = document.getElementById("accordion");
 
-    for (let i = 0; i < dataTypes.length; i++) {
-        for (let j = 0; j < csvD[i].length; j++) {
-            if (dataTypes[i] === 'Country') {
-                countryL.push(csvD[i][j].country)
-            } else if (dataTypes[i] === 'Weather Station') {
-            } else {
-                console.log("Read layer type in error");
-            }
-        }
-    }
+    // for (let i = 0; i < dataTypes.length; i++) {
+    //     for (let j = 0; j < csvD[i].length; j++) {
+    //         if (dataTypes[i] === 'Country') {
+    //             countryL.push(csvD[i][j].country)
+    //         } else if (dataTypes[i] === 'Weather Station') {
+    //         } else {
+    //             console.log("Read layer type in error");
+    //         }
+    //     }
+    // }
 
     let menuStructure;
     let cropsL = [
@@ -64,11 +60,11 @@ define([
     let numA = 0;
 
     let speed = false;
-
-    //underinitial load for case numbers
+    // console.log(newGlobe.layers)
+    //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
@@ -78,7 +74,7 @@ define([
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == activecases) {
+                            } else if (d.userProperties.Type == "Active Cases") {
                                 numA += d.userProperties.Number;
                             }
                         }
@@ -163,7 +159,15 @@ define([
             }
         });
     }
-
+    let updateFrom = function (fromD){
+        fromDate.val(fromD);
+        console.log(fromD)
+        console.log(fromDate.val(fromD))
+    }
+    let updateTo = function (toD){
+        toDate.val(toD);
+        console.log(toD)
+    }
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
     let updateCurr = function (currentD) {
         //reset case numbers
@@ -173,25 +177,29 @@ define([
         numA = 0;
 
         curDate.val(currentD);
-
+        console.log(currentD)
+        console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == currentD) {
-                            if (d.userProperties.Type === categoryS) {
+                            // console.log(currentD, categoryS);
+                            if (d.userProperties.Type == categoryS) {
                                 d.enabled = true;
+                                // console.log(d);
                             } else {
                                 d.enabled = false;
                             }
                             if (d.userProperties.Type == "Confirmed Cases") {
                                 numC += d.userProperties.Number;
+                                // console.log(d.userProperties.Number)
                             } else if (d.userProperties.Type == "Deaths") {
                                 numD += d.userProperties.Number;
                             } else if (d.userProperties.Type == "Recoveries") {
                                 numR += d.userProperties.Number;
-                            } else if (d.userProperties.Type == activecases) {
+                            } else if (d.userProperties.Type == "Active Cases") {
                                 numA += d.userProperties.Number;
                             }
                         } else {
@@ -209,87 +217,6 @@ define([
         $('#conRecoveries').text(numR);
         $('#conActive').text(numA);
     };
-
-    // //under first left tab; used to switch display between
-    // let onDiseaseClick = function (event) {
-    //
-    //     //grab the selection value
-    //     let projectionName = event.target.innerText || event.target.innerHTML;
-    //     //refresh the option display
-    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-    //
-    //     //insert foodSecurity menu corresponding to the selection
-    //     if (projectionName === "COVID-19") {
-    //         covid19();
-    //         menuStructure = {
-    //             accordianID: '#diseases',
-    //             Level1: ["COVID-19", "Influenza A", "Influenza B"],
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'Influenza A') {
-    //         influenza();
-    //         $("#diseases").css('visibility', 'visible');
-    //         menuStructure = {
-    //             accordianID: '#diseases',
-    //             Level1: [
-    //                 "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
-    //                 "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
-    //                 "H7N9","H6N1", "Not Determined"
-    //             ]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'Influenza B') {
-    //         $("#diseases").css('visibility', 'visible');
-    //         menuStructure = {
-    //             accordianID: '#diseases',
-    //             Level1: [
-    //                 "Yamagata",
-    //                 "Victoria",
-    //                 "Not Determined"
-    //             ]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     }
-    // };
-
-    // //under first left tab; used to switch display between
-    // let onAgrosphereClick = function (event) {
-    //
-    //     //grab the selection value
-    //     let projectionName = event.target.innerText || event.target.innerHTML;
-    //     //refresh the option display
-    //     $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-    //
-    //     //insert foodSecurity menu corresponding to the selection
-    //     if (projectionName === "AgroSphere") {
-    //         menuStructure = {
-    //             accordianID: '#foodSecurity',
-    //             Level1: ["Country", "Crops", "Weather"],
-    //             Level2: [countryL, cropsL, weatherL],
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'ECMWF Forecasts') {
-    //         menuStructure = {
-    //             accordianID: '#foodSecurity',
-    //             Level1: ["Temperature", "Precipitation", "Wind"]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'Sentinel Satellite Data') {
-    //         menuStructure = {
-    //             accordianID: '#foodSecurity',
-    //             Level1: [
-    //                 "Agriculture",
-    //                 "False Color (Urban)",
-    //                 "False Color (Vegetation)",
-    //                 "Geology",
-    //                 "Moisture Index",
-    //                 "Natural Color (True Color)",
-    //                 "NDVI"
-    //             ]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     }
-    // };
 
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
@@ -847,7 +774,7 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type == categoryS) {
@@ -890,7 +817,7 @@ define([
         //turn off all the placemark layers, and then turn on the layers with continent name selected.
         newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer) {
-                if (elem.continent !== continentS && elem.layerType !== 'Country_Placemarks' && elem.layerType !== 'Weather_Station_Placemarks') {
+                if (elem.continent !== continentS && elem.layerType == "H_PKLayer") {
                     if (continentS == 'All Continents') {
                         elem.hide = false;
                         elem.enabled = true;
@@ -943,19 +870,22 @@ define([
 
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
     let timelapse = function () {
+        var a = dataAll.arrDate.findIndex(dat => dat.Date === fromDate.val())
         l = setInterval(function () {
             if (!play) {
                 //updates current date picker and date slider
-                curDate.val(dataAll.arrDate[i].Date);
-                let val = new Date(dataAll.arrDate[i].Date).getTime() / 1000;
+
+                curDate.val(dataAll.arrDate[a].Date);
+                let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
-                $("#amount").val(dataAll.arrDate[i].Date);
+                $("#amount").val(dataAll.arrDate[a].Date);
 
                 //enables placemark based on the user properties date and type
                 newGlobe.layers.forEach(function (elem, index) {
-                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {                        elem.renderables.forEach(function (d) {
+                    if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
+                        elem.renderables.forEach(function (d) {
                             if (d instanceof WorldWind.Placemark) {
-                                if (d.userProperties.Date === dataAll.arrDate[i].Date) {
+                                if (d.userProperties.Date === dataAll.arrDate[a].Date) {
                                     d.enabled = d.userProperties.Type === categoryS;
                                 } else {
                                     d.enabled = false;
@@ -963,20 +893,22 @@ define([
                             }
                         })
                     }
+
                     newGlobe.redraw()
                 });
 
-                i++;
+
 
                 //when date reaches 'To' date aka end of date range, stop animation
-                if (toDate.val() === dataAll.arrDate[i].Date) {
-                    curDate.val(dataAll.arrDate[i].Date);
+                if (toDate.val() === dataAll.arrDate[a].Date) {
+                    curDate.val(dataAll.arrDate[a].Date);
 
                     $('#pauseTL').hide();
                     $('#toggleTL').show();
 
                     clearI();
                 }
+                a++;
             }
 
 
@@ -999,11 +931,11 @@ define([
 
         //enables placemark based on the placemark properties current date and type
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType !== "Country_Placemarks" && elem.layerType !== 'Weather_Station_Placemarks') {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type === categoryS) {
+                            if (d.userProperties.Type == categoryS) {
                                 sortLayers.push(d);
                                 d.enabled = true;
                             } else {
@@ -1041,13 +973,13 @@ define([
     }
 
     //under third left tab; changes starting date for timelapse when 'From' date is changed
-    let onFrom = function () {
-        for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
-            if (dataAll.arrDate[j].Date === fromDate.val()) {
-                i = j;
-            }
-        }
-    };
+    // let onFrom = function () {
+    //     for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
+    //         if (dataAll.arrDate[j].Date === fromDate.val()) {
+    //             i = j;
+    //         }
+    //     }
+    // };
 
     //under third left tab; filter slider for lowest to highest infections
     let infectionSlider = function () {
@@ -1096,6 +1028,7 @@ define([
             max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
+            // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
                 //updates text
 
@@ -1110,7 +1043,10 @@ define([
         });
         //display current date
         curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
-        $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        // $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+
+        // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
+        $('#amount').val(toDate.val());
     };
 
     //range slider; sets date range for date slider
@@ -1209,7 +1145,7 @@ define([
                     //creates placemarks based on range selected
                     if (speed) {
                         console.log("fast");
-                        createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
                     }
 
                     //ensures date slider is shown and range slider is hidden; edit mode is closed
@@ -1259,8 +1195,8 @@ define([
 
                     //creates placemarks based on range selected
                     if (speed) {
-                        console.log("fast");
-                        createPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
+                        // console.log("fast");
+                        covidPK([$('#foFrom').val(), $('#foTo').val()], categoryS, "not init", $('#filterContinents').val());
                     }
 
                     $(this).dialog("close");
@@ -1292,19 +1228,25 @@ define([
 
         pickListCLK.objects.forEach(function (value) {
             let pickedPM = value.userObject;
-            //  console.log(pickedPM)
+              //console.log(pickedPM)
 
             if (pickedPM instanceof WorldWind.Placemark) {
                 // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
-                } else if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                } else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
                     let foodsecuritya = "FoodSecurity-a";
                     let foodsecurity = "FoodSecurity"
                     let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
                     let agrofoodsecurity = "FoodSecurity-Agrosphere"
 
-                    document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                    if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.userProperties.country + " ";
+                    } else {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
+                    }
+
                     document.getElementById("controls").style.display = 'block';
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
@@ -1320,6 +1262,7 @@ define([
                     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
                     document.getElementById(agrofoodsecurity).style.height = '';
                 }
+
             }
 
         })
@@ -1347,7 +1290,7 @@ define([
                 //console.log("hovered");
                 let xOffset = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
                 let yOffset = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-                let content;
+                let content = "";
 
                 let popover = document.getElementById('popover');
                 popover.style.position = "absolute";
@@ -1359,9 +1302,9 @@ define([
                 //     sitePopUp(pickedPM);
                 // }
                 if (pickedPM.layer.layerType === 'Country_Placemarks') {
-                    content = "<p><strong>Country:</strong> " + pickedPM.country + "</p>";
+                    content = "<p><strong>Country:</strong> " + pickedPM.userProperties.country + "</p>";
                 } else if (pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
-                    content = "<p><strong>Weather Station:</strong> " + pickedPM.stationName +
+                    content = "<p><strong>Weather Station:</strong> " + pickedPM.userProperties.stationName +
                         "</p>";
                 }
 
@@ -1644,6 +1587,8 @@ define([
     return {
         initCaseNum,
         subDropdown,
+        updateFrom,
+        updateTo,
         updateCurr,
         // onDiseaseClick,
         // onAgrosphereClick,
@@ -1654,7 +1599,7 @@ define([
         pause,
         clearI,
         updateHIS,
-        onFrom,
+        // onFrom,
         infectionSlider,
         opacitySlider,
         dateSlider,

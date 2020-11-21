@@ -28,6 +28,10 @@
   line-height: 1%;
 }
 
+#selectedCountry {
+  text-align: center;
+}
+
 .panel-group .panel-heading a:after {
   content: '-';
   width: inherit;

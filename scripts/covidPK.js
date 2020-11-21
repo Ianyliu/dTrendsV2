@@ -9,12 +9,11 @@ define([
 
     let pLayer;
 
-    function createPK(date, type, flag, countries, continents) {
+    function covidPK(date, type, flag, countries, continents) {
 
         // let csvdata = loadCSVData();
 
         // generatePlacemarkLayer(csvdata);
-
 
         // request the data for placemarks with given date and country
         $.ajax({
@@ -169,6 +168,6 @@ define([
         }
     }
 
-    return createPK;
+    return covidPK;
 });
 
