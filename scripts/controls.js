@@ -1015,7 +1015,7 @@ define([
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type == categoryS) {
+                            if (d.userProperties.Type === categoryS) {
                                 sortLayers.push(d);
                                 d.enabled = true;
                             } else {
@@ -1346,7 +1346,6 @@ define([
                     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
                     document.getElementById(agrofoodsecurity).style.height = '';
                 }
-
             }
 
         })

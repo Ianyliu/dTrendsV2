@@ -578,7 +578,9 @@ requirejs([
         layerManager.categoryList();
 
         //sets date picker values
-
+        // fromDate.val(dataAll.arrDate[0].Date);
+        // toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        // curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
 
         //when user changes the date, globe will redraw to show the placemarks of current day
         curDate.change(function () {
