@@ -218,6 +218,87 @@ define([
         $('#conActive').text(numA);
     };
 
+    // //under first left tab; used to switch display between
+    // let onDiseaseClick = function (event) {
+    //
+    //     //grab the selection value
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     //refresh the option display
+    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //
+    //     //insert foodSecurity menu corresponding to the selection
+    //     if (projectionName === "COVID-19") {
+    //         covid19();
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: ["COVID-19", "Influenza A", "Influenza B"],
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Influenza A') {
+    //         influenza();
+    //         $("#diseases").css('visibility', 'visible');
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: [
+    //                 "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+    //                 "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+    //                 "H7N9","H6N1", "Not Determined"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Influenza B') {
+    //         $("#diseases").css('visibility', 'visible');
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: [
+    //                 "Yamagata",
+    //                 "Victoria",
+    //                 "Not Determined"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     }
+    // };
+
+    // //under first left tab; used to switch display between
+    // let onAgrosphereClick = function (event) {
+    //
+    //     //grab the selection value
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     //refresh the option display
+    //     $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //
+    //     //insert foodSecurity menu corresponding to the selection
+    //     if (projectionName === "AgroSphere") {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: ["Country", "Crops", "Weather"],
+    //             Level2: [countryL, cropsL, weatherL],
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'ECMWF Forecasts') {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: ["Temperature", "Precipitation", "Wind"]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Sentinel Satellite Data') {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: [
+    //                 "Agriculture",
+    //                 "False Color (Urban)",
+    //                 "False Color (Vegetation)",
+    //                 "Geology",
+    //                 "Moisture Index",
+    //                 "Natural Color (True Color)",
+    //                 "NDVI"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     }
+    // };
+
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
         // if(document.getElementById('diseases').css.visiblity === 'visible') {
@@ -893,7 +974,6 @@ define([
                             }
                         })
                     }
-
                     newGlobe.redraw()
                 });
 
@@ -1030,8 +1110,11 @@ define([
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
+                console.log(ui.value)
+                console.log(ui.value.type) //undefined
+                console.log(toDate.val())
+                console.log(new Date(toDate.val()).getTime())
                 //updates text
-
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
@@ -1047,6 +1130,7 @@ define([
 
         // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
         $('#amount').val(toDate.val());
+        console.log($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"))
     };
 
     //range slider; sets date range for date slider

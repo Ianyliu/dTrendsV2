@@ -424,10 +424,20 @@ requirejs([
             let toggle = this;
             if (toggle.checked === true) {
                 document.getElementById("COVID-category").disabled = false;
+                document.getElementById("datesliderdiv").hidden = false;
+                $( "#slider-range" ).slider( "enable" );
+                document.getElementById("drawingtools-tab").style.visibility = 'visible';
+                document.getElementById("diseasetrends-tab").style.visibility = 'visible';
+                openTabLeft(event, 'options_div');
+
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
             } else {
                 document.getElementById("COVID-category").disabled = true;
+                document.getElementById("datesliderdiv").hidden = true;
+                $( "#slider-range" ).slider( "disable" );
+                document.getElementById("drawingtools-tab").style.visibility = 'hidden';
+                document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
             }
@@ -657,6 +667,10 @@ requirejs([
         //dropdown menu for placemark category
         $("#categoryList").find("li").on("click", function (e) {
             controls.onCategory(e);
+            $( "#slider-range" ).slider( "enable" );
+            if (document.getElementById("COVID-19-checkbox").checked === false) {
+                document.getElementById("COVID-19-checkbox").checked = true;
+            }
         });
 
         //dropdown menu for continent selection
@@ -672,7 +686,7 @@ requirejs([
             curDate.val(fromDate);
             console.log(curDate)
 
-            controls.timelapse();
+            controls.timelapse(fromDate.val(),toDate.val());
         });
 
         //timelapse: stop button
