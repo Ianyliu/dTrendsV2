@@ -22,10 +22,7 @@ requirejs([
     let date1 = dataAll.arrDate[0];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
-    // console.log(date1)
-    // console.log(date2)
-
-    console.log(newGlobe.layers);
+    // console.log(newGlobe.layers);
 
     if(date1 !== undefined && date2 !== undefined) {
         covidPK([date1.Date, date2.Date], "Confirmed", "init");
@@ -34,11 +31,9 @@ requirejs([
     }
 
     let fromDate = $('#fromdatepicker');
-    console.log($('.fromdatepicker'))
 
     let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
-    console.log(curDate)
 
     const firstL = ['Disease Projection','Food Security']
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
@@ -129,7 +124,7 @@ requirejs([
                         }
                     } else if (diseasesecondL[j] === "COVID-19") {
                         controls.createThirdLayer(firstL[i],diseasesecondL[j],"COVID-19");
-                        controls.covid19();
+                        // controls.covid19();
                     } else {
                         alert('Error! Some layers might not have been created properly. ');
                         // throw error
@@ -422,17 +417,14 @@ requirejs([
 
 
         $("#COVID-19-checkbox").on("click", function (e) {
-            controls.covid19();
-            console.log("checked")
+            // controls.covid19();
             let toggle = this;
             if (toggle.checked === true) {
                 document.getElementById("COVID-category").disabled = false;
-                console.log("disable false")
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
             } else {
                 document.getElementById("COVID-category").disabled = true;
-                console.log("disable true")
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
             }
@@ -589,8 +581,6 @@ requirejs([
         });
         fromDate.val(dataAll.arrDate[0].Date);
         toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        console.log(dataAll.arrDate[0].Date)
-        console.log(dataAll.arrDate[dataAll.arrDate.length - 1].Date)
         curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         //loads initial case numbers
         controls.initCaseNum();
@@ -676,8 +666,8 @@ requirejs([
             $('#pauseTL').show();
             $('#toggleTL').hide();
 
-            //curDate.val(fromDate);
-            // console.log(curDate)
+            curDate.val(fromDate);
+            console.log(curDate)
 
             controls.timelapse();
         });

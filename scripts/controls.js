@@ -6,33 +6,30 @@ define([
     , './covidPK'
 ], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
-    console.log(csvD)
+
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
-
-    let firstLayers =[];
-    let secondLayers =[];
 
     let fromDate = $('#fromdatepicker');
     let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
 
-    let dataTypes = ['Country', 'Weather Station'];
-    let countryL = []
+    // let dataTypes = ['Country', 'Weather Station'];
+    // let countryL = []
     let active = "active";
     let activecases = "Active Cases";
     let parentMenu = document.getElementById("accordion");
 
-    for (let i = 0; i < dataTypes.length; i++) {
-        for (let j = 0; j < csvD[i].length; j++) {
-            if (dataTypes[i] === 'Country') {
-                countryL.push(csvD[i][j].country)
-            } else if (dataTypes[i] === 'Weather Station') {
-            } else {
-                console.log("Read layer type in error");
-            }
-        }
-    }
+    // for (let i = 0; i < dataTypes.length; i++) {
+    //     for (let j = 0; j < csvD[i].length; j++) {
+    //         if (dataTypes[i] === 'Country') {
+    //             countryL.push(csvD[i][j].country)
+    //         } else if (dataTypes[i] === 'Weather Station') {
+    //         } else {
+    //             console.log("Read layer type in error");
+    //         }
+    //     }
+    // }
 
     let menuStructure;
     let cropsL = [
@@ -220,87 +217,6 @@ define([
         $('#conRecoveries').text(numR);
         $('#conActive').text(numA);
     };
-
-    // //under first left tab; used to switch display between
-    // let onDiseaseClick = function (event) {
-    //
-    //     //grab the selection value
-    //     let projectionName = event.target.innerText || event.target.innerHTML;
-    //     //refresh the option display
-    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-    //
-    //     //insert foodSecurity menu corresponding to the selection
-    //     if (projectionName === "COVID-19") {
-    //         covid19();
-    //         menuStructure = {
-    //             accordianID: '#diseases',
-    //             Level1: ["COVID-19", "Influenza A", "Influenza B"],
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'Influenza A') {
-    //         influenza();
-    //         $("#diseases").css('visibility', 'visible');
-    //         menuStructure = {
-    //             accordianID: '#diseases',
-    //             Level1: [
-    //                 "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
-    //                 "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
-    //                 "H7N9","H6N1", "Not Determined"
-    //             ]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'Influenza B') {
-    //         $("#diseases").css('visibility', 'visible');
-    //         menuStructure = {
-    //             accordianID: '#diseases',
-    //             Level1: [
-    //                 "Yamagata",
-    //                 "Victoria",
-    //                 "Not Determined"
-    //             ]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     }
-    // };
-
-    // //under first left tab; used to switch display between
-    // let onAgrosphereClick = function (event) {
-    //
-    //     //grab the selection value
-    //     let projectionName = event.target.innerText || event.target.innerHTML;
-    //     //refresh the option display
-    //     $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
-    //
-    //     //insert foodSecurity menu corresponding to the selection
-    //     if (projectionName === "AgroSphere") {
-    //         menuStructure = {
-    //             accordianID: '#foodSecurity',
-    //             Level1: ["Country", "Crops", "Weather"],
-    //             Level2: [countryL, cropsL, weatherL],
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'ECMWF Forecasts') {
-    //         menuStructure = {
-    //             accordianID: '#foodSecurity',
-    //             Level1: ["Temperature", "Precipitation", "Wind"]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     } else if (projectionName === 'Sentinel Satellite Data') {
-    //         menuStructure = {
-    //             accordianID: '#foodSecurity',
-    //             Level1: [
-    //                 "Agriculture",
-    //                 "False Color (Urban)",
-    //                 "False Color (Vegetation)",
-    //                 "Geology",
-    //                 "Moisture Index",
-    //                 "Natural Color (True Color)",
-    //                 "NDVI"
-    //             ]
-    //         }
-    //         accordionMenu(menuStructure);
-    //     }
-    // };
 
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
@@ -1642,7 +1558,7 @@ define([
     function enableAllToggle() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            console.log(layer);
+            // console.log(layer);
             // layer.enabled = true;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL" || layer.displayName !== "Country_PK" || layer.displayName !== "Weather_Station_PK") {
