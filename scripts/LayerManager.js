@@ -91,21 +91,28 @@ define([
 
     LayerManager.prototype.onLayerClick = function (layerButton) {
         let layerName = layerButton.text();
-
+        //console.log(layerName)
         // Update the layer state for the selected layer.
         for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+
             let layer = this.wwd.layers[i];
+            //console.log(i)
             if (layer.hide) {
                 continue;
             }
-
-            if (layer.displayName === layerName && this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
+            console.log(i)
+            console.log(layerName)
+            console.log(this.wwd.layers[i].displayName)
+            if (this.wwd.layers[i].displayName === layerName && this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
+                console.log("run");
                 layer.enabled = !layer.enabled;
                 this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
                 if (layer.enabled) {
+                    console.log("enabled")
                     layerButton.addClass("active");
                     layerButton.css("color", "white");
                 } else {
+                    console.log("disabled")
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
                 }
@@ -117,7 +124,7 @@ define([
 
     LayerManager.prototype.synchronizeLayerList = function () {
         let layerListItem = $("#layerList");
-
+        console.log("synchronize")
         layerListItem.find("button").off("click");
         layerListItem.find("button").remove();
 
@@ -155,24 +162,25 @@ define([
                     layerItem.removeClass("active");
                     layerItem.css("color", "black");
                 }
-                if (layer.showSpinner && Spinner) {
-                    let opts = {
-                        scale: 0.9
-                    };
-                    let spinner = new Spinner(opts).spin();
-                    layerItem.append(spinner.el);
-                }
-                if (layer.enabled) {
-                    layerItem.addClass("active");
-                    layerItem.css("color", "white");
-                } else {
-                    layerItem.removeClass("active");
-                    layerItem.css("color", "black");
-                }
+                // if (layer.showSpinner && Spinner) {
+                //     let opts = {
+                //         scale: 0.9
+                //     };
+                //     let spinner = new Spinner(opts).spin();
+                //     layerItem.append(spinner.el);
+                // }
+                // if (layer.enabled) {
+                //     layerItem.addClass("active");
+                //     layerItem.css("color", "white");
+                // } else {
+                //     layerItem.removeClass("active");
+                //     layerItem.css("color", "black");
+                // }
             }
 
             let self = this;
             layerListItem.find("button").on("click", function (e) {
+                console.log("button")
                 self.onLayerClick($(this));
             });
 

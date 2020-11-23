@@ -423,13 +423,16 @@ requirejs([
 
         $("#COVID-19-checkbox").on("click", function (e) {
             controls.covid19();
+            console.log("checked")
             let toggle = this;
             if (toggle.checked === true) {
                 document.getElementById("COVID-category").disabled = false;
+                console.log("disable false")
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
             } else {
                 document.getElementById("COVID-category").disabled = true;
+                console.log("disable true")
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
             }
@@ -673,8 +676,8 @@ requirejs([
             $('#pauseTL').show();
             $('#toggleTL').hide();
 
-            curDate.val(fromDate);
-            console.log(curDate)
+            //curDate.val(fromDate);
+            // console.log(curDate)
 
             controls.timelapse();
         });
