@@ -230,8 +230,8 @@ define([
             let layer = newGlobe.layers[i];
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
-                $("#diseases").css('visibility', 'hidden');
-                $("#diseases").css('display', 'none');
+                // $("#diseases").css('visibility', 'hidden');
+                // $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass(active);
@@ -1552,7 +1552,7 @@ define([
     function enableAllToggle() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            console.log(layer);
+            // console.log(layer);
             // layer.enabled = true;
             let layerButton = $('#' + layer.displayName + '');
             if (layer.displayName !== "TL" || layer.displayName !== "Country_PK" || layer.displayName !== "Weather_Station_PK") {
