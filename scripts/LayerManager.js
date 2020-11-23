@@ -102,7 +102,7 @@ define([
             }
             console.log(i)
             console.log(layerName)
-            console.log(this.wwd.layers[i].displayName)
+            console.log(this.wwd.layers[i].enabled)
             if (this.wwd.layers[i].displayName === layerName && this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
                 console.log("run");
                 layer.enabled = !layer.enabled;
@@ -119,6 +119,7 @@ define([
                 this.wwd.redraw();
                 break;
             }
+
         }
     };
 
@@ -176,6 +177,7 @@ define([
                 //     layerItem.removeClass("active");
                 //     layerItem.css("color", "black");
                 // }
+
             }
 
             let self = this;
