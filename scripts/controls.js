@@ -1549,39 +1549,33 @@ define([
     }
 
     //enables all layers; if layer is disabled, force enable it
-    function enableAllToggle() {
+    function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            // console.log(layer);
-            // layer.enabled = true;
-            let layerButton = $('#' + layer.displayName + '');
-            if (layer.displayName !== "TL" || layer.displayName !== "Country_PK" || layer.displayName !== "Weather_Station_PK") {
+            if (layer.layerType == 'H_PKLayer') {
                 layer.enabled = true;
+                let layerButton = $('#' + layer.displayName + '');
                 if (!layerButton.hasClass(active)) {
                     layerButton.addClass(active);
                     layerButton.css("color", "white");
                 }
             }
-
-
         }
-
     }
 
     //disables all layers; if layer is enabled, force disable it
-    function closeAllToggle() {
+    function closeAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            layer.enabled = false;
-            let layerButton = $('#' + layer.displayName + '');
-            if (layer.displayName !== "TL" || layer.displayName !== "Country_PK" || layer.displayName !== "Weather_Station_PK") {
+            if (layer.layerType == 'H_PKLayer') {
+                layer.enabled = false;
+                let layerButton = $('#' + layer.displayName + '');
                 if (layerButton.hasClass(active)) {
                     layerButton.removeClass(active);
                     layerButton.css("color", "black");
                 }
             }
         }
-
     }
 
     return {
@@ -1610,8 +1604,8 @@ define([
         editDialog,
         handleMouseCLK,
         handleMouseMove,
-        enableAllToggle,
-        closeAllToggle,
+        enableAllCovid,
+        closeAllCovid,
         createFirstLayer,
         createSecondLayer,
         createThirdLayer,
