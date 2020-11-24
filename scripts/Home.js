@@ -34,7 +34,6 @@ requirejs([
     }
 
     let fromDate = $('#fromdatepicker');
-
     let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
 
