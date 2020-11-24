@@ -221,7 +221,7 @@ requirejs([
                 let toggle = this;
                 // let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele => ele.displayName === 'Weather_Station_PK');
-                console.log(this.value);
+                // console.log(this.value);
                 // console.log(toggle.checked);
                 if (toggle.checked === true) {
                     // console.log('checked');
@@ -462,7 +462,6 @@ requirejs([
                     .attr("href");
 
                 if (hrefvalue !== undefined && hrefvalue !== '#FoodSecurity-Agrosphere') {
-                    console.log(hrefvalue);
                     document.getElementById(hrefvalue.substring(1)).setAttribute("class", "collapsing");
                     document.getElementById(hrefvalue.substring(1)).removeAttribute("class", "collapsing");
                     document.getElementById(hrefvalue.substring(1)).style.visibility = 'hidden';
