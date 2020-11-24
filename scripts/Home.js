@@ -22,10 +22,7 @@ requirejs([
     let date1 = dataAll.arrDate[0];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
-    // console.log(date1)
-    // console.log(date2)
-
-    console.log(newGlobe.layers);
+    // console.log(newGlobe.layers);
 
     if(date1 !== undefined && date2 !== undefined) {
         covidPK([date1.Date, date2.Date], "Confirmed", "init");
@@ -126,7 +123,7 @@ requirejs([
                         }
                     } else if (diseasesecondL[j] === "COVID-19") {
                         controls.createThirdLayer(firstL[i],diseasesecondL[j],"COVID-19");
-                        controls.covid19();
+                        // controls.covid19();
                     } else {
                         alert('Error! Some layers might not have been created properly. ');
                         // throw error
@@ -419,7 +416,7 @@ requirejs([
 
 
         $("#COVID-19-checkbox").on("click", function (e) {
-            controls.covid19();
+            // controls.covid19();
             let toggle = this;
             if (toggle.checked === true) {
                 document.getElementById("COVID-category").disabled = false;
