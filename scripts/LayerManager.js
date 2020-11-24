@@ -93,17 +93,20 @@ define([
         let layerName = layerButton.text();
         //console.log(layerName)
         // Update the layer state for the selected layer.
-        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+        // for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
 
-            let layer = this.wwd.layers[i];
+            let layer = this.wwd.layers;
+            console.log(layer)
+            var a = layer.findIndex(ele => ele.displayName === layerName)
+            console.log(a)
             //console.log(i)
-            if (layer.hide) {
-                continue;
-            }
-            console.log(i)
+            // if (layer.hide) {
+            //     continue;
+            // }
+
             console.log(layerName)
-            console.log(this.wwd.layers[i].enabled)
-            if (this.wwd.layers[i].displayName === layerName && this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
+            console.log(this.wwd.layers[a].enabled)
+            if (this.wwd.layers[a].displayName === layerName && this.wwd.layers[a].layerType !== "Country_Placemarks" && this.wwd.layers[a].layerType !== "Weather_Station_Placemarks") {
                 console.log("run");
                 layer.enabled = !layer.enabled;
                 this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
@@ -117,9 +120,8 @@ define([
                     layerButton.css("color", "black");
                 }
                 this.wwd.redraw();
-                break;
-            }
-
+                // break;
+            // }
         }
     };
 
