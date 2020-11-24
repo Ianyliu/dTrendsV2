@@ -108,7 +108,7 @@ requirejs([
                     if (diseasesecondL[j] === "Influenza A") {
                         for (let h = 0; h < influenzaA.length; h++) {
                             controls.createThirdLayer(firstL[i], diseasesecondL[j], influenzaA[h]);
-                            controls.influenza();
+                            // controls.influenza();
                         }
                     } else if (diseasesecondL[j] === "Influenza B") {
                         for (let h = 0; h < influenzaB.length; h++) {

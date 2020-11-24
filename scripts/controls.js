@@ -273,7 +273,7 @@ define([
             }
 
             if (i === newGlobe.layers.length - 1) {
-                console.log("bye")
+                // console.log("bye")
                 layerManager.synchronizeLayerList();
             }
         }

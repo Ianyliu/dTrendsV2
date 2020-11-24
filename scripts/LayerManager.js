@@ -7,7 +7,7 @@
  */
 define([
     './WorldWindShim'
-    ],function (WorldWind) {
+], function (WorldWind) {
     "use strict";
 
     /**
@@ -90,28 +90,17 @@ define([
     };
 
     LayerManager.prototype.onLayerClick = function (layerButton) {
-        let layerName = layerButton.text();
-        //console.log(layerName)
         // Update the layer state for the selected layer.
-        // for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
+        let layerName = layerButton.text();
+        let layers = this.wwd.layers;
+        const a = layers.findIndex(ele => ele.displayName === layerName)
 
-            let layer = this.wwd.layers;
-            console.log(layer)
-            var a = layer.findIndex(ele => ele.displayName === layerName)
-            console.log(a)
-            //console.log(i)
-            // if (layer.hide) {
-            //     continue;
-            // }
+        if (!layers[a].hide) {
+            if (layers[a].displayName === layerName && layers[a].layerType == "H_PKLayer") {
+                layers[a].enabled = !layers[a].enabled;
+                this.wwd.goTo(new WorldWind.Position(layers[a].renderables[0].position.latitude, layers[a].renderables[0].position.longitude, 14000000));
 
-            console.log(layerName)
-            console.log(this.wwd.layers[a].enabled)
-            if (this.wwd.layers[a].displayName === layerName && this.wwd.layers[a].layerType !== "Country_Placemarks" && this.wwd.layers[a].layerType !== "Weather_Station_Placemarks") {
-                console.log("run");
-                layer.enabled = !layer.enabled;
-                this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
-                if (layer.enabled) {
-                    console.log("enabled")
+                if (layers[a].enabled) {
                     layerButton.addClass("active");
                     layerButton.css("color", "white");
                 } else {
@@ -119,34 +108,30 @@ define([
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
                 }
+
                 this.wwd.redraw();
-                // break;
-            // }
+            }
         }
     };
 
     LayerManager.prototype.synchronizeLayerList = function () {
         let layerListItem = $("#layerList");
-        console.log("synchronize")
+        // console.log("synchronize")
         layerListItem.find("button").off("click");
         layerListItem.find("button").remove();
-
 
         // Synchronize the displayed layer list with the World Window's layer list.
         for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
             let layer = this.wwd.layers[i];
-            // console.log(layer);
             if (layer.hide) {
                 continue;
             }
-            // console.log(layer.renderables[0].userProperties.layerName);
-
 
             if (layer.displayName.includes(' ')) {
                 layer.displayName = layer.displayName.replace(/ /g, '_');
             }
 
-            if (this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
+            if (layer.layerType == "H_PKLayer") {
                 let layerItem = $('<button class="list-group-item btn btn-block" id="' + layer.displayName + '" style="color: white">' + layer.displayName + '</button>');
                 layerListItem.append(layerItem);
 
@@ -165,30 +150,13 @@ define([
                     layerItem.removeClass("active");
                     layerItem.css("color", "black");
                 }
-                // if (layer.showSpinner && Spinner) {
-                //     let opts = {
-                //         scale: 0.9
-                //     };
-                //     let spinner = new Spinner(opts).spin();
-                //     layerItem.append(spinner.el);
-                // }
-                // if (layer.enabled) {
-                //     layerItem.addClass("active");
-                //     layerItem.css("color", "white");
-                // } else {
-                //     layerItem.removeClass("active");
-                //     layerItem.css("color", "black");
-                // }
-
             }
+        }
 
-            let self = this;
-            layerListItem.find("button").on("click", function (e) {
-                console.log("button")
-                self.onLayerClick($(this));
-            });
-
-            }
+        let self = this;
+        layerListItem.find("button").on("click", function (e) {
+            self.onLayerClick($(this));
+        });
     };
 
     //LayerManager.prototype.updateVisibilityState = function (WorldWindow) {
@@ -275,7 +243,7 @@ define([
 
         let dropdownButton = $('<button class="btn btn-info btn-block dropdown-toggle" id="COVID-category" type="button" data-toggle="dropdown" disabled>Confirmed Cases<span class="caret"></span></button>');
         projectionDropdown.append(dropdownButton);
-        projectionDropdown.find("button").css("background-color","red");
+        projectionDropdown.find("button").css("background-color", "red");
         let ulItem = $('<ul class="dropdown-menu">');
         projectionDropdown.append(ulItem);
 
@@ -312,7 +280,7 @@ define([
         diseaseDropdown.append(ulItem2);
 
         for (let i = 0; i < diseaseName.length; i++) {
-            let diseaseItem = $('<li id="'+ diseaseId[i] + '"><a >' + diseaseName[i] + '</a></li>');
+            let diseaseItem = $('<li id="' + diseaseId[i] + '"><a >' + diseaseName[i] + '</a></li>');
             ulItem2.append(diseaseItem);
         }
 
