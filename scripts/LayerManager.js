@@ -91,33 +91,43 @@ define([
 
     LayerManager.prototype.onLayerClick = function (layerButton) {
         let layerName = layerButton.text();
-
+        //console.log(layerName)
         // Update the layer state for the selected layer.
-        for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
-            let layer = this.wwd.layers[i];
-            if (layer.hide) {
-                continue;
-            }
+        // for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
 
-            if (layer.displayName === layerName && this.wwd.layers[i].layerType !== "Country_Placemarks" && this.wwd.layers[i].layerType !== "Weather_Station_Placemarks") {
+            let layer = this.wwd.layers;
+            console.log(layer)
+            var a = layer.findIndex(ele => ele.displayName === layerName)
+            console.log(a)
+            //console.log(i)
+            // if (layer.hide) {
+            //     continue;
+            // }
+
+            console.log(layerName)
+            console.log(this.wwd.layers[a].enabled)
+            if (this.wwd.layers[a].displayName === layerName && this.wwd.layers[a].layerType !== "Country_Placemarks" && this.wwd.layers[a].layerType !== "Weather_Station_Placemarks") {
+                console.log("run");
                 layer.enabled = !layer.enabled;
                 this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
                 if (layer.enabled) {
+                    console.log("enabled")
                     layerButton.addClass("active");
                     layerButton.css("color", "white");
                 } else {
+                    console.log("disabled")
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
                 }
                 this.wwd.redraw();
-                break;
-            }
+                // break;
+            // }
         }
     };
 
     LayerManager.prototype.synchronizeLayerList = function () {
         let layerListItem = $("#layerList");
-
+        console.log("synchronize")
         layerListItem.find("button").off("click");
         layerListItem.find("button").remove();
 
@@ -155,24 +165,26 @@ define([
                     layerItem.removeClass("active");
                     layerItem.css("color", "black");
                 }
-                if (layer.showSpinner && Spinner) {
-                    let opts = {
-                        scale: 0.9
-                    };
-                    let spinner = new Spinner(opts).spin();
-                    layerItem.append(spinner.el);
-                }
-                if (layer.enabled) {
-                    layerItem.addClass("active");
-                    layerItem.css("color", "white");
-                } else {
-                    layerItem.removeClass("active");
-                    layerItem.css("color", "black");
-                }
+                // if (layer.showSpinner && Spinner) {
+                //     let opts = {
+                //         scale: 0.9
+                //     };
+                //     let spinner = new Spinner(opts).spin();
+                //     layerItem.append(spinner.el);
+                // }
+                // if (layer.enabled) {
+                //     layerItem.addClass("active");
+                //     layerItem.css("color", "white");
+                // } else {
+                //     layerItem.removeClass("active");
+                //     layerItem.css("color", "black");
+                // }
+
             }
 
             let self = this;
             layerListItem.find("button").on("click", function (e) {
+                console.log("button")
                 self.onLayerClick($(this));
             });
 

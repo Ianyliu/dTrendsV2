@@ -228,6 +228,7 @@ define([
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
+            // console.log(layer)
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
                 // $("#diseases").css('visibility', 'hidden');
@@ -236,12 +237,15 @@ define([
                 if (!layer.enabled) {
                     layerButton.addClass(active);
                     layerButton.css("color", "white");
+                    // console.log("active")
                 } else {
                     layerButton.removeClass(active);
                     layerButton.css("color", "black");
+                    // console.log("inactive")
                 }
             }
             if (i === newGlobe.layers.length - 1) {
+                console.log("hi");
                 layerManager.synchronizeLayerList();
             }
         }
@@ -269,6 +273,7 @@ define([
             }
 
             if (i === newGlobe.layers.length - 1) {
+                console.log("bye")
                 layerManager.synchronizeLayerList();
             }
         }
@@ -842,6 +847,7 @@ define([
                 })
 
                 layerManager.synchronizeLayerList();
+                console.log("123")
 
                 if (country_status === false) {
                     newGlobe.layers[findCountryIndex].enabled = false;
