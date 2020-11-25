@@ -95,34 +95,36 @@ define([
         // Update the layer state for the selected layer.
         // for (let i = 6, len = this.wwd.layers.length; i < len; i++) {
 
-            let layer = this.wwd.layers;
-            console.log(layer)
-            var a = layer.findIndex(ele => ele.displayName === layerName)
+
+            var a = this.wwd.layers.findIndex(ele => ele.displayName === layerName)
             console.log(a)
+            let layer = this.wwd.layers[a];
+
             //console.log(i)
             // if (layer.hide) {
             //     continue;
             // }
-
-            console.log(layerName)
-            console.log(this.wwd.layers[a].enabled)
+            // console.log(layer)
+            // console.log(layerName)
+            // console.log(this.wwd.layers[a].enabled)
             if (this.wwd.layers[a].displayName === layerName && this.wwd.layers[a].layerType !== "Country_Placemarks" && this.wwd.layers[a].layerType !== "Weather_Station_Placemarks") {
-                console.log("run");
+                // console.log("run");
+                // console.log(layer.renderables[0])
                 layer.enabled = !layer.enabled;
                 this.wwd.goTo(new WorldWind.Position(layer.renderables[0].position.latitude, layer.renderables[0].position.longitude, 14000000));
                 if (layer.enabled) {
-                    console.log("enabled")
+                    // console.log("enabled")
                     layerButton.addClass("active");
                     layerButton.css("color", "white");
                 } else {
-                    console.log("disabled")
+                    // console.log("disabled")
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
                 }
                 this.wwd.redraw();
                 // break;
-            // }
-        }
+            }
+        // }
     };
 
     LayerManager.prototype.synchronizeLayerList = function () {
@@ -182,15 +184,15 @@ define([
 
             }
 
-            let self = this;
-            layerListItem.find("button").on("click", function (e) {
-                console.log("button")
-                self.onLayerClick($(this));
-            });
 
-            }
     };
+        let self = this;
+        layerListItem.find("button").on("click", function (e) {
+            console.log("button")
+            self.onLayerClick($(this));
+        });
 
+}
     //LayerManager.prototype.updateVisibilityState = function (WorldWindow) {
     //    let layerButtons = $("#layerList").find("button"),
     //        layers = WorldWindow.layers;
