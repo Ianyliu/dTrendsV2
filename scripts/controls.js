@@ -855,10 +855,10 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type == categoryS) {
+                        if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
                             // console.log(d)
                         } else {
@@ -867,8 +867,8 @@ define([
                     }
                 });
             }
-            if (index == newGlobe.layers.length - 1) {
-                newGlobe.redraw()
+            if (index === newGlobe.layers.length - 1) {
+                newGlobe.redraw();
             }
         });
     };
@@ -913,7 +913,7 @@ define([
             }
 
             // refreshed the menu buttoms
-            if (index == newGlobe.layers.length - 1) {
+            if (index === newGlobe.layers.length - 1) {
                 //navigate the globe to the continent
                 letLong.some(function (c) {
                     if (c.cont == continentS) {
@@ -1631,7 +1631,7 @@ define([
     function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            if (layer.layerType == 'H_PKLayer') {
+            if (layer.layerType === 'H_PKLayer') {
                 layer.enabled = true;
                 let layerButton = $('#' + layer.displayName + '');
                 if (!layerButton.hasClass(active)) {
