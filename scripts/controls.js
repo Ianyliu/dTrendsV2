@@ -974,7 +974,6 @@ define([
                             }
                         })
                     }
-
                     newGlobe.redraw()
                 });
 
@@ -1016,7 +1015,7 @@ define([
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type == categoryS) {
+                            if (d.userProperties.Type === categoryS) {
                                 sortLayers.push(d);
                                 d.enabled = true;
                             } else {
@@ -1328,7 +1327,7 @@ define([
                         document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
                     }
 
-                    openTabLeft(event, 'controls');
+                    document.getElementById("controls").style.display = 'block';
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
                     document.getElementById(foodsecurity).setAttribute("aria-expanded", "true");
@@ -1343,7 +1342,6 @@ define([
                     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
                     document.getElementById(agrofoodsecurity).style.height = '';
                 }
-
             }
 
         })
