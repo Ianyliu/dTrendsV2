@@ -161,8 +161,8 @@ define([
     }
     let updateFrom = function (fromD){
         fromDate.val(fromD);
-        console.log(fromD)
-        console.log(fromDate.val(fromD))
+        // console.log(fromD)
+        // console.log(fromDate.val(fromD))
     }
     let updateTo = function (toD){
         toDate.val(toD);
