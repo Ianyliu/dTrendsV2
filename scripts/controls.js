@@ -60,7 +60,7 @@ define([
     let numA = 0;
 
     let speed = false;
-
+    // console.log(newGlobe.layers)
     //under initial load for case numbers
     let initCaseNum = function () {
         newGlobe.layers.forEach(function (elem, index) {
