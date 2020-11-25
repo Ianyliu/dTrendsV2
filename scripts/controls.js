@@ -309,24 +309,20 @@ define([
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            // console.log(layer)
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
-                // $("#diseases").css('visibility', 'hidden');
-                // $("#diseases").css('display', 'none');
+                $("#diseases").css('visibility', 'hidden');
+                $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass(active);
                     layerButton.css("color", "white");
-                    // console.log("active")
                 } else {
                     layerButton.removeClass(active);
                     layerButton.css("color", "black");
-                    // console.log("inactive")
                 }
             }
             if (i === newGlobe.layers.length - 1) {
-                console.log("hi");
                 layerManager.synchronizeLayerList();
             }
         }
@@ -354,7 +350,6 @@ define([
             }
 
             if (i === newGlobe.layers.length - 1) {
-                // console.log("bye")
                 layerManager.synchronizeLayerList();
             }
         }
@@ -860,10 +855,10 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type == categoryS) {
+                        if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
                             // console.log(d)
                         } else {
@@ -872,8 +867,8 @@ define([
                     }
                 });
             }
-            if (index == newGlobe.layers.length - 1) {
-                newGlobe.redraw()
+            if (index === newGlobe.layers.length - 1) {
+                newGlobe.redraw();
             }
         });
     };
@@ -918,7 +913,7 @@ define([
             }
 
             // refreshed the menu buttoms
-            if (index == newGlobe.layers.length - 1) {
+            if (index === newGlobe.layers.length - 1) {
                 //navigate the globe to the continent
                 letLong.some(function (c) {
                     if (c.cont == continentS) {
@@ -928,7 +923,6 @@ define([
                 })
 
                 layerManager.synchronizeLayerList();
-                console.log("123")
 
                 if (country_status === false) {
                     newGlobe.layers[findCountryIndex].enabled = false;
@@ -1116,11 +1110,8 @@ define([
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
-                console.log(ui.value)
-                console.log(ui.value.type) //undefined
-                console.log(toDate.val())
-                console.log(new Date(toDate.val()).getTime())
                 //updates text
+
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
@@ -1136,7 +1127,6 @@ define([
 
         // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
         $('#amount').val(toDate.val());
-        console.log($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"))
     };
 
     //range slider; sets date range for date slider
@@ -1641,7 +1631,7 @@ define([
     function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            if (layer.layerType == 'H_PKLayer') {
+            if (layer.layerType === 'H_PKLayer') {
                 layer.enabled = true;
                 let layerButton = $('#' + layer.displayName + '');
                 if (!layerButton.hasClass(active)) {
