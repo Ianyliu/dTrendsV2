@@ -178,13 +178,13 @@ define([
 
         curDate.val(currentD);
         console.log(currentD)
-        console.log(curDate.val(currentD))
+        console.log(curDate.val())
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date == currentD) {
+                        if (d.userProperties.Date === currentD) {
                             // console.log(currentD, categoryS);
                             if (d.userProperties.Type == categoryS) {
                                 d.enabled = true;
@@ -1110,8 +1110,8 @@ define([
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
+                console.log(event)
                 //updates text
-
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date

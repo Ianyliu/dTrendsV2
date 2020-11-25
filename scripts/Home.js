@@ -94,7 +94,8 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        alert('Welcome to the A World Bridge COVID Toolkit! Our application works best' +
+        alert('Welcome to the A World Bridge COVID Toolkit! Please wait for our application to load...' +
+            'Our application works best' +
             ' on the most recent version of Chrome. If you are experiencing any problems, ' +
             'please try switching a browser.')
 
