@@ -90,7 +90,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        alert('Welcome to the A World Bridge COVID Toolkit! Please do not click on the app until the globe appears...     ' +
+        alert('Welcome to the A World Bridge COVID Toolkit! ' +
             'Our application works best' +
             ' on the most recent version of Chrome. If you are experiencing any problems, ' +
             'please try switching a browser.')
