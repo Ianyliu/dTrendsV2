@@ -108,7 +108,9 @@ requirejs([
 
         // console.log(newGlobe.layers)
 
-        alert('Welcome to the A World Bridge COVID Toolkit! Our application works best on the most recent version of Chrome. If you are experiencing any problems, please try switching a browser.')
+        alert('Welcome to the A World Bridge COVID Toolkit! ' +
+            'Our application works best on the most recent version of Chrome. ' +
+            'If you are experiencing any problems, please try switching a browser.')
 
         for (let i = 0; i < firstL.length; i++) {
             controls.createFirstLayer(firstL[i]);
