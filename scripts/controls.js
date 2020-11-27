@@ -7,6 +7,8 @@ define([
 ], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
 
+    alert ("Please do not click on the app until the globe appears.");
+
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
