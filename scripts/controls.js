@@ -168,7 +168,7 @@ define([
     }
     let updateTo = function (toD){
         toDate.val(toD);
-        console.log(toD)
+        // console.log(toD)
     }
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
     let updateCurr = function (currentD) {
@@ -179,8 +179,8 @@ define([
         numA = 0;
 
         curDate.val(currentD);
-        console.log(currentD)
-        console.log(curDate.val(currentD))
+        // console.log(currentD)
+        // console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
