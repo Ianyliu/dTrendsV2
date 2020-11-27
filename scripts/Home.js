@@ -22,6 +22,10 @@ requirejs([
     let date1 = dataAll.arrDate[0];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
+    if (date1 !== undefined && date2 !== undefined) {
+        covidPK([date1.Date, date2.Date], "Confirmed", "init");
+    }
+
     let fromDate = $('#fromdatepicker');
     let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
@@ -93,22 +97,20 @@ requirejs([
 
         console.log(newGlobe.layers);
 
-        if (date1 !== undefined && date2 !== undefined) {
-            covidPK([date1.Date, date2.Date], "Confirmed", "init");
-        } else {
-            alert("Error! COVID data couldn't be loaded!")
+        if (date1 === undefined || date2 === undefined) {
+            alert("Error! Some COVID data wasn't loaded!");
         }
 
-        if (newGlobe.layers.includes("Weather Station PK") === false || newGlobe.layers.includes("Country PK") === false){
+        if (newGlobe.layers.includes("Weather Station PK") === false && newGlobe.layers.includes("Country PK") === false){
             alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
-            document.getElementsByClassName("FoodSecurity-Agrosphere-Country").remove();
-            document.getElementsByClassName("FoodSecurity-Agrosphere-Weather").remove();
+            document.getElementById('Country-alltoggle').setAttribute("disabled", "true");
+            document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
         } else if (newGlobe.layers.includes("Weather Station PK") === false){
             alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
-            document.getElementsByClassName("FoodSecurity-Agrosphere-Weather").remove();
+            document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
         } else if (newGlobe.layers.includes("Country PK") === false) {
             alert("Error! Agrosphere country placemarks couldn't be loaded!")
-            document.getElementsByClassName("FoodSecurity-Agrosphere-Country").remove();
+            document.getElementById('Country-alltoggle').setAttribute("disabled", "true");
         }
 
         // Initially load accordion menu
