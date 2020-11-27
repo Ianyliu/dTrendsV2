@@ -6,7 +6,7 @@ define(['./WorldWindShim'],function (WorldWind) {
         placemarkAttributes.imageScale = Math.abs(magnitude * 3); //placemark size!
 
         if (!imageTemp) {
-            imageTemp = new WorldWind.ImageSource(imagePK('rgb(255,255,255)', 5, 15));
+            imageTemp = new WorldWind.ImageSource(imgPK('rgb(255,255,255)', 5, 15));
         }
 
         placemarkAttributes.imageSource = imageTemp;
@@ -20,7 +20,7 @@ define(['./WorldWindShim'],function (WorldWind) {
     };
 
     // wrap up placemark image source
-    function imagePK(color, innerR, outerR) {
+    function imgPK(color, innerR, outerR) {
         let canvas = document.createElement("canvas"),
             ctx = canvas.getContext('2d');
 
