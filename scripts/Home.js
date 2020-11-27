@@ -22,14 +22,6 @@ requirejs([
     let date1 = dataAll.arrDate[0];
     let date2 = dataAll.arrDate[dataAll.arrDate.length - 1];
 
-    // console.log(newGlobe.layers);
-
-    if (date1 !== undefined && date2 !== undefined) {
-        covidPK([date1.Date, date2.Date], "Confirmed", "init");
-    } else {
-        alert("Error! COVID data couldn't be loaded!")
-    }
-
     let fromDate = $('#fromdatepicker');
     let toDate = $('#todatepicker');
     let curDate = $("#currentdatepicker");
@@ -94,10 +86,30 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        alert('Welcome to the A World Bridge COVID Toolkit! Please wait for our application to load...' +
+        alert('Welcome to the A World Bridge COVID Toolkit! Please do not click on the app until the globe appears...     ' +
             'Our application works best' +
             ' on the most recent version of Chrome. If you are experiencing any problems, ' +
             'please try switching a browser.')
+
+        console.log(newGlobe.layers);
+
+        if (date1 !== undefined && date2 !== undefined) {
+            covidPK([date1.Date, date2.Date], "Confirmed", "init");
+        } else {
+            alert("Error! COVID data couldn't be loaded!")
+        }
+
+        if (newGlobe.layers.includes("Weather Station PK") === false || newGlobe.layers.includes("Country PK") === false){
+            alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
+            document.getElementsByClassName("FoodSecurity-Agrosphere-Country").remove();
+            document.getElementsByClassName("FoodSecurity-Agrosphere-Weather").remove();
+        } else if (newGlobe.layers.includes("Weather Station PK") === false){
+            alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
+            document.getElementsByClassName("FoodSecurity-Agrosphere-Weather").remove();
+        } else if (newGlobe.layers.includes("Country PK") === false) {
+            alert("Error! Agrosphere country placemarks couldn't be loaded!")
+            document.getElementsByClassName("FoodSecurity-Agrosphere-Country").remove();
+        }
 
         // Initially load accordion menu
         for (let i = 0; i < firstL.length; i++) {

@@ -184,7 +184,7 @@ define([
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Date === currentD) {
+                        if (d.userProperties.Date == currentD) {
                             // console.log(currentD, categoryS);
                             if (d.userProperties.Type == categoryS) {
                                 d.enabled = true;
