@@ -168,7 +168,7 @@ define([
     }
     let updateTo = function (toD){
         toDate.val(toD);
-        console.log(toD)
+        // console.log(toD)
     }
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
     let updateCurr = function (currentD) {
@@ -179,8 +179,8 @@ define([
         numA = 0;
 
         curDate.val(currentD);
-        console.log(currentD)
-        console.log(curDate.val())
+        // console.log(currentD)
+        // console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
@@ -311,10 +311,11 @@ define([
         //refreshes layer menu to match the disease selected
         for (let i = 0, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
+            // console.log(layer)
             let layerButton = $('#' + layer.displayName + '');
             if (layer.layerType === "H_PKLayer") {
-                $("#diseases").css('visibility', 'hidden');
-                $("#diseases").css('display', 'none');
+                // $("#diseases").css('visibility', 'hidden');
+                // $("#diseases").css('display', 'none');
                 layer.enabled = !layer.enabled;
                 if (!layer.enabled) {
                     layerButton.addClass(active);
@@ -925,6 +926,7 @@ define([
                 })
 
                 layerManager.synchronizeLayerList();
+                console.log("123")
 
                 if (country_status === false) {
                     newGlobe.layers[findCountryIndex].enabled = false;
@@ -1633,7 +1635,7 @@ define([
     function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            if (layer.layerType === 'H_PKLayer') {
+            if (layer.layerType == 'H_PKLayer') {
                 layer.enabled = true;
                 let layerButton = $('#' + layer.displayName + '');
                 if (!layerButton.hasClass(active)) {
@@ -1648,7 +1650,7 @@ define([
     function closeAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            if (layer.layerType == 'H_PKLayer') {
+            if (layer.layerType === 'H_PKLayer') {
                 layer.enabled = false;
                 let layerButton = $('#' + layer.displayName + '');
                 if (layerButton.hasClass(active)) {
