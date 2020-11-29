@@ -99,6 +99,10 @@ requirejs([
 
         if (date1 === undefined || date2 === undefined) {
             alert("Error! Some COVID data wasn't loaded!");
+            document.getElementById("dialog").hidden = true;
+            document.getElementById("dialog").style.display = "none";
+            document.getElementById("dialogDateRange").hidden = true;
+            document.getElementById("dialogDateRange").style.display = "none";
         }
 
         if (newGlobe.layers.includes("Weather Station PK") === false && newGlobe.layers.includes("Country PK") === false){
@@ -440,6 +444,7 @@ requirejs([
                 document.getElementById("diseasetrends-tab").style.visibility = 'visible';
                 openTabLeft(event, 'options_div');
                 controls.enableAllCovid();
+                controls.onCategory("Confirmed Cases");
 
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
