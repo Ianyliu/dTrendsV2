@@ -11,7 +11,7 @@ requirejs([
     , 'covidPK'
     , 'controls'
     , 'csvData'
-    // , 'cAgrosPK'
+    , 'cAgrosPK'
 ], function (newGlobe, dataAll, LayerManager, Chart, covidPK, controls, csvD) {
     "use strict";
 
