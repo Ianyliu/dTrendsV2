@@ -834,9 +834,14 @@ define([
     // };
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
-    let onCategory = function (event) {
-        //grab the selection value
-        categoryS = event.target.innerText || event.target.innerHTML;
+    let onCategory = function (event, cat ="none") {
+        if (cat === "none") {
+            //grab the selection value
+            categoryS = event.target.innerText || event.target.innerHTML;
+        } else {
+            categoryS = cat;
+        }
+
         //refresh the option display
         $("#categoryList").find("button").html(categoryS + ' <span class="caret"></span>');
 

@@ -107,8 +107,8 @@ requirejs([
 
         if (newGlobe.layers.includes("Weather Station PK") === false && newGlobe.layers.includes("Country PK") === false){
             alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
-            document.getElementById('Country-alltoggle').setAttribute("disabled", "true");
-            document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
+            // document.getElementById('Country-alltoggle').setAttribute("disabled", "true");
+            // document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
         } else if (newGlobe.layers.includes("Weather Station PK") === false){
             alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
             document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
@@ -444,7 +444,8 @@ requirejs([
                 document.getElementById("diseasetrends-tab").style.visibility = 'visible';
                 openTabLeft(event, 'options_div');
                 controls.enableAllCovid();
-                controls.onCategory("Confirmed Cases");
+                alert("Please wait a while for the placemarks to load...")
+                controls.onCategory("Confirmed Cases","Confirmed Cases");
 
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
