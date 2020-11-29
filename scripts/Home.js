@@ -105,16 +105,12 @@ requirejs([
             document.getElementById("dialogDateRange").style.display = "none";
         }
 
-        if (newGlobe.layers.includes("Weather Station PK") === false && newGlobe.layers.includes("Country PK") === false){
+        if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
             alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
-            // document.getElementById('Country-alltoggle').setAttribute("disabled", "true");
-            // document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
-        } else if (newGlobe.layers.includes("Weather Station PK") === false){
+        } else if (newGlobe.layers.displayName.includes("Weather Station PK") === false){
             alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
-            document.getElementById('Weather-alltoggle').setAttribute("disabled", "true");
-        } else if (newGlobe.layers.includes("Country PK") === false) {
+        } else if (newGlobe.layers.displayName.includes("Country PK") === false) {
             alert("Error! Agrosphere country placemarks couldn't be loaded!")
-            document.getElementById('Country-alltoggle').setAttribute("disabled", "true");
         }
 
         // Initially load accordion menu
