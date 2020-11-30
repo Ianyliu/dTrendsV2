@@ -105,13 +105,13 @@ requirejs([
             document.getElementById("dialogDateRange").style.display = "none";
         }
 
-        if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
-            alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
-        } else if (newGlobe.layers.displayName.includes("Weather Station PK") === false){
-            alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
-        } else if (newGlobe.layers.displayName.includes("Country PK") === false) {
-            alert("Error! Agrosphere country placemarks couldn't be loaded!")
-        }
+        // if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
+        //     alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
+        // } else if (newGlobe.layers.displayName.includes("Weather Station PK") === false){
+        //     alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
+        // } else if (newGlobe.layers.displayName.includes("Country PK") === false) {
+        //     alert("Error! Agrosphere country placemarks couldn't be loaded!")
+        // }
 
         // Initially load accordion menu
         for (let i = 0; i < firstL.length; i++) {
@@ -436,8 +436,8 @@ requirejs([
                 document.getElementById("COVID-category").disabled = false;
                 document.getElementById("datesliderdiv").hidden = false;
                 $( "#slider-range" ).slider( "enable" );
-                document.getElementById("drawingtools-tab").style.visibility = 'visible';
-                document.getElementById("diseasetrends-tab").style.visibility = 'visible';
+                document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
+                document.getElementById("diseasetrends-tab").style.pointerEvents = 'auto';
                 openTabLeft(event, 'options_div');
                 controls.enableAllCovid();
                 alert("Please wait a while for the placemarks to load...")
@@ -449,8 +449,8 @@ requirejs([
                 document.getElementById("COVID-category").disabled = true;
                 document.getElementById("datesliderdiv").hidden = true;
                 $( "#slider-range" ).slider( "disable" );
-                document.getElementById("drawingtools-tab").style.visibility = 'hidden';
-                document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
+                // document.getElementById("drawingtools-tab").style.visibility = 'hidden';
+                // document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
                 controls.closeAllCovid();
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
@@ -626,9 +626,7 @@ requirejs([
         $("#categoryList").find("li").on("click", function (e) {
             controls.onCategory(e);
             $( "#slider-range" ).slider( "enable" );
-            if (document.getElementById("COVID-19-checkbox").checked === false) {
-                document.getElementById("COVID-19-checkbox").checked = true;
-            }
+            document.getElementById("COVID-19-checkbox").checked = true;
         });
 
         //dropdown menu for continent selection
