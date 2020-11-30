@@ -499,6 +499,11 @@ requirejs([
 
 
         //when user changes the date, globe will redraw to show the placemarks of current day
+
+        fromDate.val(dataAll.arrDate[0].Date);
+        toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        //loads initial case numbers
         curDate.change(function () {
             controls.updateCurr(curDate.val());
         });
@@ -510,12 +515,7 @@ requirejs([
         toDate.change(function () {
             controls.updateTo(toDate.val());
         });
-        fromDate.val(dataAll.arrDate[0].Date);
-        toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        //loads initial case numbers
         controls.initCaseNum();
-
         //load slider functionalities
         controls.dateSlider();
         controls.rangeSlider();
@@ -597,7 +597,7 @@ requirejs([
             $('#pauseTL').show();
             $('#toggleTL').hide();
 
-            curDate.val(fromDate);
+            // curDate.val(fromDate);
 
             controls.timelapse();
         });
