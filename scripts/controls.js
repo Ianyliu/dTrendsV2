@@ -7,6 +7,8 @@ define([
 ], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
 
+    alert ("Please do not click on the app until the globe appears.");
+
     let layerManager = new LayerManager(newGlobe);
     let categoryS = "Confirmed Cases";
 
@@ -166,7 +168,7 @@ define([
     }
     let updateTo = function (toD){
         toDate.val(toD);
-        console.log(toD)
+        // console.log(toD)
     }
     //enables placemarks for current date; used when current date is changed based on date picker or date slider
     let updateCurr = function (currentD) {
@@ -177,8 +179,8 @@ define([
         numA = 0;
 
         curDate.val(currentD);
-        console.log(currentD)
-        console.log(curDate.val(currentD))
+        // console.log(currentD)
+        // console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
@@ -218,6 +220,87 @@ define([
         $('#conActive').text(numA);
     };
 
+    // //under first left tab; used to switch display between
+    // let onDiseaseClick = function (event) {
+    //
+    //     //grab the selection value
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     //refresh the option display
+    //     $("#diseaseDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //
+    //     //insert foodSecurity menu corresponding to the selection
+    //     if (projectionName === "COVID-19") {
+    //         covid19();
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: ["COVID-19", "Influenza A", "Influenza B"],
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Influenza A') {
+    //         influenza();
+    //         $("#diseases").css('visibility', 'visible');
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: [
+    //                 "H1N1", "H2N2", "H3N2", "H5N1", "H7N7",
+    //                 "H1N2", "H9N2", "H7N2", "H7N3", "H10N7",
+    //                 "H7N9","H6N1", "Not Determined"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Influenza B') {
+    //         $("#diseases").css('visibility', 'visible');
+    //         menuStructure = {
+    //             accordianID: '#diseases',
+    //             Level1: [
+    //                 "Yamagata",
+    //                 "Victoria",
+    //                 "Not Determined"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     }
+    // };
+
+    // //under first left tab; used to switch display between
+    // let onAgrosphereClick = function (event) {
+    //
+    //     //grab the selection value
+    //     let projectionName = event.target.innerText || event.target.innerHTML;
+    //     //refresh the option display
+    //     $("#agrosphereDropdown").find("button").html(projectionName + ' <span class="caret"></span>');
+    //
+    //     //insert foodSecurity menu corresponding to the selection
+    //     if (projectionName === "AgroSphere") {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: ["Country", "Crops", "Weather"],
+    //             Level2: [countryL, cropsL, weatherL],
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'ECMWF Forecasts') {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: ["Temperature", "Precipitation", "Wind"]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     } else if (projectionName === 'Sentinel Satellite Data') {
+    //         menuStructure = {
+    //             accordianID: '#foodSecurity',
+    //             Level1: [
+    //                 "Agriculture",
+    //                 "False Color (Urban)",
+    //                 "False Color (Vegetation)",
+    //                 "Geology",
+    //                 "Moisture Index",
+    //                 "Natural Color (True Color)",
+    //                 "NDVI"
+    //             ]
+    //         }
+    //         accordionMenu(menuStructure);
+    //     }
+    // };
+
     //under first left tab; activates COVID-19 display when selected for Disease Projection
     let covid19 = function () {
         // if(document.getElementById('diseases').css.visiblity === 'visible') {
@@ -237,15 +320,12 @@ define([
                 if (!layer.enabled) {
                     layerButton.addClass(active);
                     layerButton.css("color", "white");
-                    // console.log("active")
                 } else {
                     layerButton.removeClass(active);
                     layerButton.css("color", "black");
-                    // console.log("inactive")
                 }
             }
             if (i === newGlobe.layers.length - 1) {
-                console.log("hi");
                 layerManager.synchronizeLayerList();
             }
         }
@@ -273,7 +353,6 @@ define([
             }
 
             if (i === newGlobe.layers.length - 1) {
-                // console.log("bye")
                 layerManager.synchronizeLayerList();
             }
         }
@@ -755,9 +834,14 @@ define([
     // };
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
-    let onCategory = function (event) {
-        //grab the selection value
-        categoryS = event.target.innerText || event.target.innerHTML;
+    let onCategory = function (event, cat ="none") {
+        if (cat === "none") {
+            //grab the selection value
+            categoryS = event.target.innerText || event.target.innerHTML;
+        } else {
+            categoryS = cat;
+        }
+
         //refresh the option display
         $("#categoryList").find("button").html(categoryS + ' <span class="caret"></span>');
 
@@ -779,10 +863,10 @@ define([
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
         newGlobe.layers.forEach(function (elem, index) {
-            if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer") {
+            if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
-                        if (d.userProperties.Type == categoryS) {
+                        if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
                             // console.log(d)
                         } else {
@@ -791,8 +875,8 @@ define([
                     }
                 });
             }
-            if (index == newGlobe.layers.length - 1) {
-                newGlobe.redraw()
+            if (index === newGlobe.layers.length - 1) {
+                newGlobe.redraw();
             }
         });
     };
@@ -837,7 +921,7 @@ define([
             }
 
             // refreshed the menu buttoms
-            if (index == newGlobe.layers.length - 1) {
+            if (index === newGlobe.layers.length - 1) {
                 //navigate the globe to the continent
                 letLong.some(function (c) {
                     if (c.cont == continentS) {
@@ -899,7 +983,6 @@ define([
                             }
                         })
                     }
-
                     newGlobe.redraw()
                 });
 
@@ -941,7 +1024,7 @@ define([
                 elem.renderables.forEach(function (d) {
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Date == curDate.val()) {
-                            if (d.userProperties.Type == categoryS) {
+                            if (d.userProperties.Type === categoryS) {
                                 sortLayers.push(d);
                                 d.enabled = true;
                             } else {
@@ -1036,8 +1119,8 @@ define([
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
+                console.log(event)
                 //updates text
-
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
@@ -1268,7 +1351,6 @@ define([
                     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
                     document.getElementById(agrofoodsecurity).style.height = '';
                 }
-
             }
 
         })
@@ -1573,7 +1655,7 @@ define([
     function closeAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            if (layer.layerType == 'H_PKLayer') {
+            if (layer.layerType === 'H_PKLayer') {
                 layer.enabled = false;
                 let layerButton = $('#' + layer.displayName + '');
                 if (layerButton.hasClass(active)) {
