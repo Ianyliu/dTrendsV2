@@ -439,7 +439,10 @@ requirejs([
                 document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
                 document.getElementById("diseasetrends-tab").style.pointerEvents = 'auto';
                 openTabLeft(event, 'options_div');
-                controls.enableAllCovid();
+                document.getElementById("drawingtools-span").classList.remove("disabled-icon");
+                document.getElementById("diseasetrends-span").classList.remove("disabled-icon");
+                document.getElementById("drawingtools-span").classList.add("enabled-icon");
+                document.getElementById("diseasetrends-span").classList.add("enabled-icon");
                 alert("Please wait a while for the placemarks to load...")
                 controls.onCategory("Confirmed Cases","Confirmed Cases");
 
@@ -448,10 +451,15 @@ requirejs([
             } else {
                 document.getElementById("COVID-category").disabled = true;
                 document.getElementById("datesliderdiv").hidden = true;
+                document.getElementById("drawingtools-tab").style.pointerEvents = 'none';
+                document.getElementById("diseasetrends-tab").style.pointerEvents = 'none';
+                document.getElementById("drawingtools-span").classList.remove("enabled-icon");
+                document.getElementById("diseasetrends-span").classList.remove("enabled-icon");
+                document.getElementById("drawingtools-span").classList.add("disabled-icon");
+                document.getElementById("diseasetrends-span").classList.add("disabled-icon");
                 $( "#slider-range" ).slider( "disable" );
                 // document.getElementById("drawingtools-tab").style.visibility = 'hidden';
                 // document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
-                controls.closeAllCovid();
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
             }
