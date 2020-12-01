@@ -161,12 +161,12 @@ define([
             }
         });
     }
-    fromDate.val(dataAll.arrDate[0].Date);
-    // let updateFrom = function (fromD){
-    //     fromDate.val(fromD);
-    //     // console.log(fromD)
-    //     // console.log(fromDate.val(fromD))
-    // }
+    // fromDate.val(dataAll.arrDate[0].Date);
+    let updateFrom = function (fromD){
+        fromDate.val(fromD);
+        // console.log(fromD)
+        // console.log(fromDate.val(fromD))
+    }
     let updateTo = function (toD){
         toDate.val(toD);
         // console.log(toD)
@@ -962,6 +962,7 @@ define([
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
     let timelapse = function () {
         var a = dataAll.arrDate.findIndex(dat => dat.Date === fromDate.val())
+        console.log(fromDate.val())
         l = setInterval(function () {
             if (!play) {
                 //updates current date picker and date slider
@@ -1062,15 +1063,6 @@ define([
         }
     }
 
-    //under third left tab; changes starting date for timelapse when 'From' date is changed
-    // let onFrom = function () {
-    //     for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
-    //         if (dataAll.arrDate[j].Date === fromDate.val()) {
-    //             i = j;
-    //         }
-    //     }
-    // };
-
     //under third left tab; filter slider for lowest to highest infections
     let infectionSlider = function () {
         $("#hInfectionSlider").slider({
@@ -1113,9 +1105,10 @@ define([
 
     //date slider
     let dateSlider = function () {
+        // console.log(fromDate.val());
         $("#slider-range").slider({
-            // min: new Date(fromDate.val()).getTime() / 1000,
-            // max: new Date(toDate.val()).getTime() / 1000 + 86400,
+            min: new Date(fromDate.val()).getTime() / 1000 + 86400,
+            max: new Date(toDate.val()).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()),
@@ -1145,10 +1138,10 @@ define([
     //range slider; sets date range for date slider
     let rangeSlider = function () {
         $("#doubleSlider-range").slider({
-            // min: new Date(fromDate.val()).getTime() / 1000,
+            min: new Date(fromDate.val()).getTime() / 1000,
             max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
-            // values: [new Date(fromDate.val()).getTime() / 1000, new Date(toDate.val()).getTime() / 1000],
+            values: [new Date(fromDate.val()).getTime() / 1000, new Date(toDate.val()).getTime() / 1000],
             slide: function (event, ui) {
                 //updates text
                 $("#amount2").val($.format.date(ui.values[0] * 1000, "yyyy-MM-dd") + " to " + $.format.date(ui.values[1] * 1000, "yyyy-MM-dd"));
@@ -1673,7 +1666,7 @@ define([
     return {
         initCaseNum,
         subDropdown,
-        // updateFrom,
+        updateFrom,
         updateTo,
         updateCurr,
         // onDiseaseClick,
