@@ -161,11 +161,12 @@ define([
             }
         });
     }
-    let updateFrom = function (fromD){
-        fromDate.val(fromD);
-        // console.log(fromD)
-        // console.log(fromDate.val(fromD))
-    }
+    fromDate.val(dataAll.arrDate[0].Date);
+    // let updateFrom = function (fromD){
+    //     fromDate.val(fromD);
+    //     // console.log(fromD)
+    //     // console.log(fromDate.val(fromD))
+    // }
     let updateTo = function (toD){
         toDate.val(toD);
         // console.log(toD)
@@ -1113,14 +1114,17 @@ define([
     //date slider
     let dateSlider = function () {
         $("#slider-range").slider({
-            min: new Date(fromDate.val()).getTime() / 1000,
-            max: new Date(toDate.val()).getTime() / 1000,
+            // min: new Date(fromDate.val()).getTime() / 1000,
+            // max: new Date(toDate.val()).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
+            // value: new Date(toDate.val()),
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
-                console.log(event)
+                // console.log(ui.value * 1000);
                 //updates text
+                // console.log($.format.date(ui.value * 1000, "yyyy-MM-dd"));
+                // $("#amount").val($.format.date(ui.value, "yyyy-MM-dd"));
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
@@ -1141,10 +1145,10 @@ define([
     //range slider; sets date range for date slider
     let rangeSlider = function () {
         $("#doubleSlider-range").slider({
-            min: new Date(fromDate.val()).getTime() / 1000,
+            // min: new Date(fromDate.val()).getTime() / 1000,
             max: new Date(toDate.val()).getTime() / 1000,
             step: 86400,
-            values: [new Date(fromDate.val()).getTime() / 1000, new Date(toDate.val()).getTime() / 1000],
+            // values: [new Date(fromDate.val()).getTime() / 1000, new Date(toDate.val()).getTime() / 1000],
             slide: function (event, ui) {
                 //updates text
                 $("#amount2").val($.format.date(ui.values[0] * 1000, "yyyy-MM-dd") + " to " + $.format.date(ui.values[1] * 1000, "yyyy-MM-dd"));
@@ -1669,7 +1673,7 @@ define([
     return {
         initCaseNum,
         subDropdown,
-        updateFrom,
+        // updateFrom,
         updateTo,
         updateCurr,
         // onDiseaseClick,

@@ -431,6 +431,9 @@ requirejs([
 
         $("#COVID-19-checkbox").on("click", function (e) {
             // controls.covid19();
+            console.log(fromDate.val())
+            fromDate.val(dataAll.arrDate[0].Date);
+            console.log(fromDate.val())
             // let toggle = this;
             if (this.checked) {
                 document.getElementById("COVID-category").disabled = false;
@@ -543,21 +546,31 @@ requirejs([
         fromDate.val(dataAll.arrDate[0].Date);
         toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
         curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        console.log(dataAll.arrDate[0].Date);
+        console.log(fromDate.val());
+        console.log(toDate.val())
         //loads initial case numbers
         curDate.change(function () {
             controls.updateCurr(curDate.val());
         });
 
+        $("#DiseaseProjection-a").click(function(){
+            console.log(fromDate.val());
+        })
         //when user changes the 'From' date, updates starting date for timelapse
-        fromDate.change(function () {
-            controls.updateFrom(fromDate.val());
-        });
+        // fromDate.change(function () {
+        //     console.log('fromDate is changed');
+        //     controls.updateFrom(fromDate.val());
+        // });
         toDate.change(function () {
             controls.updateTo(toDate.val());
         });
         controls.initCaseNum();
         //load slider functionalities
         controls.dateSlider();
+        console.log("asdf: ")
+        console.log(toDate.val())
+        // console.log($.format.date(new Date(toDate.val()).getTime(), "yyyy-MM-dd"))
         controls.rangeSlider();
         controls.infectionSlider();
         controls.opacitySlider();
@@ -641,7 +654,7 @@ requirejs([
 
             // curDate.val(fromDate);
 
-            controls.timelapse(fromDate.val(),toDate.val());
+            // controls.timelapse(fromDate.val(),toDate.val());
         });
 
         //timelapse: stop button
@@ -652,7 +665,7 @@ requirejs([
             $('#pauseTL').hide();
             $('#toggleTL').show();
 
-            curDate.val(fromDate.val());
+            // curDate.val(fromDate.val());
         });
 
         //timelapse: pause button
