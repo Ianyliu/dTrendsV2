@@ -54,7 +54,7 @@ define([
     let i = 0;
     let l;
 
-    let play = false;
+    let play = true;
 
     let numC = 0;
     let numD = 0;
@@ -849,7 +849,7 @@ define([
         //reset the button background color according to selection
         if (categoryS === "Confirmed Cases") {
             $("#categoryList").find("button").css("background-color", "red");
-            $("#titleCategory").text("Highest Infections (lowest to highest)");
+            $("#titleCategory").text("Infections Filter (Lowest - Highest)");
         } else if (categoryS === "Deaths") {
             $("#categoryList").find("button").css("background-color", "black");
             $("#titleCategory").text("Highest Deaths (lowest to highest)");
@@ -1009,6 +1009,7 @@ define([
     //used for timelapse function; pauses/plays animation without restarting from the beginning of timelapse
     let pause = function () {
         play = !play;
+        console.log(play)
     };
 
     //clears timelapse interval

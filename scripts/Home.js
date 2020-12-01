@@ -644,10 +644,12 @@ requirejs([
             $('#toggleTL').hide();
 
            controls.timelapse(fromDateH.val(),toDateH.val());
+           controls.pause();
         });
 
         //timelapse: stop button
         $('#stopTL').click(function () {
+            controls.pause();
             controls.clearI();
 
             $('#playTL').hide();
