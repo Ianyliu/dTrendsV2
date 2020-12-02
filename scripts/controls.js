@@ -179,8 +179,8 @@ define([
         numA = 0;
 
         curDate.val(currentD);
-        console.log(currentD)
-        console.log(curDate.val(currentD))
+        // console.log(currentD)
+        // console.log(curDate.val(currentD))
         //enables placemark based on the placemark properties current date and type; adds number of cases per category
         newGlobe.layers.forEach(function (elem) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType == "H_PKLayer" && elem.enabled) {
@@ -506,7 +506,7 @@ define([
         checkboxInput.value = allToggle;
         checkboxInput.className = "input alltoggle";
 
-        if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
+        // if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
 
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
