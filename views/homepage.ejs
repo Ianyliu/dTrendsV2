@@ -322,19 +322,19 @@
     <li><a class="tablinksLeft logo" title="Info"><strong>AWB COVID Toolkit</strong></a></li>
     <li>
         <a class="tablinksLeft" onclick="openTabLeft(event, 'controls')" title="Controls">
-            <span class="glyphicon glyphicon-tasks"></span></a>
+            <span id="controls-span" class="glyphicon glyphicon-tasks disabled-icon"></span></a>
     </li>
     <li>
-        <a id="diseasetrends-tab" class="tablinksLeft" onclick="openTabLeft(event, 'options_div')" style="pointer-events: none;" title="Disease Trends">
-            <span class="glyphicon glyphicon-globe"></span></a>
+        <a id="diseasetrends-tab" class="tablinksLeft" onclick="openTabLeft(event, 'options_div')" style="pointer-events: none;"  title="Disease Trends">
+            <span id="diseasetrends-span" class="glyphicon glyphicon-globe disabled-icon"></span></a>
     </li>
     <li>
         <a id="drawingtools-tab" class="tablinksLeft" onclick="openTabLeft(event, 'drawing')" style="pointer-events: none;" title="Drawing Tools">
-            <span id="drawingtools-tab" class="glyphicon glyphicon-pencil" disabled="true"></span></a>
+            <span id="drawingtools-span" class="glyphicon glyphicon-pencil disabled-icon"></span></a>
     </li>
     <li>
         <a class="tablinksLeft" id="globeOrigin" title="Reset">
-            <span class="glyphicon glyphicon-repeat"></span></a>
+            <span id="reset-span" class="glyphicon glyphicon-repeat disabled-icon"></span></a>
     </li>
 
     <li>
@@ -968,6 +968,10 @@
         tutorial.hidden = false;
         tutorial.disabled = false;
         tutorial.style.display = 'table-cell';
+        document.getElementById("controls-span").classList.remove("disabled-icon");
+        document.getElementById("reset-span").classList.remove("disabled-icon");
+        document.getElementById("controls-span").classList.add("enabled-icon");
+        document.getElementById("reset-span").classList.add("enabled-icon");
     }
 
     function onFunction() {

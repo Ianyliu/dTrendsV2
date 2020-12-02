@@ -506,7 +506,7 @@ define([
         checkboxInput.value = allToggle;
         checkboxInput.className = "input alltoggle";
 
-        if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
+        // if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
 
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
