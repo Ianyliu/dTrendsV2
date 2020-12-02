@@ -22,7 +22,7 @@ requirejs([
    function genPLPK(dType, i, csvData) {
         // create placemark layer for AgroSphere
        aLayer = new WorldWind.RenderableLayer(dType + " PK");
-       aLayer.enabled = false;
+       // aLayer.enabled = false;
 
        let apkArr = [];
         // Create the placemark and its label.

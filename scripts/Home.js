@@ -229,7 +229,8 @@ requirejs([
                         // document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Country ";
                     }
                 } else {
-                    alert("Error! Agrosphere country placemarks weren't loaded");
+                    alert("Error! Agrosphere country placemarks are currently unavailable");
+                    document.getElementById("Country-alltoggle").disabled = true;
                 }
 
             });
@@ -271,7 +272,8 @@ requirejs([
                         document.getElementById("FoodSecurity-Agrosphere-Weather").setAttribute("aria-expanded", "false");
                     }
                 } else {
-                    alert("Error! Weather station placemarks weren't loaded");
+                    alert("Error! Weather station placemarks are currently unavailable");
+                    document.getElementById("Weather-alltoggle").disabled = true;
                 }
 
             });
@@ -279,7 +281,7 @@ requirejs([
             $("#Crops-alltoggle ").change(function () {
                 //Shows/hides menu below
                 let toggle = this;
-
+                let findLayerIndex = newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
 
@@ -295,6 +297,10 @@ requirejs([
                         document.getElementById("FoodSecurity-Agrosphere-Crops").removeAttribute("class", "in");
                         document.getElementById("FoodSecurity-Agrosphere-Crops").setAttribute("aria-expanded", "false");
                     }
+                } else {
+                    alert("Error! Agrosphere country placemarks are currently unavailable");
+                    document.getElementById("Crops-alltoggle").disabled = true;
+                    document.getElementById("Country-alltoggle").disabled = true;
                 }
             });
             // $(".countries-check").change(function(){
@@ -362,7 +368,7 @@ requirejs([
 
                         if (eachothertoggle !== toggle) {
                             eachothertoggle.checked = false;
-                            togglePK(eachothertoggle.value, false);
+                            // togglePK(eachothertoggle.value, false);
                         }
                         // console.log(this);//this selects individual checkboxes one by one
 
@@ -455,6 +461,7 @@ requirejs([
                 // document.getElementById("continentList").visibility = "visible";
             } else if (this.checked && coviderror === true) {
                 alert("COVID placemarks & layers are currently unavailable. ")
+                document.getElementById("COVID-19-checkbox").disabled = true;
             } else {
                 document.getElementById("COVID-category").disabled = true;
                 document.getElementById("datesliderdiv").hidden = true;
