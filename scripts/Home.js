@@ -642,20 +642,25 @@ requirejs([
         $('#toggleTL').click(function () {
             $('#pauseTL').show();
             $('#toggleTL').hide();
-
-           controls.timelapse(fromDateH.val(),toDateH.val());
-           controls.pause();
+            // controls.play = false;
+            controls.timelapse(fromDateH.val(),toDateH.val());
+            console.log(controls.play)
+           // controls.pause();
         });
 
         //timelapse: stop button
         $('#stopTL').click(function () {
-            controls.pause();
+            if (controls.play === true){
+                controls.pause();
+                console.log("change boolean")
+            }
             controls.clearI();
 
             $('#playTL').hide();
             $('#pauseTL').hide();
             $('#toggleTL').show();
-
+            curDateH.val(fromDateH.val());
+            $("#amount").val(fromDateH.val());
         });
 
         //timelapse: pause button
@@ -664,6 +669,8 @@ requirejs([
             $('#playTL').show();
 
             controls.pause();
+            console.log(controls.play)
+
         });
 
         //timelapse: play button

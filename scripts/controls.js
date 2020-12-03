@@ -54,7 +54,7 @@ define([
     let i = 0;
     let l;
 
-    let play = true;
+    var play = false;
 
     let numC = 0;
     let numD = 0;
@@ -161,6 +161,7 @@ define([
             }
         });
     }
+
     // fromDate.val(dataAll.arrDate[0].Date);
     let updateFrom = function (fromD){
         fromDate.val(fromD);
@@ -1010,7 +1011,9 @@ define([
     let pause = function () {
         play = !play;
         console.log(play)
+
     };
+
 
     //clears timelapse interval
     let clearI = function () {
@@ -1698,6 +1701,8 @@ define([
         createThirdLayers,
         createFourthLayer,
         covid19,
-        influenza
+        influenza,
+        play
+
     }
 })
