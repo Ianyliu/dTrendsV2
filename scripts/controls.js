@@ -54,7 +54,7 @@ define([
     let i = 0;
     let l;
 
-    let play = false;
+    let play = true;
 
     let numC = 0;
     let numD = 0;
@@ -848,7 +848,7 @@ define([
         //reset the button background color according to selection
         if (categoryS === "Confirmed Cases") {
             $("#categoryList").find("button").css("background-color", "red");
-            $("#titleCategory").text("Highest Infections (lowest to highest)");
+            $("#titleCategory").text("Infections Filter (Lowest - Highest)");
         } else if (categoryS === "Deaths") {
             $("#categoryList").find("button").css("background-color", "black");
             $("#titleCategory").text("Highest Deaths (lowest to highest)");
@@ -1113,8 +1113,8 @@ define([
     //date slider
     let dateSlider = function () {
         $("#slider-range").slider({
-            min: new Date(fromDate.val()).getTime() / 1000,
-            max: new Date(toDate.val()).getTime() / 1000,
+            min: new Date(fromDate.val()).getTime() / 1000 + 86400,
+            max: new Date(toDate.val()).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
             // value: new Date(toDate.val()).getUTCDate() / 1000,

@@ -26,9 +26,9 @@ requirejs([
         covidPK([date1.Date, date2.Date], "Confirmed", "init");
     }
 
-    let fromDate = $('#fromdatepicker');
-    let toDate = $('#todatepicker');
-    let curDate = $("#currentdatepicker");
+    let fromDateH = $('#fromdatepicker');
+    let toDateH = $('#todatepicker');
+    let curDateH = $("#currentdatepicker");
 
     const firstL = ['Disease Projection', 'Food Security']
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
@@ -94,13 +94,17 @@ requirejs([
         alert('Welcome to the A World Bridge COVID Toolkit! ' +
             'Our application works best' +
             ' on the most recent version of Chrome. If you are experiencing any problems, ' +
-            'please try switching a browser.')
+            'please try switching a browser or watching the tutorial.')
 
         console.log(newGlobe.layers);
 
         if (date1 === undefined || date2 === undefined) {
             alert("Error! Some COVID data wasn't loaded! Functionality may be unavailable.");
             coviderror = true;
+            document.getElementById("dialog").hidden = true;
+            document.getElementById("dialog").style.display = "none";
+            document.getElementById("dialogDateRange").hidden = true;
+            document.getElementById("dialogDateRange").style.display = "none";
         }
 
         // if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
@@ -188,6 +192,7 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
+                        alert("Agrosphere country placemarks are loading... please be patient")
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -243,6 +248,7 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
+                        alert("Agrosphere weather placemarks are loading... please be patient")
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -439,8 +445,11 @@ requirejs([
 
         $("#COVID-19-checkbox").on("click", function (e) {
             // controls.covid19();
+            // console.log(fromDateH.val())
+            fromDateH.val(dataAll.arrDate[0].Date);
+            // console.log(fromDateH.val());
             // let toggle = this;
-            if (this.checked && coviderror !== true) {
+            if (this.checked) {
                 document.getElementById("COVID-category").disabled = false;
                 document.getElementById("datesliderdiv").hidden = false;
 
@@ -459,9 +468,10 @@ requirejs([
 
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
-            } else if (this.checked && coviderror === true) {
-                alert("COVID placemarks & layers are currently unavailable. ")
-                document.getElementById("COVID-19-checkbox").disabled = true;
+            // } else if (this.checked && coviderror === true) {
+            //     alert("COVID placemarks & layers are currently unavailable. ")
+            //     document.getElementById("COVID-19-checkbox").disabled = true;
+            //     this.checked = false;
             } else {
                 document.getElementById("COVID-category").disabled = true;
                 document.getElementById("datesliderdiv").hidden = true;
@@ -556,32 +566,26 @@ requirejs([
         layerManager.continentList();
         layerManager.categoryList();
 
-        //sets date picker values
-        // fromDate.val(dataAll.arrDate[0].Date);
-        // toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        // curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-
-        //when user changes the date, globe will redraw to show the placemarks of current day
-        curDate.change(function () {
-            controls.updateCurr(curDate.val());
-        });
-
-        //when user changes the 'From' date, updates starting date for timelapse
-        fromDate.change(function () {
-            controls.updateFrom(fromDate.val());
-        });
-        toDate.change(function () {
-            controls.updateTo(toDate.val());
-        });
-        if (dataAll.arrDate[0] !== undefined) {
-            fromDate.val(dataAll.arrDate[0].Date);
-        }
-        if (dataAll.arrDate[dataAll.arrDate.length - 1] !== undefined) {
-            toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-            curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        }
+        //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
+        fromDateH.val(dataAll.arrDate[0].Date);
+        toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        // console.log(dataAll.arrDate[0].Date);
+        // console.log(fromDateH.val());
 
         //loads initial case numbers
+        curDateH.change(function () {
+            controls.updateCurr(curDateH.val());
+        });
+
+        // when user changes the 'From' date, updates starting date for timelapse
+        fromDateH.change(function () {
+            console.log('fromDate is changed');
+            controls.updateFrom(fromDateH.val());
+        });
+        toDateH.change(function () {
+            controls.updateTo(toDateH.val());
+        });
         controls.initCaseNum();
 
         //load slider functionalities
@@ -670,20 +674,19 @@ requirejs([
             $('#pauseTL').show();
             $('#toggleTL').hide();
 
-            curDate.val(fromDate);
-
-            controls.timelapse(fromDate.val(),toDate.val());
+           controls.timelapse(fromDateH.val(),toDateH.val());
+           controls.pause();
         });
 
         //timelapse: stop button
         $('#stopTL').click(function () {
+            controls.pause();
             controls.clearI();
 
             $('#playTL').hide();
             $('#pauseTL').hide();
             $('#toggleTL').show();
 
-            curDate.val(fromDate.val());
         });
 
         //timelapse: pause button
