@@ -101,10 +101,10 @@ requirejs([
         if (date1 === undefined || date2 === undefined) {
             alert("Error! Some COVID data wasn't loaded! Functionality may be unavailable.");
             coviderror = true;
-            document.getElementById("dialog").hidden = true;
-            document.getElementById("dialog").style.display = "none";
-            document.getElementById("dialogDateRange").hidden = true;
-            document.getElementById("dialogDateRange").style.display = "none";
+            // document.getElementById("dialog").hidden = true;
+            // document.getElementById("dialog").style.display = "none";
+            // document.getElementById("dialogDateRange").hidden = true;
+            // document.getElementById("dialogDateRange").style.display = "none";
         }
 
         // if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
@@ -449,7 +449,7 @@ requirejs([
             fromDateH.val(dataAll.arrDate[0].Date);
             // console.log(fromDateH.val());
             // let toggle = this;
-            if (this.checked) {
+            if (this.checked && coviderror !== true) {
                 document.getElementById("COVID-category").disabled = false;
                 document.getElementById("datesliderdiv").hidden = false;
 
@@ -468,10 +468,10 @@ requirejs([
 
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
-            // } else if (this.checked && coviderror === true) {
-            //     alert("COVID placemarks & layers are currently unavailable. ")
-            //     document.getElementById("COVID-19-checkbox").disabled = true;
-            //     this.checked = false;
+            } else if (this.checked && coviderror === true) {
+                alert("COVID placemarks & layers are currently unavailable. ")
+                document.getElementById("COVID-19-checkbox").disabled = true;
+                this.checked = false;
             } else {
                 document.getElementById("COVID-category").disabled = true;
                 document.getElementById("datesliderdiv").hidden = true;
@@ -484,7 +484,7 @@ requirejs([
                 $( "#slider-range" ).slider( "disable" );
                 // document.getElementById("drawingtools-tab").style.visibility = 'hidden';
                 // document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
-                // controls.closeAllCovid();
+                controls.closeAllCovid();
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
             }
