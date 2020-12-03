@@ -546,6 +546,7 @@ requirejs([
         //loads initial case numbers
         curDateH.change(function () {
             controls.updateCurr(curDateH.val());
+            console.log(curDateH.val());
         });
 
         // when user changes the 'From' date, updates starting date for timelapse
@@ -644,16 +645,13 @@ requirejs([
             $('#toggleTL').hide();
             // controls.play = false;
             controls.timelapse(fromDateH.val(),toDateH.val());
-            console.log(controls.play)
+            // console.log(controls.play)
            // controls.pause();
         });
 
         //timelapse: stop button
         $('#stopTL').click(function () {
-            if (controls.play === true){
-                controls.pause();
-                console.log("change boolean")
-            }
+
             controls.clearI();
 
             $('#playTL').hide();
@@ -668,8 +666,9 @@ requirejs([
             $('#pauseTL').hide();
             $('#playTL').show();
 
-            controls.pause();
-            console.log(controls.play)
+            controls.clearI();
+            // controls.pause();
+            // console.log(controls.play)
 
         });
 
@@ -677,8 +676,10 @@ requirejs([
         $('#playTL').click(function () {
             $('#pauseTL').show();
             $('#playTL').hide();
-
-            controls.pause();
+            var a = dataAll.arrDate.findIndex(dat => dat.Date === curDateH.val());
+            // console.log(dataAll.arrDate[a + 1].Date);
+            controls.timelapse(dataAll.arrDate[a + 1].Date, toDateH.val());
+            // controls.pause();
         });
 
 

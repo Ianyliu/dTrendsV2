@@ -54,7 +54,7 @@ define([
     let i = 0;
     let l;
 
-    var play = false;
+    // var play = false;
 
     let numC = 0;
     let numD = 0;
@@ -179,7 +179,6 @@ define([
         numD = 0;
         numR = 0;
         numA = 0;
-
         curDate.val(currentD);
         // console.log(currentD)
         // console.log(curDate.val(currentD))
@@ -961,14 +960,14 @@ define([
     }
 
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
-    let timelapse = function () {
-        var a = dataAll.arrDate.findIndex(dat => dat.Date === fromDate.val())
-        console.log(fromDate.val())
+    let timelapse = function (sd,ed) {
+        var a = dataAll.arrDate.findIndex(dat => dat.Date === sd)
         l = setInterval(function () {
-            if (!play) {
-                //updates current date picker and date slider
 
-                curDate.val(dataAll.arrDate[a].Date);
+                //updates current date picker and date slider
+                updateCurr(dataAll.arrDate[a].Date);
+                // curDate.val(dataAll.arrDate[a].Date);
+                console.log(curDate.val())
                 let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
                 $("#amount").val(dataAll.arrDate[a].Date);
@@ -1001,18 +1000,19 @@ define([
                     clearI();
                 }
                 a++;
-            }
+
 
 
         }, 1000)
     };
 
-    //used for timelapse function; pauses/plays animation without restarting from the beginning of timelapse
-    let pause = function () {
-        play = !play;
-        console.log(play)
 
-    };
+    //used for timelapse function; pauses/plays animation without restarting from the beginning of timelapse
+    // let pause = function () {
+    //     play = !play;
+    //     console.log(play)
+    //
+    // };
 
 
     //clears timelapse interval
@@ -1679,7 +1679,7 @@ define([
         onContinent,
         onNav,
         timelapse,
-        pause,
+        // pause,
         clearI,
         updateHIS,
         // onFrom,
@@ -1701,8 +1701,8 @@ define([
         createThirdLayers,
         createFourthLayer,
         covid19,
-        influenza,
-        play
+        influenza
+        // play
 
     }
 })
