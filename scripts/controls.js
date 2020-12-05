@@ -54,7 +54,7 @@ define([
     let i = 0;
     let l;
 
-    let play = false;
+    // var play = false;
 
     let numC = 0;
     let numD = 0;
@@ -161,6 +161,8 @@ define([
             }
         });
     }
+
+    // fromDate.val(dataAll.arrDate[0].Date);
     let updateFrom = function (fromD){
         fromDate.val(fromD);
         // console.log(fromD)
@@ -177,7 +179,6 @@ define([
         numD = 0;
         numR = 0;
         numA = 0;
-
         curDate.val(currentD);
         // console.log(currentD)
         // console.log(curDate.val(currentD))
@@ -848,16 +849,16 @@ define([
         //reset the button background color according to selection
         if (categoryS === "Confirmed Cases") {
             $("#categoryList").find("button").css("background-color", "red");
-            $("#titleCategory").text("Highest Infections (lowest to highest)");
+            $("#titleCategory").text("Infections Filter (Lowest - Highest)");
         } else if (categoryS === "Deaths") {
             $("#categoryList").find("button").css("background-color", "black");
-            $("#titleCategory").text("Highest Deaths (lowest to highest)");
+            $("#titleCategory").text("Deaths Filter (Lowest - Highest)");
         } else if (categoryS === "Recoveries") {
             $("#categoryList").find("button").css("background-color", "#7cfc00");
-            $("#titleCategory").text("Highest Recoveries (lowest to highest)");
+            $("#titleCategory").text("Recoveries Filter (Lowest - Highest)");
         } else if (categoryS === activecases) {
             $("#categoryList").find("button").css("background-color", "#F9910A");
-            $("#titleCategory").text("Highest Active Cases (lowest to highest)");
+            $("#titleCategory").text("Active Cases Filter (Lowest - Highest)");
         }
 
         //turn off all the placemarks, and then turn on selected placemarks
@@ -959,13 +960,12 @@ define([
     }
 
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
-    let timelapse = function () {
-        var a = dataAll.arrDate.findIndex(dat => dat.Date === fromDate.val())
+    let timelapse = function (sd,ed) {
+        var a = dataAll.arrDate.findIndex(dat => dat.Date === sd)
         l = setInterval(function () {
-            if (!play) {
-                //updates current date picker and date slider
 
-                curDate.val(dataAll.arrDate[a].Date);
+                //updates current date picker and date slider
+                updateCurr(dataAll.arrDate[a].Date);
                 let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
                 $("#amount").val(dataAll.arrDate[a].Date);
@@ -989,7 +989,7 @@ define([
 
 
                 //when date reaches 'To' date aka end of date range, stop animation
-                if (toDate.val() === dataAll.arrDate[a].Date) {
+                if (ed === dataAll.arrDate[a].Date) {
                     curDate.val(dataAll.arrDate[a].Date);
 
                     $('#pauseTL').hide();
@@ -998,16 +998,20 @@ define([
                     clearI();
                 }
                 a++;
-            }
+
 
 
         }, 1000)
     };
 
+
     //used for timelapse function; pauses/plays animation without restarting from the beginning of timelapse
-    let pause = function () {
-        play = !play;
-    };
+    // let pause = function () {
+    //     play = !play;
+    //     console.log(play)
+    //
+    // };
+
 
     //clears timelapse interval
     let clearI = function () {
@@ -1061,15 +1065,6 @@ define([
         }
     }
 
-    //under third left tab; changes starting date for timelapse when 'From' date is changed
-    // let onFrom = function () {
-    //     for (let j = 0; j < dataAll.arrDate.length - 1; j++) {
-    //         if (dataAll.arrDate[j].Date === fromDate.val()) {
-    //             i = j;
-    //         }
-    //     }
-    // };
-
     //under third left tab; filter slider for lowest to highest infections
     let infectionSlider = function () {
         $("#hInfectionSlider").slider({
@@ -1112,15 +1107,19 @@ define([
 
     //date slider
     let dateSlider = function () {
+        // console.log(fromDate.val());
         $("#slider-range").slider({
-            min: new Date(fromDate.val()).getTime() / 1000,
-            max: new Date(toDate.val()).getTime() / 1000,
+            min: new Date(fromDate.val()).getTime() / 1000 + 86400,
+            max: new Date(toDate.val()).getTime() / 1000 + 86400,
             step: 86400,
             value: new Date(toDate.val()).getTime() / 1000,
+            // value: new Date(toDate.val()),
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
-                console.log(event)
+                // console.log(ui.value * 1000);
                 //updates text
+                // console.log($.format.date(ui.value * 1000, "yyyy-MM-dd"));
+                // $("#amount").val($.format.date(ui.value, "yyyy-MM-dd"));
                 $("#amount").val($.format.date(ui.value * 1000, "yyyy-MM-dd"));
 
                 //update current placemark display based on slider/current date
@@ -1678,7 +1677,7 @@ define([
         onContinent,
         onNav,
         timelapse,
-        pause,
+        // pause,
         clearI,
         updateHIS,
         // onFrom,
@@ -1701,5 +1700,7 @@ define([
         createFourthLayer,
         covid19,
         influenza
+        // play
+
     }
 })

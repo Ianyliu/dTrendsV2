@@ -325,12 +325,12 @@
             <span class="glyphicon glyphicon-tasks"></span></a>
     </li>
     <li>
-        <a id="diseasetrends-tab" class="tablinksLeft" onclick="openTabLeft(event, 'options_div')" style="visibility: hidden" title="Disease Trends">
+        <a id="diseasetrends-tab" class="tablinksLeft" onclick="openTabLeft(event, 'options_div')" style="pointer-events: none;" title="Disease Trends">
             <span class="glyphicon glyphicon-globe"></span></a>
     </li>
     <li>
-        <a id="drawingtools-tab" class="tablinksLeft" onclick="openTabLeft(event, 'drawing')" style="visibility: hidden" title="Drawing Tools">
-            <span class="glyphicon glyphicon-pencil"></span></a>
+        <a id="drawingtools-tab" class="tablinksLeft" onclick="openTabLeft(event, 'drawing')" style="pointer-events: none;" title="Drawing Tools">
+            <span id="drawingtools-tab" class="glyphicon glyphicon-pencil" disabled="true"></span></a>
     </li>
     <li>
         <a class="tablinksLeft" id="globeOrigin" title="Reset">
@@ -595,7 +595,7 @@
         <div class="list-group" id="annotationList" style="width: 100%; text-align: center;">
             <div class="input-group" id="annotationBox" style="width: 100%;text-align: center;align-content: center;">
                 <div class="smallRule">
-                    <h5 id="titleCategory"><strong>Highest Infections (lowest to highest)</strong></h5>
+                    <h5 id="titleCategory"><strong>Infections Filter (Lowest - Highest)</strong></h5>
                     <div id="hInfectionSlider"
                          class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
                          style="width: 100%;">
@@ -608,7 +608,7 @@
                         <div class="ui-slider-range ui-widget-header ui-corner-all"
                              style="width: 24.2857%; left: 75.7143%;"></div>
                     </div>
-                    <h5><span id="hInfectionsValue">0 to 300 Locations</span></h5>
+                    <h5><span id="hInfectionsValue">0 to 320 Locations</span></h5>
                 </div>
                 <div style="color: #FFFFFF;">
                     <h5><strong>Surface Opacity</strong></h5>
