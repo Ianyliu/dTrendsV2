@@ -94,17 +94,17 @@ requirejs([
         alert('Welcome to the A World Bridge COVID Toolkit! ' +
             'Our application works best' +
             ' on the most recent version of Chrome. If you are experiencing any problems, ' +
-            'please try switching a browser.')
+            'please try switching a browser or watching the tutorial.')
 
         console.log(newGlobe.layers);
 
         if (date1 === undefined || date2 === undefined) {
-            alert("Error! Some COVID data isn't available.");
+            alert("Error! Some COVID data wasn't loaded! Functionality may be unavailable.");
             coviderror = true;
-            document.getElementById("dialog").hidden = true;
-            document.getElementById("dialog").style.display = "none";
-            document.getElementById("dialogDateRange").hidden = true;
-            document.getElementById("dialogDateRange").style.display = "none";
+            // document.getElementById("dialog").hidden = true;
+            // document.getElementById("dialog").style.display = "none";
+            // document.getElementById("dialogDateRange").hidden = true;
+            // document.getElementById("dialogDateRange").style.display = "none";
         }
 
         // if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
@@ -192,6 +192,7 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
+                        alert("Agrosphere country placemarks are loading... please be patient")
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -247,6 +248,7 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
+                        alert("Agrosphere weather placemarks are loading... please be patient")
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -469,6 +471,7 @@ requirejs([
             } else if (this.checked && coviderror === true) {
                 alert("COVID placemarks & layers are currently unavailable. ")
                 document.getElementById("COVID-19-checkbox").disabled = true;
+                this.checked = false;
             } else {
                 document.getElementById("COVID-category").disabled = true;
                 document.getElementById("datesliderdiv").hidden = true;
@@ -481,7 +484,7 @@ requirejs([
                 $( "#slider-range" ).slider( "disable" );
                 // document.getElementById("drawingtools-tab").style.visibility = 'hidden';
                 // document.getElementById("diseasetrends-tab").style.visibility = 'hidden';
-                // controls.closeAllCovid();
+                controls.closeAllCovid();
                 // document.getElementById("options_div").visibility = "hidden";
                 // document.getElementById("continentList").visibility = "hidden";
             }
