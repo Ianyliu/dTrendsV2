@@ -551,7 +551,6 @@ requirejs([
 
         // when user changes the 'From' date, updates starting date for timelapse
         fromDateH.change(function () {
-            console.log('fromDate is changed');
             controls.updateFrom(fromDateH.val());
         });
         toDateH.change(function () {
@@ -643,17 +642,12 @@ requirejs([
         $('#toggleTL').click(function () {
             $('#pauseTL').show();
             $('#toggleTL').hide();
-            // controls.play = false;
             controls.timelapse(fromDateH.val(),toDateH.val());
-            // console.log(controls.play)
-           // controls.pause();
         });
 
         //timelapse: stop button
         $('#stopTL').click(function () {
-
             controls.clearI();
-
             $('#playTL').hide();
             $('#pauseTL').hide();
             $('#toggleTL').show();
@@ -665,11 +659,7 @@ requirejs([
         $('#pauseTL').click(function () {
             $('#pauseTL').hide();
             $('#playTL').show();
-
             controls.clearI();
-            // controls.pause();
-            // console.log(controls.play)
-
         });
 
         //timelapse: play button

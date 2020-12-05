@@ -966,8 +966,6 @@ define([
 
                 //updates current date picker and date slider
                 updateCurr(dataAll.arrDate[a].Date);
-                // curDate.val(dataAll.arrDate[a].Date);
-                console.log(curDate.val())
                 let val = new Date(dataAll.arrDate[a].Date).getTime() / 1000;
                 $("#slider-range").slider("value", val);
                 $("#amount").val(dataAll.arrDate[a].Date);
@@ -991,7 +989,7 @@ define([
 
 
                 //when date reaches 'To' date aka end of date range, stop animation
-                if (toDate.val() === dataAll.arrDate[a].Date) {
+                if (ed === dataAll.arrDate[a].Date) {
                     curDate.val(dataAll.arrDate[a].Date);
 
                     $('#pauseTL').hide();
