@@ -26,9 +26,9 @@ requirejs([
         covidPK([date1.Date, date2.Date], "Confirmed", "init");
     }
 
-    let fromDate = $('#fromdatepicker');
-    let toDate = $('#todatepicker');
-    let curDate = $("#currentdatepicker");
+    let fromDateH = $('#fromdatepicker');
+    let toDateH = $('#todatepicker');
+    let curDateH = $("#currentdatepicker");
 
     const firstL = ['Disease Projection', 'Food Security']
     const diseasesecondL = ["COVID-19", "Influenza A", "Influenza B"];
@@ -443,6 +443,9 @@ requirejs([
 
         $("#COVID-19-checkbox").on("click", function (e) {
             // controls.covid19();
+            // console.log(fromDateH.val())
+            fromDateH.val(dataAll.arrDate[0].Date);
+            // console.log(fromDateH.val());
             // let toggle = this;
             if (this.checked && coviderror !== true) {
                 document.getElementById("COVID-category").disabled = false;
@@ -560,36 +563,52 @@ requirejs([
         layerManager.continentList();
         layerManager.categoryList();
 
-        //sets date picker values
-        // fromDate.val(dataAll.arrDate[0].Date);
-        // toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        // curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        //sets date picker values. when user changes the date, globe will redraw to show the placemarks of current day
+        fromDateH.val(dataAll.arrDate[0].Date);
+        toDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        curDateH.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        // console.log(dataAll.arrDate[0].Date);
+        // console.log(fromDateH.val());
 
-        //when user changes the date, globe will redraw to show the placemarks of current day
-        curDate.change(function () {
-            controls.updateCurr(curDate.val());
-        });
-
-        //when user changes the 'From' date, updates starting date for timelapse
-        fromDate.change(function () {
-            controls.updateFrom(fromDate.val());
-        });
-        toDate.change(function () {
-            controls.updateTo(toDate.val());
-        });
-        if (dataAll.arrDate[0] !== undefined) {
-            fromDate.val(dataAll.arrDate[0].Date);
-        }
-        if (dataAll.arrDate[dataAll.arrDate.length - 1] !== undefined) {
-            toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-            curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
-        }
+        // //when user changes the date, globe will redraw to show the placemarks of current day
+        // curDate.change(function () {
+        //     controls.updateCurr(curDate.val());
+        // });
+        //
+        // //when user changes the 'From' date, updates starting date for timelapse
+        // fromDate.change(function () {
+        //     controls.updateFrom(fromDate.val());
+        // });
+        // toDate.change(function () {
+        //     controls.updateTo(toDate.val());
+        // });
+        // if (dataAll.arrDate[0] !== undefined) {
+        //     fromDate.val(dataAll.arrDate[0].Date);
+        // }
+        // if (dataAll.arrDate[dataAll.arrDate.length - 1] !== undefined) {
+        //     toDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        //     curDate.val(dataAll.arrDate[dataAll.arrDate.length - 1].Date);
+        // }
 
         //loads initial case numbers
-        controls.initCaseNum();
+        curDateH.change(function () {
+            controls.updateCurr(curDateH.val());
+            console.log(curDateH.val());
+        });
 
+        // when user changes the 'From' date, updates starting date for timelapse
+        fromDateH.change(function () {
+            controls.updateFrom(fromDateH.val());
+        });
+        toDateH.change(function () {
+            controls.updateTo(toDateH.val());
+        });
+        controls.initCaseNum();
         //load slider functionalities
         controls.dateSlider();
+        // console.log("asdf: ")
+
+        // console.log($.format.date(new Date(toDateH.val()).getTime(), "yyyy-MM-dd"))
         controls.rangeSlider();
         controls.infectionSlider();
         controls.opacitySlider();
@@ -673,37 +692,34 @@ requirejs([
         $('#toggleTL').click(function () {
             $('#pauseTL').show();
             $('#toggleTL').hide();
-
-            curDate.val(fromDate);
-
-            controls.timelapse(fromDate.val(),toDate.val());
+            controls.timelapse(fromDateH.val(),toDateH.val());
         });
 
         //timelapse: stop button
         $('#stopTL').click(function () {
             controls.clearI();
-
             $('#playTL').hide();
             $('#pauseTL').hide();
             $('#toggleTL').show();
-
-            curDate.val(fromDate.val());
+            curDateH.val(fromDateH.val());
+            $("#amount").val(fromDateH.val());
         });
 
         //timelapse: pause button
         $('#pauseTL').click(function () {
             $('#pauseTL').hide();
             $('#playTL').show();
-
-            controls.pause();
+            controls.clearI();
         });
 
         //timelapse: play button
         $('#playTL').click(function () {
             $('#pauseTL').show();
             $('#playTL').hide();
-
-            controls.pause();
+            let a = dataAll.arrDate.findIndex(dat => dat.Date === curDateH.val());
+            // console.log(dataAll.arrDate[a + 1].Date);
+            controls.timelapse(dataAll.arrDate[a + 1].Date, toDateH.val());
+            // controls.pause();
         });
 
 
