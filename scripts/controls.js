@@ -852,13 +852,13 @@ define([
             $("#titleCategory").text("Infections Filter (Lowest - Highest)");
         } else if (categoryS === "Deaths") {
             $("#categoryList").find("button").css("background-color", "black");
-            $("#titleCategory").text("Highest Deaths (lowest to highest)");
+            $("#titleCategory").text("Deaths Filter (Lowest - Highest)");
         } else if (categoryS === "Recoveries") {
             $("#categoryList").find("button").css("background-color", "#7cfc00");
-            $("#titleCategory").text("Highest Recoveries (lowest to highest)");
+            $("#titleCategory").text("Recoveries Filter (Lowest - Highest)");
         } else if (categoryS === activecases) {
             $("#categoryList").find("button").css("background-color", "#F9910A");
-            $("#titleCategory").text("Highest Active Cases (lowest to highest)");
+            $("#titleCategory").text("Active Cases Filter (Lowest - Highest)");
         }
 
         //turn off all the placemarks, and then turn on selected placemarks
