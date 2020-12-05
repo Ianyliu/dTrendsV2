@@ -1344,7 +1344,8 @@ define([
                         document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
                     }
 
-                    document.getElementById("controls").style.display = 'block';
+                    // document.getElementById("controls").style.display = 'block';
+                    openTabLeft(event, 'controls','open');
                     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
                     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
                     document.getElementById(foodsecurity).setAttribute("aria-expanded", "true");
