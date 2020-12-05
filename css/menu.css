@@ -227,6 +227,26 @@ ul.nav {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
+
+.disabled-icon {
+  opacity: 0.5;
+}
+
+.enabled-icon {
+  opacity: 1;
+}
+
+.modal-title {
+  text-align: center;
+}
+
+.h4-sitename {
+  text-align: center;
+}
+
+.site-description {
+  text-align: center;
+}
 /*
 .ec-submenu.pull-left>.ec-menu {
   left: -100%;

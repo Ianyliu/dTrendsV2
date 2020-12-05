@@ -2,7 +2,7 @@
  * Created by Ben on 8/15/16.
  */
 
-function openTabLeft(evt, tabName) {
+function openTabLeft(evt, tabName,special="none") {
     // Declare all variables
     var i, tabcontentLeft, tablinksLeft;
 
@@ -28,26 +28,27 @@ function openTabLeft(evt, tabName) {
 
     // Show the current tab, and add an "active" attribute to the link
     // that opened the tab, or removes it if it was already open
-
-    if (document.getElementById(tabName).style.display == "none") {
+    if(special === "open") {
         document.getElementById(tabName).style.display = "block";
         evt.currentTarget.setAttribute("target", "active");
-
+    } else {
+        if (document.getElementById(tabName).style.display === "none") {
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.setAttribute("target", "active");
+        } else {
+            document.getElementById(tabName).style.display = "none";
+            document.getElementById(tabName).className.replace("active", "");
+            evt.currentTarget.removeAttribute("target", "active");
+        }
     }
-    else {
-        document.getElementById(tabName).style.display = "none";
-        document.getElementById(tabName).className.replace("active", "");
-        evt.currentTarget.removeAttribute("target", "active");
 
-
-    }
 
     // remove all other tabs except for the one that was clicked, but do not let this apply to he help tab
 
     tabcontentLeft = document.getElementsByClassName("tabcontentLeft");
     for (i = 0; i < tabcontentLeft.length; i++) {
 
-        if (tabcontentLeft[i].id != tabName.toString())
+        if (tabcontentLeft[i].id !== tabName.toString())
             tabcontentLeft[i].style.display = "none";
     }
 }
