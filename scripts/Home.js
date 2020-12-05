@@ -91,12 +91,16 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        alert('Welcome to the A World Bridge COVID Toolkit! ' +
-            'Our application works best' +
-            ' on the most recent version of Chrome. If you are experiencing any problems, ' +
-            'please try switching a browser or watching the tutorial.')
-
         console.log(newGlobe.layers);
+
+        let ls = localStorage.getItem('namespace.visited');
+        if (ls == null) {
+            alert('Welcome to the A World Bridge COVID Toolkit! ' +
+                'Our application works best' +
+                ' on the most recent version of Chrome. If you are experiencing any problems, ' +
+                'please try switching a browser or watching the tutorial.');
+            localStorage.setItem('namespace.visited', 1)
+        }
 
         if (date1 === undefined || date2 === undefined) {
             alert("Error! Some COVID data wasn't loaded! Functionality may be unavailable.");

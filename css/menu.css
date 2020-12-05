@@ -236,6 +236,17 @@ ul.nav {
   opacity: 1;
 }
 
+.modal-title {
+  text-align: center;
+}
+
+.h4-sitename {
+  text-align: center;
+}
+
+.site-description {
+  text-align: center;
+}
 /*
 .ec-submenu.pull-left>.ec-menu {
   left: -100%;
