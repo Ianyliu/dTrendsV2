@@ -968,6 +968,12 @@
         tutorial.hidden = false;
         tutorial.disabled = false;
         tutorial.style.display = 'table-cell';
+        document.getElementById("controls-span").classList.remove("disabled-icon");
+        document.getElementById("reset-span").classList.remove("disabled-icon");
+        document.getElementById("controls-span").classList.add("enabled-icon");
+        document.getElementById("reset-span").classList.add("enabled-icon");
+        document.getElementById("controls-tab").style.pointerEvents = 'auto';
+        document.getElementById("reset-tab").style.pointerEvents = 'auto';
     }
 
     function onFunction() {
