@@ -319,7 +319,7 @@
 <ul class="tab"
     style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
 <!--    <li><a class="tablinksLeft logo" title="Info"><strong>AWB Disease Trends</strong></a></li>-->
-    <li><a class="tablinksLeft logo" title="Info"><strong>AWB COVID Toolkit</strong></a></li>
+    <li><a class="tablinksLeft logo" title="Info"autofocus><strong>AWB COVID Toolkit</strong></a></li>
     <li>
         <a id="controls-tab" class="tablinksLeft" onclick="openTabLeft(event, 'controls')" style="pointer-events: none;" title="Controls">
             <span id="controls-span" class="glyphicon glyphicon-tasks disabled-icon"></span></a>
@@ -968,12 +968,6 @@
         tutorial.hidden = false;
         tutorial.disabled = false;
         tutorial.style.display = 'table-cell';
-        document.getElementById("controls-span").classList.remove("disabled-icon");
-        document.getElementById("reset-span").classList.remove("disabled-icon");
-        document.getElementById("controls-span").classList.add("enabled-icon");
-        document.getElementById("reset-span").classList.add("enabled-icon");
-        document.getElementById("controls-tab").style.pointerEvents = 'auto';
-        document.getElementById("reset-tab").style.pointerEvents = 'auto';
     }
 
     function onFunction() {

@@ -95,9 +95,9 @@ requirejs([
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
-            alert('Welcome to the A World Bridge COVID Toolkit! ' +
-                'Our application works best' +
-                ' on the most recent version of Chrome. If you are experiencing any problems, ' +
+            alert('Welcome to the A World Bridge COVID Toolkit! ' + "\r\n" +
+                'For a better experience, please use Google Chrome as a browser and allow all cookies. ' +
+                'If you are experiencing any problems, ' +
                 'please try switching a browser or watching the tutorial.');
             localStorage.setItem('namespace.visited', 1)
         }
@@ -196,7 +196,10 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
-                        alert("Agrosphere country placemarks are loading... please be patient")
+                        if (ls=== null) {
+                            alert("Agrosphere country placemarks are loading... please be patient")
+                        }
+
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -252,7 +255,10 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
-                        alert("Agrosphere weather placemarks are loading... please be patient")
+                        if (ls=== null) {
+                            alert("Agrosphere weather placemarks are loading... please be patient")
+                        }
+
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
