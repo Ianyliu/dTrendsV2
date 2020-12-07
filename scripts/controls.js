@@ -1637,7 +1637,7 @@ define([
 
     let chartDFun = function (objButton, PM) {
         // get button value to reset chart duration time
-        let pDate = dataAll.arrDate[dataAll.arrDate.length - 1].Date;
+        let pDate = $("#amount").val();
         let d0 = new Date("" + pDate + "")
         let dFrom = $.format.date(d0.setDate(d0.getDate() - objButton.id + 1), "yyyy-MM-dd");
         let dTo = dataAll.arrDate[dataAll.arrDate.length - 1].Date;
