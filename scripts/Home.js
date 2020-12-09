@@ -191,6 +191,7 @@ requirejs([
                 let toggle = this;
                 // let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
+                console.log(findLayerIndex)
                 // let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
                 // console.log(this.value);
                 // console.log(toggle.checked);
@@ -474,8 +475,8 @@ requirejs([
                 alert("Please wait a while for the placemarks to load...")
                 // controls.onCategory("Confirmed Cases","Confirmed Cases");
                 $( "#slider-range" ).slider( "enable" );
+                controls.enableAllCovid();
                 controls.updateCurr($("#amount").val());
-
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
             } else if (this.checked && coviderror === true) {
