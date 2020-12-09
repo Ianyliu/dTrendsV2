@@ -691,7 +691,7 @@ requirejs([
 
         //dropdown menu for placemark category
         $("#categoryList").find("li").on("click", function (e) {
-            alert("Please wait a few minutes for the placemarks and layers to load...");
+            alert("Please wait a few seconds for the placemarks and layers to load...");
             controls.onCategory(e);
             $( "#slider-range" ).slider( "enable" );
             document.getElementById("COVID-19-checkbox").checked = true;

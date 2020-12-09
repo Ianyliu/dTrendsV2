@@ -1789,7 +1789,7 @@ define([
     function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
             let layer = newGlobe.layers[i];
-            if (layer.layerType == 'H_PKLayer') {
+            if (layer.layerType === 'H_PKLayer') {
                 layer.enabled = true;
                 let layerButton = $('#' + layer.displayName + '');
                 if (!layerButton.hasClass(active)) {
