@@ -1333,36 +1333,36 @@ define([
                 // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
-                } else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
-                    let foodsecuritya = "FoodSecurity-a";
-                    let foodsecurity = "FoodSecurity"
-                    let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
-                    let agrofoodsecurity = "FoodSecurity-Agrosphere"
-
-                    //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
-                    if (pickedPM.layer.layerType === 'Country_Placemarks') {
-                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.userProperties.country + " ";
-                    } else {
-                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
-                    }
-
-                    // document.getElementById("controls").style.display = 'block';
-                    openTabLeft(event, 'controls','open');
-                    document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
-                    document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
-                    document.getElementById(foodsecurity).setAttribute("aria-expanded", "true");
-                    document.getElementById(foodsecurity).setAttribute("class", "in");
-                    document.getElementById(foodsecurity).style.visibility = 'visible';
-                    document.getElementById(foodsecurity).style.height = '';
-
-                    document.getElementById(agrofoodsecuritya).removeAttribute("class", "collapsed");
-                    document.getElementById(agrofoodsecuritya).setAttribute("aria-expanded", "true");
-                    document.getElementById(agrofoodsecurity).setAttribute("aria-expanded", "true");
-                    document.getElementById(agrofoodsecurity).setAttribute("class", "in");
-                    document.getElementById(agrofoodsecurity).style.visibility = 'visible';
-                    document.getElementById(agrofoodsecurity).style.height = '';
-                    sitePopUp(pickedPM);
-                }
+                } //  else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
+                //     let foodsecuritya = "FoodSecurity-a";
+                //     let foodsecurity = "FoodSecurity"
+                //     let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
+                //     let agrofoodsecurity = "FoodSecurity-Agrosphere"
+                //
+                //     //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
+                //     if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                //         document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.userProperties.country + " ";
+                //     } else {
+                //         document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
+                //     }
+                //
+                //     // document.getElementById("controls").style.display = 'block';
+                //     openTabLeft(event, 'controls','open');
+                //     document.getElementById(foodsecuritya).removeAttribute("class", "collapsed");
+                //     document.getElementById(foodsecuritya).setAttribute("aria-expanded", "true");
+                //     document.getElementById(foodsecurity).setAttribute("aria-expanded", "true");
+                //     document.getElementById(foodsecurity).setAttribute("class", "in");
+                //     document.getElementById(foodsecurity).style.visibility = 'visible';
+                //     document.getElementById(foodsecurity).style.height = '';
+                //
+                //     document.getElementById(agrofoodsecuritya).removeAttribute("class", "collapsed");
+                //     document.getElementById(agrofoodsecuritya).setAttribute("aria-expanded", "true");
+                //     document.getElementById(agrofoodsecurity).setAttribute("aria-expanded", "true");
+                //     document.getElementById(agrofoodsecurity).setAttribute("class", "in");
+                //     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
+                //     document.getElementById(agrofoodsecurity).style.height = '';
+                //     sitePopUp(pickedPM);
+                // }
             }
 
         })
