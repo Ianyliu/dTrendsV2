@@ -91,7 +91,7 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        console.log(newGlobe.layers);
+        // console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
