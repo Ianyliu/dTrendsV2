@@ -765,25 +765,25 @@ requirejs([
 
     });
 
-    // async function togglePK(countryN, status) {
-    //     // use countryN to look pk
-    //     if (countryN !== undefined || status !== undefined) {
-    //         let findLayerIndex = await newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
-    //         let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
-    //
-    //         //turn on/off the pk
-    //         if (findPKIndex >= 0) {
-    //             newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
-    //             newGlobe.redraw();
-    //
-    //             newGlobe.goTo(new WorldWind.Position(
-    //                 newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
-    //                 newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
-    //                 newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
-    //             ));
-    //         }
-    //     } else {
-    //         alert('Error!');
-    //     }
-    // }
+    async function togglePK(countryN, status) {
+        // use countryN to look pk
+        if (countryN !== undefined || status !== undefined) {
+            let findLayerIndex = await newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
+            let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
+
+            //turn on/off the pk
+            if (findPKIndex >= 0) {
+                newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
+                newGlobe.redraw();
+
+                newGlobe.goTo(new WorldWind.Position(
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
+                ));
+            }
+        } else {
+            alert('Error!');
+        }
+    }
 });

@@ -835,7 +835,7 @@ define([
     // };
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
-    let onCategory = function (event, cat ="none") {
+    let onCategory = async function (event, cat ="none") {
         if (cat === "none") {
             //grab the selection value
             categoryS = event.target.innerText || event.target.innerHTML;
@@ -863,9 +863,11 @@ define([
 
         //turn off all the placemarks, and then turn on selected placemarks
         //locate placemarks by accessing renderables member in placemark layers
-        newGlobe.layers.forEach(function (elem, index) {
+        await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
+                console.log(elem)
                 elem.renderables.forEach(function (d) {
+                    console.log(d)
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
@@ -961,7 +963,7 @@ define([
 
     //under third left tab; plays a timelapse of the placemarks over the course of a set date range
     let timelapse = function (sd,ed) {
-        var a = dataAll.arrDate.findIndex(dat => dat.Date === sd)
+        let a = dataAll.arrDate.findIndex(dat => dat.Date === sd)
         l = setInterval(function () {
 
                 //updates current date picker and date slider
