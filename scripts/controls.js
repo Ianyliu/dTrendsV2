@@ -865,9 +865,9 @@ define([
         //locate placemarks by accessing renderables member in placemark layers
         await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
-                console.log(elem)
+                // console.log(elem)
                 elem.renderables.forEach(function (d) {
-                    console.log(d)
+                    // console.log(d)
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
