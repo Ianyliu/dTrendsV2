@@ -33,6 +33,22 @@ module.exports = function (app) {
         });
     });
 
+    app.get('/rr', function (req, res) {
+        console.log("function")
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        let countryQ = "select * from dtrends.continent where CountryName= ?";
+        con_DT.query(countryQ, [req.query.country], function (err, results) {
+            if (err) {
+                console.log(err);
+                res.json({"error": true, "message": "An unexpected error occurred !"});
+            } else {
+                // console.log(results);
+                res.json({"error": false,  "data": results});
+            }
+        });
+    });
+
     app.get('/1dData', function (req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
