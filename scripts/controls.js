@@ -835,7 +835,7 @@ define([
     // };
 
     //under second left tab, second dropdown menu; used to display layers filtered by cases, deaths, and recoveries
-    let onCategory = async function (event, cat ="none") {
+    let onCategory = async function (event, cat = "none") {
         if (cat === "none") {
             //grab the selection value
             categoryS = event.target.innerText || event.target.innerHTML;
@@ -865,9 +865,7 @@ define([
         //locate placemarks by accessing renderables member in placemark layers
         await newGlobe.layers.forEach(function (elem, index) {
             if (elem instanceof WorldWind.RenderableLayer && elem.layerType === "H_PKLayer") {
-                // console.log(elem)
                 elem.renderables.forEach(function (d) {
-                    // console.log(d)
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
                             d.enabled = true;

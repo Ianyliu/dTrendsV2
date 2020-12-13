@@ -34,10 +34,10 @@ requirejs([
            //Handle the string is based on the type we determine
            if (dType === 'Country') {
                aLayer.layerType = 'Country_Placemarks';
-               imgSource = '/flags/' + e.iconCode + '.png';
+               imgSource = 'images/flags/' + e.iconCode + '.png';
            } else if (dType === 'Weather Station') {
                aLayer.layerType = 'Weather_Station_Placemarks';
-               imgSource = '/images/sun.png';
+               imgSource = 'images/sun.png';
            } else {
                console.log("Read layer type in error");
            }
