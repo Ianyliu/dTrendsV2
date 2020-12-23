@@ -839,8 +839,10 @@ define([
         if (cat === "none") {
             //grab the selection value
             categoryS = event.target.innerText || event.target.innerHTML;
+            console.log(categoryS);
         } else {
             categoryS = cat;
+            console.log(categoryS)
         }
 
         //refresh the option display
@@ -850,6 +852,7 @@ define([
         if (categoryS === "Confirmed Cases") {
             $("#categoryList").find("button").css("background-color", "red");
             $("#titleCategory").text("Infections Filter (Lowest - Highest)");
+
         } else if (categoryS === "Deaths") {
             $("#categoryList").find("button").css("background-color", "black");
             $("#titleCategory").text("Deaths Filter (Lowest - Highest)");
@@ -869,7 +872,7 @@ define([
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
-                            // console.log(d)
+                            console.log(d)
                         } else {
                             d.enabled = false;
                         }
@@ -1114,13 +1117,14 @@ define([
     };
 
     //date slider
-    let dateSlider = function () {
+    let dateSlider = function (sd) {
         // console.log(fromDate.val());
+
         $("#slider-range").slider({
-            min: new Date(fromDate.val()).getTime() / 1000 + 86400,
-            max: new Date(toDate.val()).getTime() / 1000 + 86400,
+            min: new Date(dataAll.arrDate[0].Date).getTime() / 1000 + 86400,
+            max: new Date(dataAll.arrDate[dataAll.arrDate.length - 1].Date).getTime() / 1000 + 86400,
             step: 86400,
-            value: new Date(toDate.val()).getTime() / 1000,
+            value: new Date(sd).getTime() / 1000 + 86400,
             // value: new Date(toDate.val()),
             // value: new Date(toDate.val()).getUTCDate() / 1000,
             slide: function (event, ui) {
@@ -1143,7 +1147,7 @@ define([
         // $('#amount').val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
 
         // curDate.val($.format.date(new Date($("#slider-range").slider("value") * 1000), "yyyy-MM-dd"));
-        $('#amount').val(toDate.val());
+        $('#amount').val(curDate.val());
     };
 
     //range slider; sets date range for date slider
