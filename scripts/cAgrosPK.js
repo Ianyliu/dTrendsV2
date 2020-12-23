@@ -32,12 +32,12 @@ requirejs([
            let imgSource = "";
 
            //Handle the string is based on the type we determine
-           if (dType == 'Country') {
+           if (dType === 'Country') {
                aLayer.layerType = 'Country_Placemarks';
-               imgSource = '/flags/' + e.iconCode + '.png';
-           } else if (dType == 'Weather Station') {
+               imgSource = 'images/flags/' + e.iconCode + '.png';
+           } else if (dType === 'Weather Station') {
                aLayer.layerType = 'Weather_Station_Placemarks';
-               imgSource = '/images/sun.png';
+               imgSource = 'images/sun.png';
            } else {
                console.log("Read layer type in error");
            }
@@ -48,7 +48,8 @@ requirejs([
            agroPK.pk.userProperties.stationName = e.stationName;
 
            apkArr.push(agroPK.pk);
-           if (j == csvData[i].length - 1) {
+
+           if (j === csvData[i].length - 1) {
                // add AgroSphere placemark onto AgroSphere Placemark Layer.
                newGlobe.redraw();
                aLayer.addRenderables(apkArr);

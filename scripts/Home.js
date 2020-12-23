@@ -91,13 +91,13 @@ requirejs([
     //All the event listeners
     $(document).ready(function () {
 
-        console.log(newGlobe.layers);
+        // console.log(newGlobe.layers);
 
         let ls = localStorage.getItem('namespace.visited');
         if (ls == null) {
-            alert('Welcome to the A World Bridge COVID Toolkit! ' +
-                'Our application works best' +
-                ' on the most recent version of Chrome. If you are experiencing any problems, ' +
+            alert('Welcome to the A World Bridge COVID Toolkit! ' + "\r\n" +
+                'For a better experience, please use Google Chrome as a browser and allow all cookies. ' +
+                'If you are experiencing any problems, ' +
                 'please try switching a browser or watching the tutorial.');
             localStorage.setItem('namespace.visited', 1)
         }
@@ -191,12 +191,16 @@ requirejs([
                 let toggle = this;
                 // let countries = document.getElementsByClassName('countries-check');
                 let findLayerIndex = newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
+                console.log(findLayerIndex)
                 // let findPKIndex = newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.enabled === false);
                 // console.log(this.value);
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
-                        alert("Agrosphere country placemarks are loading... please be patient")
+                        if (ls=== null) {
+                            alert("Agrosphere country placemarks are loading... please be patient")
+                        }
+
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -252,7 +256,10 @@ requirejs([
                 // console.log(toggle.checked);
                 if (newGlobe.layers[findLayerIndex] !== undefined) {
                     if (toggle.checked === true) {
-                        alert("Agrosphere weather placemarks are loading... please be patient")
+                        if (ls=== null) {
+                            alert("Agrosphere weather placemarks are loading... please be patient")
+                        }
+
                         // console.log('checked');
                         // $(".countries-check").prop("checked", true);
                         // console.log(countries.value);
@@ -468,8 +475,8 @@ requirejs([
                 alert("Please wait a while for the placemarks to load...")
                 // controls.onCategory("Confirmed Cases","Confirmed Cases");
                 $( "#slider-range" ).slider( "enable" );
+                controls.enableAllCovid();
                 controls.updateCurr($("#amount").val());
-
                 // document.getElementById("options_div").visibility = "visible";
                 // document.getElementById("continentList").visibility = "visible";
             } else if (this.checked && coviderror === true) {
@@ -684,7 +691,7 @@ requirejs([
 
         //dropdown menu for placemark category
         $("#categoryList").find("li").on("click", function (e) {
-            alert("Please wait a few minutes for the placemarks and layers to load...");
+            alert("Please wait a few seconds for the placemarks and layers to load...");
             controls.onCategory(e);
             $( "#slider-range" ).slider( "enable" );
             document.getElementById("COVID-19-checkbox").checked = true;
@@ -758,25 +765,25 @@ requirejs([
 
     });
 
-    // async function togglePK(countryN, status) {
-    //     // use countryN to look pk
-    //     if (countryN !== undefined || status !== undefined) {
-    //         let findLayerIndex = await newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
-    //         let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
-    //
-    //         //turn on/off the pk
-    //         if (findPKIndex >= 0) {
-    //             newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
-    //             newGlobe.redraw();
-    //
-    //             newGlobe.goTo(new WorldWind.Position(
-    //                 newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
-    //                 newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
-    //                 newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
-    //             ));
-    //         }
-    //     } else {
-    //         alert('Error!');
-    //     }
-    // }
+    async function togglePK(countryN, status) {
+        // use countryN to look pk
+        if (countryN !== undefined || status !== undefined) {
+            let findLayerIndex = await newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
+            let findPKIndex = await newGlobe.layers[findLayerIndex].renderables.findIndex(pk => pk.country === countryN);
+
+            //turn on/off the pk
+            if (findPKIndex >= 0) {
+                newGlobe.layers[findLayerIndex].renderables[findPKIndex].enabled = status;
+                newGlobe.redraw();
+
+                newGlobe.goTo(new WorldWind.Position(
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.latitude,
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.longitude,
+                    newGlobe.layers[findLayerIndex].renderables[findPKIndex].position.altitude
+                ));
+            }
+        } else {
+            alert('Error!');
+        }
+    }
 });

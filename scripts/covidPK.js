@@ -23,6 +23,7 @@ define([
             dataType: 'json',
             async: false,
             success: function (resp) {
+
                 if (!resp.error) {
                     if (flag !== "init") {
                         // initiated by Home.js

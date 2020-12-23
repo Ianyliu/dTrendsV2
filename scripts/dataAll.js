@@ -30,5 +30,6 @@ define(['./WorldWindShim'], function (WorldWind) {
         }
     });
 
+
     return {arrDate, arrCountry}
 });

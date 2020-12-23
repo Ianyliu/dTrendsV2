@@ -25,6 +25,10 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!--    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="css/Chart.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+
+
     <!--    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
     <!--    <script data-require="angular.js@1.6.0" data-semver="1.6.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>-->
     <!--    <script data-require="ui-bootstrap@*" data-semver="2.2.0" src="https://cdn.rawgit.com/angular-ui/bootstrap/gh-pages/ui-bootstrap-tpls-2.2.0.js"></script>-->
@@ -319,7 +323,7 @@
 <ul class="tab"
     style="z-index: 999; position: fixed; left: 0; height: 38px; width: 100%; background: rgba(46,74,110,1); overflow: visible">
 <!--    <li><a class="tablinksLeft logo" title="Info"><strong>AWB Disease Trends</strong></a></li>-->
-    <li><a class="tablinksLeft logo" title="Info"><strong>AWB COVID Toolkit</strong></a></li>
+    <li><a class="tablinksLeft logo" title="Info"autofocus><strong>AWB COVID Toolkit</strong></a></li>
     <li>
         <a id="controls-tab" class="tablinksLeft" onclick="openTabLeft(event, 'controls')" style="pointer-events: none;" title="Controls">
             <span id="controls-span" class="glyphicon glyphicon-tasks disabled-icon"></span></a>
@@ -944,24 +948,45 @@
 <div id="overlay">
     <div class="spinner"></div>
 </div>
+<!--<div id="cookieconsent"></div>-->
 <!--<div id="popover" style="border-style: solid; opacity: 0;" hidden></div>-->
 <script>
-    $(document).ready(function () {
-        // $.get("path to csv", function (data){
-        //     console.log(data);
-        // })
-        // flatpickr(".date", {
-        //     defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
-        //     dateFormat: "Y-m-d",
-        //     time_24hr: true
-        // });
-        //     alert('Welcome to CitySmart V2! Our application works best on the most recent version of Chrome. If you are experiencing any problems, try switching a browser.');
-        //     alert('Please wait for our application to finish loading before attempting to login.');
-
-
-    });
+    // $(document).ready(function () {
+    //     // $.get("path to csv", function (data){
+    //     //     console.log(data);
+    //     // })
+    //     // flatpickr(".date", {
+    //     //     defaultDate: dataAll.arrDate[dataAll.arrDate.length - 1].Date,
+    //     //     dateFormat: "Y-m-d",
+    //     //     time_24hr: true
+    //     // });
+    //     //     alert('Welcome to CitySmart V2! Our application works best on the most recent version of Chrome. If you are experiencing any problems, try switching a browser.');
+    //     //     alert('Please wait for our application to finish loading before attempting to login.');
+    //
+    //
+    // });
     let overlay = document.getElementById("overlay");
     let tutorial = document.getElementById("tutorial");
+
+    window.cookieconsent.initialise({
+        "palette": {
+            "popup": {
+                "background": "#252e39"
+            },
+            "button": {
+                "background": "#14a7d0"
+            }
+        },
+        "theme": "classic",
+        "position": "top",
+        "content": {
+            "message": 'We use cookies! By using our site you agree to our use of cookies to deliver a better site experience.',
+            "dismiss": 'Got it!',
+            "link": ''
+            // "href": "www.covidtoolkit.aworldbridgelabs.com",
+            // "target": '_blank'
+        }
+    });
 
     function hideDialog (){
         overlay.style.display = 'none';
@@ -977,7 +1002,7 @@
     }
 
     function onFunction() {
-        alert ("You are now online.");
+        alert ("You are back online!");
     }
 
     function offFunction() {

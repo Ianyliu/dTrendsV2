@@ -17,10 +17,13 @@ define([
      * @classdesc Provides a layer manager to interactively control layer visibility for a World Window.
      * @param {WorldWindow} WorldWindow The World Window to associated this layer manager with.
      */
+
+    let worldWin;
     let LayerManager = function (WorldWindow) {
         let thisExplorer = this;
 
         this.wwd = WorldWindow;
+        worldWin = WorldWindow;
 
         this.roundGlobe = this.wwd.globe;
 
@@ -94,17 +97,30 @@ define([
         let layerName = layerButton.text();
         let layers = this.wwd.layers;
         const a = layers.findIndex(ele => ele.displayName === layerName)
-
         if (!layers[a].hide) {
+
             if (layers[a].displayName === layerName && layers[a].layerType == "H_PKLayer") {
                 layers[a].enabled = !layers[a].enabled;
-                this.wwd.goTo(new WorldWind.Position(layers[a].renderables[0].position.latitude, layers[a].renderables[0].position.longitude, 14000000));
+                $.ajax({
+                    url: '/rr',
+                    type: 'GET',
+                    data: {country: layerName},
+                    dataType: 'json',
+                    async: false,
+                    success: function (res) {
+                        if (!res.error) {
+                            // console.log(res.data[0].Latitude)
+                            worldWin.goTo(new WorldWind.Position(res.data[0].Latitude, res.data[0].Longitude, 14000000));
 
+                        }
+
+                    }
+                })
+                // this.wwd.goTo(new WorldWind.Position(layers[a].renderables[0].position.latitude, layers[a].renderables[0].position.longitude, 14000000));
                 if (layers[a].enabled) {
                     layerButton.addClass("active");
                     layerButton.css("color", "white");
                 } else {
-                    console.log("disabled")
                     layerButton.removeClass("active");
                     layerButton.css("color", "black");
                 }
