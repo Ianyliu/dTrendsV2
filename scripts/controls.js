@@ -839,10 +839,10 @@ define([
         if (cat === "none") {
             //grab the selection value
             categoryS = event.target.innerText || event.target.innerHTML;
-            console.log(categoryS);
+            // console.log(categoryS);
         } else {
             categoryS = cat;
-            console.log(categoryS)
+            // console.log(categoryS)
         }
 
         //refresh the option display
@@ -872,7 +872,7 @@ define([
                     if (d instanceof WorldWind.Placemark) {
                         if (d.userProperties.Type === categoryS) {
                             d.enabled = true;
-                            console.log(d)
+                            // console.log(d)
                         } else {
                             d.enabled = false;
                         }
