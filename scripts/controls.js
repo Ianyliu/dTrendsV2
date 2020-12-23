@@ -507,8 +507,6 @@ define([
         checkboxInput.value = allToggle;
         checkboxInput.className = "input alltoggle";
 
-        // if (ThirdL !== "Crops") {checkboxInput.defaultChecked = true;}
-
         let nested1c1 = document.createElement("div");
         nested1c1.id = firstL + "-" + secondL + "-" + thirdL;
         nested1c1.className = "panel-collapse collapse";
@@ -606,6 +604,8 @@ define([
         let checkboxInput = document.createElement("input");
         checkboxInput.type = "checkbox";
         checkboxInput.className = "input";
+
+        if (ThirdL === "COVID-19") {checkboxInput.defaultChecked = true;}
 
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
