@@ -1335,18 +1335,18 @@ define([
                 // console.log("picked");
                 if (pickedPM.layer.layerType !== 'Country_Placemarks' && pickedPM.layer.layerType !== 'Weather_Station_Placemarks') {
                     sitePopUp(pickedPM);
-                } //  else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
+                }   else if (pickedPM.layer.layerType === 'Country_Placemarks'|| pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
                 //     let foodsecuritya = "FoodSecurity-a";
                 //     let foodsecurity = "FoodSecurity"
                 //     let agrofoodsecuritya = "FoodSecurity-Agrosphere-a"
                 //     let agrofoodsecurity = "FoodSecurity-Agrosphere"
                 //
                 //     //document.getElementById("FoodSecurity-Agrosphere-Country-a").innerHTML = "Selected Country: " + pickedPM.country + " ";
-                //     if (pickedPM.layer.layerType === 'Country_Placemarks') {
-                //         document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.userProperties.country + " ";
-                //     } else {
-                //         document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
-                //     }
+                    if (pickedPM.layer.layerType === 'Country_Placemarks') {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Country: " + pickedPM.userProperties.country + " ";
+                    } else {
+                        document.getElementById("selectedCountry").innerHTML = "Selected Station: " + pickedPM.userProperties.stationName + " ";
+                    }
                 //
                 //     // document.getElementById("controls").style.display = 'block';
                 //     openTabLeft(event, 'controls','open');
@@ -1363,8 +1363,8 @@ define([
                 //     document.getElementById(agrofoodsecurity).setAttribute("class", "in");
                 //     document.getElementById(agrofoodsecurity).style.visibility = 'visible';
                 //     document.getElementById(agrofoodsecurity).style.height = '';
-                //     sitePopUp(pickedPM);
-                // }
+                    sitePopUp(pickedPM);
+                }
             }
 
         })
@@ -1406,8 +1406,7 @@ define([
                 if (pickedPM.layer.layerType === 'Country_Placemarks') {
                     content = "<p><strong>Country:</strong> " + pickedPM.userProperties.country + "</p>";
                 } else if (pickedPM.layer.layerType === 'Weather_Station_Placemarks') {
-                    content = "<p><strong>Weather Station:</strong> " + pickedPM.userProperties.stationName +
-                        "</p>";
+                    content = "<p><strong>Weather Station:</strong> " + pickedPM.userProperties.stationName + "</p>";
                 }
 
                 $("#popover").attr('data-content', content);
@@ -1421,7 +1420,6 @@ define([
         let popupBodyItem = $("#popupBody");
         //clears pop-up contents
         popupBodyItem.children().remove();
-
 
         if(PM.layer.layerType === "Country_Placemarks") {
             //inserts title and discription for placemark
@@ -1492,7 +1490,7 @@ define([
                 }
 
             }
-        } else if (PM.layer.layerType === "Weather_Station_PK") {
+        } else if (PM.layer.layerType === "Weather_Station_Placemarks") {
             //inserts title and discription for placemark
             let popupBodyName = $('<p class="site-name"><h4 class="h4-sitename">' + PM.userProperties.stationName + '</h4></p>');
             // let popupBodyDesc = $('<p class="site-description">' + "Total Cases = Active + Deceased + Recoveries" + '</p><br>');

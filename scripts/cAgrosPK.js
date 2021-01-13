@@ -44,8 +44,14 @@ requirejs([
 
            // create AgroSphere placemark
            let agroPK = new imagePK(lat, lon, imgSource);
-           agroPK.pk.userProperties.country = e.country;
-           agroPK.pk.userProperties.stationName = e.stationName;
+           if (e.country !== "undefined" && e.country !== undefined) {
+               agroPK.pk.userProperties.country = e.country;
+           } else if (e.stationName !== "undefined" && e.stationName !== undefined) {
+               agroPK.pk.userProperties.country = e.stationName.charAt(0) + e.stationName.charAt(1);
+               agroPK.pk.userProperties.stationName = e.stationName;
+               console.log(agroPK.pk.userProperties.country)
+               console.log(agroPK.pk.userProperties.stationName);
+           }
 
            apkArr.push(agroPK.pk);
 
