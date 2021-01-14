@@ -4,7 +4,6 @@ define([
     , './csvData'
     , './LayerManager'
     , './covidPK'
-    ,'./controls'
 ], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
     "use strict";
 
@@ -100,5 +99,10 @@ define([
         }
         return 0;
     }
+
+    return {agriData: agriData, atmoData: atmoData,
+        atmoDataMonthly: atmoDataMonthly, emissionAgriData: emissionAgriData,
+        fertiData: fertiData, liveData: liveData, pestiData: pestiData,
+        priceData: priceData, refugeeData: refugeeData, yieldData: yieldData}
 
 })

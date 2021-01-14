@@ -4,7 +4,8 @@ define([
     , './csvData'
     , './LayerManager'
     , './covidPK'
-], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
+    , './graphsData'
+], function (newGlobe, dataAll,csvD, LayerManager, covidPK, graphsD) {
     "use strict";
 
     alert ("Please do not click on the app until the globe appears.");
