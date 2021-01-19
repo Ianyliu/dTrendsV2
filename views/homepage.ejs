@@ -359,7 +359,7 @@
             Your browser does not support HTML5 Canvas.
         </canvas>
 
-        <div id="datesliderdiv" style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;" >
+        <div id="datesliderdiv" style="position: fixed;width: 50%; left: 25%; right: 25%; bottom: 5%; padding: 20px; border-radius: 15px; background: rgba(46,74,110,0.6);border: 1px solid #ccc;" hidden>
             <h4 id="labelSlider" style="color: white; display: inline-block;">Date Slider:</h4>
             <h4 id="labelRangeSlider" style="color: white; display: none;">Date Range Selector (select slider min/max
                 dates):</h4>
@@ -869,7 +869,7 @@
                     <h4 class="modal-title">Application Tutorial</h4>
                 </div>
                 <div class="modal-body">
-                    <video width="100%" style="border: 0;" height="315" controls><source src="https://www.dropbox.com/s/8gapoaiqsx46ii8/CovidToolkitTutorialV4.mp4?dl=0" type="video/mp4" autostart="false"></video>
+                    <video width="100%" style="border: 0;" height="315" controls><source src="https://www.dropbox.com/s/enwaulcy3qhrtdv/CovidToolkitTutorialV4_1.mp4?raw=1" type="video/mp4" autostart="false"></video>
 <!--                    <div id="carousel-generic" class="carousel slide" data-ride="carousel" data-interval="false">-->
 <!--                        &lt;!&ndash; Wrapper for slides &ndash;&gt;-->
 <!--                        <div class="carousel-inner">-->
@@ -994,22 +994,11 @@
         tutorial.disabled = false;
         tutorial.style.display = 'table-cell';
         document.getElementById("controls-span").classList.remove("disabled-icon");
-        document.getElementById("drawingtools-span").classList.remove("disabled-icon");
-        document.getElementById("diseasetrends-span").classList.remove("disabled-icon");
         document.getElementById("reset-span").classList.remove("disabled-icon");
-
         document.getElementById("controls-span").classList.add("enabled-icon");
-        document.getElementById("drawingtools-span").classList.add("enabled-icon");
-        document.getElementById("diseasetrends-span").classList.add("enabled-icon");
         document.getElementById("reset-span").classList.add("enabled-icon");
-
-        // document.getElementById("controls-tab").style.pointerEvents = 'auto';
-        // document.getElementById("reset-tab").style.pointerEvents = 'auto';
-        // document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
-        // document.getElementById("diseasetrends-tab").style.pointerEvents = 'auto';
-        openTabLeft(event, 'options_div');
-
-        $( "#slider-range" ).slider( "enable" );
+        document.getElementById("controls-tab").style.pointerEvents = 'auto';
+        document.getElementById("reset-tab").style.pointerEvents = 'auto';
     }
 
     function onFunction() {
