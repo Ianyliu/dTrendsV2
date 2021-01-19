@@ -230,10 +230,12 @@ ul.nav {
 
 .disabled-icon {
   opacity: 0.5;
+  pointer-events: none;
 }
 
 .enabled-icon {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .modal-title {

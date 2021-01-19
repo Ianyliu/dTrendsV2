@@ -78,7 +78,7 @@ define([
 
                         // disable all the placemarks except requested date
                         if (el.Date === resp.data[resp.data.length - 1].Date) {
-                            confirmedPK.pk.enabled = false;
+                            confirmedPK.pk.enabled = true;
                             deathPK.pk.enabled = false;
                             recoveredPK.pk.enabled = false;
                             activePK.pk.enabled = false;

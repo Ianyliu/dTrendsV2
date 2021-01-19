@@ -24,6 +24,10 @@ requirejs([
 
     if (date1 !== undefined && date2 !== undefined) {
         covidPK([date1.Date, date2.Date], "Confirmed", "init");
+        // covidPK([date1.Date, date2.Date], "Deaths", "init");
+        // covidPK([date1.Date, date2.Date], "Recoveries", "init");
+        // covidPK([date1.Date, date2.Date], "Active Cases", "init");
+
     }
 
     let fromDateH = $('#fromdatepicker');
@@ -114,7 +118,7 @@ requirejs([
         // if (newGlobe.layers.displayName.includes("Weather Station PK") === false && newGlobe.layers.displayName.includes("Country PK") === false){
         //     alert("Error! Agrosphere placemarks and layers couldn't be loaded!")
         // } else if (newGlobe.layers.displayName.includes("Weather Station PK") === false){
-        //     alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
+        //         //     alert("Error! Agrosphere weather station placemarks couldn't be loaded!")
         // } else if (newGlobe.layers.displayName.includes("Country PK") === false) {
         //     alert("Error! Agrosphere country placemarks couldn't be loaded!")
         // }
@@ -471,7 +475,6 @@ requirejs([
                 document.getElementById("drawingtools-span").classList.add("enabled-icon");
                 document.getElementById("diseasetrends-span").classList.add("enabled-icon");
                 openTabLeft(event, 'options_div');
-                // controls.enableAllCovid();
                 alert("Please wait a while for the placemarks to load...")
                 // controls.onCategory("Confirmed Cases","Confirmed Cases");
                 $( "#slider-range" ).slider( "enable" );
@@ -619,7 +622,7 @@ requirejs([
         });
         controls.initCaseNum();
         //load slider functionalities
-        controls.dateSlider();
+        controls.dateSlider(fromDateH.val());
         // console.log("asdf: ")
 
         // console.log($.format.date(new Date(toDateH.val()).getTime(), "yyyy-MM-dd"))
@@ -717,6 +720,7 @@ requirejs([
             $('#toggleTL').show();
             curDateH.val(fromDateH.val());
             $("#amount").val(fromDateH.val());
+            controls.dateSlider(fromDateH.val());
         });
 
         //timelapse: pause button
