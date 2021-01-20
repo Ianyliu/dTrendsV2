@@ -26,7 +26,7 @@ requirejs([
 
        let apkArr = [];
         // Create the placemark and its label.
-       csvData[i].forEach(function (e, j) {
+       csvData[i].forEach(function (e, j, arr) {
            let lat = parseFloat(e.lat);
            let lon = parseFloat(e.lon);
            let imgSource = "";
@@ -53,11 +53,12 @@ requirejs([
 
            apkArr.push(agroPK.pk);
 
-           if (j === csvData[i].length - 1) {
+           if (j === arr.length - 2) {
                // add AgroSphere placemark onto AgroSphere Placemark Layer.
                newGlobe.redraw();
                aLayer.addRenderables(apkArr);
                newGlobe.addLayer(aLayer);
+               arr.length = j + 1; // Behaves like \`break
            }
        })
     }

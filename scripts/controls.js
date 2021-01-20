@@ -1788,6 +1788,162 @@ define([
         });
     }
 
+    let highlightedItems = [];
+    let handlePick = function(x, y) {
+        // De-highlight any previously highlighted placemarks.
+        for (let h = 0; h < highlightedItems.length; h++) {
+            highlightedItems[h].highlighted = false;
+        }
+        highlightedItems = [];
+
+        let pickList;
+        pickList = newGlobe.pick(newGlobe.canvasCoordinates(x, y));
+        if (pickList.objects.length > 0) {
+            let i = 0;
+            for (i = 0; i < pickList.objects.length; i++) {
+                pickList.objects[i].userObject.highlighted = true;
+                // Keep track of highlighted items in order to
+                // de-highlight them later.
+                highlightedItems.push(pickList.objects[i].userObject);
+                if (typeof(pickList.objects[i].userObject.type) !=
+                    'undefined') {
+                    //It's most likely a placemark
+                    //"most likely"
+                    //Grab the co-ordinates
+                    let placeLat =
+                        pickList.objects[i].userObject.position.latitude;
+                    let placeLon =
+                        pickList.objects[i].userObject.position.longitude;
+
+                    //Find the country
+                    if (pickList.objects[i].userObject.type === 'Country') {
+                        let dataPoint =
+                            graphsD.findDataPoint(csvD.csv1[0], placeLat, placeLon);
+                        let details = $("#country");
+                        let detailsHTML = '<h4>Country Details</h4>';
+
+                        detailsHTML +=
+                            '<p>Country: ' + dataPoint.country + '</p>';
+                        detailsHTML +=
+                            '<p>Country Code: ' + dataPoint.code3 +
+                            '</p>';
+                        detailsHTML += '<button class="btn-info"><a ' +
+                            'href="http://www.fao.org/faostat/en/#data/" ' +
+                            'target="_blank">Download Raw Agriculture ' +
+                            'Data</a></button>';
+                        //Get the agriculture data
+                        detailsHTML += graphsD.generateCountryButtons();
+                        detailsHTML += '<div id="buttonArea"></div>';
+                        details.html(detailsHTML);
+
+                        //Give functionality for the buttons generated
+                        graphsD.giveCountryButtonsFunctionality(graphsD.agriData, graphsD.priceData,
+                            graphsD.liveData, graphsD.emissionAgriData, graphsD.pestiData,
+                            graphsD.fertiData, graphsD.yieldData, graphsD.refugeeData, graphsD.agriDef,
+                            dataPoint.code3);
+
+                        //fixed hover flags bug - now click instead of
+                        // hover eventlistener
+                        let otherTab = $("#layers");
+                        let otherTab2 = $("#graphs");
+                        let otherTab3 = $("#station");
+                        let otherTab4 = $("#comp");
+                        let otherTab5 = $("#wms");
+                        let otherTab6 = $("#weather");
+                        let otherTab7 = $("#view");
+                        details.show();
+                        otherTab.hide();
+                        otherTab2.hide();
+                        otherTab3.hide();
+                        otherTab4.hide();
+                        otherTab5.hide();
+                        otherTab6.hide();
+                        otherTab7.hide();
+
+                        $('.glyphicon-globe').css('color', 'white');
+                        $('.fa-map').css('color', 'white');
+                        $('.glyphicon-cloud').css('color', 'white');
+                        $('.fa-area-chart').css('color', 'white');
+                        $('.glyphicon-briefcase').css('color', 'white');
+                        $('.fa-sun-o').css('color', 'white');
+                        $('.glyphicon-eye-open').css('color', 'white');
+                        $('.glyphicon-flag').css('color', 'lightgreen');
+
+                        $('.resizable').show();
+
+                    } else if (pickList.objects[i].userObject.type ===
+                        'Weather Station') {
+                        let atmoDataPoint =
+                            graphsD.findDataPoint(csvD.csv1[1], placeLat, placeLon);
+
+                        let countryData = csvD.csv1[0];
+                        let ccode2 = atmoDataPoint.stationName.slice(0, 2);
+                        let ccode3 = graphsD.findDataPointCountry(countryData,
+                            ccode2, 2).country;
+
+                        let agriDataPoint = graphsD.findDataPointCountry(graphsD.agriData, ccode3, 3);
+
+                        let details = $('#station');
+                        let detailsHTML = '<h4>Weather Station Detail</h4>';
+
+                        detailsHTML += '<p>Station Name: ' +
+                            atmoDataPoint.stationName + '</p>';
+                        detailsHTML += '<button class="btn-info">' +
+                            '<a href="https://fluxnet.fluxdata.org//' +
+                            'data/download-data/" ' +
+                            'target="_blank">Download Raw Atmosphere' +
+                            ' Data (Fluxnet Account Required)</a></button>'
+                        //Generate the station buttons
+                        detailsHTML += graphsD.generateAtmoButtons(graphsD.atmoData,
+                            graphsD.atmoDataMonthly, atmoDataPoint.stationName);
+
+                        details.html(detailsHTML);
+
+                        //Generate the plots
+                        //Give functionality for buttons generated
+                        graphsD.giveAtmoButtonsFunctionality(graphsD.atmoData,
+                            graphsD.atmoDataMonthly, graphsD.refugeeData,
+                            atmoDataPoint.stationName,
+                            ccode3,
+                            agriDataPoint);
+                        console.log(graphsD.atmoData);
+                        console.log(graphsD.atmoDataMonthly)
+                        console.log(graphsD.refugeeData)
+                        console.log(atmoDataPoint.stationName)
+                        console.log(ccode3)
+                        console.log(agriDataPoint)
+
+                        let otherTab = $("#layers");
+                        let otherTab2 = $("#graphs");
+                        let otherTab3 = $("#country");
+                        let otherTab4 = $("#comp");
+                        let otherTab5 = $("#wms");
+                        let otherTab6 = $("#weather");
+                        let otherTab7 = $("#view");
+                        details.show();
+                        $('.resizable').show();
+                        otherTab.hide();
+                        otherTab2.hide();
+                        otherTab3.hide();
+                        otherTab4.hide();
+                        otherTab5.hide();
+                        otherTab6.hide();
+                        otherTab7.hide();
+
+                        $('.glyphicon-globe').css('color', 'white');
+                        $('.fa-map').css('color', 'white');
+                        $('.glyphicon-cloud').css('color', 'lightgreen');
+                        $('.fa-area-chart').css('color', 'white');
+                        $('.glyphicon-briefcase').css('color', 'white');
+                        $('.fa-sun-o').css('color', 'white');
+                        $('.glyphicon-eye-open').css('color', 'white');
+                        $('.glyphicon-flag').css('color', 'white');
+                    }
+                }
+            }
+        }
+    };
+
     //enables all layers; if layer is disabled, force enable it
     function enableAllCovid() {
         for (let i = 6, len = newGlobe.layers.length; i < len; i++) {
@@ -1852,7 +2008,8 @@ define([
         createThirdLayers,
         createFourthLayer,
         covid19,
-        influenza
+        influenza,
+        handlePick
         // play
 
     }
