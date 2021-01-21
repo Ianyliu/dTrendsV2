@@ -51,6 +51,7 @@ define([
         'YearlyPrecipitation',
         'MonthlyPrecipitation'
     ];
+    let highlightedItems = [];
 
     let i = 0;
     let l;
@@ -1788,7 +1789,6 @@ define([
         });
     }
 
-    let highlightedItems = [];
     let handlePick = function(x, y) {
         // De-highlight any previously highlighted placemarks.
         for (let h = 0; h < highlightedItems.length; h++) {
