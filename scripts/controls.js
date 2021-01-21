@@ -1643,7 +1643,7 @@ define([
         // get button value to reset chart duration time
         let pDate = $("#amount").val();
         let d0 = new Date("" + pDate + "")
-        let dFrom = $.format.date(d0.setDate(d0.getDate() - objButton.id + 1), "yyyy-MM-dd");
+        let dFrom = $.format.date(d0.setDate(d0.getDate() - objButton.id + 2), "yyyy-MM-dd");
         let dTo = dataAll.arrDate[dataAll.arrDate.length - 1].Date;
 
         // disable this button and enable previous button disabled
@@ -1727,16 +1727,23 @@ define([
             dataType: 'json',
             async: false,
             success: function (resp) {
+                let j;
                 if (!resp.error) {
+
+                    // let num = resp.data.findIndex(ele => ele.Date === pDate);
+                    // console.log(num);
                     let dArr = [];
                     let rArr = [];
                     let aArr = [];
-
-                    for (i = 0; i < resp.data.length - 1; i++) {
-                        dArr.push(resp.data[i].DeathNum);
-                        rArr.push(resp.data[i].RecovNum);
-                        aArr.push(resp.data[i].CaseNum - resp.data[i].DeathNum - resp.data[i].RecovNum);
+                    // console.log(resp.data);
+                    for (j = 0; j < resp.data.length; j++) {
+                        dArr.push(resp.data[j].DeathNum);
+                        rArr.push(resp.data[j].RecovNum);
+                        // aArr.push(resp.data[i].CaseNum - resp.data[i].DeathNum - resp.data[i].RecovNum);
+                        aArr.push(resp.data[j].ActiveNum);
                     }
+
+                    // console.log(aArr);
 
                     let myChart = new Chart(ctx, {
                         type: 'bar',
