@@ -4,7 +4,8 @@ define([
     , './csvData'
     , './LayerManager'
     , './covidPK'
-], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
+    ,'./ResizeSensor'
+], function (newGlobe, dataAll,csvD, LayerManager, covidPK, ResizeSensor) {
     "use strict";
 
     let agriData = convertArrayToDataSet(csvD.csv2[0]);
@@ -28,7 +29,6 @@ define([
      *          value pairs}
      */
     function convertArrayToDataSet(csvData) {
-        console.log(csvData);
         //Create the temporary object
         let objectList = [];
         let i = 0;
@@ -111,6 +111,37 @@ define([
         }
     }
 
+    /**
+     * Find data given name of station
+     *
+     * @param dataSet - type of data to get for
+     * @param stationName - name of station to get data for
+     * @returns {data for specified station}
+     */
+    function findDataPointStation(dataSet, stationName) {
+        for (let i = 0; i < dataSet.length; i++) {
+            if (dataSet[i].code3 === stationName) {
+                return dataSet[i];
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Get definition of crop given name
+     * @param dataSet - data from which to search
+     * @param cropName - name of crop to get definition for
+     * @returns {definition and statement of crop from FAO}
+     */
+    function findCropDefinition(dataSet, cropName) {
+        for (let i = 0; i < dataSet.length; i++) {
+            if (dataSet[i].Item === cropName) {
+                return dataSet[i].Description;
+            }
+        }
+        return 0;
+    }
+
     function findDataPointCountry(dataSet, countryCode, codeNumber) {
         let i = 0;
         if (codeNumber === 2) {
@@ -135,6 +166,32 @@ define([
     }
 
     /**
+     * filters out nonexistent values in an array
+     *
+     * @param inputData - array to be filtered
+     * @param mode - 1 mode means set value to 0 in case of blank
+     * @returns {filtered array}
+     */
+    function filterOutBlanks(inputData, mode) {
+        let i = 0;
+        let tempArray = [];
+        for (i = 0; i < inputData.length; i++) {
+            //Check for empty string
+            if ((inputData[i].value !== "") && (mode === 0)) {
+                tempArray.push(inputData[i]);
+            } else if (mode === 1) {
+                if (inputData[i].value === "") {
+                    inputData[i].value = 0;
+                    tempArray.push(inputData[i]);
+                } else {
+                    tempArray.push(inputData[i]);
+                }
+            }
+        }
+        return tempArray;
+    }
+
+    /**
      * Gives the button functionality for weather station
      *
      * @param inputData - first data type
@@ -144,25 +201,25 @@ define([
      */
     function giveAtmoButtonsFunctionality(inputData, inputData2, refugeeData, stationName, ccode3,
                                           agriDataPoint) {
-        var dataPoint = findDataPointStation(inputData, stationName);
-        var dataPoint2 = findDataPointStation(inputData2, stationName);
-        var offSetLength = dataPoint.dataValues.length;
-        if (dataPoint != 0) {
-            var i = 0;
+        let dataPoint = findDataPointStation(inputData, stationName);
+        let dataPoint2 = findDataPointStation(inputData2, stationName);
+        let offSetLength = dataPoint.dataValues.length;
+        if (dataPoint !== 0) {
+            let i = 0;
             for (i = 0; i < (dataPoint.dataValues.length +
                 dataPoint2.dataValues.length); i++) {
-                var buttonHTML = $('#plotWeatherButton' + i).button();
+                let buttonHTML = $('#plotWeatherButton' + i).button();
                 buttonHTML.click(function(event) {
                     //Generate the plot based on things
-                    var buttonID = this.id;
-                    var buttonNumber = buttonID.slice(
+                    let buttonID = this.id;
+                    let buttonNumber = buttonID.slice(
                         'plotWeatherButton'.length);
-                    var selfHTML = $('#' + buttonID);
-                    var plotID = 'graphWeatherPoint' + buttonNumber;
+                    let selfHTML = $('#' + buttonID);
+                    let plotID = 'graphWeatherPoint' + buttonNumber;
 
                     //Do we already have a plot?
-                    var plotHTML = $('#' + plotID);
-                    if (plotHTML.html() == '') {
+                    let plotHTML = $('#' + plotID);
+                    if (plotHTML.html() === '') {
 
                         if (buttonNumber < offSetLength) {
                             plotScatter(dataPoint.dataValues[buttonNumber].typeName, '',
@@ -186,10 +243,10 @@ define([
                             buttonNumber).html('')
                     }, 5000);
                 });
-                var combineButtonHTML = $('#combineButtonStation' + i).button();
+                let combineButtonHTML = $('#combineButtonStation' + i).button();
                 combineButtonHTML.click(function(event) {
-                    var buttonID = this.id;
-                    var buttonNumber = buttonID.slice(
+                    let buttonID = this.id;
+                    let buttonNumber = buttonID.slice(
                         'combineButtonStation'.length);
                     //Add to the graph
                     if (buttonNumber < offSetLength) {
@@ -211,11 +268,11 @@ define([
                     }, 5000);
                 });
 
-                var addButtonHTML = $('#addButtonStation' + i).button();
+                let addButtonHTML = $('#addButtonStation' + i).button();
                 addButtonHTML.click(function(event) {
                     //Grab id
-                    var buttonID = this.id;
-                    var buttonNumber = buttonID.slice('addButtonStation'.length);
+                    let buttonID = this.id;
+                    let buttonNumber = buttonID.slice('addButtonStation'.length);
 
                     //Check how many divs there are
                     var manyGraphDivChildren = $('#manyGraph > div');
@@ -259,7 +316,7 @@ define([
                 if (!Number.isNaN(parseInt(topX))) {
                     amount = parseInt(topX);
                 }
-                if ($('#allGraphStation').html() == '') {
+                if ($('#allGraphStation').html() === '') {
                     plotStack(agriDataPoint, 'allGraphStation', amount);
                     createSubPlot(dataPoint.dataValues, 'allGraphStation');
                 } else {
@@ -271,7 +328,7 @@ define([
             legendButtonHTML.off();
             legendButtonHTML.on('click', function() {
                 //Check if the plot exist
-                if ($('#allGraphStation').html() != '') {
+                if ($('#allGraphStation').html() !== '') {
                     var layout = {};
                     if ($(this).hasClass('legendoff')) {
 
@@ -304,7 +361,7 @@ define([
         //Do a search for all the buttons based on the data
         var dataPoint = findDataPointCountry(inputData, codeName, 3);
         //Check for existing data point
-        if (dataPoint != 0) {
+        if (dataPoint !== 0) {
             var i = 0;
             for (i = 0; i < dataPoint.dataValues.length; i++) {
                 var buttonHTML = $('#plotButton' + i).button();
@@ -317,7 +374,7 @@ define([
 
                     //Do we already have a plot?
                     var plotHTML = $('#' + plotID);
-                    if (plotHTML.html() == '') {
+                    if (plotHTML.html() === '') {
                         plotScatter(dataPoint.dataValues[buttonNumber].typeName, dataPoint.code3,
                             dataPoint.dataValues[buttonNumber].timeValues,
                             plotID, 0);
@@ -380,7 +437,7 @@ define([
                     }, 5000);
                 });
 
-                if (mode == 0) {
+                if (mode === 0) {
                     var definitionHTML = $('#definitionNumber' +
                         i).button();
                     definitionHTML.click(function(event) {
@@ -506,7 +563,7 @@ define([
                 for (i = 0; i < layerTitleList.length; i++) {
                     if (!$(layerTitleList[i]).html().toUpperCase().includes(textValue)) {
                         $(layerTitles[i]).hide();
-                    } else if (textValue == '') {
+                    } else if (textValue === '') {
                         $(layerTitles[i]).show();
                     } else if ($(layerTitleList[i]).html().toUpperCase().includes(textValue)) {
                         $(layerTitles[i]).show();
@@ -532,7 +589,7 @@ define([
                 } else {
                     $(this).addClass('plotted');
                     plotStack(dataPoint, 'allGraph', amount);
-                    if ((mode == 0) || (mode == 6)) {
+                    if ((mode === 0) || (mode === 6)) {
                         var refugeePoint = findDataPointCountry(refugeeData,
                             codeName, 3);
                         createSubPlot(refugeePoint.dataValues, 'allGraph');
@@ -544,7 +601,7 @@ define([
             legendButtonHTML.off();
             legendButtonHTML.on('click', function() {
                 //Check if the plot exist
-                if ($('#allGraph').html() != '') {
+                if ($('#allGraph').html() !== '') {
                     var layout = {};
                     if ($(this).hasClass('legendoff')) {
 
@@ -662,7 +719,7 @@ define([
         atmoHTML += '<button class="btn-info" id="allButtonStation">' +
             'Graph Crops and Weather</button>';
         atmoHTML += '<div id="allGraphStation"></div>';
-        if (dataPoint != 0) {
+        if (dataPoint !== 0) {
             var i = 0;
             //Yearly data
             for (i = 0; i < dataPoint.dataValues.length; i++) {
@@ -888,7 +945,7 @@ define([
 
         //Find the appropiate data point to use for the buttons
         var dataPoint = findDataPointCountry(inputData, codeName, 3);
-        if (dataPoint != 0) {
+        if (dataPoint !== 0) {
             var i = 0;
             dataHTML += '<ul id="myUL">';
             switch (mode) {
@@ -937,7 +994,7 @@ define([
                 dataHTML += '<div class="layerTitle" id="layerTitle' +
                     i + '"><li>' + dataPoint.dataValues[i].typeName +
                     '</li>';
-                if (mode == 0) {
+                if (mode === 0) {
                     var tempTitleName =
                         dataPoint.dataValues[i].typeName.slice(0,
                             dataPoint.dataValues[i].typeName.length -
@@ -1109,18 +1166,18 @@ define([
             // higher (not 0)
             for (j = 0; j < filteredDataSet.length; j++) {
                 var value = parseFloat(filteredDataSet[j][i].value);
-                if ((value > threshold) && (value != 0)) {
+                if ((value > threshold) && (value !== 0)) {
                     //Check if item is already in the array
                     var isIn = false;
                     for (k = 0; k < showDataValues.length; k++) {
-                        if (showDataValues[k].typeName ==
+                        if (showDataValues[k].typeName ===
                             inputData.dataValues[j].typeName) {
                             isIn = true;
                             break;
                         }
                     }
 
-                    if (isIn == false) {
+                    if (isIn === false) {
                         //Not in, create a new object
                         var tempObj = {};
                         tempObj.typeName = inputData.dataValues[j].typeName;
@@ -1219,11 +1276,11 @@ define([
      */
     function plotScatter(titleName, secondName, inputData, htmlID, mode) {
         //Filter the input data, we may get some blanks
-        var filteredData = filterOutBlanks(inputData, 0);
+        let filteredData = filterOutBlanks(inputData, 0);
         //Blank years gone, create the x-y axis
-        var xValues = [];
-        var yValues = [];
-        var i = 0;
+        let xValues = [];
+        let yValues = [];
+        let i = 0;
         for (i = 0; i < filteredData.length; i++) {
             if (!isNaN(parseFloat(filteredData[i].year))) {
                 xValues.push(parseFloat(filteredData[i].year));
@@ -1233,62 +1290,62 @@ define([
             yValues.push(parseFloat(filteredData[i].value));
         }
         //Create the plotly graph
-        var graph = {
+        let graph = {
             name: titleName + ' ' + secondName,
             x: xValues,
             y: yValues,
             mode: 'markers',
             type: 'scatter'
         };
-        var xAxis = {
+        let xAxis = {
             title: 'Year'
         }
-        if (mode == 0) {
-            var yAxis = {
+        if (mode === 0) {
+            let yAxis = {
                 title: titleName
             };
         } else {
-            var yAxis = {
+            let yAxis = {
                 title: 'Unitless'
             };
         }
-        var titleString = '';
-        if (mode == 0) {
+        let titleString = '';
+        if (mode === 0) {
             titleString = titleName + ' vs Year';
         } else {
             titleString = 'Legend vs Year';
         }
-        var layout = {
+        let layout = {
             xaxis: xAxis,
             yaxis: yAxis,
             title: titleString,
             showlegend: true
         };
         //Check if the htmlID is empty
-        var plotHTML = $('#' + htmlID);
+        let plotHTML = $('#' + htmlID);
         var d3 = Plotly.d3;
-        var size = 100;
-        var plotID = '#' + htmlID;
-        if ((mode == 0) || ((mode == 1) && plotHTML.html() == '')) {
+        let size = 100;
+        let plotID = '#' + htmlID;
+        if ((mode === 0) || ((mode === 1) && plotHTML.html() === '')) {
             //Indicates new plot
-            var gd3 = d3.select(plotID).append('div').style({
+            let gd3 = d3.select(plotID).append('div').style({
                 width: size + '%',
                 'margin-left': ((100 - size) / 2) + '%',
                 height: size + '%',
                 'margin-top': ((100 - size) / 2) + '%'
             });
-            var gd = gd3.node();
+            let gd = gd3.node();
             $(gd).css('min-width', '300px');
             $(gd).css('min-height', '300px');
             Plotly.plot(gd, [graph], layout);
-        } else if (mode == 1) {
-            var gd3 = d3.select(plotID + '> div');
-            var gd = gd3[0][0];
+        } else if (mode === 1) {
+            let gd3 = d3.select(plotID + '> div');
+            let gd = gd3[0][0];
             Plotly.addTraces(gd, [graph]);
-            var dimensions = {
+            let dimensions = {
                 width: '100%'
             }
-            var multiGraphUpdate = {
+            let multiGraphUpdate = {
                 title: 'Multiple Graphs'
             }
             Plotly.update(gd, multiGraphUpdate);
@@ -1306,6 +1363,6 @@ define([
     return {agriData: agriData, atmoData: atmoData,
         atmoDataMonthly: atmoDataMonthly, emissionAgriData: emissionAgriData,
         fertiData: fertiData, liveData: liveData, pestiData: pestiData,
-        priceData: priceData, refugeeData: refugeeData, yieldData: yieldData, agriDef: agriDef, findDataPoint, findDataPointCountry, findDataBaseName, generateAtmoButtons, generateCountryButtons, generateDataButtons, giveCountryButtonsFunctionality, giveAtmoButtonsFunctionality, giveDataButtonsFunctionality, giveWeatherButtonFunctionality}
+        priceData: priceData, refugeeData: refugeeData, yieldData: yieldData, agriDef: agriDef, findDataPoint, findDataPointCountry, findDataBaseName, generateAtmoButtons, generateCountryButtons, generateDataButtons, giveCountryButtonsFunctionality, giveAtmoButtonsFunctionality, giveDataButtonsFunctionality, giveWeatherButtonFunctionality, filterOutBlanks}
 
 })
