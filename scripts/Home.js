@@ -12,6 +12,7 @@ requirejs([
     , 'controls'
     , 'csvData'
     , 'cAgrosPK'
+    , 'graphsData'
 ], function (newGlobe, dataAll, LayerManager, Chart, covidPK, controls, csvD) {
     "use strict";
 
@@ -85,16 +86,16 @@ requirejs([
         'MonthlyPrecipitation'
     ]
 
-    for (let i = 0; i < dataTypes.length; i++) {
-        for (let j = 0; j < csvD[i].length; j++) {
-            if (dataTypes[i] === 'Country') {
-                countryL.push(csvD[i][j].country)
-            } else if (dataTypes[i] === 'Weather Station') {
-            } else {
-                console.log("Read layer type in error");
-            }
-        }
-    }
+    // for (let i = 0; i < dataTypes.length; i++) {
+    //     for (let j = 0; j < csvD[i].length; j++) {
+    //         if (dataTypes[i] === 'Country') {
+    //             countryL.push(csvD[i][j].country)
+    //         } else if (dataTypes[i] === 'Weather Station') {
+    //         } else {
+    //             console.log("Read layer type in error");
+    //         }
+    //     }
+    // }
 
     //All the event listeners
     $(document).ready(function () {

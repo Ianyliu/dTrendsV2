@@ -994,11 +994,22 @@
         tutorial.disabled = false;
         tutorial.style.display = 'table-cell';
         document.getElementById("controls-span").classList.remove("disabled-icon");
+        document.getElementById("drawingtools-span").classList.remove("disabled-icon");
+        document.getElementById("diseasetrends-span").classList.remove("disabled-icon");
         document.getElementById("reset-span").classList.remove("disabled-icon");
+
         document.getElementById("controls-span").classList.add("enabled-icon");
+        document.getElementById("drawingtools-span").classList.add("enabled-icon");
+        document.getElementById("diseasetrends-span").classList.add("enabled-icon");
         document.getElementById("reset-span").classList.add("enabled-icon");
-        document.getElementById("controls-tab").style.pointerEvents = 'auto';
-        document.getElementById("reset-tab").style.pointerEvents = 'auto';
+
+        // document.getElementById("controls-tab").style.pointerEvents = 'auto';
+        // document.getElementById("reset-tab").style.pointerEvents = 'auto';
+        // document.getElementById("drawingtools-tab").style.pointerEvents = 'auto';
+        // document.getElementById("diseasetrends-tab").style.pointerEvents = 'auto';
+        openTabLeft(event, 'options_div');
+
+        $( "#slider-range" ).slider( "enable" );
     }
 
     function onFunction() {
