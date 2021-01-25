@@ -483,7 +483,7 @@ requirejs([
                 document.getElementById("drawingtools-span").classList.add("enabled-icon");
                 document.getElementById("diseasetrends-span").classList.add("enabled-icon");
                 openTabLeft(event, 'options_div');
-                alert("Please wait a while for the placemarks to load...")
+                // alert("Please wait a while for the placemarks to load...")
                 // controls.onCategory("Confirmed Cases","Confirmed Cases");
                 $( "#slider-range" ).slider( "enable" );
                 controls.enableAllCovid();

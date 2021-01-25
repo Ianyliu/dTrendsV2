@@ -5,6 +5,7 @@ define([
     , './LayerManager'
     , './covidPK'
     , './graphsData'
+    // , './ui_controls'
 ], function (newGlobe, dataAll,csvD, LayerManager, covidPK, graphsD) {
     "use strict";
 
