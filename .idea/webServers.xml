@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="27f8fe97-a1a9-4edb-b32a-727194fee572" name="v2DTrends" url="http://localhost:9091">
-        <fileTransfer rootFolder="/var/www/covidtoolkit/current" accessType="SFTP" host="aworldbridgelabs.com" port="5532" sshConfigId="a1b0a442-b49d-477f-9632-d160dc0932b1" sshConfig="ansonz@aworldbridgelabs.com:5532 password">
+        <fileTransfer rootFolder="/var/www/dtrends/current" accessType="SFTP" host="aworldbridgelabs.com" port="5532" sshConfigId="a1b0a442-b49d-477f-9632-d160dc0932b1" sshConfig="ansonz@aworldbridgelabs.com:5532 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
