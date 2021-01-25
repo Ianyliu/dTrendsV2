@@ -48,7 +48,11 @@ requirejs([
         "Yamagata",
         "Victoria",
         "Not Determined"
-    ]
+    ];
+    const covid19M = [
+        "COVID-19",
+        "Global Vaccinations"
+    ];
     const ecmwf_forecasts = ["Temperature", "Precipitation", "Wind"]
     const dataTypes = ['Country', 'Weather Station'];
     let countryL = [];
@@ -139,7 +143,10 @@ requirejs([
                             controls.createThirdLayer(firstL[i], diseasesecondL[j], influenzaB[h]);
                         }
                     } else if (diseasesecondL[j] === "COVID-19" || coviderror !== true) {
-                        controls.createThirdLayer(firstL[i], diseasesecondL[j], "COVID-19");
+                        for (let h = 0; h < covid19M.length; h++) {
+                            controls.createThirdLayer(firstL[i], diseasesecondL[j], covid19M[h]);
+                        }
+                        // controls.createThirdLayer(firstL[i], diseasesecondL[j], "COVID-19");
                         // controls.covid19();
                     } else {
                         alert('Error! Some disease trends layers might not have been created properly. ');
