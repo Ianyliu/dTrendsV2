@@ -175,7 +175,7 @@ module.exports = function (app) {
         let dFrom = req.query.dateFrom;
 
         // let stat1 = "SELECT LayerType, DisplayName, Color_Confirmed, SUBSTRING(RID, 1, 10) AS newRID From dtrends.covid_19;";
-        let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "';";
+        let statAll = "SELECT * From dtrends.covid_19 WHERE DisplayName = '" + dName + "' AND Date >= '" + dFrom + "' AND Date <= '" + dTo + "' ORDER BY Date ASC;";
 
         con_DT.query(statAll, function (err, results) {
             if (err) {
