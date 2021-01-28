@@ -4,7 +4,8 @@ define([
     , './csvData'
     , './LayerManager'
     , './covidPK'
-], function (newGlobe, dataAll,csvD, LayerManager, covidPK) {
+    , './graphsData'
+], function (newGlobe, dataAll,csvD, LayerManager, covidPK, graphsD) {
     "use strict";
 
     alert ("Please do not click on the app until the globe appears.");
@@ -1421,6 +1422,8 @@ define([
         let popupBodyItem = $("#popupBody");
         //clears pop-up contents
         popupBodyItem.children().remove();
+        let placeLat = PM.position.latitude;
+        let placeLon = PM.position.longitude;
 
         if(PM.layer.layerType === "Country_Placemarks") {
             //inserts title and discription for placemark
@@ -1474,10 +1477,51 @@ define([
             popupBodyItem.append(button4);
             popupBodyItem.append(br);
 
+
+
+
+
+
+
+
+
+
+
+
+            let dataPoint =
+                graphsD.findDataPoint(csvD.csv1[0], placeLat, placeLon);
+            let details = $("#country");
+            let detailsHTML = '<h4>Country Details</h4>';
+
+            detailsHTML +=
+                '<p>Country: ' + dataPoint.country + '</p>';
+            detailsHTML +=
+                '<p>Country Code: ' + dataPoint.code3 +
+                '</p>';
+            detailsHTML += '<button class="btn-info"><a ' +
+                'href="http://www.fao.org/faostat/en/#data/" ' +
+                'target="_blank">Download Raw Agriculture ' +
+                'Data</a></button>';
+            //Get the agriculture data
+            detailsHTML += graphsD.generateCountryButtons();
+            detailsHTML += '<div id="buttonArea"></div>';
+            details.html(detailsHTML);
+
+            //Give functionality for the buttons generated
+            graphsD.giveCountryButtonsFunctionality(graphsD.agriData, graphsD.priceData,
+                graphsD.liveData, graphsD.emissionAgriData, graphsD.pestiData,
+                graphsD.fertiData, graphsD.yieldData, graphsD.refugeeData, graphsD.agriDef,
+                dataPoint.country);
+
+
+
+
+
+
             let modal = document.getElementById('popupBox');
             let span = document.getElementById('closeIt');
 
-            if (PM.userProperties.country !== 'undefined') {
+            if (PM.userProperties.country !== 'undefined' || PM.userProperties.country !== undefined) {
                 modal.style.display = "block";
 
                 span.onclick = function () {
@@ -1546,7 +1590,7 @@ define([
             let modal = document.getElementById('popupBox');
             let span = document.getElementById('closeIt');
 
-            if (PM.userProperties.country !== 'undefined') {
+            if (PM.userProperties.country !== 'undefined' || PM.userProperties.country !== undefined) {
                 modal.style.display = "block";
 
                 span.onclick = function () {
@@ -1615,7 +1659,7 @@ define([
             let modal = document.getElementById('popupBox');
             let span = document.getElementById('closeIt');
 
-            if (PM.userProperties.dName !== 'undefined') {
+            if (PM.userProperties.dName !== 'undefined' || PM.userProperties.dName !== undefined) {
                 modal.style.display = "block";
 
                 span.onclick = function () {
