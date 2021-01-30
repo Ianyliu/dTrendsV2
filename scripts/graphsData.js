@@ -666,9 +666,9 @@ define([
                 dataType: 'json',
                 success: function(data) {
                     //Create some html
-                    var dropArea = $('#searchDetails');
+                    let dropArea = $('#searchDetails');
                     dropArea.html('');
-                    var tempHTML = '<h5 class="fontsize"><b>Weather' +
+                    let tempHTML = '<h5 class="fontsize"><b>Weather' +
                         ' Details for ' + data.name + '</b></h5>';
                     tempHTML += '<p><b>Country:</b> ' + data.sys.country +
                         '</p><br>';
