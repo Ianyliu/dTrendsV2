@@ -1,14 +1,14 @@
 
 requirejs([
     'globeObject',
-    '../config/serverConfig'
-], function (newGlobe, serverConfig) {
+    '../config/clientConfig'
+], function (newGlobe) {
 
     "use strict";
 
     // Web Map Service information from NASA's Near Earth Observations WMS
-    let serviceAddress1 = serverConfig.Download_To;
-    let serviceAddress2 = serverConfig.Backup_Dir;
+    let serviceAddress1 = config.serviceAddress1;
+    let serviceAddress2 = config.serviceAddress2;
     let secondDownload = false;
     let preloadWmsLayers = [];//preload entire layer name
 

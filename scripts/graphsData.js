@@ -90,7 +90,7 @@ define([
         return objectList;
     }
 
-    let findDataBaseName = function (inputArray, name) {
+    function findDataBaseName (inputArray, name) {
         let i = 0;
         for (i = 0; i < inputArray.length; i++) {
             //Find if the name exists
@@ -1363,6 +1363,6 @@ define([
     return {agriData: agriData, atmoData: atmoData,
         atmoDataMonthly: atmoDataMonthly, emissionAgriData: emissionAgriData,
         fertiData: fertiData, liveData: liveData, pestiData: pestiData,
-        priceData: priceData, refugeeData: refugeeData, yieldData: yieldData, agriDef: agriDef, findDataPoint, findDataPointCountry, findDataBaseName, generateAtmoButtons, generateCountryButtons, generateDataButtons, giveCountryButtonsFunctionality, giveAtmoButtonsFunctionality, giveDataButtonsFunctionality, giveWeatherButtonFunctionality, filterOutBlanks, }
+        priceData: priceData, refugeeData: refugeeData, yieldData: yieldData, agriDef: agriDef, findDataPoint, findDataPointCountry, findDataBaseName, generateAtmoButtons, generateCountryButtons, generateDataButtons, giveCountryButtonsFunctionality, giveAtmoButtonsFunctionality, giveDataButtonsFunctionality, giveWeatherButtonFunctionality, filterOutBlanks}
 
 })

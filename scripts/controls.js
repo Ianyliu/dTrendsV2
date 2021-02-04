@@ -464,7 +464,7 @@ define([
 
     function createThirdLayers(FirstL, SecondL, ThirdL) {
 
-        //Third Layer for Agrosphere Menu
+        //Third Layer for Agrosphere and Sentinel Menu
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
@@ -482,7 +482,8 @@ define([
 
         let collapsed3 = document.createElement("a");
         collapsed3.className = "collapsed";
-        if (thirdL !== 'Country') {
+        if (thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+        // if (thirdL !== 'Country') {
             collapsed3.href = "#" + firstL + "-" + secondL + "-" + thirdL;
             collapsed3.setAttribute("data-toggle", "collapse");
             collapsed3.setAttribute("data-parent", "#nested");
@@ -522,7 +523,8 @@ define([
         panelHeading3.appendChild(panelTitle3);
         panelHeading3.appendChild(checkboxDiv);
         panelDefault3.appendChild(panelHeading3);
-        if (thirdL !== 'Country') {
+        if (thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
+        // if (thirdL !== 'Country') {
             panelDefault3.appendChild(nested1c1);
             nested1c1.appendChild(panelBody4);
         }
@@ -674,7 +676,7 @@ define([
         let thirdL = ThirdL.replace(/\s+/g, '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
-        if (fourthL !== 'none' && thirdL !== 'Country') {
+        if (fourthL !== 'none' && thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
@@ -718,8 +720,6 @@ define([
             // } else {
             document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
             // }
-
-        } else if(thirdL === 'Country'){
 
         } else {
             alert('Error!');
