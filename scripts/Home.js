@@ -386,6 +386,105 @@ requirejs([
         //SentinelSatelliteData
 
         $("#SentinelSatelliteData").find("input").on("click", function (e) {
+
+            $("#NDVI-alltoggle ").change(function () {
+                //Shows/hides menu below
+                let toggle = this;
+                // let findLayerIndex = newGlobe.layers.findIndex(ele => ele.displayName === 'Country_PK');
+                // if (newGlobe.layers[findLayerIndex] !== undefined) {
+                    if (toggle.checked === true) {
+                        //FoodSecurity-SentinelSatelliteData-NDMI
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").setAttribute("class", "in");
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").style.visibility = 'visible';
+                        $("#FoodSecurity-SentinelSatelliteData-NDVI").css("height", "");
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").setAttribute("aria-expanded", "true");
+                    } else if (toggle.checked === false) {
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").style.height = '0px';
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").setAttribute("class", "collapsing");
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").style.visibility = 'hidden';
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").removeAttribute("class", "collapsing");
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").removeAttribute("class", "in");
+                        document.getElementById("FoodSecurity-SentinelSatelliteData-NDVI").setAttribute("aria-expanded", "false");
+                    }
+                // } else {
+                //     alert("Error! Agrosphere country placemarks are currently unavailable");
+                //     document.getElementById("Crops-alltoggle").disabled = true;
+                //     document.getElementById("Country-alltoggle").disabled = true;
+                // }
+            });
+            $("#NDMI-alltoggle ").change(function () {
+                //Shows/hides menu below
+                let toggle = this;
+                if (toggle.checked === true) {
+                    //FoodSecurity-SentinelSatelliteData-NDMI
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").setAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").style.visibility = 'visible';
+                    $("#FoodSecurity-SentinelSatelliteData-NDMI").css("height", "");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").setAttribute("aria-expanded", "true");
+                } else if (toggle.checked === false) {
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").style.height = '0px';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").setAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").removeAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").removeAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDMI").setAttribute("aria-expanded", "false");
+                }
+            });
+            $("#NDWI-alltoggle ").change(function () {
+                //Shows/hides menu below
+                let toggle = this;
+                if (toggle.checked === true) {
+                    //FoodSecurity-SentinelSatelliteData-NDMI
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").setAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").style.visibility = 'visible';
+                    $("#FoodSecurity-SentinelSatelliteData-NDWI").css("height", "");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").setAttribute("aria-expanded", "true");
+                } else if (toggle.checked === false) {
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").style.height = '0px';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").setAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").removeAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").removeAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-NDWI").setAttribute("aria-expanded", "false");
+                }
+            });
+
+            $("#SWIR-alltoggle ").change(function () {
+                //Shows/hides menu below
+                let toggle = this;
+                if (toggle.checked === true) {
+                    //FoodSecurity-SentinelSatelliteData-NDMI
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").style.visibility = 'visible';
+                    $("#FoodSecurity-SentinelSatelliteData-SWIR").css("height", "");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("aria-expanded", "true");
+                } else if (toggle.checked === false) {
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").style.height = '0px';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").removeAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").removeAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("aria-expanded", "false");
+                }
+            });
+            $("#SWIR-alltoggle ").change(function () {
+                //Shows/hides menu below
+                let toggle = this;
+                if (toggle.checked === true) {
+                    //FoodSecurity-SentinelSatelliteData-NDMI
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").style.visibility = 'visible';
+                    $("#FoodSecurity-SentinelSatelliteData-SWIR").css("height", "");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("aria-expanded", "true");
+                } else if (toggle.checked === false) {
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").style.height = '0px';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").style.visibility = 'hidden';
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").removeAttribute("class", "collapsing");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").removeAttribute("class", "in");
+                    document.getElementById("FoodSecurity-SentinelSatelliteData-SWIR").setAttribute("aria-expanded", "false");
+                }
+            });
             // $("#Country-alltoggle").change(function () {
             //     //Shows/hides menu below, sets country placemarks' layer to .enabled and toggles all the toggles beneath it
             //     let toggle = this;
