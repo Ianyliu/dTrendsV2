@@ -233,7 +233,7 @@ module.exports = function (app) {
         // console.log("Parsed Layers: ");
         // console.log(parsedLayers);
 
-        con_CS.query('SELECT LayerName, Longitude, Latitude, Altitude, ThirdLayer FROM layers WHERE LayerName = ?', parsedLayers[0], function (err, results) {
+        con_DT.query('SELECT LayerName, Longitude, Latitude, Altitude, ThirdLayer FROM layers WHERE LayerName = ?', parsedLayers[0], function (err, results) {
             if (err) {
                 console.log(err);
                 res.json({"error": true, "message": "no result found!"});

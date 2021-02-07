@@ -889,23 +889,6 @@ requirejs([
             }
         });
 
-        function globePosition(request) {
-            $.ajax({
-                url: '/position',
-                type: 'GET',
-                dataType: 'json',
-                data: request, //send the most current value of the selected switch to server-side
-                async: false,
-                success: function (results) {
-                    layerSelected = results[0];
-                    Altitude = layerSelected.Altitude * 1000;
-                    newGlobe.goTo(new WorldWind.Position(layerSelected.Latitude, layerSelected.Longitude, Altitude));
-
-                    // console.log('globePosition');
-                }
-            })
-        }
-
         // function buttonControl(toggleOn) {
         //
         //     if (toggleOn) {
@@ -1155,6 +1138,24 @@ requirejs([
 
     });
 
+
+    function globePosition(request) {
+        $.ajax({
+            url: '/position',
+            type: 'GET',
+            dataType: 'json',
+            data: request, //send the most current value of the selected switch to server-side
+            async: false,
+            success: function (results) {
+                console.log(results)
+                layerSelected = results[0];
+                Altitude = layerSelected.Altitude * 1000;
+                newGlobe.goTo(new WorldWind.Position(layerSelected.Latitude, layerSelected.Longitude, Altitude));
+
+                // console.log('globePosition');
+            }
+        })
+    }
     async function togglePK(countryN, status) {
         // use countryN to look pk
         // if (countryN !== undefined || status !== undefined) {
@@ -1184,11 +1185,8 @@ requirejs([
                 newGlobe.layers[findLayerIndex].enabled = status;
                 newGlobe.redraw();
 
-                newGlobe.goTo(new WorldWind.Position(
-                    newGlobe.layers[findLayerIndex].position.latitude,
-                    newGlobe.layers[findLayerIndex].position.longitude,
-                    newGlobe.layers[findLayerIndex].position.altitude
-                ));
+                let layerRequest =  countryN;
+                globePosition(layerRequest);
             }
         } else {
             alert('Error!');
