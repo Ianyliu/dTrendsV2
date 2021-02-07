@@ -468,6 +468,7 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        thirdL = thirdL.replace('()', '');
         let allToggle = thirdL + '-alltoggle';
 
         let panelDefault3 = document.createElement("div");
@@ -595,6 +596,7 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        thirdL = thirdL.replace('()', '');
 
         let checkboxDiv = document.createElement("div");
         checkboxDiv.className = "Menu "
@@ -674,6 +676,7 @@ define([
         let firstL = FirstL.replace(/\s+/g, '');
         let secondL = SecondL.replace(/\s+/g, '');
         let thirdL = ThirdL.replace(/\s+/g, '');
+        thirdL = thirdL.replace('()', '');
         let fourthL = FourthL.replace(/\s+/g, '');
 
         if (fourthL !== 'none' && thirdL !== 'Country' && thirdL != 'Agriculture' && thirdL != 'False Color (Urban)' && thirdL != 'False Color (Vegetation)' && thirdL != 'Geology' && thirdL != 'Natural Color (True Color)') {
@@ -682,14 +685,15 @@ define([
         checkboxDiv.className = "Menu "
         let checkboxH4 = document.createElement("h5");
         let checkboxA = document.createElement("a");
-        let idname;
+        let idname = fourthL;
 
         let checkboxLabel = document.createElement("label");
         checkboxLabel.className = "switch right";
 
         let checkboxInput = document.createElement("input");
         checkboxInput.type = "checkbox";
-        checkboxInput.className = "input";
+        checkboxInput.className = "input" + " input-" + ThirdL;
+        checkboxInput.id = idname + '-checkbox';
 
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
