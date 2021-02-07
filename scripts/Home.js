@@ -76,7 +76,7 @@ requirejs([
     ]
     const NDMI = ['ET_NDMI_Sent2_L1C']
     const NDVI = ["ET_NDVI2",'ET_NDVI_Sent2_L1C']
-    const NDWI = ["ET_NDWI_Sent3_OLCI "]
+    const NDWI = ["ET_NDWI_Sent3_OLCI"]
     const MI = ["ET_M1"]
     const SWIR = ["ET_SWIR_Sent2_L1C"]
 
@@ -143,98 +143,98 @@ requirejs([
         // }
 
         // Initially load accordion menu
-        for (let i = 0; i < firstL.length; i++) {
-            controls.createFirstLayer(firstL[i]);
-            if (firstL[i] === 'Disease Projection') {
-                for (let j = 0; j < diseasesecondL.length; j++) {
-                    controls.createSecondLayer(firstL[i], diseasesecondL[j]);
-                    if (diseasesecondL[j] === "Influenza A") {
-                        for (let h = 0; h < influenzaA.length; h++) {
-                            controls.createThirdLayer(firstL[i], diseasesecondL[j], influenzaA[h]);
-                            // controls.influenza();
-                        }
-                    } else if (diseasesecondL[j] === "Influenza B") {
-                        for (let h = 0; h < influenzaB.length; h++) {
-                            controls.createThirdLayer(firstL[i], diseasesecondL[j], influenzaB[h]);
-                        }
-                    } else if (diseasesecondL[j] === "COVID-19" || coviderror !== true) {
-                        for (let h = 0; h < covid19M.length; h++) {
-                            controls.createThirdLayer(firstL[i], diseasesecondL[j], covid19M[h]);
-                        }
-                        // controls.createThirdLayer(firstL[i], diseasesecondL[j], "COVID-19");
-                        // controls.covid19();
-                    } else {
-                        alert('Error! Some disease trends layers might not have been created properly. ');
-                        // throw error
-                    }
-                }
-            } else if (firstL[i] === 'Food Security') {
-                for (let j = 0; j < foodsecondL.length; j++) {
-                    controls.createSecondLayer(firstL[i], foodsecondL[j]);
-                    if (foodsecondL[j] === 'Agrosphere') {
-                        for (let h = 0; h < thirdL.length; h++) {
-
-                            controls.createThirdLayers(firstL[i], foodsecondL[j], thirdL[h]);
-                            if (thirdL[h] === "Country") {
-                                // for (let k = 0; k <countryL.length; k++) {
-                                //     controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],countryL[k]);
-                                // }
-                            } else if (thirdL[h] === "Crops") {
-                                for (let k = 0; k < cropsL.length; k++) {
-                                    controls.createFourthLayer(firstL[i], foodsecondL[j], thirdL[h], cropsL[k]);
-                                }
-                            } else if (thirdL[h] === "Weather") {
-                                for (let k = 0; k < weatherL.length; k++) {
-                                    controls.createFourthLayer(firstL[i], foodsecondL[j], thirdL[h], weatherL[k]);
-                                }
-                            } else {
-                                alert('Error! Some Agrosphere layers might not have been created properly. ');
-                                // throw error
-                            }
-                        }
-                    } else if (foodsecondL[j] === 'ECMWF Forecasts') {
-                        for (let h = 0; h < ecmwf_forecasts.length; h++) {
-                            controls.createThirdLayer(firstL[i], foodsecondL[j], ecmwf_forecasts[h]);
-                        }
-                    } else if (foodsecondL[j] === 'Sentinel Satellite Data') {
-                        for (let h = 0; h < satellite_data.length; h++) {
-                            // controls.createThirdLayer(firstL[i], foodsecondL[j], satellite_data[h]);
-
-                            controls.createThirdLayers(firstL[i], foodsecondL[j], satellite_data[h]);
-                            if (satellite_data[h] === "Moisture Index") {
-                                for (let k = 0; k <MI.length; k++) {
-                                    controls.createFourthLayer(firstL[i],foodsecondL[j], satellite_data[h],MI[k]);
-                                }
-                            } else if (satellite_data[h] === "SWIR") {
-                                for (let k = 0; k < SWIR.length; k++) {
-                                    controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], SWIR[k]);
-                                }
-                            } else if (satellite_data[h] === "NDWI") {
-                                for (let k = 0; k < NDWI.length; k++) {
-                                    controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], NDWI[k]);
-                                }
-                            } else if (satellite_data[h] === "NDMI") {
-                                for (let k = 0; k < NDMI.length; k++) {
-                                    controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], NDMI[k]);
-                                }
-                            } else if (satellite_data[h] === "NDVI") {
-                                for (let k = 0; k < NDVI.length; k++) {
-                                    controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], NDVI[k]);
-                                }
-                            } else {
-
-                            }
-                        }
-                    } else {
-                        // throw error
-                        alert('Error! Some layers might not have been created properly. ');
-                    }
-                }
-            } else {
-                // throw error
-                alert('Error! Some layers might not have been created properly. ');
-            }
-        }
+        // for (let i = 0; i < firstL.length; i++) {
+        //     controls.createFirstLayer(firstL[i]);
+        //     if (firstL[i] === 'Disease Projection') {
+        //         for (let j = 0; j < diseasesecondL.length; j++) {
+        //             controls.createSecondLayer(firstL[i], diseasesecondL[j]);
+        //             if (diseasesecondL[j] === "Influenza A") {
+        //                 for (let h = 0; h < influenzaA.length; h++) {
+        //                     controls.createThirdLayer(firstL[i], diseasesecondL[j], influenzaA[h]);
+        //                     // controls.influenza();
+        //                 }
+        //             } else if (diseasesecondL[j] === "Influenza B") {
+        //                 for (let h = 0; h < influenzaB.length; h++) {
+        //                     controls.createThirdLayer(firstL[i], diseasesecondL[j], influenzaB[h]);
+        //                 }
+        //             } else if (diseasesecondL[j] === "COVID-19" || coviderror !== true) {
+        //                 for (let h = 0; h < covid19M.length; h++) {
+        //                     controls.createThirdLayer(firstL[i], diseasesecondL[j], covid19M[h]);
+        //                 }
+        //                 // controls.createThirdLayer(firstL[i], diseasesecondL[j], "COVID-19");
+        //                 // controls.covid19();
+        //             } else {
+        //                 alert('Error! Some disease trends layers might not have been created properly. ');
+        //                 // throw error
+        //             }
+        //         }
+        //     } else if (firstL[i] === 'Food Security') {
+        //         for (let j = 0; j < foodsecondL.length; j++) {
+        //             controls.createSecondLayer(firstL[i], foodsecondL[j]);
+        //             if (foodsecondL[j] === 'Agrosphere') {
+        //                 for (let h = 0; h < thirdL.length; h++) {
+        //
+        //                     controls.createThirdLayers(firstL[i], foodsecondL[j], thirdL[h]);
+        //                     if (thirdL[h] === "Country") {
+        //                         // for (let k = 0; k <countryL.length; k++) {
+        //                         //     controls.createFourthLayer(firstL[i],foodsecondL[j], thirdL[h],countryL[k]);
+        //                         // }
+        //                     } else if (thirdL[h] === "Crops") {
+        //                         for (let k = 0; k < cropsL.length; k++) {
+        //                             controls.createFourthLayer(firstL[i], foodsecondL[j], thirdL[h], cropsL[k]);
+        //                         }
+        //                     } else if (thirdL[h] === "Weather") {
+        //                         for (let k = 0; k < weatherL.length; k++) {
+        //                             controls.createFourthLayer(firstL[i], foodsecondL[j], thirdL[h], weatherL[k]);
+        //                         }
+        //                     } else {
+        //                         alert('Error! Some Agrosphere layers might not have been created properly. ');
+        //                         // throw error
+        //                     }
+        //                 }
+        //             } else if (foodsecondL[j] === 'ECMWF Forecasts') {
+        //                 for (let h = 0; h < ecmwf_forecasts.length; h++) {
+        //                     controls.createThirdLayer(firstL[i], foodsecondL[j], ecmwf_forecasts[h]);
+        //                 }
+        //             } else if (foodsecondL[j] === 'Sentinel Satellite Data') {
+        //                 for (let h = 0; h < satellite_data.length; h++) {
+        //                     // controls.createThirdLayer(firstL[i], foodsecondL[j], satellite_data[h]);
+        //
+        //                     controls.createThirdLayers(firstL[i], foodsecondL[j], satellite_data[h]);
+        //                     if (satellite_data[h] === "Moisture Index") {
+        //                         for (let k = 0; k <MI.length; k++) {
+        //                             controls.createFourthLayer(firstL[i],foodsecondL[j], satellite_data[h],MI[k]);
+        //                         }
+        //                     } else if (satellite_data[h] === "SWIR") {
+        //                         for (let k = 0; k < SWIR.length; k++) {
+        //                             controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], SWIR[k]);
+        //                         }
+        //                     } else if (satellite_data[h] === "NDWI") {
+        //                         for (let k = 0; k < NDWI.length; k++) {
+        //                             controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], NDWI[k]);
+        //                         }
+        //                     } else if (satellite_data[h] === "NDMI") {
+        //                         for (let k = 0; k < NDMI.length; k++) {
+        //                             controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], NDMI[k]);
+        //                         }
+        //                     } else if (satellite_data[h] === "NDVI") {
+        //                         for (let k = 0; k < NDVI.length; k++) {
+        //                             controls.createFourthLayer(firstL[i], foodsecondL[j], satellite_data[h], NDVI[k]);
+        //                         }
+        //                     } else {
+        //
+        //                     }
+        //                 }
+        //             } else {
+        //                 // throw error
+        //                 alert('Error! Some layers might not have been created properly. ');
+        //             }
+        //         }
+        //     } else {
+        //         // throw error
+        //         alert('Error! Some layers might not have been created properly. ');
+        //     }
+        // }
 
         $("#FoodSecurity-Agrosphere").find("input").on("click", function (e) {
             $("#Country-alltoggle").change(function () {

@@ -2,6 +2,7 @@
 requirejs([
     'globeObject',
     '../config/clientConfig'
+    ,'menu'
 ], function (newGlobe) {
 
     "use strict";

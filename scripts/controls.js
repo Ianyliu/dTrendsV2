@@ -538,9 +538,12 @@ define([
         //// document.getElementById(firstL + "--" + secondL + "--" + thirdL).appendChild(checkboxDiv);
 
         // secondLayers.push(panelBody3.id);
-        checkboxLabel.appendChild(checkboxInput);
-        checkboxLabel.appendChild(checkboxSpan);
-        checkboxDiv.appendChild(checkboxLabel);
+
+        if (SecondL !== "Sentinel Satellite Data") {
+            checkboxLabel.appendChild(checkboxInput);
+            checkboxLabel.appendChild(checkboxSpan);
+            checkboxDiv.appendChild(checkboxLabel);
+        }
 
         document.getElementById(firstL + "--" + secondL).appendChild(panelDefault3);
 
@@ -618,7 +621,7 @@ define([
 
         // if (FourthL === 'none') {
 
-            let checkboxAt = document.createTextNode(thirdL + "   ");
+            let checkboxAt = document.createTextNode(thirdL);
             checkboxA.className = "menuWords";
             idname = thirdL
             checkboxA.id = idname + '-atag';
@@ -698,11 +701,15 @@ define([
         let checkboxSpan = document.createElement("span");
         checkboxSpan.className = "slider round";
 
-            let checkboxAt = document.createTextNode(FourthL + "   ");
-            checkboxA.className = "menuWords";
+            let checkboxAt = document.createTextNode(FourthL + "");
+            if (SecondL === "Sentinel Satellite Data") {
+                checkboxA.className = "menuWords" + " WmsLayer";
+            } else {
+                checkboxA.className = "menuWords";
+            }
             idname = fourthL;
             checkboxA.id = idname + '-atag';
-
+            checkboxA.value = fourthL;
             checkboxInput.value = FourthL;
 
             // if (ThirdL === "Country") {
